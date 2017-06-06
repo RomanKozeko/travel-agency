@@ -8,9 +8,10 @@ const config = {
     // Add the client which connects to our middleware
     // You can use full urls like 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr'
     // useful if you run your app from another point like django
+    'react-hot-loader/patch',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    // And then the actual application
-    './client/index.js',
+    'webpack/hot/only-dev-server',
+    './client/index.js'
   ],
   //entry: './client/index.js',
   output: {
@@ -26,19 +27,9 @@ const config = {
         exclude: /node_modules/
       },
       {
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'react-hot'],
         test: /\.css$/
       },
-      // {
-      //   test: /\.scss$/,
-      //   use: [{
-      //     loader: "style-loader" // creates style nodes from JS strings
-      //   }, {
-      //     loader: "css-loader" // translates CSS into CommonJS
-      //   }, {
-      //     loader: "sass-loader" // compiles Sass to CSS
-      //   }]
-      // }
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
@@ -49,20 +40,27 @@ const config = {
       }
     ]
   },
-  devtool: '#source-map',
+  devtool: 'eval',
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: './server/views/index.html'
     })
-    //if you want to pass in options, you can do so:
-    //new ExtractTextPlugin({
-    //  filename: 'style.css'
-    //})
-  ]
+  ],
+  devServer: {
+    host: 'localhost',
+    port: 3000,
+
+    historyApiFallback: true,
+    // respond to 404s with index.html
+
+    hot: true,
+    // enable HMR on the server
+  },
 };
 
 module.exports = config;

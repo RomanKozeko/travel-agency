@@ -1,6 +1,6 @@
 import React from 'react'
 const button = () => (
-  <a className="link">App12131asdasd</a>
+  <a className="link">12asdasds</a>
 );
 
 export default button;

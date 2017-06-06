@@ -67,12 +67,17 @@ const compiler = webpack(webpackConfig);
 //path: path.resolve(__dirname, './public/js/'),
 
 app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true, publicPath: webpackConfig.output.publicPath
+  hot: true,
+  publicPath: webpackConfig.output.publicPath
 }));
+
+app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(require('webpack-hot-middleware')(compiler, {
   log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
 }));
+
+
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
