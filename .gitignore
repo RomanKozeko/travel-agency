@@ -26,6 +26,8 @@ bower_components
 # Editors
 .idea
 *.iml
+data/db/
+public/
 
 # OS metadata
 .DS_Store

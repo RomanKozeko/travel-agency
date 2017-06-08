@@ -3,17 +3,17 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const VENDOR_LIBS = [
+  'react', 'react-dom', 'react-router-dom'
+];
+
 const config = {
   entry: [
-    // Add the client which connects to our middleware
-    // You can use full urls like 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr'
-    // useful if you run your app from another point like django
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    'webpack/hot/only-dev-server',
-    './client/index.js'
+      'react-hot-loader/patch',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      'webpack/hot/only-dev-server',
+      './client/index.js'
   ],
-  //entry: './client/index.js',
   output: {
     path: path.resolve(__dirname, './public/js/'),
     publicPath: '/',
@@ -40,16 +40,26 @@ const config = {
       }
     ]
   },
-  devtool: 'eval',
+  devtool: '#sourcemaps',
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new HtmlWebpackPlugin({
-      template: './server/views/index.html'
-    })
+    // new HtmlWebpackPlugin({
+    //   template: './server/views/index.html'
+    // }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: "vendor",
+    //   minChunks: function(module){
+    //     return module.context && module.context.indexOf("node_modules") !== -1;
+    //   }
+    // }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: "manifest",
+    //   minChunks: Infinity
+    // }),
   ],
   devServer: {
     host: 'localhost',

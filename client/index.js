@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { AppContainer } from 'react-hot-loader'
 import registerServiceWorker from './registerServiceWorker';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 ReactDOM.render(
   <AppContainer>
-    <App/>
+    <Router>
+      <App/>
+    </Router>
   </AppContainer>,
   document.getElementById('root')
 );
@@ -18,7 +25,9 @@ if (module.hot) {
     const NextApp = require('./App').default;
     ReactDOM.render(
       <AppContainer>
-        <NextApp/>
+        <Router>
+          <NextApp/>
+        </Router>
       </AppContainer>,
       document.getElementById('root')
     );
