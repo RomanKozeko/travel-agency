@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './modules/app/App';
 import { AppContainer } from 'react-hot-loader'
 import registerServiceWorker from './registerServiceWorker';
 import {
@@ -21,8 +21,8 @@ registerServiceWorker();
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
+  module.hot.accept('./modules/app/App', () => {
+    const NextApp = require('./modules/app/App').default;
     ReactDOM.render(
       <AppContainer>
         <Router>

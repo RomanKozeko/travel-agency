@@ -4,14 +4,14 @@ import {
   Link
 } from 'react-router-dom';
 
-import Home from './Home'
-import Contacts from './Contacts'
-import Button from './button'
+import Home from '../../Home'
+import Contacts from '../../Contacts'
+import Button from '../ui-elements/button'
 
 const App = () => (
   <div>
     <ul>
-      <li><Link to="/">Home</Link></li>
+      <li><Link to="/">Home 12 2ss</Link></li>
       <li><Link to="/contacts">Contacts </Link></li>
       <li><Link to="/contacts">Contacts </Link></li>
     </ul>
