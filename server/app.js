@@ -25,7 +25,7 @@ const webpackConfig = require('../webpack.config');
 const ReactDOMServer = require('react-dom/server');
 import { StaticRouter } from 'react-router'
 import React from 'react';
-import App from '../client/App';
+import App from '../client/modules/app/App';
 
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });

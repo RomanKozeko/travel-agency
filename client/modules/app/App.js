@@ -11,7 +11,7 @@ import Button from '../ui-elements/button'
 const App = () => (
   <div>
     <ul>
-      <li><Link to="/">Home 12 2ss</Link></li>
+      <li><Link to="/">Home 111s</Link></li>
       <li><Link to="/contacts">Contacts </Link></li>
       <li><Link to="/contacts">Contacts </Link></li>
     </ul>
