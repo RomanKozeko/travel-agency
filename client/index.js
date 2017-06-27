@@ -8,12 +8,23 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import { Provider } from 'react-redux'
+import {createStore, applyMiddleware} from 'redux';
+
+import rootReducer from './rootReducer';
+
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <AppContainer>
-    <Router>
-      <App/>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App/>
+      </Router>
+    </Provider>
   </AppContainer>,
   document.getElementById('root')
 );
@@ -25,9 +36,11 @@ if (module.hot) {
     const NextApp = require('./modules/app/App').default;
     ReactDOM.render(
       <AppContainer>
-        <Router>
-          <NextApp/>
-        </Router>
+        <Provider store={store}>
+          <Router>
+            <NextApp />
+          </Router>
+        </Provider>
       </AppContainer>,
       document.getElementById('root')
     );

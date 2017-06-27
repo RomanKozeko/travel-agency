@@ -40,7 +40,7 @@ const config = {
       }
     ]
   },
-  devtool: 'eval',
+  devtool: '#sourcemaps',
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.OccurrenceOrderPlugin(),

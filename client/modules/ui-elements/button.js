@@ -3,7 +3,24 @@ import injectSheet from 'react-jss'
 
 const styles = {
   button: {
-    backgroundColor: 'yellow'
+    width: '100%',
+    display: 'inline-block',
+    lineHeight: '40px',
+    borderRadius: '5px',
+    color: '#fff',
+    backgroundColor: '#333',
+    cursor: 'pointer',
+    transition: ['background'],
+    transitionDuration: 300,
+    margin: [5, 0],
+    textAlign: 'center',
+    '&:hover': {
+      backgroundColor: 'blue'
+    },
+    '@media (min-width: 800px)': {
+      width: 'auto'
+    }
+
   },
   label: {
     fontWeight: 'bold',
@@ -12,10 +29,9 @@ const styles = {
   }
 };
 
-const button = ({classes}) => (
+const button = ({classes, text}) => (
   <a className={classes.button}>
-    button
-    <span className={classes.label}>label</span>
+    <span className={classes.label}>{text}</span>
   </a>
 );
 
