@@ -40,26 +40,13 @@ const config = {
       }
     ]
   },
-  devtool: '#sourcemaps',
+  devtool: 'eval',
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: './server/views/index.html'
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "vendor",
-    //   minChunks: function(module){
-    //     return module.context && module.context.indexOf("node_modules") !== -1;
-    //   }
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: "manifest",
-    //   minChunks: Infinity
-    // }),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   devServer: {
     host: 'localhost',
