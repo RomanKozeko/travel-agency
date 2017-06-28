@@ -1,6 +1,7 @@
+import 'babel-polyfill'
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './modules/app/App';
 import { AppContainer } from 'react-hot-loader'
 import registerServiceWorker from './registerServiceWorker';
 import {
@@ -9,14 +10,22 @@ import {
   Link
 } from 'react-router-dom';
 import { Provider } from 'react-redux'
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import createSagaMiddleware from 'redux-saga'
 
+import rootSaga from './modules/tours/sagas';
+import App from './modules/app/App';
 import rootReducer from './rootReducer';
 
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const sagaMiddleware = createSagaMiddleware();
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
+  applyMiddleware(sagaMiddleware)
+));
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <AppContainer>

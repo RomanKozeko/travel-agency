@@ -9,9 +9,9 @@ const toursItems = [
 
 const toursReducer = (state = { items: toursItems}, action) => {
   switch (action.type) {
-    case 'ADD_TOUR': {
+    case 'ADD_TOUR_SUCCESS': {
       const items = [...state.items];
-      items.push(action.newTour);
+      items.push(action.tour);
 
       return {
         ...state,

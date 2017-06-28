@@ -3,11 +3,17 @@ import { Field, reduxForm } from 'redux-form'
 
 let NewTourForm = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
+
+  const submitForm = (data) => {
+    handleSubmit(data);
+    reset();
+  };
+
   return (
-    <form onSubmit={ handleSubmit }>
+    <form onSubmit={ submitForm }>
       <div>
-        <label htmlFor="firstName">First Name</label>
-        <Field name="firstName" component="input" type="text" />
+        <label htmlFor="firstName">Tour title</label>
+        <Field name="title" component="input" type="text" />
       </div>
       <div>
         <label htmlFor="lastName">Last Name</label>

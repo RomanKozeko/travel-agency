@@ -4,7 +4,7 @@ import toursReducer from './modules/tours/toursReducer'
 
 const rootReducer = combineReducers({
   toursReducer,
-  form: formReducer
+  form: formReducer,
 });
 
 export default rootReducer

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
-import { addNewTour } from './toursActions'
+import { addNewTourRequest } from './toursActions'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,15 +10,11 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = {
-  addNewTour
-};
-
 class ToursContainer extends React.Component {
   submit(values) {
     // print the form values to the console
-    console.log(values)
-    this.props.addNewTour(values)
+    console.log(values);
+    this.props.addNewTourRequest(values)
   }
 
   render() {
@@ -33,7 +29,7 @@ class ToursContainer extends React.Component {
 
 ToursContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  { addNewTourRequest }
 )(ToursContainer);
 
 export default ToursContainer
