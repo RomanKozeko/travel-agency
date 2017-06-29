@@ -14,8 +14,5 @@ export function* watchAddTour() {
 }
 
 export default function* rootSaga() {
-  yield all([
-    addTour(),
-    watchAddTour()
-  ])
+  yield all([watchAddTour()])
 }
