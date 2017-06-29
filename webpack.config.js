@@ -9,9 +9,6 @@ const VENDOR_LIBS = [
 
 const config = {
   entry: [
-      'react-hot-loader/patch',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      'webpack/hot/only-dev-server',
       './client/index.js'
   ],
   output: {
@@ -25,18 +22,6 @@ const config = {
         use: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/
-      },
-      {
-        use: ['style-loader', 'css-loader', 'react-hot'],
-        test: /\.css$/
-      },
-      {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          //resolve-url-loader may be chained before sass-loader if necessary
-          use: ['css-loader', 'sass-loader']
-        })
       }
     ]
   },
@@ -55,7 +40,7 @@ const config = {
     historyApiFallback: true,
     // respond to 404s with index.html
 
-    hot: true,
+    //hot: true,
     // enable HMR on the server
   },
 };

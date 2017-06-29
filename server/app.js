@@ -19,14 +19,6 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpack = require('webpack');
-const webpackConfig = require('../webpack.config');
-const ReactDOMServer = require('react-dom/server');
-import { StaticRouter } from 'react-router'
-import React from 'react';
-import App from '../client/modules/App';
-
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -65,28 +57,28 @@ mongoose.connection.on('error', (err) => {
 });
 
 
-if (!process.env.NODE_ENV !== 'production') {
-  const compiler = webpack(webpackConfig);
-  app.use(require('webpack-dev-middleware')(compiler, {
-    hot: true,
-    log: false,
-    publicPath: webpackConfig.output.publicPath
-  }));
-
-  app.use(require('webpack-hot-middleware')(compiler));
-
-  app.use(require('webpack-hot-middleware')(compiler, {
-    log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
-  }));
-}
+// if (!process.env.NODE_ENV !== 'production') {
+//   const compiler = webpack(webpackConfig);
+//   app.use(require('webpack-dev-middleware')(compiler, {
+//     hot: true,
+//     log: false,
+//     publicPath: webpackConfig.output.publicPath
+//   }));
+//   //
+//   // app.use(compiler);
+//   //
+//   // app.use(require('webpack-hot-middleware')(compiler, {
+//   //   log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+//   // }));
+// }
 
 
 /**
  * Express configuration.
  */
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('port', process.env.PORT || 3003);
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'hbs');
 app.use(expressStatusMonitor());
 app.use(compression());
 app.use(sass({
@@ -137,41 +129,15 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(path.join(__dirname, '../public'), { maxAge: -31557600000 }));
+//
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
+// }
+app.use(express.static(path.join(__dirname, '../client/build'), { maxAge: -31557600000 }));
 
 /**
  * Primary app routes.
  */
-
-
-
-app.get('*', function(req, res) {
-  const context = {};
-  let markup = '';
-  
-  //disable servereside renderign for dev;
-  // markup = ReactDOMServer.renderToString(
-  //   <StaticRouter
-  //     location={req.url}
-  //     context={context}
-  //   >
-  //     <App />
-  //   </StaticRouter>
-  // );
-  // if (context.url) {
-  //   // Somewhere a `<Redirect>` was rendered
-  //   res.redirect(301, context.url)
-  // } else {
-  //   // we're good, send the response
-  // }
-
-  res.render('index', {
-    html: markup,
-    title: 'Home page 2'
-  });
-
-});
-
 app.get('/', homeController.index);
 // app.get('/login', userController.getLogin);
 // app.post('/login', userController.postLogin);

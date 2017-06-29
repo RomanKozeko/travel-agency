@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
 import { addNewTourRequest } from './toursActions'
+import './ToursContainer.css'
 
 const mapStateToProps = (state) => {
   return {
@@ -19,7 +20,7 @@ class ToursContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="ToursContainer">
         <ToursList tours={this.props.tours} />
         <NewTourForm onSubmit={this.submit.bind(this)} />
       </div>
