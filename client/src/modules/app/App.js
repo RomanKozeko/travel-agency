@@ -10,6 +10,7 @@ import {
 import Home from './Home'
 import Contacts from './Contacts'
 import ToursContainer from '../tours/ToursContainer';
+import Tour from '../tours/Tour';
 import Button from '../ui-elements/button'
 
 const App = () => (
@@ -27,6 +28,7 @@ const App = () => (
     <ul>
       <li><Link to="/">Home 12s</Link></li>
       <li><Link to="/tours">Tours </Link></li>
+      <li><Link to="/tour/max">Tours max</Link></li>
       <li><Link to="/contacts">Contacts </Link></li>
     </ul>
     <hr/>
@@ -34,6 +36,7 @@ const App = () => (
     <Route exact path="/" component={Home}/>
     <Route path="/contacts" component={Contacts}/>
     <Route path="/tours" component={ToursContainer}/>
+    <Route path="/tour/:id" component={Tour}/>
   </div>
 );
 

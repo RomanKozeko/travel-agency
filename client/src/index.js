@@ -8,6 +8,7 @@ import {
   Link
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { render } from 'react-snapshot';
 
 import App from './modules/app/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -29,12 +30,22 @@ const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
 
 sagaMiddleware.run(rootSaga);
 
+// ReactDOM.render(
+//   render(
+//   <Provider store={store}>
+//     <Router>
+//       <App/>
+//     </Router>
+//   </Provider>,
+//   document.getElementById('root'))
+// );
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App/>
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+      <Router>
+        <App/>
+      </Router>
+    </Provider>,
+    document.getElementById('root')
 );
 registerServiceWorker();

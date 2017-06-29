@@ -22,6 +22,7 @@ class ToursContainer extends React.Component {
     return (
       <div className="ToursContainer">
         <ToursList tours={this.props.tours} />
+        <ToursList tours={this.props.tours} />
         <NewTourForm onSubmit={this.submit.bind(this)} />
       </div>
     )
