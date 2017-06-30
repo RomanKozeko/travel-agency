@@ -1,18 +1,21 @@
-import { put, takeEvery, all } from 'redux-saga/effects'
-import * as actions from './toursActions'
+import { take, put, call, fork, select, all, takeEvery } from 'redux-saga/effects'
+import { getToursSuccess, getToursFailure } from './toursActions'
+import { fetchTours } from '../../services/apiHelper'
 
-export function* addTour(data) {
-  try {
-    yield put(actions.addNewTourSuccess(data))
-  } catch(error) {
-    yield put(actions.addNewTourFailure(error))
+export function* requestTours() {
+  const response = yield call(fetchTours);
+  if (!response.error) {
+    yield put(getToursSuccess(response.tours))
+  } else {
+    yield put(getToursFailure())
   }
 }
 
-export function* watchAddTour() {
-  yield takeEvery('ADD_TOUR_REQUEST', addTour)
+export function* watchRequestTours() {
+  yield takeEvery('REQUEST_TOURS', requestTours)
 }
 
 export default function* rootSaga() {
-  yield all([watchAddTour()])
+  yield all([watchRequestTours()])
 }
+

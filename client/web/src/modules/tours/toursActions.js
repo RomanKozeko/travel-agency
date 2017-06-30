@@ -1,19 +1,29 @@
-export const addNewTourRequest = (newTourData) => {
-  return {
-    type: 'ADD_TOUR_REQUEST',
-    tour: newTourData
-  }
-};
+const REQUEST = 'REQUEST'
+const SUCCESS = 'SUCCESS'
+const FAILURE = 'FAILURE'
 
-export const addNewTourSuccess = (newTourData) => {
-  return {
-    type: 'ADD_TOUR_SUCCESS',
-    tour: newTourData
-  }
-};
+function createRequestTypes(base) {
+  return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => {
+    acc[type] = `${base}_${type}`
+    return acc
+  }, {})
+}
 
-export const addNewTourFailure = () => {
-  return {
-    type: 'ADD_TOUR_SUCCESS_FAILURE'
-  }
-};
+function action(type, payload = {}) {
+  return {type, ...payload}
+}
+
+export const TOURS = createRequestTypes('TOURS');
+
+export const requestTours = () => ({
+  type: 'REQUEST_TOURS'
+});
+
+export const getToursSuccess = (tours) => ({
+  type: 'REQUEST_TOURS_SUCCESS',
+  tours
+});
+
+export const getToursFailure = () => ({
+  type: 'REQUEST_TOURS_FAILURE'
+});

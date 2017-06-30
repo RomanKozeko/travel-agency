@@ -37,6 +37,30 @@ exports.getApi = (req, res) => {
 };
 
 /**
+ * GET /api/tours
+ * Tours API example.
+ */
+const TourModel = require('../models/Tour');
+
+exports.getTours = (req, res) => {
+  TourModel.find().then(result => {
+    res.json({ tours: result });
+  })
+  .catch(err => {
+    console.log(err)
+  });
+};
+
+exports.postTours = (req, res) => {
+  TourModel.create({ title: 'Simba' }).then(result => {
+    res.json({ tour: result });
+  })
+  .catch(err => {
+    console.log(err)
+  });
+};
+
+/**
  * GET /api/foursquare
  * Foursquare API example.
  */

@@ -1,21 +1,11 @@
-const toursItems = [
-  {
-    title: 'Тур по Греции'
-  },
-  {
-    title: 'Тур по Италии 2'
-  },
-];
+const toursItems = [];
 
 const toursReducer = (state = { items: toursItems}, action) => {
   switch (action.type) {
-    case 'ADD_TOUR_SUCCESS': {
-      const items = [...state.items];
-      items.push(action.tour);
-
+    case 'REQUEST_TOURS_SUCCESS': {
       return {
         ...state,
-        items
+        items: action.tours
       }
     }
     default:
