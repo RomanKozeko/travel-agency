@@ -111,19 +111,22 @@ app.use(lusca.xssProtection(true));
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
 // }
-app.use(express.static(path.join(__dirname, '../client/build'), { maxAge: -31557600000 }));
+app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
 
+const toursRouter = express.Router();
+
+app.use('/tour', toursRouter);
+
+toursRouter.route('/:tourId').get((req, res) => {
+  res.sendFile(path.join(__dirname, `../client/web/build/tour${req.url}.html`));
+});
 
 /**
  * Primary app routes.
  */
-//app.get('/', homeController.index);
+app.get('/', homeController.index);
 app.get('/tours', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/tours.html'));
-});
-
-app.get('/tours/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/tours.html'));
+  res.sendFile(path.join(__dirname, '../client/web/build/tours.html'));
 });
 
 app.get('/login', userController.getLogin);

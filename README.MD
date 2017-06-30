@@ -1,3 +1,5 @@
- My project's README
+server: localhost:3003
+client: localhost:3000
+admin: localhost:3006
  
-for development: -r babel-register 
+
