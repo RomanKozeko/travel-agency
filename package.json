@@ -11,7 +11,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
     "test": "mocha --reporter spec",
-    "server": "node --debug-brk=56465 --expose_debug_as=v8debug server/app.js",
+    "server": "node server/app.js",
     "client": "node start-client.js",
     "admin": "node start-client-admin.js"
   },

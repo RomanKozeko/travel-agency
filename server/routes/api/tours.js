@@ -1,9 +1,9 @@
 const express = require('express');
 const path = require('path');
-const requireAuth = require('../services/passport');
+const requireAuth = require('../../services/passport');
 
 const router = express.Router();
-const TourModel = require('../models/Tour');
+const TourModel = require('../../models/Tour');
 
 router.route('/').get((req, res) => {
   TourModel.find().then(result => {
@@ -22,3 +22,5 @@ router.route('/').post(requireAuth, (req, res) => {
       console.log(err)
     });
 });
+
+module.exports = router;
