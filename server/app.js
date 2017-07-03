@@ -18,6 +18,7 @@ const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const multer = require('multer');
+const router = require('./routes/router');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -25,19 +26,6 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
 dotenv.load({ path: '.env.example' });
-
-/**
- * Controllers (route handlers).
- */
-const homeController = require('./controllers/home');
-const userController = require('./controllers/user');
-const apiController = require('./controllers/api');
-const contactController = require('./controllers/contact');
-
-/**
- * API keys and Passport configuration.
- */
-const passportConfig = require('./config/passport');
 
 /**
  * Create Express server.
@@ -77,105 +65,15 @@ app.use(session({
     clear_interval: 3600
   })
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
-app.use((req, res, next) => {
-  next();
-  // if (req.path === '/api/upload') {
-  //   next();
-  // } else {
-  //   lusca.csrf()(req, res, next);
-  // }
-});
-app.use(lusca.xframe('SAMEORIGIN'));
-app.use(lusca.xssProtection(true));
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
-app.use((req, res, next) => {
-  // After successful login, redirect back to the intended page
-  if (!req.user &&
-    req.path !== '/login' &&
-    req.path !== '/signup' &&
-    !req.path.match(/^\/auth/) &&
-    !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
-  } else if (req.user &&
-    req.path == '/account') {
-    req.session.returnTo = req.path;
-  }
-  next();
-});
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
 // }
 app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
 
-const toursRouter = express.Router();
 
-app.use('/tour', toursRouter);
-
-toursRouter.route('/:tourId').get((req, res) => {
-  res.sendFile(path.join(__dirname, `../client/web/build/tour${req.url}.html`));
-});
-
-/**
- * Primary app routes.
- */
-app.get('/', homeController.index);
-app.get('/tours', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/web/build/tours.html'));
-});
-
-app.get('/login', userController.getLogin);
-app.post('/login', userController.postLogin);
-app.get('/logout', userController.logout);
-app.get('/forgot', userController.getForgot);
-app.post('/forgot', userController.postForgot);
-app.get('/reset/:token', userController.getReset);
-app.post('/reset/:token', userController.postReset);
-app.get('/signup', userController.getSignup);
-app.post('/signup', userController.postSignup);
-app.get('/contact', contactController.getContact);
-app.post('/contact', contactController.postContact);
-app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
-app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
-app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
-app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
-app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
-
-/**
- * API examples routes.
- */
-app.get('/api', apiController.getApi);
-app.get('/api/tours', apiController.getTours);
-app.post('/api/tours', apiController.postTours);
-app.get('/api/upload', apiController.getFileUpload);
-app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
-app.get('/api/google-maps', apiController.getGoogleMaps);
-
-/**
- * OAuth authorization routes. (API examples)
- */
-app.get('/auth/foursquare', passport.authorize('foursquare'));
-app.get('/auth/foursquare/callback', passport.authorize('foursquare', { failureRedirect: '/api' }), (req, res) => {
-  res.redirect('/api/foursquare');
-});
-app.get('/auth/tumblr', passport.authorize('tumblr'));
-app.get('/auth/tumblr/callback', passport.authorize('tumblr', { failureRedirect: '/api' }), (req, res) => {
-  res.redirect('/api/tumblr');
-});
-app.get('/auth/steam', passport.authorize('openid', { state: 'SOME STATE' }));
-app.get('/auth/steam/callback', passport.authorize('openid', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
-app.get('/auth/pinterest', passport.authorize('pinterest', { scope: 'read_public write_public' }));
-app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect('/api/pinterest');
-});
+router(app);
 
 /**
  * Error Handler.

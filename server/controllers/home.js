@@ -1,7 +1,8 @@
+const path = require('path');
 /**
  * GET /
  * Home page.
  */
 exports.index = (req, res) => {
-  res.sendFile('./client/build/index.html');
+  res.sendFile(path.join(__dirname, '../../client/web/build/index.html'));
 };
