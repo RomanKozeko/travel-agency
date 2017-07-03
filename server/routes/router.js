@@ -14,8 +14,8 @@ const requireSignIn = passport.authenticate('local', { session: false });
 
 module.exports = app => {
   app.get('/', HomeController.index);
-  app.get('/tours', requireSignIn, ToursController);
-  app.post('/login', AuthController.login);
+  app.get('/tours', ToursController);
+  app.post('/login', requireSignIn, AuthController.login);
   app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/web/build/admin/index.html'));
   });
