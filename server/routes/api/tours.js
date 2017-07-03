@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const requireAuth = require('../../services/passport');
+const passport = require('passport');
+const requireAuth = passport.authenticate('jwt', { session: false });
 
 const router = express.Router();
 const TourModel = require('../../models/Tour');
