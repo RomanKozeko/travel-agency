@@ -15,9 +15,13 @@ class ToursContainer extends React.Component {
   submit(values) {
     // print the form values to the console
     console.log(values);
+
   }
 
   componentDidMount() {
+    console.log(this.props.match)
+    console.log(this.props.location)
+    console.log(this.props.history)
     this.props.requestTours();
   }
 
