@@ -8,5 +8,9 @@ function tokenForUser(user) {
 }
 
 exports.login = (req, res) => {
-  res.send({ token: tokenForUser(req.user)})
+  res.send({ token: tokenForUser(req.user) })
+};
+
+exports.getMe = (req, res) => {
+	res.json({ userName: config.user.login });
 };

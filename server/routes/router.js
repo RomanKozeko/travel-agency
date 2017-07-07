@@ -18,6 +18,7 @@ module.exports = app => {
   app.get('/tours', ToursController);
   app.delete('/tours/:id', ToursController.delete);
   app.post('/login', requireSignIn, AuthController.login);
+	app.get('/getMe', requireAuth,  AuthController.getMe);
   app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/web/build/admin/index.html'));
   });
