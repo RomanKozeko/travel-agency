@@ -1,27 +1,28 @@
 const path = require('path');
 const passport = require('passport');
-const apiTours = require('./api/tours');
 const passportService = require('../services/passport');
 
 /**
  * Controllers (route handlers).
  */
-const AuthController = require('../controllers/auth');
-const HomeController = require('../controllers/home');
-const ToursController = require('../controllers/tours');
+const AuthCtrl = require('../controllers/auth');
+const HomeCtrl = require('../controllers/home');
+const ToursCtrl = require('../controllers/tours');
+const ApiToursCtrl = require('../controllers/api/tours');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = app => {
-  app.get('/', HomeController.index);
-  app.get('/tours', ToursController);
-  app.delete('/tours/:id', ToursController.delete);
-  app.post('/login', requireSignIn, AuthController.login);
-	app.get('/getMe', requireAuth,  AuthController.getMe);
+  app.get('/', HomeCtrl.index);
+  app.get('/tours', ToursCtrl);
+  app.delete('/tours/:id', ToursCtrl.delete);
+  app.post('/login', requireSignIn, AuthCtrl.login);
+	app.get('/getMe', requireAuth,  AuthCtrl.getMe);
   app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/web/build/admin/index.html'));
   });
-  app.use('/api/tours', apiTours);
+  app.get('/api/tours', ApiToursCtrl.get);
+  app.post('/api/tours', ApiToursCtrl.post);
 };
 

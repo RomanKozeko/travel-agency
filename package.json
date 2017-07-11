@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/sahat/hackathon-starter.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "",
   "license": "MIT",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",

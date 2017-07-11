@@ -78,7 +78,9 @@ router(app);
 /**
  * Error Handler.
  */
-app.use(errorHandler());
+app.use((err, req, res, next) => {
+  res.send({error: err.message })
+});
 
 /**
  * Start Express server.
