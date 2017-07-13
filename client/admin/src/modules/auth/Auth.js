@@ -1,35 +1,25 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import AuthContainer from './AuthContainer'
+import { connect } from 'react-redux';
+import AuthForm from './AuthForm'
+import { loginUser } from './authActions'
 
-const fakeAuth = {
-	isAuthenticated: false,
-	authenticate(cb) {
-		this.isAuthenticated = true
-		setTimeout(cb, 100)
-	},
-	signout(cb) {
-		this.isAuthenticated = false
-		setTimeout(cb, 100)
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
 	}
-}
+};
 
 export class Auth extends React.Component {
-	state = {
-		redirectToReferrer: false
-	}
-
-	login = () => {
-		fakeAuth.authenticate(() => {
-			this.setState({ redirectToReferrer: true })
-		})
+	submit(values) {
+		this.props.loginUser(values);
 	}
 
 	render() {
 		const { from } = this.props.location.state || { from: { pathname: '/' } }
-		const { redirectToReferrer } = this.state
+		const { isAuth } = this.props.auth;
 
-		if (redirectToReferrer) {
+		if (isAuth) {
 			return (
 				<Redirect to={from}/>
 			)
@@ -38,8 +28,15 @@ export class Auth extends React.Component {
 		return (
 			<div>
 				<p>You must log in to view the page at {from.pathname}</p>
-				<AuthContainer/>
+					<AuthForm onSubmit={this.submit.bind(this)} />
 			</div>
 		)
 	}
 }
+
+Auth = connect(
+	mapStateToProps,
+	{ loginUser }
+)(Auth);
+
+export default Auth

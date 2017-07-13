@@ -27,7 +27,6 @@ let AuthForm = props => {
 };
 
 AuthForm = reduxForm({
-  // a unique name for the form
   form: 'auth'
 })(AuthForm);
 

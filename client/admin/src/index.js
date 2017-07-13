@@ -18,8 +18,6 @@ import { getMeRequest } from './services/apiHelper';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const Product = () => <h3>Product</h3>
-const Book = () => <h3>Book</h3>
 
 getMeRequest().then(res => {
 	const preloadedState = {
@@ -39,7 +37,7 @@ getMeRequest().then(res => {
 					<Route path="/login" component={Auth}/>
 
 					<PrivateRoute
-						path="/tours"
+						path="/"
 						component={App}
 					/>
 
