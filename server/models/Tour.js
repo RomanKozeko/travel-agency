@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ContentSchema = require('./Content');
 
-const tourSchema = new mongoose.Schema({
-  title: { type: String, required: true }
+const TourSchema = new Schema({
+  preview: {
+    type: String,
+    required: true
+  },
+  content: [ContentSchema],
+  periodType: String
 });
 
-module.exports = mongoose.model('TourModel', tourSchema);
+module.exports = mongoose.model('Tour', TourSchema);

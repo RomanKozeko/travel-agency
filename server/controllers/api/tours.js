@@ -2,20 +2,29 @@ const express = require('express');
 const path = require('path');
 const passport = require('passport');
 
-const TourModel = require('../../models/Tour');
+const Tour = require('../../models/Tour');
 
 module.exports =  {
   get(req, res, next) {
-    TourModel.find().then(result => {
+    Tour.find().then(result => {
       res.json({ tours: result });
     })
     .catch(next);
   },
 
   post(req, res, next) {
-    TourModel.create({ }).then(result => {
-      res.json({ tour: result });
-    })
+    const { preview, content, periodType } = req.body;
+    const tour = new Tour({
+      preview,
+      content,
+      periodType
+    });
+
+    tour.save()
+      .then((result) => {
+        res.json({ tour: result });
+      })
+
     .catch(next);
   }
 };
