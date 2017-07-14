@@ -8,6 +8,10 @@ const TourSchema = new Schema({
     required: true
   },
   content: [ContentSchema],
+  categories: [{
+    type: String,
+    ref: 'TourCategory'
+  }],
   periodType: String
 });
 

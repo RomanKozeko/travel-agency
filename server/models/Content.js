@@ -11,5 +11,4 @@ const ContentSchema = new Schema({
   language: String
 });
 
-
 module.exports = ContentSchema;
