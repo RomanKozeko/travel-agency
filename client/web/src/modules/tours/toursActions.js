@@ -1,29 +1,26 @@
-const REQUEST = 'REQUEST'
-const SUCCESS = 'SUCCESS'
-const FAILURE = 'FAILURE'
+import { CALL_API, Schemas } from '../../middleware/api'
 
-function createRequestTypes(base) {
-  return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => {
-    acc[type] = `${base}_${type}`
-    return acc
-  }, {})
+export const TOURS_REQUEST = 'TOURS_REQUEST';
+export const TOURS_SUCCESS = 'TOURS_SUCCESS';
+export const TOURS_FAILURE = 'TOURS_FAILURE';
+
+
+
+const fetchTours = () => ({
+  [CALL_API]: {
+    types: [ TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE ],
+    endpoint: 'api/tours',
+    schema: Schemas.TOURS
+  }
+});
+
+// Fetches a single repository from API unless it is cached.
+// Relies on Redux Thunk middleware.
+export const loadTours = () => (dispatch, getState) => {
+  const tours = getState().tours.allIds;
+  if (tours.length) {
+    return null
+  }
+
+  return dispatch(fetchTours())
 }
-
-function action(type, payload = {}) {
-  return {type, ...payload}
-}
-
-export const TOURS = createRequestTypes('TOURS');
-
-export const requestTours = () => ({
-  type: 'REQUEST_TOURS'
-});
-
-export const getToursSuccess = (tours) => ({
-  type: 'REQUEST_TOURS_SUCCESS',
-  tours
-});
-
-export const getToursFailure = () => ({
-  type: 'REQUEST_TOURS_FAILURE'
-});

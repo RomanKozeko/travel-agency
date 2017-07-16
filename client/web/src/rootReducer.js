@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
-import toursReducer from './modules/tours/toursReducer'
 import appReducer from './modules/app/appReducer'
+import toursReducer, * as fromTours from './modules/tours/toursReducer'
 
 const rootReducer = combineReducers({
-  toursReducer,
+  tours: toursReducer,
   app: appReducer,
   form: formReducer,
 });
 
-export default rootReducer
+export default rootReducer;
+
+
+//selectors
+export const getTours = state => fromTours.getTours(state.tours);

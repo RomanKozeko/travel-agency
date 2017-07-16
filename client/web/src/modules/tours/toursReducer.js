@@ -1,11 +1,32 @@
+import { TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE } from './toursActions';
+
 const toursItems = [];
 
-const toursReducer = (state = { items: toursItems}, action) => {
+
+const toursReducer = (state = {
+  allIds: [],
+  byIds: {},
+  isFetching: false
+}, action) => {
   switch (action.type) {
-    case 'REQUEST_TOURS_SUCCESS': {
+    case TOURS_REQUEST: {
       return {
         ...state,
-        items: action.tours
+        isFetching: true
+      }
+    }
+    case TOURS_SUCCESS: {
+      return {
+        ...state,
+        allIds: action.response.result.tours,
+        byIds: action.response.entities.tours,
+        isFetching: false
+      }
+    }
+    case TOURS_FAILURE: {
+      return {
+        ...state,
+        isFetching: false
       }
     }
     default:
@@ -14,3 +35,5 @@ const toursReducer = (state = { items: toursItems}, action) => {
 };
 
 export default toursReducer;
+
+export const getTours = state => (state.allIds.map(id => state.byIds[id]));

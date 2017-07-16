@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux';
 import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
-import { requestTours } from './toursActions'
+import { loadTours } from './toursActions'
+import { getTours } from '../../rootReducer'
 import './ToursContainer.css'
 
 const mapStateToProps = (state) => {
   return {
-    tours: state.toursReducer.items
+    tours: getTours(state),
+    isFetching: state.tours.isFetching
   }
 };
 
@@ -19,16 +21,17 @@ class ToursContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match)
-    console.log(this.props.location)
-    console.log(this.props.history)
-    this.props.requestTours();
+    this.props.loadTours();
   }
 
   render() {
     return (
       <div className="ToursContainer">
-        <ToursList tours={this.props.tours} />
+        {this.props.isFetching ?
+          <h3>Loading...</h3>
+          :
+          <ToursList tours={this.props.tours} />
+        }
         <NewTourForm onSubmit={this.submit.bind(this)} />
       </div>
     )
@@ -37,7 +40,7 @@ class ToursContainer extends React.Component {
 
 ToursContainer = connect(
   mapStateToProps,
-  { requestTours }
+  { loadTours }
 )(ToursContainer);
 
 export default ToursContainer
