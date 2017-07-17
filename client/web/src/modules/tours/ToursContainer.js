@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
+import Pagination from '../ui-elements/pagination'
 import { loadTours } from './toursActions'
 import { getTours } from '../../rootReducer'
 import './ToursContainer.css'
@@ -9,6 +10,7 @@ import './ToursContainer.css'
 const mapStateToProps = (state) => {
   return {
     tours: getTours(state),
+    pageNumber: state.tours.pageCount,
     isFetching: state.tours.isFetching
   }
 };
@@ -25,12 +27,26 @@ class ToursContainer extends React.Component {
   }
 
   render() {
+    const {
+      tours,
+      isFetching,
+      pageNumber,
+      loadTours
+    } = this.props;
+    
     return (
       <div className="ToursContainer">
-        {this.props.isFetching ?
+        {isFetching ?
           <h3>Loading...</h3>
           :
-          <ToursList tours={this.props.tours} />
+          <div>
+            <ToursList tours={tours} />
+            <Pagination 
+              pageNumber={pageNumber}
+              requestPage={loadTours}
+            />
+          </div>
+
         }
         <NewTourForm onSubmit={this.submit.bind(this)} />
       </div>

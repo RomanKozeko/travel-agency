@@ -5,22 +5,26 @@ export const TOURS_SUCCESS = 'TOURS_SUCCESS';
 export const TOURS_FAILURE = 'TOURS_FAILURE';
 
 
-
-const fetchTours = () => ({
+const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
     types: [ TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE ],
-    endpoint: 'api/tours',
-    schema: Schemas.TOURS
+    endpoint: nextPageUrl,
+    schema: Schemas.TOURS,
+    nextPage
   }
 });
 
-// Fetches a single repository from API unless it is cached.
-// Relies on Redux Thunk middleware.
-export const loadTours = () => (dispatch, getState) => {
-  const tours = getState().tours.allIds;
-  if (tours.length) {
+export const loadTours = (nextPage = 1) => (dispatch, getState) => {
+  console.log(nextPage);
+  const {
+    nextPageUrl = `api/tours?page=${nextPage}`,
+    pageCount = 0,
+    pages,
+  } = getState().tours;
+
+  if (pages[nextPage]) {
     return null
   }
 
-  return dispatch(fetchTours())
-}
+  return dispatch(fetchTours(nextPageUrl, nextPage))
+};

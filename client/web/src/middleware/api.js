@@ -1,9 +1,13 @@
 import { camelizeKeys } from 'humps';
 import { normalize, schema } from 'normalizr'
 
-const API_ROOT = '/';
+const API_ROOT = 'http://localhost:3006/';
 
-const callApi = (endpoint, schema) => {
+const getLangPref = () => {
+  return window.location.href.split('/')[3]
+};
+
+const callApi = (endpoint, schema, nextPage) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
   return fetch(fullUrl)
@@ -13,8 +17,10 @@ const callApi = (endpoint, schema) => {
           return Promise.reject(json)
         }
 
-
-        return normalize(json, schema)
+        return Object.assign({},
+          normalize(json, schema),
+          { nextPage }
+        )
       })
     )
 };
@@ -39,7 +45,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint } = callAPI;
+  let { endpoint, nextPage } = callAPI;
   const { schema, types } = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -68,7 +74,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema).then(
+  return callApi(endpoint, schema, nextPage).then(
     response => next(actionWith({
       response,
       type: successType

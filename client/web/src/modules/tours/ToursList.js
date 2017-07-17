@@ -13,10 +13,7 @@ const ToursList = ({tours}) => {
         ))
         }
       </ul>
-      <Input />
-      <Button text={'Add new tour'} />
     </div>
-
   );
 };
 

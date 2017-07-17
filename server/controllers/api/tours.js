@@ -7,10 +7,14 @@ const TourCategory = require('../../models/TourCategory');
 
 module.exports =  {
   get(req, res, next) {
-    Tour.find({}).populate('categories').then(result => {
-      res.json({ tours: result });
-    })
-    .catch(next);
+    Tour.find({})
+      .skip()
+      .limit()
+      .populate('categories')
+      .then(result => {
+        res.json({tours: result});
+      })
+      .catch(next);
   },
 
   post(req, res, next) {
