@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
-import Pagination from '../ui-elements/pagination'
+import Pagination from '../ui-elements/Pagination'
 import { loadTours } from './toursActions'
 import { getTours } from '../../rootReducer'
 import './ToursContainer.css'
