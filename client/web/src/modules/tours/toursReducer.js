@@ -1,4 +1,4 @@
-import { TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE } from './toursActions';
+import { TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE, TOURS_GET_PAGE_FROM_CACHE } from './toursActions';
 
 
 const toursReducer = (state = {
@@ -6,6 +6,7 @@ const toursReducer = (state = {
   byIds: {},
   isFetching: false,
   pageCount: 0,
+  currPage: 0,
   pages: {}
 }, action) => {
   switch (action.type) {
@@ -15,16 +16,25 @@ const toursReducer = (state = {
         isFetching: true
       }
     }
-    case TOURS_SUCCESS: {
+    case TOURS_GET_PAGE_FROM_CACHE: {
       return {
         ...state,
-        allIds: action.response.result.tours,
-        byIds: action.response.entities.tours,
+        currPage: action.payload
+      }
+    }
+    case TOURS_SUCCESS: {
+      const payload = action.response;
+      return {
+        ...state,
+        allIds: payload.result.tours,
+        byIds: payload.entities.tours,
         isFetching: false,
-        pageCount: action.response.nextPage,
+        count: payload.result.count,
+        pageCount: getPageCount(payload.result.count, payload.result.limit),
+        currPage: payload.nextPage,
         pages: {
           ...state.pages,
-          [action.response.nextPage]: action.response.result.tours
+          [payload.nextPage]: payload.result.tours
         }
       }
     }
@@ -37,6 +47,10 @@ const toursReducer = (state = {
     default:
       return state
   }
+};
+
+const getPageCount = (count, limit) => {
+  return parseInt(count/limit) + (count % limit)
 };
 
 export default toursReducer;

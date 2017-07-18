@@ -4,5 +4,6 @@ module.exports = {
     id: '_daspoi132asdipask',
     login: 'Admin',
     password: 'Admin'
-  }
+  },
+  pageLimit: 1
 };

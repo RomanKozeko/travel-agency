@@ -10,7 +10,9 @@ import './ToursContainer.css'
 const mapStateToProps = (state) => {
   return {
     tours: getTours(state),
-    pageNumber: state.tours.pageCount,
+    currPage: state.tours.currPage,
+    pageCount: state.tours.pageCount,
+    count: state.tours.count,
     isFetching: state.tours.isFetching
   }
 };
@@ -30,8 +32,10 @@ class ToursContainer extends React.Component {
     const {
       tours,
       isFetching,
-      pageNumber,
-      loadTours
+      currPage,
+      count,
+      loadTours,
+      pageCount
     } = this.props;
     
     return (
@@ -42,8 +46,10 @@ class ToursContainer extends React.Component {
           <div>
             <ToursList tours={tours} />
             <Pagination 
-              pageNumber={pageNumber}
+              pageNumber={currPage}
+              pageCount={pageCount}
               requestPage={loadTours}
+              totalPages={count}
             />
           </div>
 
