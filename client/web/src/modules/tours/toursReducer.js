@@ -1,5 +1,5 @@
 import { TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE, TOURS_GET_PAGE_FROM_CACHE } from './toursActions';
-
+import { combineReducers } from 'redux';
 
 const toursReducer = (state = {
   allIds: [],
@@ -27,7 +27,7 @@ const toursReducer = (state = {
       return {
         ...state,
         allIds: payload.result.tours,
-        byIds: payload.entities.tours,
+        byIds: {...state.byIds, ...payload.entities.tours},
         isFetching: false,
         count: payload.result.count,
         pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -49,6 +49,7 @@ const toursReducer = (state = {
   }
 };
 
+
 const getPageCount = (count, limit) => {
   return parseInt(count/limit) + (count % limit)
 };
@@ -56,3 +57,10 @@ const getPageCount = (count, limit) => {
 export default toursReducer;
 
 export const getTours = state => (state.allIds.map(id => state.byIds[id]));
+export const getPageWithTours = (state, page) => {
+  if (state.pages[page]) {
+    return state.pages[page].map(id => state.byIds[id])
+  } else {
+    return []
+  }
+};

@@ -4,12 +4,12 @@ import ToursList from './ToursList'
 import NewTourForm from './NewTourForm'
 import Pagination from '../ui-elements/Pagination'
 import { loadTours } from './toursActions'
-import { getTours } from '../../rootReducer'
+import { getPageWithTours } from '../../rootReducer'
 import './ToursContainer.css'
 
 const mapStateToProps = (state) => {
   return {
-    tours: getTours(state),
+    tours: getPageWithTours(state, state.tours.currPage),
     currPage: state.tours.currPage,
     pageCount: state.tours.pageCount,
     count: state.tours.count,

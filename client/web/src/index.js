@@ -26,7 +26,6 @@ const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
   applyMiddleware(api, thunk)
 ));
 
-
 // ReactDOM.render(
 //   render(
 //   <Provider store={store}>
@@ -37,12 +36,13 @@ const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
 //   document.getElementById('root'))
 // );
 
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App/>
-    </Router>
-  </Provider>,
+    <Provider store={store}>
+      <Router>
+        <App/>
+      </Router>
+    </Provider>,
   document.getElementById('root')
 );
 
