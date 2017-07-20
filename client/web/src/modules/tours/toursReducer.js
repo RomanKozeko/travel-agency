@@ -1,61 +1,45 @@
 import { TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE, TOURS_GET_PAGE_FROM_CACHE } from './toursActions';
-import { combineReducers } from 'redux';
+import { createReducer, getPageCount } from '../../services/utils';
 
-const toursReducer = (state = {
+
+const toursSuccess = (state, action) => {
+  const payload = action.response;
+  return {
+    ...state,
+    allIds: [...state.allIds, ...payload.result.tours],
+    byIds: {...state.byIds, ...payload.entities.tours},
+    isFetching: false,
+    count: payload.result.count,
+    pageCount: getPageCount(payload.result.count, payload.result.limit),
+    currPage: payload.nextPage,
+    pages: {
+      ...state.pages,
+      [payload.nextPage]: payload.result.tours
+    }
+  }
+};
+
+
+const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
   pageCount: 0,
   currPage: 0,
   pages: {}
-}, action) => {
-  switch (action.type) {
-    case TOURS_REQUEST: {
-      return {
-        ...state,
-        isFetching: true
-      }
-    }
-    case TOURS_GET_PAGE_FROM_CACHE: {
-      return {
-        ...state,
-        currPage: action.payload
-      }
-    }
-    case TOURS_SUCCESS: {
-      const payload = action.response;
-      return {
-        ...state,
-        allIds: [...state.allIds, ...payload.result.tours],
-        byIds: {...state.byIds, ...payload.entities.tours},
-        isFetching: false,
-        count: payload.result.count,
-        pageCount: getPageCount(payload.result.count, payload.result.limit),
-        currPage: payload.nextPage,
-        pages: {
-          ...state.pages,
-          [payload.nextPage]: payload.result.tours
-        }
-      }
-    }
-    case TOURS_FAILURE: {
-      return {
-        ...state,
-        isFetching: false
-      }
-    }
-    default:
-      return state
-  }
 };
 
-
-const getPageCount = (count, limit) => {
-  return parseInt(count/limit) + (count % limit)
-};
+const toursReducer = createReducer(defaultState, {
+  [TOURS_REQUEST] : (state) => ({...state, isFetching: true}),
+  [TOURS_GET_PAGE_FROM_CACHE] : (state, action) => ({...state, currPage: action.payload}),
+  [TOURS_SUCCESS] : toursSuccess,
+  [TOURS_FAILURE] : (state) => ({...state, isFetching: false})
+});
 
 export default toursReducer;
 
+
+//selectors
 export const getTours = state => (state.allIds.map(id => state.byIds[id]));
 export const getPageWithTours = (state, page) => {
   if (state.pages[page]) {
