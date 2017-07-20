@@ -1,10 +1,9 @@
-import { CALL_API, Schemas } from '../../middleware/api'
+import { CALL_API, Schemas } from '../../middleware/callApi'
 
 export const TOURS_REQUEST = 'TOURS_REQUEST';
 export const TOURS_SUCCESS = 'TOURS_SUCCESS';
 export const TOURS_FAILURE = 'TOURS_FAILURE';
 export const TOURS_GET_PAGE_FROM_CACHE = 'TOURS/GET_PAGE_FROM_CACHE';
-
 
 const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {

@@ -1,7 +1,7 @@
 import { camelizeKeys } from 'humps';
 import { normalize, schema } from 'normalizr'
 
-const API_ROOT = 'http://localhost:3006/';
+const API_ROOT = '/';
 
 const getLangPref = () => {
   return window.location.href.split('/')[3]

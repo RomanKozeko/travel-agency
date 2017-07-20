@@ -10,7 +10,7 @@ import {
 import { Provider } from 'react-redux';
 import { render } from 'react-snapshot';
 import thunk from 'redux-thunk'
-import api from './middleware/api'
+import callApi from './middleware/callApi'
 
 import App from './modules/app/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -23,7 +23,7 @@ import './index.css';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
-  applyMiddleware(api, thunk)
+  applyMiddleware(callApi, thunk)
 ));
 
 // ReactDOM.render(

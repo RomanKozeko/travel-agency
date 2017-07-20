@@ -13,7 +13,8 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.1",
     "redux-form": "^6.8.0",
-    "redux-saga": "^0.15.4"
+    "redux-saga": "^0.15.4",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.7",

@@ -26,7 +26,7 @@ const toursReducer = (state = {
       const payload = action.response;
       return {
         ...state,
-        allIds: payload.result.tours,
+        allIds: [...state.allIds, ...payload.result.tours],
         byIds: {...state.byIds, ...payload.entities.tours},
         isFetching: false,
         count: payload.result.count,
