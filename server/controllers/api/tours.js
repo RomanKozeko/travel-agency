@@ -4,25 +4,25 @@ const passport = require('passport');
 
 const Tour = require('../../models/Tour');
 const TourCategory = require('../../models/TourCategory');
-const config = require('../../config/index')
+const config = require('../../config/index');
 
 module.exports =  {
   get(req, res, next) {
 
-    const offset = +req.query.page;
+    const offset = +req.query.page * config.itemsPerPageLimit;
 
     const query = Tour.find({})
       .skip(offset)
-      .limit(config.pageLimit)
+      .limit(config.itemsPerPageLimit)
       .populate('categories');
 
     Promise.all([query, Tour.count()])
       .then(result => {
         res.json({
+          offset,
           tours: result[0],
           count: result[1],
-          offset,
-          limit: config.pageLimit
+          limit: config.itemsPerPageLimit
         });
       })
       .catch(next);
