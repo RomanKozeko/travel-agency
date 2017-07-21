@@ -19,7 +19,6 @@ const toursSuccess = (state, action) => {
   }
 };
 
-
 const defaultState = {
   allIds: [],
   byIds: {},

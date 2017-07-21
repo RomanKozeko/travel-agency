@@ -8,6 +8,18 @@ export const createReducer = (initialState, handlers) => {
   }
 };
 
+export const makeActionCreator = (type, ...argNames) => {
+  return function (...args) {
+    const action = { type };
+    argNames.forEach((arg, index) => {
+      action[argNames[index]] = args[index]
+    });
+    return action
+  }
+};
+
+
 export const getPageCount = (count, limit) => {
   return parseInt(count/limit) + (count % limit)
 };
+

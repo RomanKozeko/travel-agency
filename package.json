@@ -11,7 +11,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
     "test": "mocha --reporter spec",
-    "server": "node server/app.js",
+    "server": "babel-node server/app.js --presets react",
     "client": "node start-client.js",
     "admin": "node start-client-admin.js"
   },
@@ -54,6 +54,9 @@
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router": "^4.1.2",
     "redux-thunk": "^2.2.0",
     "request": "^2.78.0",
     "stripe": "^4.12.0",

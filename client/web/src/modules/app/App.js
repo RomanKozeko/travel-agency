@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import { connect } from 'react-redux';
-import './App.css';
 
 import {
   Route,
@@ -18,7 +16,6 @@ const App = () => (
     <div>
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
         <p className="App-intro">

@@ -19,6 +19,10 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const multer = require('multer');
 const router = require('./routes/router');
+const indexRouter = require('./routes/index');
+const apiRouter = require('./routes/apiRoutes');
+
+
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -70,10 +74,12 @@ app.use(flash());
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
 // }
+
+
 app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
 
-
-router(app);
+app.use('/', indexRouter);
+app.use('/api', apiRouter);
 
 /**
  * Error Handler.

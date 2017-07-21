@@ -5,7 +5,6 @@ import NewTourForm from './NewTourForm'
 import Pagination from '../ui-elements/Pagination'
 import { loadTours } from './toursActions'
 import { getPageWithTours } from '../../rootReducer'
-import './ToursContainer.css'
 
 const mapStateToProps = (state) => {
   return {
