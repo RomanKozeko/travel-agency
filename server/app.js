@@ -18,7 +18,6 @@ const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const multer = require('multer');
-const router = require('./routes/router');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/apiRoutes');
 
@@ -76,9 +75,11 @@ app.use(flash());
 // }
 
 
-app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
 
 app.use('/', indexRouter);
+
+app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
+
 app.use('/api', apiRouter);
 
 /**

@@ -10,7 +10,6 @@ import Home from './Home'
 import Contacts from './Contacts'
 import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
-import Button from '../ui-elements/button'
 
 const App = () => (
     <div>

@@ -7,8 +7,8 @@ const ToursCtrl = require('../controllers/tours');
 //const universalLoader = require('../universal')
 
 router.get('/', HomeCtrl.index);
-router.get('/tours', ToursCtrl);
-router.delete('/tours/:id', ToursCtrl.delete);
+router.get('/tours', ToursCtrl.index);
+//router.delete('/tours/:id', ToursCtrl.delete);
 
 router.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/web/build/admin/index.html'));

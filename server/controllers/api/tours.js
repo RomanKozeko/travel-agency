@@ -6,17 +6,14 @@ const Tour = require('../../models/Tour');
 const TourCategory = require('../../models/TourCategory');
 const config = require('../../config/index');
 
+const ToursQueries = require('../../models/queries/tours');
+
 module.exports =  {
   get(req, res, next) {
 
     const offset = +req.query.page * config.itemsPerPageLimit;
 
-    const query = Tour.find({})
-      .skip(offset)
-      .limit(config.itemsPerPageLimit)
-      .populate('categories');
-
-    Promise.all([query, Tour.count()])
+    ToursQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
       .then(result => {
         res.json({
           offset,

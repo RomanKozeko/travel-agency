@@ -10,12 +10,8 @@ const configureStore = (initialState = {}) => {
     callApi, thunk
   ];
 
-  const enhancers = [
-    applyMiddleware(...middlewares)
-  ];
 
-
-  return createStore(rootReducer, initialState = {}, enhancers);
+  return createStore(rootReducer, initialState, composeEnhancers(applyMiddleware(...middlewares)));
 };
 
 export default configureStore

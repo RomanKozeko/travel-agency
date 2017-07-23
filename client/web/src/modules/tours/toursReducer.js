@@ -19,7 +19,7 @@ const toursSuccess = (state, action) => {
   }
 };
 
-const defaultState = {
+export const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
