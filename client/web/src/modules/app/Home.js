@@ -1,11 +1,9 @@
 import React from 'react'
+import PhotoSlider from '../photoSlider/PhotoSlider'
 
 const Home = ({ match }) => (
   <div>
-    <h4>Home pageasdas asddsa dasdsasda das dasdasd</h4>
-    <h4>Home pageasdas</h4>
-    <h4>Home pageasdas</h4>
-    <h4>Home pageasdas</h4>
+    <PhotoSlider />
   </div>
 );
 

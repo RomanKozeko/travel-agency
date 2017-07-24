@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CSSTransitionGroup } from 'react-transition-group'
 
 import {
   Route,
@@ -10,45 +11,52 @@ import Home from './Home'
 import Contacts from './Contacts'
 import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
+import HeaderContainer from '../header/HeaderContainer'
+import TransitionGroup from 'react-transition-group/TransitionGroup';
+import AnimatedSwitch from '../animated/AnimatedSwitch';
+
+console.log(CSSTransitionGroup);
+
 
 const App = () => (
     <div>
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload..
-        </p>
-      </div>
+      <HeaderContainer />
 
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/contacts">contacts</Link></li>
-        <li><Link to="/tours">tours</Link></li>
-        <li><Link to="/tour/max">tour max</Link></li>
-      </ul>
+      <Route
+        render={({ location }) => (
+          <TransitionGroup component="main">
+            <AnimatedSwitch
+              key={location.key}
+              location={location}
+            >
+              <Route exact path="/" component={Home} />
+              <Route
+                exact
+                path="/tours"
+                render={props => (
+                  <ToursContainer {...props}  />
+                )}
+              />
+              <Route
+                path="/tour/:id"
+                render={props => (
+                  <Tour {...props} />
+                )}
+              />
+              <Route
+                path="/contacts"
+                render={props => (
+                  <Contacts {...props} />
+                )}
+              />
+            </AnimatedSwitch>
+          </TransitionGroup>
+        )}
+      />
 
-      <ul>
-        <li><Link to="/en-en/">Home</Link></li>
-        <li><Link to="contacts">contacts</Link></li>
-        <li><Link to="tours">tours</Link></li>
-        <li><Link to="tour/max">tour max</Link></li>
-      </ul>
-
-      <hr/>
-      <Route exact path="/" component={Home}/>
-      <Route path="/contacts" component={Contacts}/>
-      <Route path="/tours" component={ToursContainer}/>
-      <Route path="/tour/:id" component={Tour}/>
-
-      <Route exact path="/en-en" component={Home}/>
-      <Route path="/en-en/contacts" component={Contacts}/>
-      <Route path="/en-en/tours" component={ToursContainer}/>
-      <Route path="/en-en/tour/:id" component={Tour}/>
 
     </div>
-  )
+  );
 
 
-export default App;
+export default App

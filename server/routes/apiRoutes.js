@@ -15,11 +15,11 @@ const ApiCategoriesCtrl = require('../controllers/api/toursCategories');
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
 
-router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next()
-});
+// router.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next()
+// });
 
 router.post('/login', requireSignIn, AuthCtrl.login);
 router.get('/getMe', requireAuth,  AuthCtrl.getMe);
