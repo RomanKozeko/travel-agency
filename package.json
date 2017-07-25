@@ -51,12 +51,10 @@
     "concurrently": "^3.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "start:server": "SET NODE_ENV=development&& node server/app.js",
+    "start:all": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\"",
     "server": "babel-node server/app.js --presets react",
+    "client": "node start-client.js",
+    "admin": "node start-client-admin.js",
     "build:server": "babel server -d dist --presets react",
     "build:client": "babel client/web/src -d dist/client --presets react",
     "serve": "node dist/app.js"
