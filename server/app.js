@@ -1,14 +1,13 @@
 /**
  * Module dependencies.
  */
+require('ignore-styles');
 const express = require('express');
 const compression = require('compression');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
-const errorHandler = require('errorhandler');
-const lusca = require('lusca');
 const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
@@ -20,7 +19,6 @@ const expressStatusMonitor = require('express-status-monitor');
 const multer = require('multer');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/apiRoutes');
-
 
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });

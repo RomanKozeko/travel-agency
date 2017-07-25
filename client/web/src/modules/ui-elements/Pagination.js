@@ -1,7 +1,7 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import {StyleSheet, css} from 'aphrodite/no-important';
 
-const styles = {
+const styles = StyleSheet.create({
   pagination: {
     display: 'inline-flex',
     alignItems: 'center'
@@ -18,14 +18,14 @@ const styles = {
     opacity: 0.6
 
   }
-};
+});
 
-const Pagination = ({classes, pageNumber, requestPage, pageCount}) => {
-  const prevArrow = pageNumber === 0 ? classes.disabledLink : classes.link;
-  const nextArrow = pageNumber + 1 === pageCount ? classes.disabledLink : classes.link;
+const Pagination = ({pageNumber, requestPage, pageCount}) => {
+  const prevArrow = pageNumber === 0 ? css(styles.disabledLink) : css(styles.link);
+  const nextArrow = pageNumber + 1 === pageCount ? css(styles.disabledLink) : css(styles.link);
   return (
-    <div className={classes.wrapper}>
-      <div className={classes.pagination}>
+    <div className={css(styles.wrapper)}>
+      <div className={css(styles.pagination)}>
         <div className={prevArrow} onClick={() => requestPage(+pageNumber - 1)}>
           <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
@@ -44,4 +44,4 @@ const Pagination = ({classes, pageNumber, requestPage, pageCount}) => {
   );
 }
 
-export default injectSheet(styles)(Pagination)
+export default Pagination
