@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { CSSTransitionGroup } from 'react-transition-group'
-
+import React, {Component} from 'react';
+import {StyleSheet, css} from 'aphrodite/no-important';
 import {
   Route,
   Link
@@ -12,24 +10,35 @@ import Contacts from './Contacts'
 import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
 import HeaderContainer from '../header/HeaderContainer'
+import Footer from './Footer'
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import AnimatedSwitch from '../animated/AnimatedSwitch';
 
-console.log(CSSTransitionGroup);
-
+const styles = StyleSheet.create({
+  wrapper: {
+    minHeight: '100vh',
+    ':after': {
+      display: 'block',
+      content: '""',
+      height: '424px'
+    },
+    marginBottom: '-424px;'
+  },
+});
 
 const App = () => (
-    <div>
-      <HeaderContainer />
+  <div>
+    <div className={css(styles.wrapper)}>
+      <HeaderContainer/>
 
       <Route
-        render={({ location }) => (
+        render={({location}) => (
           <TransitionGroup component="main">
             <AnimatedSwitch
               key={location.key}
               location={location}
             >
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Home}/>
               <Route
                 exact
                 path="/tours"
@@ -53,10 +62,10 @@ const App = () => (
           </TransitionGroup>
         )}
       />
-
-
     </div>
-  );
+    <Footer/>
+  </div>
+);
 
 
 export default App

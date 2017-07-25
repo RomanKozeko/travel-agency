@@ -1,12 +1,13 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import { StyleSheet, css } from 'aphrodite/no-important';
 import {
   Route,
   Link
 } from 'react-router-dom';
 
 
-const styles = {
+
+const styles = StyleSheet.create({
   wrapper: {
     height: '76px;',
     background: 'rgba(0,0,0,0.4)',
@@ -38,32 +39,32 @@ const styles = {
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
-    '&:hover': {
+    ':hover': {
       color: '#fc1d1d',
       textDecoration: 'none'
     },
-    '&:active': {
+    ':active': {
       color: '#fc1d1d',
       textDecoration: 'none'
     },
-    '&:focus': {
+    ':focus': {
       color: '#fc1d1d',
       textDecoration: 'none'
     }
   }
-};
+});
 
 
-const MainNav = ({classes}) => (
-  <div className={classes.wrapper}>
+const MainNav = () => (
+  <div className={css(styles.wrapper)}>
     <div className="container" style={{height: '100%'}}>
-      <nav className={classes.nav}>
-        <div className={classes.logo}>Logo</div>
-        <ul className={classes.menu}>
-          <li><Link className={classes.link} to="/">Home</Link></li>
-          <li><Link className={classes.link} to="/contacts">Contacts</Link></li>
-          <li><Link className={classes.link} to="/tours">Tours</Link></li>
-          <li><Link className={classes.link} to="/tour/max">tour max</Link></li>
+      <nav className={css(styles.nav)}>
+        <div className={css(styles.logo)}>Logo</div>
+        <ul className={css(styles.menu)}>
+          <li><Link className={css(styles.link)} to="/">Home</Link></li>
+          <li><Link className={css(styles.link)} to="/contacts">Contacts</Link></li>
+          <li><Link className={css(styles.link)} to="/tours">Tours</Link></li>
+          <li><Link className={css(styles.link)} to="/tour/max">tour max</Link></li>
         </ul>
       </nav>
     </div>
@@ -71,4 +72,4 @@ const MainNav = ({classes}) => (
 );
 
 
-export default injectSheet(styles)(MainNav)
+export default MainNav

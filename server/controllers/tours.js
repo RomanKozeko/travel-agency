@@ -4,13 +4,13 @@ const ToursQueries = require('../models/queries/tours');
 const config = require('../config/index');
 
 const ReactDOMServer = require('react-dom/server');
-import { StaticRouter } from 'react-router';
-import { Provider } from 'react-redux';
+import {StaticRouter} from 'react-router';
+import {Provider} from 'react-redux';
 import React from 'react';
 import App from '../../client/web/src/modules/app/App';
-import { defaultState } from '../../client/web/src/modules/tours/toursReducer';
-import { Schemas } from '../../client/web/src/middleware/callApi';
-import { normalize } from 'normalizr'
+import {defaultState} from '../../client/web/src/modules/tours/toursReducer';
+import {Schemas} from '../../client/web/src/middleware/callApi';
+import {normalize} from 'normalizr'
 import configureStoreSSR from '../../client/web/src/store/configureStoreSSR';
 
 /**
@@ -31,7 +31,13 @@ module.exports = {
       ToursQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
         .then(result => {
           const byIds = {};
-          const normalizedTours = normalize(result[0], Schemas.TOURS);
+          const obj = {
+            count: 9,
+            limit: 2,
+            offset: 0,
+            tours: result[0]
+          };
+          const normalizedTours = normalize(obj, Schemas.TOURS);
 
           for (const key in normalizedTours.entities.tours) {
             if (normalizedTours.entities.tours.hasOwnProperty(key) && !byIds.hasOwnProperty(key)) {
@@ -52,13 +58,14 @@ module.exports = {
           const context = {};
           // Create a new Redux store instance
           const store = configureStoreSSR({preloadState});
+
           const markup = ReactDOMServer.renderToString(
             <Provider store={store}>
               <StaticRouter
                 location={req.url}
                 context={context}
               >
-                <App />
+                <App/>
               </StaticRouter>
             </Provider>
           );

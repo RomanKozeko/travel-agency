@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "animated": "^0.2.0",
+    "aphrodite": "^1.2.3",
     "humps": "^2.0.1",
     "jss-vendor-prefixer": "^6.0.0",
     "normalizr": "^3.2.3",

@@ -1,7 +1,7 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-const styles = {
+const styles = StyleSheet.create({
   wrapper: {
     height: '800px',
     width: '100%',
@@ -9,13 +9,13 @@ const styles = {
     backgroundSize: 'cover',
     marginTop: '-76px;'
   }
-};
+});
 
 
-const PhotoSlider = ({classes}) => (
-  <div className={classes.wrapper}>
+const PhotoSlider = () => (
+  <div className={css(styles.wrapper)}>
   </div>
 );
 
 
-export default injectSheet(styles)(PhotoSlider)
+export default PhotoSlider

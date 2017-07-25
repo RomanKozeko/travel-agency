@@ -1,7 +1,7 @@
 import React from 'react'
-import injectSheet from 'react-jss'
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-const styles = {
+const styles = StyleSheet.create({
   wrapper: {
     height: '57px',
     background: '#fff',
@@ -17,23 +17,22 @@ const styles = {
     color: 'rgba(34, 34, 34, 0.6);',
     marginLeft: '10px'
   }
-};
+});
 
-
-const TopNav = ({classes}) => (
-  <div className={classes.wrapper}>
+const TopNav = () => (
+  <div className={css(styles.wrapper)}>
     <div className="container">
-      <div className={classes.item}>
+      <div className={css(styles.item)}>
         <i className="material-icons">local_phone</i>
-        <span className={classes.text}>contact with us: +375 0369 09 010</span>
+        <span className={css(styles.text)}>contact with us: +375 0369 09 010</span>
       </div>
-      <div className={classes.item}>
+      <div className={css(styles.item)}>
         <i className="material-icons">mail</i>
-        <span className={classes.text}>e-mail: let’stravel@let’stravel.com</span>
+        <span className={css(styles.text)}>e-mail: let’stravel@let’stravel.com</span>
       </div>
     </div>
   </div>
 );
 
 
-export default injectSheet(styles)(TopNav)
+export default TopNav
