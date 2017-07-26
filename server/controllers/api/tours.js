@@ -32,7 +32,28 @@ module.exports =  {
       .then((result) => {
         res.json(result);
       })
-
     .catch(next);
-  }
+  },
+
+  update(req, res, next) {
+    const tourId = req.params.id;
+	  const tourProps = req.body;
+
+	  Tour.findByIdAndUpdate(tourId, tourProps)
+      .then((tour) => {
+			  res.json(tour);
+		  })
+		  .catch(next);
+
+  },
+
+	delete(req, res, next) {
+		const tourId = req.params.id;
+
+		Tour.findByIdAndRemove(tourId)
+      .then((tour) => {
+	      res.json(tour);
+      })
+			.catch(next);
+	}
 };

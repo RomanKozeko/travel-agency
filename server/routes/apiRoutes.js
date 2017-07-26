@@ -23,6 +23,8 @@ router.get('/getMe', requireAuth,  AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
 router.post('/tours', ApiToursCtrl.post);
+router.put('/tours/:id', ApiToursCtrl.update);
+router.delete('/tours/:id', ApiToursCtrl.delete);
 router.post('/tours/categories', ApiCategoriesCtrl.post);
 
 router.get('/regions', ApiRegionsCtrl.get);
