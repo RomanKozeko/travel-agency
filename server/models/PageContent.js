@@ -9,7 +9,6 @@ const PageContentSchema = new Schema({
     required: true
   },
   description: String,
-  content: String,
   language: String,
   rows: [PageContentRowSchema]
 });

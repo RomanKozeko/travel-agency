@@ -12,6 +12,7 @@ const PageContentSchemaRow = new Schema({
   type: String,
   images: [String],
   content: String,
+  pageLink: String,
   items: [PageContentItemSchema]
 });
 

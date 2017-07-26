@@ -14,6 +14,7 @@ const ApiCategoriesCtrl = require('../controllers/api/toursCategories');
 const ApiRegionsCtrl = require('../controllers/api/regions');
 const ApiPeriodsCtrl = require('../controllers/api/periods');
 const ApiLanguagesCtrl = require('../controllers/api/languages');
+const ApiPagesCtrl = require('../controllers/api/pages');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -33,5 +34,8 @@ router.post('/periods', ApiPeriodsCtrl.post);
 
 router.get('/languages', ApiLanguagesCtrl.get);
 router.post('/languages', ApiLanguagesCtrl.post);
+
+router.get('/pages', ApiPagesCtrl.get);
+router.post('/pages', ApiPagesCtrl.post);
 
 module.exports = router;
