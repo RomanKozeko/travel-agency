@@ -7,4 +7,4 @@ const PageSchema = new Schema({
   content: [PageContentSchema],
 });
 
-module.exports = mongoose.model('Tour', PageSchema);
+module.exports = mongoose.model('Page', PageSchema);
