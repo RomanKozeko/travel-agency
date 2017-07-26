@@ -5,7 +5,9 @@ module.exports = {
     const query = Tour.find({})
       .skip(offset)
       .limit(itemsPerPageLimit)
-      .populate('categories');
+      .populate('categories')
+      .populate('regions')
+      .populate('periodType')
 
     return Promise.all([query, Tour.count()])
   }

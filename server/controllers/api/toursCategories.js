@@ -18,7 +18,7 @@ module.exports =  {
 
     tourCategory.save()
       .then(result => {
-        res.json({ tourCategory: result });
+        res.json(result);
       })
       .catch(next);
   }

@@ -26,18 +26,11 @@ module.exports =  {
   },
 
   post(req, res, next) {
-    const { preview, content, periodType, categories } = req.body;
-
-    const tour = new Tour({
-      preview,
-      periodType,
-      content,
-      categories
-    });
+    const tour = new Tour(req.body);
 
     tour.save()
       .then((result) => {
-        res.json({ tour: result });
+        res.json(result);
       })
 
     .catch(next);

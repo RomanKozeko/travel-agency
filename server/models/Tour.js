@@ -12,7 +12,14 @@ const TourSchema = new Schema({
     type: String,
     ref: 'TourCategory'
   }],
-  periodType: String
+  regions: [{
+    type: String,
+    ref: 'Region'
+  }],
+  periodType: [{
+    type: String,
+    ref: 'Period'
+  }]
 });
 
 module.exports = mongoose.model('Tour', TourSchema);
