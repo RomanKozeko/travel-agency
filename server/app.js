@@ -10,7 +10,6 @@ const logger = require('morgan');
 const chalk = require('chalk');
 const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
-const flash = require('express-flash');
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -66,7 +65,6 @@ app.use(session({
     clear_interval: 3600
   })
 }));
-app.use(flash());
 
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
