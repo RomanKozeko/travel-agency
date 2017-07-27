@@ -24,7 +24,7 @@ router.get('/getMe', requireAuth,  AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
 router.post('/tours', requireAuth,  ApiToursCtrl.post);
-router.put('/tours/:id', requireAuth,  ApiToursCtrl.update);
+router.put('/tours/:id', requireAuth,  ApiToursCtrl.put);
 router.delete('/tours/:id', requireAuth,  ApiToursCtrl.delete);
 router.post('/tours/categories', requireAuth,  ApiCategoriesCtrl.post);
 

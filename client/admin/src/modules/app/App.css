@@ -17,7 +17,9 @@
 .App-intro {
   font-size: large;
 }
-
+.App-body {
+    padding-top: 80px;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

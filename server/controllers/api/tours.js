@@ -35,7 +35,7 @@ module.exports =  {
     .catch(next);
   },
 
-  update(req, res, next) {
+  put(req, res, next) {
     const tourId = req.params.id;
 	  const tourProps = req.body;
 

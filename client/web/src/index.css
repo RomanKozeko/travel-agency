@@ -14,9 +14,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-html, body {
-  height: 100%;
-}
 
 html {
   font-family: 'Roboto', sans-serif;
@@ -1714,4 +1711,11 @@ tbody.collapse.in {
 .example-leave.example-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
+}
+
+html, body {
+  height: 100%;
+}
+body {
+  font-family: 'Roboto', sans-serif;
 }
