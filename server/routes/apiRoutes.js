@@ -23,10 +23,10 @@ router.post('/login', requireSignIn, AuthCtrl.login);
 router.get('/getMe', requireAuth,  AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
-router.post('/tours', ApiToursCtrl.post);
-router.put('/tours/:id', ApiToursCtrl.update);
-router.delete('/tours/:id', ApiToursCtrl.delete);
-router.post('/tours/categories', ApiCategoriesCtrl.post);
+router.post('/tours', requireAuth,  ApiToursCtrl.post);
+router.put('/tours/:id', requireAuth,  ApiToursCtrl.update);
+router.delete('/tours/:id', requireAuth,  ApiToursCtrl.delete);
+router.post('/tours/categories', requireAuth,  ApiCategoriesCtrl.post);
 
 router.get('/regions', ApiRegionsCtrl.get);
 router.post('/regions', ApiRegionsCtrl.post);
