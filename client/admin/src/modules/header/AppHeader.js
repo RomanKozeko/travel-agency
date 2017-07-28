@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0 20px;'
+    padding: '0 20px;',
+    zIndex: '10'
   },
   logo: {
     width: '265px',

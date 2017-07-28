@@ -1,29 +1,57 @@
 import React from 'react';
-import './App.css';
 import {
+	BrowserRouter as Router,
 	Route
-} from 'react-router-dom'
-import Header from '../header/AppHeader'
+} from 'react-router-dom';
+import {StyleSheet, css} from 'aphrodite/no-important';
+import './App.css';
+import Header from '../header/AppHeader';
+import SideBar from '../sideBar/SideBar';
 
-const Pages = () => <h3>Pages</h3>
-const Tours = () => <h3>Tours</h3>
+const styles = StyleSheet.create({
+	wrapper: {
+		minHeight: '100vh',
+		marginTop: '85px'
+	},
+});
 
-const App =({ match }) => {
+const routes = [
+	{ path: '/tours',
+		exact: true,
+		main: () => <h2>Tours</h2>
+	},
+	{ path: '/pages',
+		main: () => <h2>Pages</h2>
+	}
+];
+
+const App =() => {
     return (
       <div className="App">
         <Header />
-        <div className="App-body">
-          <h1>Admin</h1>
-          ololo
-
-          <Route path='/pages' component={Pages}/>
-          <Route path='/tours' component={Tours}/>
-          <Route exact path={match.url} render={() => (
-            <h3>Please select a smth.</h3>
-          )}/>
-        </div>
+        <Router>
+          <div className={css(styles.wrapper)}>
+            <div className="container">
+              <div className="row">
+                <div className="">
+                  <SideBar />
+                </div>
+                <div className="">
+                  {routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      exact={route.exact}
+                      component={route.main}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Router>
       </div>
     );
-}
+};
 
 export default App;
