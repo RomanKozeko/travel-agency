@@ -9,10 +9,25 @@ import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
 
 const styles = StyleSheet.create({
-	wrapper: {
+	pageContainer: {
 		minHeight: '100vh',
-		marginTop: '85px'
+		marginTop: '75px',
+		padding: '20px 20px 0'
 	},
+	sideBarWrapper: {
+		width: '235px',
+		float: 'left',
+		backgroundColor: '#fff',
+		boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)'
+},
+	contentWrapper: {
+		float: 'left',
+		width: '100%'
+	},
+	content: {
+		marginLeft: '235px',
+		padding: '10px 0 0 20px'
+	}
 });
 
 const routes = [
@@ -20,8 +35,22 @@ const routes = [
 		exact: true,
 		main: () => <h2>Tours</h2>
 	},
+	{ path: '/regions',
+		main: () => <h2>Regions</h2>
+	},
+	{ path: '/hotels',
+		exact: true,
+		main: () => <h2>Hotels</h2>
+	},
 	{ path: '/pages',
 		main: () => <h2>Pages</h2>
+	},
+	{ path: '/lang',
+		exact: true,
+		main: () => <h2>Languages</h2>
+	},
+	{ path: '/settings',
+		main: () => <h2>Settings</h2>
 	}
 ];
 
@@ -30,24 +59,20 @@ const App =() => {
       <div className="App">
         <Header />
         <Router>
-          <div className={css(styles.wrapper)}>
-            <div className="container">
-              <div className="row">
-                <div className="">
-                  <SideBar />
-                </div>
-                <div className="">
-                  {routes.map((route, index) => (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      exact={route.exact}
-                      component={route.main}
-                    />
-                  ))}
-                </div>
-              </div>
+          <div className={css(styles.pageContainer, styles.clearfix)}>
+            <div className={css(styles.sideBarWrapper)}>
+              <SideBar />
             </div>
+              <div className={css(styles.content)}>
+                {routes.map((route, index) => (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.main}
+                  />
+                ))}
+              </div>
           </div>
         </Router>
       </div>
