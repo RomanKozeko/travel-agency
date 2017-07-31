@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     zIndex: '10'
   },
   logo: {
-    width: '265px',
+    width: '235px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',

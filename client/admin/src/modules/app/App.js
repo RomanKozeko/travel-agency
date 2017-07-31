@@ -7,6 +7,7 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import './App.css';
 import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
+import PagesContainer from '../pages/PagesContainer';
 
 const styles = StyleSheet.create({
 	pageContainer: {
@@ -43,7 +44,7 @@ const routes = [
 		main: () => <h2>Hotels</h2>
 	},
 	{ path: '/pages',
-		main: () => <h2>Pages</h2>
+		main: () => <PagesContainer />
 	},
 	{ path: '/lang',
 		exact: true,
