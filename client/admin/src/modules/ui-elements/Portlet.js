@@ -23,7 +23,6 @@ const Portlet = ({children, isBordered}) => (
     [css(styles.wrapper)]: !isBordered,
     [css(styles.wrapper, styles.bordered)]: isBordered
     })}>
-    {isBordered}
     {children}
   </div>
 );
