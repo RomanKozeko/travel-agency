@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import PageHeader from '../ui-elements/PageHeader';
-
+import Portlet from '../ui-elements/Portlet'
 import SortableTable from '../ui-elements/sortableTable/SortableTable'
 
 let id = 0;
@@ -21,7 +21,9 @@ const data = [
 const PagesContainer = () => (
   <div>
     <PageHeader text={'Все страницы'} />
-    <SortableTable data={data} />
+    <Portlet isBordered={false}>
+      <SortableTable data={data} />
+    </Portlet>
   </div>
 );
 

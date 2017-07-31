@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
 
 const SortableTable = ({data}) => {
 
   return (
-    <Paper>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell>Заголовок</TableCell>
             <TableCell numeric>Calories</TableCell>
             <TableCell numeric>Fat (g)</TableCell>
             <TableCell numeric>Carbs (g)</TableCell>
@@ -23,7 +21,7 @@ const SortableTable = ({data}) => {
             return (
               <TableRow key={n.id}>
                 <TableCell>
-                  {n.name}
+                  <a href="">{n.name}</a>
                 </TableCell>
                 <TableCell numeric>
                   {n.calories}
@@ -42,7 +40,6 @@ const SortableTable = ({data}) => {
           })}
         </TableBody>
       </Table>
-    </Paper>
   );
 };
 

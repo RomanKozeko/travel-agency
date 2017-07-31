@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
-
 const styles = StyleSheet.create({
   header: {
     color: '#697882',
