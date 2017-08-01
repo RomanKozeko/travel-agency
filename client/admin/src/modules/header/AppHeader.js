@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux'
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Menu, {MenuItem} from 'material-ui/Menu';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-
-import ActionsMenu from './ActionsMenu'
+import ActionsMenu from './ActionsMenu';
+import { logoutUser } from '../auth/authActions'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -64,7 +65,7 @@ const options = [
   'Umbriel',
 ];
 
-const AppHeader = () => (
+let AppHeader = ({ dispatch }) => (
   <div className={css(styles.wrapper)}>
     <div className={css(styles.logo)}>
       <a href="" className={css(styles.logoLink)}>
@@ -76,11 +77,11 @@ const AppHeader = () => (
     </div>
     <div className={css(styles.headerLeft)}>
       <ActionsMenu />
-      <IconButton className={css(styles.toggleButton)}>
+      <IconButton className={css(styles.toggleButton)} onClick={() => { dispatch(logoutUser()) }}>
         <Icon>power_settings_new</Icon>
       </IconButton>
     </div>
   </div>
 );
 
-export default AppHeader;
+export default connect()(AppHeader)

@@ -6,6 +6,12 @@ const authReducer = (state = { isAuth: false}, action) => {
         isAuth: true
       }
     }
+	  case 'LOGOUT_SUCCESS': {
+		  return {
+			  ...state,
+			  isAuth: false
+		  }
+	  }
     default:
       return state
   }

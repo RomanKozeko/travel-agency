@@ -1,4 +1,4 @@
-import { loginUserRequest } from '../../services/apiHelper'
+import { loginUserRequest } from '../../services/apiHelper';
 
 export const requestLogin = () => ({
   type: 'REQUEST_LOGIN'
@@ -11,6 +11,10 @@ export const loginSuccess = (tours) => ({
 
 export const loginFailure = () => ({
   type: 'REQUEST_LOGIN_FAILURE'
+});
+
+export const logoutSuccess = () => ({
+	type: 'LOGOUT_SUCCESS'
 });
 
 export const loginUser = (creds) => (dispatch) => {
@@ -29,3 +33,7 @@ export const loginUser = (creds) => (dispatch) => {
 		})
 };
 
+export const logoutUser = () => (dispatch) => {
+	localStorage.removeItem('token');
+	dispatch(logoutSuccess());
+};

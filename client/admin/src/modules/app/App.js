@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
   sideBarWrapper: {
     width: '235px',
     float: 'left',
-    backgroundColor: '#fff',
-    boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)'
   },
   contentWrapper: {
     float: 'left',
