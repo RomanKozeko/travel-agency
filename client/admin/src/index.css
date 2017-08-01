@@ -22,7 +22,7 @@ html {
   font-family: 'Roboto', sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  overflow-y: scroll;
+
 }
 body {
   margin: 0;
@@ -1716,4 +1716,5 @@ tbody.collapse.in {
 body {
   font-family: 'Roboto', sans-serif;
     background: #f3f5f9;
+  overflow-y: scroll;
 }
