@@ -20,7 +20,7 @@ class AddPageItemMenu extends Component {
     return (
       <div>
         <Button aria-owns="simple-menu" onClick={this.handleClick}>
-          Добавить
+          Добавить контент
         </Button>
         <Menu
           id="simple-menu"

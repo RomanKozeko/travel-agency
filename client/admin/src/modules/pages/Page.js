@@ -9,6 +9,8 @@ import PageForm from './PageForm'
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Button from 'material-ui/Button';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import Icon from 'material-ui/Icon';
+import IconButton from 'material-ui/IconButton';
 
 const styles = StyleSheet.create({
   field: {
@@ -16,8 +18,10 @@ const styles = StyleSheet.create({
   },
   row: {
     height: '200px',
+    position: 'relative',
     width: '100%',
     border: '4px solid #aeaeae',
+    borderTop: '23px solid #aeaeae',
     margin: '20px 0',
     display: 'flex',
     padding: '0 5px;'
@@ -33,6 +37,16 @@ const styles = StyleSheet.create({
     ':hover': {
       border: '4px dashed #aeaeae',
     }
+  },
+  dragButton: {
+    position: 'absolute',
+    top: '-35px',
+    left: '-16px'
+  },
+  closeButton: {
+    position: 'absolute',
+    top: '-35px',
+    right: '-16px'
   }
 });
 
@@ -99,6 +113,12 @@ class Page extends React.Component {
           <div>
             {this.state.rows.map((row, i) => (
               <div key={i} className={css(styles.row)}>
+                <IconButton className={css(styles.dragButton)}>
+                  <Icon>drag_handle</Icon>
+                </IconButton>
+                <IconButton className={css(styles.closeButton)}>
+                  <Icon>close</Icon>
+                </IconButton>
                 {renderRows(row.columns)}
               </div>
             ))}

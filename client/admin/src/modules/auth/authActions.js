@@ -14,26 +14,26 @@ export const loginFailure = () => ({
 });
 
 export const logoutSuccess = () => ({
-	type: 'LOGOUT_SUCCESS'
+  type: 'LOGOUT_SUCCESS'
 });
 
 export const loginUser = (creds) => (dispatch) => {
-	loginUserRequest(creds)
-		.then(dispatch(requestLogin()))
-		.then((res) => {
-			if(res.error) {
-				dispatch(loginFailure());
-			} else if (res.token) {
-				localStorage.setItem('token', res.token);
-				dispatch(loginSuccess());
-			}
-		})
-		.catch((err) => {
-			dispatch(loginFailure());
-		})
+  loginUserRequest(creds)
+    .then(dispatch(requestLogin()))
+    .then((res) => {
+      if (res.error) {
+        dispatch(loginFailure());
+      } else if (res.token) {
+        localStorage.setItem('token', res.token);
+        dispatch(loginSuccess());
+      }
+    })
+    .catch(() => {
+      dispatch(loginFailure());
+    });
 };
 
 export const logoutUser = () => (dispatch) => {
-	localStorage.removeItem('token');
-	dispatch(logoutSuccess());
+  localStorage.removeItem('token');
+  dispatch(logoutSuccess());
 };
