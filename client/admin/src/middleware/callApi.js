@@ -7,10 +7,10 @@ const getLangPref = () => {
   return window.location.href.split('/')[3]
 };
 
-const callApi = (endpoint, schema, nextPage) => {
+const callApi = (endpoint, options, schema, nextPage) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
-  return fetch(fullUrl)
+  return fetch(fullUrl, options)
     .then(response =>
       response.json().then(json => {
         if (!response.ok) {
@@ -46,7 +46,7 @@ export default store => next => action => {
   }
 
   let { endpoint, nextPage } = callAPI;
-  const { schema, types } = callAPI;
+  const { schema, types, method, body } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -74,7 +74,18 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema, nextPage).then(
+	const requestOptions = !method || method === 'GET' ?
+    {
+		  method: 'GET'
+	  }
+	  :
+    {
+	    method: method,
+	    headers: {'Content-Type': 'application/json', 'authorization': window.localStorage.token},
+      body:JSON.stringify(body)
+    };
+
+  return callApi(endpoint, requestOptions, schema, nextPage).then(
     response => next(actionWith({
       response,
       type: successType
