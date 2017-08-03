@@ -1,36 +1,87 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {StyleSheet, css} from 'aphrodite/no-important';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
-
+import {CircularProgress} from 'material-ui/Progress';
+import {loadPages} from './PagesActions';
+import {getPageWithItems} from '../../rootReducer';
 import PageHeader from '../ui-elements/PageHeader';
-import Portlet from '../ui-elements/Portlet'
-import SortableTable from '../ui-elements/sortableTable/SortableTable'
+import Portlet from '../ui-elements/Portlet';
+import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
+const styles = StyleSheet.create({
+  progress: {
+    marginTop: '100px',
+    textAlign: 'center'
+  }
+});
+
+const mapStateToProps = (state) => {
+  return {
+    pages: getPageWithItems(state, state.pages.currPage),
+    currPage: state.pages.currPage,
+    pageCount: state.pages.pageCount,
+    count: state.pages.count,
+    isFetching: state.pages.isFetching
+  };
+};
+
+class PagesContainer extends React.Component {
+
+  componentDidMount() {
+    this.props.loadPages();
+  }
+
+  render() {
+    const { pages, isFetching } = this.props;
+
+    const data = {
+      headers: ['Заголовок', 'Описание', 'Язык'],
+      pages,
+      fields: [
+        'title',
+        'description',
+        'language'
+      ]
+    };
+
+    return (
+      <div>
+        <PageHeader text={'Все страницы'}/>
+        {isFetching
+          ?
+          <div className={css(styles.progress)}>
+            <CircularProgress size={50} />
+          </div>
+          :
+          <Portlet isBordered={false}>
+            <SortableTable data={data} />
+          </Portlet>
+        }
+
+      </div>
+    );
+  }
 }
 
-const data = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+PagesContainer.propTypes = {
+  loadPages: PropTypes.func,
+  pages: PropTypes.array,
+  currPage: PropTypes.number,
+  pageCount: PropTypes.number,
+  count: PropTypes.number,
+  isFetching: PropTypes.bool,
+};
 
-const PagesContainer = () => (
-  <div>
-    <PageHeader text={'Все страницы'} />
-    <Portlet isBordered={false}>
-      <SortableTable data={data} />
-    </Portlet>
-  </div>
-);
+PagesContainer = connect(
+  mapStateToProps,
+  { loadPages }
+)(PagesContainer);
 
-export default PagesContainer
+export default PagesContainer;

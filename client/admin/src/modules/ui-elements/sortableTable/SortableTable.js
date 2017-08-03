@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
+
 import {StyleSheet, css} from 'aphrodite/no-important';
 import {
   BrowserRouter as Router,
@@ -16,42 +17,47 @@ const styles = StyleSheet.create({
   }
 });
 
-const SortableTable = ({data}) => {
+const renderFileds = (item, fields) => {
+  return fields.map(field => (
+    <TableCell>
+      {item.content[0][field]}
+    </TableCell>
+  ))
+};
+
+const SortableTable = ({ data }) => {
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Заголовок</TableCell>
-          <TableCell numeric>Категория</TableCell>
+          {data.headers.map(item => (
+            <TableCell>{item}</TableCell>
+          ))
+          }
           <TableCell numeric className={css(styles.actions)}>Действия</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map(n => {
-          return (
-            <TableRow key={n.id}>
-              <TableCell>
-                <Link to="/pages/id">{n.name}</Link>
-              </TableCell>
-              <TableCell numeric>
-                {n.calories}
-              </TableCell>
-              <TableCell>
-                <IconButton>
-                  <Icon>create</Icon>
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {data.pages.map(item => (
+          <TableRow key={item._id}>
+            {renderFileds(item, data.fields)}
+            <TableCell>
+              <IconButton>
+                <Icon>create</Icon>
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        ))
+        }
       </TableBody>
     </Table>
   );
 };
 
 SortableTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
+  children: PropTypes.object,
 };
 
 export default SortableTable;

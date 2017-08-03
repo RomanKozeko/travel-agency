@@ -1,11 +1,21 @@
-
+const config = require('../../config/index');
+const PagesQueries = require('../../models/queries/pages');
 const Page = require('../../models/Page');
 
-module.exports =  {
+module.exports = {
+
   get(req, res, next) {
-    Page.find().then(result => {
-      res.json(result);
-    })
+    const offset = +req.query.page * config.itemsPerPageLimit;
+
+    PagesQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
+      .then((result) => {
+        res.json({
+          offset,
+          items: result[0],
+          count: result[1],
+          limit: config.itemsPerPageLimit
+        });
+      })
       .catch(next);
   },
 
@@ -13,7 +23,7 @@ module.exports =  {
     const page = new Page(req.body);
 
     page.save()
-      .then(result => {
+      .then((result) => {
         res.json(result);
       })
       .catch(next);

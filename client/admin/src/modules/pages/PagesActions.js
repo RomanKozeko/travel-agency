@@ -3,7 +3,7 @@ import { CALL_API, Schemas } from '../../middleware/callApi';
 export const PAGES_REQUEST = 'PAGES_REQUEST';
 export const PAGES_SUCCESS = 'PAGES_SUCCESS';
 export const PAGES_FAILURE = 'PAGES_FAILURE';
-export const PAGES_GET_PAGE_FROM_CACHE = 'TOURS/GET_PAGE_FROM_CACHE';
+export const PAGES_GET_PAGE_FROM_CACHE = 'PAGES/GET_PAGE_FROM_CACHE';
 export const PAGE_REQUEST = 'PAGE_REQUEST';
 export const PAGE_SUCCESS = 'PAGE_SUCCESS';
 export const PAGE_FAILURE = 'PAGE_FAILURE';
@@ -42,7 +42,7 @@ const fetchPage = id => ({
   [CALL_API]: {
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
     endpoint: `/api/pages/${id}`,
-    schema: Schemas.TOUR,
+    schema: Schemas.PAGE,
   }
 });
 
