@@ -45,15 +45,25 @@ class PagesContainer extends React.Component {
       headers: ['Заголовок', 'Описание', 'Язык'],
       pages,
       fields: [
-        'title',
-        'description',
-        'language'
+        {
+          name: 'title',
+          isLink: true,
+          linkPrefix: 'pages/'
+        },
+        {
+          name: 'description',
+          isLink: false
+        },
+        {
+          name: 'language',
+          isLink: false
+        }
       ]
     };
 
     return (
       <div>
-        <PageHeader text={'Все страницы'}/>
+        <PageHeader text={'Все страницы'} />
         {isFetching
           ?
           <div className={css(styles.progress)}>

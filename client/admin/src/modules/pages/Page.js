@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
 
 const renderRows = (count) => {
   const rows = [];
-  for (let i = 0; i < count; i + 1) {
+  for (let i = 0; i < count; i++) {
     rows.push(
-    <div key={i} className={css(styles.rowInner)}>
-      <AddPageItemMenu />
-    </div>)
+      <div key={i} className={css(styles.rowInner)}>
+        <AddPageItemMenu />
+      </div>)
   }
 
   return rows;
@@ -96,20 +96,20 @@ class Page extends React.Component {
           <PageCaption text={'Добавить ряд'} />
           <div className="row">
             <div className="col-sm-3">
-              <GridIcons count={1} clickHandler={() => this.addRow} />
+              <GridIcons count={1} clickHandler={this.addRow.bind(this)} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={2} clickHandler={() => this.addRow} />
+              <GridIcons count={2} clickHandler={this.addRow.bind(this)} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={3} clickHandler={() => this.addRow} />
+              <GridIcons count={3} clickHandler={this.addRow.bind(this)} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={4} clickHandler={() => this.addRow} />
+              <GridIcons count={4} clickHandler={this.addRow.bind(this)} />
             </div>
           </div>
 
-          <PageCaption text={'Схема страницы'}/>
+          <PageCaption text={'Схема страницы'} />
 
           <div>
             {this.state.rows.map((row, i) => (
@@ -120,12 +120,12 @@ class Page extends React.Component {
                 <IconButton className={css(styles.closeButton)}>
                   <Icon>close</Icon>
                 </IconButton>
-                {renderRows(row.columns)}
+                { renderRows(row.columns) }
               </div>
             ))}
           </div>
 
-          <Button raised color="primary" className={css(styles.button)} onClick={() => this.addRow(1)}>
+          <Button raised color="primary" className={css(styles.button)}>
             Сохранить
           </Button>
         </Portlet>

@@ -18,9 +18,14 @@ const styles = StyleSheet.create({
 });
 
 const renderFileds = (item, fields) => {
-  return fields.map(field => (
-    <TableCell>
-      {item.content[0][field]}
+  return fields.map((field, i) => (
+    <TableCell key={item._id + i}>
+      {field.isLink
+        ?
+        <Link to={field.linkPrefix + item._id}>{item.content[0][field.name]}</Link>
+        :
+        <span>{item.content[0][field.name]}</span>
+      }
     </TableCell>
   ))
 };
@@ -31,8 +36,8 @@ const SortableTable = ({ data }) => {
     <Table>
       <TableHead>
         <TableRow>
-          {data.headers.map(item => (
-            <TableCell>{item}</TableCell>
+          {data.headers.map((item, i) => (
+            <TableCell key={i + 1}>{item}</TableCell>
           ))
           }
           <TableCell numeric className={css(styles.actions)}>Действия</TableCell>
@@ -56,8 +61,7 @@ const SortableTable = ({ data }) => {
 };
 
 SortableTable.propTypes = {
-  data: PropTypes.object,
-  children: PropTypes.object,
+  data: PropTypes.object
 };
 
 export default SortableTable;
