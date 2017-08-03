@@ -1,5 +1,5 @@
 import { camelizeKeys } from 'humps';
-import { normalize, schema } from 'normalizr'
+import { normalize, schema } from 'normalizr';
 
 const API_ROOT = '/';
 
@@ -12,66 +12,70 @@ const callApi = (endpoint, options, schema, nextPage) => {
 
   return fetch(fullUrl, options)
     .then(response =>
-      response.json().then(json => {
+      response.json().then((json) => {
         if (!response.ok) {
-          return Promise.reject(json)
+          return Promise.reject(json);
         }
 
         return Object.assign({},
           normalize(json, schema),
           { nextPage }
-        )
+        );
       })
-    )
+    );
 };
 
 export const tourSchema = new schema.Entity('tours', {}, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
+export const pageSchema = new schema.Entity('pages', {}, { idAttribute: '_id' });
+export const pagesSchema = { tours: [tourSchema] };
+
 export const Schemas = {
   TOUR: tourSchema,
-  TOURS: toursSchema
+  TOURS: toursSchema,
+  PAGE: pageSchema,
+  PAGES: pagesSchema
 };
-
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = 'Call API';
 
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
-export default store => next => action => {
+export default store => next => (action) => {
   const callAPI = action[CALL_API];
   if (typeof callAPI === 'undefined') {
-    return next(action)
+    return next(action);
   }
 
   let { endpoint, nextPage } = callAPI;
   const { schema, types, method, body } = callAPI;
 
   if (typeof endpoint === 'function') {
-    endpoint = endpoint(store.getState())
+    endpoint = endpoint(store.getState());
   }
 
   if (typeof endpoint !== 'string') {
-    throw new Error('Specify a string endpoint URL.')
+    throw new Error('Specify a string endpoint URL.');
   }
   if (!schema) {
-    throw new Error('Specify one of the exported Schemas.')
+    throw new Error('Specify one of the exported Schemas.');
   }
   if (!Array.isArray(types) || types.length !== 3) {
-    throw new Error('Expected an array of three action types.')
+    throw new Error('Expected an array of three action types.');
   }
   if (!types.every(type => typeof type === 'string')) {
-    throw new Error('Expected action types to be strings.')
+    throw new Error('Expected action types to be strings.');
   }
 
-  const actionWith = data => {
+  const actionWith = (data) => {
     const finalAction = Object.assign({}, action, data);
     delete finalAction[CALL_API];
-    return finalAction
+    return finalAction;
   };
 
-  const [ requestType, successType, failureType ] = types;
+  const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
 	const requestOptions = !method || method === 'GET' ?
@@ -94,6 +98,6 @@ export default store => next => action => {
       type: failureType,
       error: error.message || 'Something bad happened'
     }))
-  )
-}
+  );
+};
 

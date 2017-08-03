@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
 const renderRows = (count) => {
   const rows = [];
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < count; i + 1) {
     rows.push(
     <div key={i} className={css(styles.rowInner)}>
       <AddPageItemMenu />
@@ -74,37 +74,38 @@ class Page extends React.Component {
 
   addRow(columns) {
     const rows = [...this.state.rows];
-    rows.push({columns});
-    this.setState({rows})
+    rows.push({ columns });
+    this.setState({ rows });
   }
 
-  submit = (values) => {
+  submit(values) {
     // print the form values to the console
     console.log(values)
   }
 
   render() {
+    const isBordered = true;
     return (
       <div>
-        <PageHeader text={'Cтраница:'}/>
+        <PageHeader text={'Cтраница:'} />
 
-        <Portlet isBordered={true}>
+        <Portlet isBordered={isBordered}>
 
-          <PageForm onSubmit={this.submit}/>
+          <PageForm onSubmit={this.submit} />
 
-          <PageCaption text={'Добавить ряд'}/>
+          <PageCaption text={'Добавить ряд'} />
           <div className="row">
             <div className="col-sm-3">
-              <GridIcons count={1} clickHandler={this.addRow.bind(this)} />
+              <GridIcons count={1} clickHandler={() => this.addRow} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={2} clickHandler={this.addRow.bind(this)}/>
+              <GridIcons count={2} clickHandler={() => this.addRow} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={3} clickHandler={this.addRow.bind(this)}/>
+              <GridIcons count={3} clickHandler={() => this.addRow} />
             </div>
             <div className="col-sm-3">
-              <GridIcons count={4} clickHandler={this.addRow.bind(this)}/>
+              <GridIcons count={4} clickHandler={() => this.addRow} />
             </div>
           </div>
 
