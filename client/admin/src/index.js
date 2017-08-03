@@ -6,18 +6,13 @@ import {
 	Switch
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import configureStore from './store/configureStore'
 import registerServiceWorker from './registerServiceWorker';
+import PrivateRoute from './modules/auth/PrivateRoute';
+import { getMeRequest } from './services/apiHelper';
 import App from './modules/app/App';
 import { Auth  } from './modules/auth/Auth';
-import PrivateRoute from './modules/auth/PrivateRoute';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import rootReducer from './rootReducer';
-import { getMeRequest } from './services/apiHelper';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
+import './index.css';
 
 getMeRequest().then(res => {
 	const preloadedState = {
@@ -26,10 +21,7 @@ getMeRequest().then(res => {
 		}
 	};
 
-	const store = createStore(rootReducer, preloadedState, composeEnhancers(
-		applyMiddleware(thunkMiddleware)
-	));
-
+	const store = configureStore(preloadedState);
 	ReactDOM.render(
 		<Provider store={store}>
 			<Router>

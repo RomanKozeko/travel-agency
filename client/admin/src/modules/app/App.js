@@ -7,6 +7,8 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import './App.css';
 import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
+import ToursContainer from '../tours/ToursContainer';
+import Tour from '../tours/Tour';
 import PagesContainer from '../pages/PagesContainer';
 import Page from '../pages/Page';
 
@@ -34,8 +36,13 @@ const routes = [
   {
     path: '/tours',
     exact: true,
-    main: () => <h2>Tours</h2>
+    main: ToursContainer
   },
+	{
+		path: '/tours/:id',
+		exact: true,
+		main: Tour
+	},
   {
     path: '/regions',
     main: () => <h2>Regions</h2>

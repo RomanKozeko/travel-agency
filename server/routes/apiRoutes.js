@@ -23,6 +23,7 @@ router.post('/login', requireSignIn, AuthCtrl.login);
 router.get('/getMe', requireAuth,  AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
+router.get('/tours/:id', ApiToursCtrl.getOne);
 router.post('/tours', requireAuth,  ApiToursCtrl.post);
 router.put('/tours/:id', requireAuth,  ApiToursCtrl.put);
 router.delete('/tours/:id', requireAuth,  ApiToursCtrl.delete);

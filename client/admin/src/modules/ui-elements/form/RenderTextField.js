@@ -18,6 +18,7 @@ const RenderTextField = (field) => {
         className={css(styles.input)}
         fullWidth {...field.input}
         label={field.label}
+        value={field.val}
       />
       {field.meta.touched && field.meta.error &&
       <span className="error">{field.meta.error}</span>}

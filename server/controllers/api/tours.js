@@ -25,6 +25,14 @@ module.exports =  {
       .catch(next);
   },
 
+	getOne(req, res, next) {
+		const tourId = req.params.id;
+
+		Tour.findById(tourId)
+			.then( tour => res.json(tour))
+			.catch(next);
+	},
+
   post(req, res, next) {
     const tour = new Tour(req.body);
 
