@@ -9,14 +9,11 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import { CircularProgress } from 'material-ui/Progress';
 import AddPageItemMenu from './AddPageItemMenu';
-import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
-import Spinner from '../ui-elements/Spinner';
 import PageForm from './PageForm';
 import MyEditor from './MyEditor'
-import BackLink from '../ui-elements/BackLink';
 import ImagePreview from '../ui-elements/ImagePreview';
 import { getPage } from '../../rootReducer';
 import { loadPage } from './PagesActions';
@@ -82,6 +79,15 @@ const renderRows = (size) => {
   return rows;
 };
 
+class Row {
+  constructor(title, size, type, content, pageLink) {
+    this.title = title;
+    this.size = size;
+    this.type = type;
+    this.content = content;
+    this.content = pageLink;
+  }
+}
 
 class Page extends React.Component {
   constructor(props) {
@@ -92,9 +98,9 @@ class Page extends React.Component {
   }
 
   addRow(columns) {
-    const rows = [...this.state.rows];
-    rows.push({columns});
-    this.setState({rows});
+    const page = { ...this.state.page };
+    page.content[0].rows.push(new Row('Обычный контент', `col-sm-${12 / columns}`));
+    this.setState({ page });
   }
 
   render() {
