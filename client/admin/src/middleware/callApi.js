@@ -25,11 +25,16 @@ const callApi = (endpoint, options, schema, nextPage) => {
     );
 };
 
-export const tourSchema = new schema.Entity('tours', {}, { idAttribute: '_id' });
+
+export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
+export const categoriesSchema = { items: [categorySchema] };
+
+export const tourSchema = new schema.Entity('tours', { categories: [ categorySchema ] }, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
 export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
+
 
 export const Schemas = {
   TOUR: tourSchema,
