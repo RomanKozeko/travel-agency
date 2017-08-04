@@ -11,6 +11,7 @@ import Button from 'material-ui/Button';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
+import { Link } from 'react-router-dom';
 
 const styles = StyleSheet.create({
   field: {
@@ -90,6 +91,7 @@ class Page extends React.Component {
         <PageHeader text={'Cтраница:'} />
 
         <Portlet isBordered={isBordered}>
+          <Link to="/pages">Назад к списку страниц</Link>
 
           <PageForm onSubmit={this.submit} />
 
