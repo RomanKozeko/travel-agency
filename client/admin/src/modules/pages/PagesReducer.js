@@ -40,7 +40,7 @@ export const defaultState = {
   pages: {}
 };
 
-const toursReducer = createReducer(defaultState, {
+const pagesReducer = createReducer(defaultState, {
   [PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
   [PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
   [PAGES_SUCCESS]: pagesSuccess,
@@ -50,7 +50,7 @@ const toursReducer = createReducer(defaultState, {
   [PAGES_FAILURE]: state => ({ ...state, isFetching: false })
 });
 
-export default toursReducer;
+export default pagesReducer;
 
 //  selectors
 export const getPages = state => (state.allIds.map(id => state.byIds[id]));

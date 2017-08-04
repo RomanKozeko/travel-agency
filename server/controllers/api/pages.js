@@ -19,6 +19,14 @@ module.exports = {
       .catch(next);
   },
 
+  getOne(req, res, next) {
+    const pageId = req.params.id;
+
+    Page.findById(pageId)
+      .then(page => res.json(page))
+      .catch(next);
+  },
+
   post(req, res, next) {
     const page = new Page(req.body);
 

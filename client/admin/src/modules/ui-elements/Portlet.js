@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     padding: '0'
   },
   bordered: {
-    padding: '12px 20px 15px'
+    padding: '20px 20px 15px'
   }
 });
 

@@ -3,16 +3,19 @@ import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
 
 class AddPageItemMenu extends Component {
-  state = {
-    anchorEl: undefined,
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      anchorEl: undefined,
+      open: false,
+    };
+  }
 
-  handleClick = event => {
+  handleClick (event) {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
 
-  handleRequestClose = () => {
+  handleRequestClose() {
     this.setState({ open: false });
   };
 

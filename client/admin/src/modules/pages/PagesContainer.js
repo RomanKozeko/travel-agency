@@ -13,14 +13,8 @@ import {loadPages} from './PagesActions';
 import {getPageWithItems} from '../../rootReducer';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
+import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
-
-const styles = StyleSheet.create({
-  progress: {
-    marginTop: '100px',
-    textAlign: 'center'
-  }
-});
 
 const mapStateToProps = (state) => {
   return {
@@ -66,15 +60,12 @@ class PagesContainer extends React.Component {
         <PageHeader text={'Все страницы'} />
         {isFetching
           ?
-          <div className={css(styles.progress)}>
-            <CircularProgress size={50} />
-          </div>
+            <Spinner />
           :
-          <Portlet isBordered={false}>
-            <SortableTable data={data} />
-          </Portlet>
+            <Portlet isBordered={false}>
+              <SortableTable data={data} />
+            </Portlet>
         }
-
       </div>
     );
   }

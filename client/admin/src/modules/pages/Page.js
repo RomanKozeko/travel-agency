@@ -1,17 +1,25 @@
-import React from 'react'
-import AddPageItemMenu from './AddPageItemMenu'
-import PageHeader from '../ui-elements/PageHeader'
-import Portlet from '../ui-elements/Portlet'
-import PageCaption from '../ui-elements/PageCaption'
-import GridIcons from '../ui-elements/gridIcons/GridIcons'
-import MyEditor from './MyEditor'
-import PageForm from './PageForm'
+import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
-import { Link } from 'react-router-dom';
+import { CircularProgress } from 'material-ui/Progress';
+import AddPageItemMenu from './AddPageItemMenu';
+import PageHeader from '../ui-elements/PageHeader';
+import Portlet from '../ui-elements/Portlet';
+import PageCaption from '../ui-elements/PageCaption';
+import GridIcons from '../ui-elements/gridIcons/GridIcons';
+import Spinner from '../ui-elements/Spinner';
+import PageForm from './PageForm';
+import MyEditor from './MyEditor'
+import BackLink from '../ui-elements/BackLink';
+import ImagePreview from '../ui-elements/ImagePreview';
+import { getPage } from '../../rootReducer';
+import { loadPage } from './PagesActions';
 
 const styles = StyleSheet.create({
   field: {
@@ -48,16 +56,27 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '-35px',
     right: '-16px'
-  }
+  },
 });
 
-const renderRows = (count) => {
+const mapStateToProps = (state, router) => {
+  return {
+    initialValues: getPage(state, router.match.params.id),
+    page: getPage(state, router.match.params.id),
+    isFetching: state.pages.isFetching
+  };
+};
+
+const renderRows = (size) => {
+  //"col-md-6"
+  const splited = size.split('-');
+  const count = 12 / +splited[splited.length - 1];
   const rows = [];
   for (let i = 0; i < count; i++) {
     rows.push(
       <div key={i} className={css(styles.rowInner)}>
         <AddPageItemMenu />
-      </div>)
+      </div>);
   }
 
   return rows;
@@ -66,75 +85,83 @@ const renderRows = (count) => {
 
 class Page extends React.Component {
   constructor(props) {
-
     super(props);
     this.state = {
-      rows: []
-    }
+      page: this.props.page
+    };
   }
 
   addRow(columns) {
     const rows = [...this.state.rows];
-    rows.push({ columns });
-    this.setState({ rows });
-  }
-
-  submit(values) {
-    // print the form values to the console
-    console.log(values)
+    rows.push({columns});
+    this.setState({rows});
   }
 
   render() {
     const isBordered = true;
+    const { page } = this.state;
     return (
-      <div>
-        <PageHeader text={'Cтраница:'} />
-
-        <Portlet isBordered={isBordered}>
-          <Link to="/pages">Назад к списку страниц</Link>
-
-          <PageForm onSubmit={this.submit} />
-
-          <PageCaption text={'Добавить ряд'} />
-          <div className="row">
-            <div className="col-sm-3">
-              <GridIcons count={1} clickHandler={this.addRow.bind(this)} />
-            </div>
-            <div className="col-sm-3">
-              <GridIcons count={2} clickHandler={this.addRow.bind(this)} />
-            </div>
-            <div className="col-sm-3">
-              <GridIcons count={3} clickHandler={this.addRow.bind(this)} />
-            </div>
-            <div className="col-sm-3">
-              <GridIcons count={4} clickHandler={this.addRow.bind(this)} />
-            </div>
+      <Portlet isBordered={isBordered}>
+        <div className="row">
+          <div className="col-sm-3">
+            <ImagePreview url={page.preview}/>
           </div>
-
-          <PageCaption text={'Схема страницы'} />
-
-          <div>
-            {this.state.rows.map((row, i) => (
-              <div key={i} className={css(styles.row)}>
-                <IconButton className={css(styles.dragButton)}>
-                  <Icon>drag_handle</Icon>
-                </IconButton>
-                <IconButton className={css(styles.closeButton)}>
-                  <Icon>close</Icon>
-                </IconButton>
-                { renderRows(row.columns) }
-              </div>
-            ))}
+          <div className="col-sm-5">
+            <PageForm onSubmit={this.submit} id={page._id}/>
           </div>
+        </div>
 
-          <Button raised color="primary" className={css(styles.button)}>
-            Сохранить
-          </Button>
-        </Portlet>
-      </div>
-    )
+        <PageCaption text={'Добавить ряд'}/>
+        <div className="row">
+          <div className="col-sm-3">
+            <GridIcons count={1} clickHandler={this.addRow.bind(this)}/>
+          </div>
+          <div className="col-sm-3">
+            <GridIcons count={2} clickHandler={this.addRow.bind(this)}/>
+          </div>
+          <div className="col-sm-3">
+            <GridIcons count={3} clickHandler={this.addRow.bind(this)}/>
+          </div>
+          <div className="col-sm-3">
+            <GridIcons count={4} clickHandler={this.addRow.bind(this)}/>
+          </div>
+        </div>
+
+        <PageCaption text={'Схема страницы'} />
+
+        <div>
+          {page.content[0].rows.map((row, i) => (
+            <div key={i} className={css(styles.row)}>
+              <IconButton className={css(styles.dragButton)}>
+                <Icon>drag_handle</Icon>
+              </IconButton>
+              <IconButton className={css(styles.closeButton)}>
+                <Icon>close</Icon>
+              </IconButton>
+              {renderRows(row.size)}
+            </div>
+          ))}
+        </div>
+
+        <Button raised color="primary" className={css(styles.button)}>
+          Сохранить
+        </Button>
+      </Portlet>
+    );
   }
-
 }
+
+Page.propTypes = {
+  page: PropTypes.object,
+  loadPage: PropTypes.func,
+  isFetching: PropTypes.bool,
+  content: PropTypes.object,
+  match: PropTypes.object,
+};
+
+Page = withRouter(connect(
+  mapStateToProps,
+  { loadPage }
+)(Page));
 
 export default Page;

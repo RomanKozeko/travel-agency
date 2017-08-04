@@ -10,7 +10,7 @@ import SideBar from '../sideBar/SideBar';
 import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
 import PagesContainer from '../pages/PagesContainer';
-import Page from '../pages/Page';
+import PageContainer from '../pages/PageContainer';
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -54,7 +54,7 @@ const routes = [
   },
   {
     path: '/pages/:id',
-    main: () => <Page/>
+    main: () => <PageContainer />
   },
   {
     path: '/pages',
