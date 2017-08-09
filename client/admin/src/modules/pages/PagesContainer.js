@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
@@ -18,7 +19,7 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
 const mapStateToProps = (state) => {
   return {
-    pages: getPageWithItems(state, state.pages.currPage),
+    items: getPageWithItems(state, state.pages.currPage),
     currPage: state.pages.currPage,
     pageCount: state.pages.pageCount,
     count: state.pages.count,
@@ -33,11 +34,11 @@ class PagesContainer extends React.Component {
   }
 
   render() {
-    const { pages, isFetching } = this.props;
+    const { items, isFetching } = this.props;
 
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
-      pages,
+      items,
       fields: [
         {
           name: 'title',
@@ -58,6 +59,14 @@ class PagesContainer extends React.Component {
     return (
       <div>
         <PageHeader text={'Все страницы'} />
+        <Button
+          raised
+          color="primary"
+          className="addBottomMargin"
+          onClick={() => this.props.savePage(this.state)}
+        >
+          Добавить страницу
+        </Button>
         {isFetching
           ?
             <Spinner />

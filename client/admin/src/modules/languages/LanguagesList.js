@@ -3,7 +3,7 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { CircularProgress } from 'material-ui/Progress';
-
+import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
@@ -13,12 +13,12 @@ const LanguagesList = ({ items, isFetching }) => {
 
   const data = {
     headers: ['Заголовок', 'Префикс'],
-    pages: items,
+    items,
     fields: [
       {
         name: 'title',
         isLink: true,
-        linkPrefix: 'languages/'
+        linkPrefix: 'lang/'
       },
       {
         name: 'prefix',
@@ -30,6 +30,14 @@ const LanguagesList = ({ items, isFetching }) => {
   return (
     <div>
       <PageHeader text={'Языки'} />
+      <Button
+        raised
+        color="primary"
+        className="addBottomMargin"
+        onClick={() => this.props.savePage(this.state)}
+      >
+        Добавить язык
+      </Button>
       {isFetching
         ?
         <Spinner />
