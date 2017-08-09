@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import authReducer from './modules/auth/authReducer';
+import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 
@@ -8,7 +9,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   tours: toursReducer,
   form: formReducer,
-  pages: pagesReducer
+  pages: pagesReducer,
+  regions: regionsReducer
 });
 
 export default rootReducer;

@@ -1,6 +1,7 @@
 import {
   TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE, TOURS_GET_PAGE_FROM_CACHE,
-	TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE
+	TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE,
+	EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE
 } from './toursActions';
 import { createReducer, getPageCount } from '../../services/utils';
 
@@ -47,7 +48,10 @@ const toursReducer = createReducer(defaultState, {
   [TOURS_FAILURE] : (state) => ({...state, isFetching: false}),
 	[TOUR_REQUEST] : (state) => ({...state, isFetching: true}),
 	[TOUR_SUCCESS] : tourSuccess,
-	[TOURS_FAILURE] : (state) => ({...state, isFetching: false})
+	[TOUR_FAILURE] : (state) => ({...state, isFetching: false}),
+	[EDIT_TOUR_REQUEST] : (state) => ({...state, isFetching: true}),
+	[EDIT_TOUR_SUCCESS] : tourSuccess,
+	[EDIT_TOUR_FAILURE] : (state) => ({...state, isFetching: false})
 });
 
 export default toursReducer;

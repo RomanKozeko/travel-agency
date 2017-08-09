@@ -38,7 +38,7 @@ class SortableTable extends React.Component {
   handleSelectAllClick(event, checked) {
     const selected = { ...this.state.selected };
 
-    this.props.data.pages.forEach((item) => {
+    this.props.data.items.forEach((item) => {
       selected[item._id] = checked;
     });
     this.setState({ selected });
@@ -85,7 +85,7 @@ class SortableTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.pages.map(item => (
+            {data.items.map(item => (
               <TableRow key={item._id}>
                 <TableCell checkbox>
                   <Checkbox

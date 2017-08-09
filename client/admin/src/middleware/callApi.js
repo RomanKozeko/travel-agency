@@ -29,7 +29,13 @@ const callApi = (endpoint, options, schema, nextPage) => {
 export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
 export const categoriesSchema = { items: [categorySchema] };
 
-export const tourSchema = new schema.Entity('tours', { categories: [ categorySchema ] }, { idAttribute: '_id' });
+export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id' });
+export const regionsSchema = {items: [regionSchema] };
+
+export const tourSchema = new schema.Entity('tours', {
+  categories: [ categorySchema ],
+	regions: [ regionSchema ]
+}, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
 export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
@@ -40,7 +46,9 @@ export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
   PAGE: pageSchema,
-  PAGES: pagesSchema
+  PAGES: pagesSchema,
+  REGION: regionSchema,
+  REGIONS: regionsSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

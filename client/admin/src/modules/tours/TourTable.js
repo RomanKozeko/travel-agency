@@ -27,7 +27,7 @@ class TourTable extends Component {
 								  {n.content[0].description}
                 </TableCell>
                 <TableCell>
-								  {n.content[0].language}
+								  {n.preview}
                 </TableCell>
                 <TableCell>
 								  {n.content[0].content}

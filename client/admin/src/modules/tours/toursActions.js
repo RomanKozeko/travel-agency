@@ -6,6 +6,9 @@ export const TOURS_GET_PAGE_FROM_CACHE = 'TOURS/GET_PAGE_FROM_CACHE';
 export const TOUR_REQUEST = 'TOUR_REQUEST';
 export const TOUR_SUCCESS = 'TOUR_SUCCESS';
 export const TOUR_FAILURE = 'TOUR_FAILURE';
+export const EDIT_TOUR_REQUEST = 'EDIT_TOUR_REQUEST';
+export const EDIT_TOUR_SUCCESS = 'EDIT_TOUR_SUCCESS';
+export const EDIT_TOUR_FAILURE = 'EDIT_TOUR_FAILURE';
 
 const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
@@ -18,7 +21,7 @@ const fetchTours = (nextPageUrl, nextPage) => ({
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   const {
-    nextPageUrl = `api/tours?page=${nextPage}`,
+    nextPageUrl = `/api/tours?page=${nextPage}`,
     pages,
     pageCount,
   } = getState().tours;
@@ -51,3 +54,13 @@ export const loadTour = (id) => (dispatch, getState) => {
 		return dispatch(fetchTour(id))
 	}
 };
+
+export const editTour = (id, tour) => ({
+	[CALL_API]: {
+		types: [ EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE ],
+		endpoint: `/api/tours/${id}`,
+		schema: Schemas.TOUR,
+		method: 'PUT',
+		body: tour
+	}
+});

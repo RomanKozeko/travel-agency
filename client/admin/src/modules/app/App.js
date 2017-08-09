@@ -11,6 +11,7 @@ import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
 import PagesContainer from '../pages/PagesContainer';
 import PageContainer from '../pages/PageContainer';
+import RegionsContainer from '../regions/RegionsContainer';
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -45,7 +46,7 @@ const routes = [
 	},
   {
     path: '/regions',
-    main: () => <h2>Regions</h2>
+    main: () => <RegionsContainer />
   },
   {
     path: '/hotels',

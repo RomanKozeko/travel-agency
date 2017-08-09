@@ -13,7 +13,7 @@ const TourSchema = new Schema({
     ref: 'TourCategory'
   }],
   regions: [{
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: 'Region'
   }],
   periodType: [{

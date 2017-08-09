@@ -1,19 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
-import { CircularProgress } from 'material-ui/Progress';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
+import Spinner from '../ui-elements/Spinner';
+import Pagination from '../ui-elements/Pagination'
 import TourTable from './TourTable';
 import { loadTours } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
-
-const styles = StyleSheet.create({
-	progress: {
-		marginTop: '100px',
-		textAlign: 'center'
-	}
-});
 
 const mapStateToProps = (state) => {
   return {
@@ -36,20 +29,31 @@ class ToursContainer extends React.Component {
   }
 
   render() {
-    const { tours, isFetching } = this.props;
+	  const {
+		  tours,
+		  isFetching,
+		  currPage,
+		  count,
+		  loadTours,
+		  pageCount
+	  } = this.props;
     
     return (
       <div className="ToursContainer">
         {isFetching ?
-          <div className={css(styles.progress)}>
-            <CircularProgress size={50} />
-          </div>
+          <Spinner/>
           :
           <div>
             <PageHeader text={'Все туры'} />
             <Portlet isBordered={false}>
-              <TourTable cells={['title', 'description', 'language', 'content' ]} data={tours} />
+              <TourTable data={tours} />
             </Portlet>
+            <Pagination
+              pageNumber={currPage}
+              pageCount={pageCount}
+              requestPage={loadTours}
+              totalPages={count}
+            />
           </div>
 
         }
