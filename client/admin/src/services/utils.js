@@ -9,6 +9,7 @@ export const createReducer = (initialState, handlers) => {
 };
 
 export const getPageCount = (count, limit) => {
-  return parseInt(count/limit) + (count % limit)
+  const pageCount = count % limit ? 1 : 0;
+  return parseInt(count / limit) + pageCount;
 };
 
