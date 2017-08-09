@@ -7,6 +7,9 @@ export const PAGES_GET_PAGE_FROM_CACHE = 'PAGES/GET_PAGE_FROM_CACHE';
 export const PAGE_REQUEST = 'PAGE_REQUEST';
 export const PAGE_SUCCESS = 'PAGE_SUCCESS';
 export const PAGE_FAILURE = 'PAGE_FAILURE';
+export const PAGE_SAVE_REQUEST = 'PAGE_SAVE_REQUEST';
+export const PAGE_SAVE_SUCCESS = 'PAGE_SAVE_SUCCESS';
+export const PAGE_SAVE_FAILURE = 'PAGE_SAVE_FAILURE';
 
 const fetchPages = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
@@ -52,4 +55,23 @@ export const loadPage = id => (dispatch, getState) => {
     return dispatch(fetchPage(id));
   }
   return null;
+};
+
+export const savePage = pageState => (dispatch, getState) => {
+  const state = getState();
+  // const state = state.form.pageForm.values;
+  // console.log(pageState);
+  return dispatch({
+    [CALL_API]: {
+      types: [PAGE_SAVE_REQUEST, PAGE_SAVE_SUCCESS, PAGE_SAVE_FAILURE],
+      method: 'POST',
+      endpoint: '',
+      body: '',
+      schema: Schemas.PAGE
+    }
+  });
+};
+
+const setupPageData = (values, rows) => {
+
 };

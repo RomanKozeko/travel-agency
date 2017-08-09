@@ -13,10 +13,11 @@ import Portlet from '../ui-elements/Portlet';
 import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
 import PageForm from './PageForm';
-import MyEditor from './MyEditor'
+import MyEditor from './MyEditor';
 import ImagePreview from '../ui-elements/ImagePreview';
 import { getPage } from '../../rootReducer';
-import { loadPage } from './PagesActions';
+import { loadPage, savePage } from './PagesActions';
+import GridSelector from './GridSelector';
 
 const styles = StyleSheet.create({
   field: {
@@ -65,7 +66,6 @@ const mapStateToProps = (state, router) => {
 };
 
 const renderRows = (size) => {
-  //"col-md-6"
   const splited = size.split('-');
   const count = 12 / +splited[splited.length - 1];
   const rows = [];
@@ -110,28 +110,18 @@ class Page extends React.Component {
       <Portlet isBordered={isBordered}>
         <div className="row">
           <div className="col-sm-3">
-            <ImagePreview url={page.preview}/>
+            <ImagePreview url={page.preview} />
           </div>
           <div className="col-sm-5">
-            <PageForm onSubmit={this.submit} id={page._id}/>
+            <PageForm onSubmit={this.submit} id={page._id} />
           </div>
         </div>
 
-        <PageCaption text={'Добавить ряд'}/>
-        <div className="row">
-          <div className="col-sm-3">
-            <GridIcons count={1} clickHandler={this.addRow.bind(this)}/>
-          </div>
-          <div className="col-sm-3">
-            <GridIcons count={2} clickHandler={this.addRow.bind(this)}/>
-          </div>
-          <div className="col-sm-3">
-            <GridIcons count={3} clickHandler={this.addRow.bind(this)}/>
-          </div>
-          <div className="col-sm-3">
-            <GridIcons count={4} clickHandler={this.addRow.bind(this)}/>
-          </div>
-        </div>
+        <PageCaption text={'Добавить ряд'} />
+        <GridSelector
+          clickHandler={this.addRow.bind(this)}
+          count={4}
+        />
 
         <PageCaption text={'Схема страницы'} />
 
@@ -149,7 +139,12 @@ class Page extends React.Component {
           ))}
         </div>
 
-        <Button raised color="primary" className={css(styles.button)}>
+        <Button
+          raised
+          color="primary"
+          className={css(styles.button)}
+          onClick={() => this.props.savePage(this.state)}
+        >
           Сохранить
         </Button>
       </Portlet>
@@ -167,7 +162,7 @@ Page.propTypes = {
 
 Page = withRouter(connect(
   mapStateToProps,
-  { loadPage }
+  { loadPage, savePage }
 )(Page));
 
 export default Page;

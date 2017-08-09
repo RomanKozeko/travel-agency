@@ -15,17 +15,24 @@ const styles = StyleSheet.create({
   }
 });
 
+const getItemContent = (item) => {
+  if (item.content) {
+    return item.content[0];
+  }
+  return item;
+};
+
 const renderFileds = (item, fields) => {
   return fields.map((field, i) => (
     <TableCell key={item._id + i}>
       {field.isLink
         ?
-        <Link to={field.linkPrefix + item._id}>{item.content[0][field.name]}</Link>
+        <Link to={field.linkPrefix + item._id}>{getItemContent(item)[field.name]}</Link>
         :
-        <span>{item.content[0][field.name]}</span>
+        <span>{getItemContent(item)[field.name]}</span>
       }
     </TableCell>
-  ))
+  ));
 };
 
 class SortableTable extends React.Component {
@@ -74,7 +81,7 @@ class SortableTable extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell checkbox>
+              <TableCell checkbox className={css(styles.actions)}>
                 <Checkbox onChange={(e, checked) => this.handleSelectAllClick(e, checked)} />
               </TableCell>
               {data.headers.map((item, i) => (
