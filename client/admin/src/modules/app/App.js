@@ -12,6 +12,7 @@ import Tour from '../tours/Tour';
 import PagesContainer from '../pages/PagesContainer';
 import PageContainer from '../pages/PageContainer';
 import RegionsContainer from '../regions/RegionsContainer';
+import LanguagesContainer from '../languages/LanguagesContainer';
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -60,12 +61,12 @@ const routes = [
   {
     path: '/pages',
     exact: true,
-    main: () => <PagesContainer/>
+    main: () => <PagesContainer />
   },
   {
     path: '/lang',
     exact: true,
-    main: () => <h2>Languages</h2>
+    main: () => <LanguagesContainer />
   },
   {
     path: '/settings',

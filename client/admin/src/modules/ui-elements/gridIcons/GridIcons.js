@@ -5,13 +5,13 @@ import './GridIcons.css'
 const renderCollumns = (count) => {
   const columns = [];
   for (let i = 0; i < count; i++) {
-    columns.push(<div key={i} className="Grid-icons__inner"></div>)
+    columns.push(<div key={i} className="Grid-icons__inner"></div>);
   }
 
   return columns;
 };
 
-const GridIcons = ({count, clickHandler}) => {
+const GridIcons = ({ count, clickHandler }) => {
   return (
     <div className="Grid-icons" onClick={() => clickHandler(count)}>
       {renderCollumns(count)}
@@ -22,6 +22,7 @@ const GridIcons = ({count, clickHandler}) => {
 
 GridIcons.propTypes = {
   count: PropTypes.number,
+  clickHandler: PropTypes.func
 };
 
 export default GridIcons;

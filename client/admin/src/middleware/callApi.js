@@ -41,12 +41,16 @@ export const toursSchema = { tours: [tourSchema] };
 export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 
+export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const languagesSchema = [languageSchema];
+
 
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
   PAGE: pageSchema,
   PAGES: pagesSchema,
+  LANGUAGES: languagesSchema,
   REGION: regionSchema,
   REGIONS: regionsSchema
 };
@@ -91,16 +95,16 @@ export default store => next => (action) => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-	const requestOptions = !method || method === 'GET' ?
-    {
-		  method: 'GET'
-	  }
-	  :
-    {
-	    method: method,
-	    headers: {'Content-Type': 'application/json', 'authorization': window.localStorage.token},
-      body:JSON.stringify(body)
-    };
+  const requestOptions = !method || method === 'GET' ?
+  {
+    method: 'GET'
+  }
+  :
+  {
+    method,
+    headers: { 'Content-Type': 'application/json', authorization: window.localStorage.token },
+    body: JSON.stringify(body)
+  };
 
   return callApi(endpoint, requestOptions, schema, nextPage).then(
     response => next(actionWith({

@@ -22,19 +22,19 @@ class AddPageItemMenu extends Component {
   render() {
     return (
       <div>
-        <Button aria-owns="simple-menu" onClick={this.handleClick}>
+        <Button aria-owns="simple-menu" onClick={event => this.handleClick(event)}>
           Добавить контент
         </Button>
         <Menu
           id="simple-menu"
           anchorEl={this.state.anchorEl}
           open={this.state.open}
-          onRequestClose={this.handleRequestClose}
+          onRequestClose={() => this.handleRequestClose()}
         >
-          <MenuItem onClick={this.handleRequestClose}>Добавить галерею</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить картнику</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить список туров</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem>
+          <MenuItem onClick={() => this.handleRequestClose()}>Добавить галерею</MenuItem>
+          <MenuItem onClick={() => this.handleRequestClose()}>Добавить картнику</MenuItem>
+          <MenuItem onClick={() => this.handleRequestClose()}>Добавить список туров</MenuItem>
+          <MenuItem onClick={() => this.handleRequestClose()}>Добавить список отелей</MenuItem>
         </Menu>
       </div>
     );

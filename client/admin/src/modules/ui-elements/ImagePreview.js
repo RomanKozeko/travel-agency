@@ -26,4 +26,4 @@ ImagePreview.propTypes = {
   url: PropTypes.string,
 };
 
-export default ImagePreview
+export default ImagePreview;
