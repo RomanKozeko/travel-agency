@@ -29,15 +29,15 @@ class ToursContainer extends React.Component {
   }
 
   render() {
-	  const {
-		  tours,
-		  isFetching,
-		  currPage,
-		  count,
-		  loadTours,
-		  pageCount
-	  } = this.props;
-    
+    const {
+      tours,
+      isFetching,
+      currPage,
+      count,
+      loadTours,
+      pageCount
+    } = this.props;
+
     return (
       <div className="ToursContainer">
         {isFetching ?

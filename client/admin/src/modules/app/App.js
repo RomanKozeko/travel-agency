@@ -38,13 +38,13 @@ const routes = [
   {
     path: '/tours',
     exact: true,
-    main: ToursContainer
+    main: () => <ToursContainer />
   },
-	{
-		path: '/tours/:id',
-		exact: true,
-		main: Tour
-	},
+  {
+    path: '/tours/:id',
+    exact: true,
+    main: () => <Tour />
+  },
   {
     path: '/regions',
     main: () => <RegionsContainer />
