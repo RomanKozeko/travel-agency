@@ -33,12 +33,16 @@ export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id
 export const regionsSchema = {items: [regionSchema] };
 
 export const tourSchema = new schema.Entity('tours', {
-  categories: [ categorySchema ],
-	regions: [ regionSchema ]
+  categories: [categorySchema],
+  regions: [regionSchema]
 }, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
-export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const contentSchema = new schema.Entity('content', {}, { idAttribute: '_id' });
+
+export const pageSchema = new schema.Entity('items', {
+  content: [contentSchema]
+}, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });

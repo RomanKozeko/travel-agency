@@ -32,14 +32,18 @@ class TourForm extends Component {
 
 	componentDidMount() {
 		const { tour, regions } = this.props;
-		const idsRegions = regions.map((item) => {item._id});
-		console.log(idsRegions);
-		const idsChecked = idsRegions.map((regionId) => {
-			tour.regions.map((tourRegionId) => {
-				regionId === tourRegionId
-			})
-		}
-	);
+		const idsRegions = regions.map((item) => (item._id));
+    let tourRegions;
+		const idsChecked = idsRegions.filter((regionId) => {
+
+      tourRegions = tour.regions.map((tourRegionId) => {
+          return regionId === tourRegionId
+        }
+      );
+
+      return tourRegions.forEach((item)=> item)
+
+    });
 		this.setState({
 			idsRegions: idsRegions,
 			checked: idsChecked
