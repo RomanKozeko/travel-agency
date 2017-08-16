@@ -15,25 +15,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const getItemContent = (item) => {
-  if (item.content) {
-    return item.content[0];
-  }
-  return item;
-};
 
-const renderFileds = (item, fields) => {
-  return fields.map((field, i) => (
-    <TableCell key={item._id + i}>
-      {field.isLink
-        ?
-        <Link to={field.linkPrefix + item._id}>{getItemContent(item)[field.name]}</Link>
-        :
-        <span>{getItemContent(item)[field.name]}</span>
-      }
-    </TableCell>
-  ));
-};
 
 class SortableTable extends React.Component {
   constructor(props) {
@@ -72,6 +54,35 @@ class SortableTable extends React.Component {
     return counter;
   }
 
+  getItemContent(item) {
+    const { data } = this.props;
+    if (item.content) {
+      //  get all content of curr item
+      const contentForCurrLang = item.content.find((itemContent) => {
+        const itemContentLang = data.content[itemContent].language;
+
+        return data.languages.byIds[itemContentLang].prefix === data.languages.currLanguage;
+      });
+
+      return data.content[contentForCurrLang];
+    }
+    return item;
+  }
+
+
+  renderFileds(item, fields) {
+    return fields.map((field, i) => (
+      <TableCell key={item._id + i}>
+        {field.isLink
+          ?
+          <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>
+          :
+          <span>{() => this.getItemContent(item)[field.name]}</span>
+        }
+      </TableCell>
+    ));
+  }
+
   render() {
     const { data } = this.props;
 
@@ -100,7 +111,7 @@ class SortableTable extends React.Component {
                     checked={this.isSelected.bind(this)(item._id)}
                   />
                 </TableCell>
-                {renderFileds(item, data.fields)}
+                {this.renderFileds(item, data.fields)}
                 <TableCell>
                   <IconButton>
                     <Icon>create</Icon>
@@ -117,7 +128,8 @@ class SortableTable extends React.Component {
 }
 
 SortableTable.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  languages: PropTypes.object
 };
 
 export default SortableTable;
