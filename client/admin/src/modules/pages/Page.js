@@ -2,22 +2,17 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
-import IconButton from 'material-ui/IconButton';
 import { CircularProgress } from 'material-ui/Progress';
-import AddPageItemMenu from './AddPageItemMenu';
 import Portlet from '../ui-elements/Portlet';
-import PageCaption from '../ui-elements/PageCaption';
-import GridIcons from '../ui-elements/gridIcons/GridIcons';
 import PageForm from './PageForm';
 import MyEditor from './MyEditor';
 import ImagePreview from '../ui-elements/ImagePreview';
 import { getPage } from '../../rootReducer';
 import { loadPage, savePage } from './PagesActions';
-import GridSelector from './GridSelector';
+
 
 const styles = StyleSheet.create({
   field: {
@@ -59,94 +54,45 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, router) => {
   return {
-    initialValues: getPage(state, router.match.params.id),
     page: getPage(state, router.match.params.id),
     isFetching: state.pages.isFetching
   };
 };
 
-const renderRows = (size) => {
-  const splited = size.split('-');
-  const count = 12 / +splited[splited.length - 1];
-  const rows = [];
-  for (let i = 0; i < count; i++) {
-    rows.push(
-      <div key={i} className={css(styles.rowInner)}>
-        <AddPageItemMenu />
-      </div>);
-  }
 
-  return rows;
-};
-
-class Row {
-  constructor(title, size, type, content, pageLink) {
-    this.title = title;
-    this.size = size;
-    this.type = type;
-    this.content = content;
-    this.content = pageLink;
-  }
-}
 
 class Page extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: this.props.page
+      page: this.props.page,
+      index: 0
     };
   }
 
-  addRow(columns) {
-    const page = { ...this.state.page };
-    page.content[0].rows.push(new Row('Обычный контент', `col-sm-${12 / columns}`));
-    this.setState({ page });
+  // addRow(columns) {
+  //   const page = { ...this.state.page };
+  //   page.content[0].rows.push(new Row('Обычный контент', `col-sm-${12 / columns}`));
+  //   this.setState({ page });
+  // }
+
+  handleChange(event, index) {
+    this.setState({ index });
   }
 
   render() {
     const isBordered = true;
     const { page } = this.state;
+    const tabIndex = this.state.index;
     return (
       <Portlet isBordered={isBordered}>
-        <div className="row">
-          <div className="col-sm-3">
-            <ImagePreview url={page.preview} />
-          </div>
-          <div className="col-sm-5">
-            <PageForm onSubmit={this.submit} id={page._id} />
-          </div>
-        </div>
-
-        <PageCaption text={'Добавить ряд'} />
-        <GridSelector
-          clickHandler={this.addRow.bind(this)}
-          count={4}
-        />
-
-        <PageCaption text={'Схема страницы'} />
-
-        <div>
-          {page.content[0].rows.map((row, i) => (
-            <div key={i} className={css(styles.row)}>
-              <IconButton className={css(styles.dragButton)}>
-                <Icon>drag_handle</Icon>
-              </IconButton>
-              <IconButton className={css(styles.closeButton)}>
-                <Icon>close</Icon>
-              </IconButton>
-              {renderRows(row.size)}
-            </div>
-          ))}
-        </div>
-
-        <Button
-          raised
-          color="primary"
-          className={css(styles.button)}
-          onClick={() => this.props.savePage(this.state)}
-        >
-          Сохранить
-        </Button>
+        <Tabs index={this.state.index} onChange={(event, index) => this.handleChange(event, index)}>
+          {this.props.languages.map(lang => (
+            <Tab label={lang.title} key={lang._id}/>
+          ))
+          }
+        </Tabs>
+        <PageForm onSubmit={this.submit} {...this.props} />
       </Portlet>
     );
   }
@@ -154,6 +100,7 @@ class Page extends React.Component {
 
 Page.propTypes = {
   page: PropTypes.object,
+  languages: PropTypes.array,
   loadPage: PropTypes.func,
   isFetching: PropTypes.bool,
   content: PropTypes.object,

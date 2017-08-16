@@ -7,7 +7,7 @@ const GridSelector = ({ count, clickHandler }) => {
   for (let i = 0; i < count; i++) {
     rows.push(
       <div key={i} className="col-sm-3">
-        <GridIcons count={i + 1} clickHandler={clickHandler} />
+        <GridIcons count={i + 1} clickHandler={() => clickHandler(count)} />
       </div>);
   }
 

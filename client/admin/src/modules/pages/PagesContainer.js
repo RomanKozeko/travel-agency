@@ -20,10 +20,12 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 const mapStateToProps = (state) => {
   return {
     items: getPageWithItems(state, state.pages.currPage),
+    content: state.pages.pagesContent,
     currPage: state.pages.currPage,
     pageCount: state.pages.pageCount,
     count: state.pages.count,
-    isFetching: state.pages.isFetching
+    isFetching: state.pages.isFetching,
+    languages: state.languages
   };
 };
 
@@ -34,11 +36,13 @@ class PagesContainer extends React.Component {
   }
 
   render() {
-    const { items, isFetching } = this.props;
+    const { items, content, languages, isFetching } = this.props;
 
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
       items,
+      content,
+      languages,
       fields: [
         {
           name: 'title',
@@ -72,7 +76,7 @@ class PagesContainer extends React.Component {
             <Spinner />
           :
             <Portlet isBordered={false}>
-              <SortableTable data={data} />
+               <SortableTable data={data} />
             </Portlet>
         }
       </div>
@@ -82,7 +86,7 @@ class PagesContainer extends React.Component {
 
 PagesContainer.propTypes = {
   loadPages: PropTypes.func,
-  pages: PropTypes.array,
+  items: PropTypes.array,
   currPage: PropTypes.number,
   pageCount: PropTypes.number,
   count: PropTypes.number,

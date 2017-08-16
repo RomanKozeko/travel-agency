@@ -10,6 +10,7 @@ const pagesSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, ...payload.result.items],
     byIds: { ...state.byIds, ...payload.entities.items },
+    pagesContent: { ...state.pagesContent, ...payload.entities.content },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -37,7 +38,8 @@ export const defaultState = {
   isFetching: false,
   pageCount: 0,
   currPage: 0,
-  pages: {}
+  pages: {},
+  pagesContent: {}
 };
 
 const pagesReducer = createReducer(defaultState, {

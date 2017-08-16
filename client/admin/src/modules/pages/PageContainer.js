@@ -8,20 +8,30 @@ import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import MyEditor from './MyEditor'
 import BackLink from '../ui-elements/BackLink';
-import { getPage } from '../../rootReducer';
+import { getPage, getLanguages } from '../../rootReducer';
 import { loadPage } from './PagesActions';
+import { addRow } from './pageActions';
 import Page from './Page';
+
 
 const mapStateToProps = (state, router) => {
   return {
     initialValues: getPage(state, router.match.params.id),
     page: getPage(state, router.match.params.id),
-    isFetching: state.pages.isFetching
+    isFetching: state.pages.isFetching,
+    languagesIsFetching: state.languages.isFetching
   };
 };
 
 
 class PageContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      index: 0,
+    };
+  }
+
   componentDidMount() {
     if (!this.props.page) {
       this.props.loadPage(this.props.match.params.id);
@@ -54,7 +64,7 @@ PageContainer.propTypes = {
 
 PageContainer = withRouter(connect(
   mapStateToProps,
-  { loadPage }
+  { loadPage, addRow }
 )(PageContainer));
 
 export default PageContainer;
