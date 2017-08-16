@@ -28,3 +28,4 @@ export const getMeRequest = () =>
 		method: "GET",
 		headers: {'Content-Type': 'application/json', 'authorization': window.localStorage.token},
 	});
+

@@ -10,7 +10,8 @@ const languagesSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, ...payload.result],
     byIds: { ...state.byIds, ...payload.entities.items },
-    isFetching: false
+    isFetching: false,
+    isFetched: true
   };
 };
 
@@ -27,7 +28,9 @@ const languageSuccess = (state, action) => {
 export const defaultState = {
   allIds: [],
   byIds: {},
-  isFetching: false
+  isFetching: false,
+  isFetched: false,
+  currLanguage: 'ru'
 };
 
 const languagesReducer = createReducer(defaultState, {

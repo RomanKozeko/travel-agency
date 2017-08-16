@@ -23,13 +23,13 @@ const toursSuccess = (state, action) => {
 };
 
 const tourSuccess = (state, action) => {
-	const payload = action.response;
-	return {
-		...state,
-		allIds: [...state.allIds, payload.result],
-		byIds: {...state.byIds, ...payload.entities.tours},
-		isFetching: false,
-	}
+  const payload = action.response;
+  return {
+    ...state,
+    allIds: [...state.allIds, payload.result],
+    byIds: {...state.byIds, ...payload.entities.tours},
+    isFetching: false,
+  }
 };
 
 export const defaultState = {
