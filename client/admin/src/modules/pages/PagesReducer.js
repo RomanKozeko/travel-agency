@@ -28,6 +28,7 @@ const pageSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.items },
+    pagesContent: { ...state.pagesContent, ...payload.entities.content },
     isFetching: false,
   };
 };
@@ -69,3 +70,13 @@ export const getPageWithItems = (state, page) => {
   }
   return [];
 };
+
+export const getContentByLang = (state, contentId, lang) => {
+  const content = state.pages.pagesContent;
+
+  if (content[contentId].language === lang._id) {
+    return content[contentId];
+  }
+  return null;
+};
+

@@ -10,7 +10,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import RenderTextField from '../ui-elements/form/RenderTextField';
 import ImagePreview from '../ui-elements/ImagePreview';
-import {getPage} from '../../rootReducer';
+import {getPage, getContentByLang} from '../../rootReducer';
 import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
 import MyEditor from './MyEditor';
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   field: {
     marginBottom: '10px;'
   },
+
   button: {
   }
 });
@@ -51,47 +52,52 @@ class Row {
 }
 
 let PageForm = props => {
-  const { handleSubmit, page, languages, addRow } = props;
+  const { handleSubmit, page, languages, addRow, selectedTabIndex } = props;
   return (
     <form onSubmit={handleSubmit}>
       {languages.map((lang, i) => (
         <div key={lang._id}>
-          <div className="row">
-            <div className="col-sm-3">
-              <ImagePreview url={page.preview} />
-            </div>
-            <div className="col-sm-5">
-              <Field name={`${lang.prefix}.title`} component={RenderTextField} label="Заголовок страницы" />
-              <Field
-                name={`${lang.prefix}.description`}
-                component={RenderTextField}
-                label="Мета описание"
-                type="text"
+          {selectedTabIndex === i &&
+            <div>
+              <div className="row">
+                <div className="col-sm-3">
+                  <ImagePreview url={page.preview} />
+                </div>
+                <div className="col-sm-5">
+                  <Field name={`${lang.prefix}.title`} component={RenderTextField} label="Заголовок страницы" />
+                  <Field
+                    name={`${lang.prefix}.description`}
+                    component={RenderTextField}
+                    label="Мета описание"
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <PageCaption text={'Добавить ряд'} />
+              <GridSelector
+                clickHandler={addRow}
+                count={4}
               />
-            </div>
-          </div>
 
-          <PageCaption text={'Добавить ряд'} />
-          <GridSelector
-            clickHandler={addRow}
-            count={4}
-          />
+              <PageCaption text={'Схема страницы'}/>
 
-          <PageCaption text={'Схема страницы'}/>
-
-          <div>
-            {/*{page.content[0].rows.map((row, i) => (*/}
-              {/*<div key={i} className={css(styles.row)}>*/}
+              <div>
+                {/*{page.content[0].rows.map((row, i) => (*/}
+                {/*<div key={i} className={css(styles.row)}>*/}
                 {/*<IconButton className={css(styles.dragButton)}>*/}
-                  {/*<Icon>drag_handle</Icon>*/}
+                {/*<Icon>drag_handle</Icon>*/}
                 {/*</IconButton>*/}
                 {/*<IconButton className={css(styles.closeButton)}>*/}
-                  {/*<Icon>close</Icon>*/}
+                {/*<Icon>close</Icon>*/}
                 {/*</IconButton>*/}
                 {/*{renderRows(row.size)}*/}
-              {/*</div>*/}
-            {/*))}*/}
-          </div>
+                {/*</div>*/}
+                {/*))}*/}
+              </div>
+            </div>
+          }
+
 
         </div>
         )
@@ -118,9 +124,10 @@ PageForm = connect((state, ownProps) => {
   const { page, languages } = ownProps;
   const initialValues = { preview: page.preview };
 
-  page.content.forEach((content) => {
+  page.content.forEach((contentId) => {
     languages.forEach((lang) => {
-      if (content.language === lang._id) {
+      const content = getContentByLang(state, contentId, lang);
+      if (content) {
         initialValues[lang.prefix] = content;
       }
     });

@@ -1,22 +1,23 @@
-import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from 'material-ui/Progress';
 import Portlet from '../ui-elements/Portlet';
 import PageForm from './PageForm';
 import MyEditor from './MyEditor';
-import ImagePreview from '../ui-elements/ImagePreview';
-import { getPage } from '../../rootReducer';
-import { loadPage, savePage } from './PagesActions';
-
+import AppBar from 'material-ui/AppBar';
 
 const styles = StyleSheet.create({
   field: {
     marginBottom: '10px;'
+  },
+  tabs: {
+    top: '-20px',
+    zIndex: '1',
+    position: 'relative',
+    borderRadius: '4px 4px 0 0',
+    borderBottom: '1px solid #dae2ea'
   },
   row: {
     height: '200px',
@@ -52,15 +53,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = (state, router) => {
-  return {
-    page: getPage(state, router.match.params.id),
-    isFetching: state.pages.isFetching
-  };
-};
-
-
-
 class Page extends React.Component {
   constructor(props) {
     super(props);
@@ -70,29 +62,27 @@ class Page extends React.Component {
     };
   }
 
-  // addRow(columns) {
-  //   const page = { ...this.state.page };
-  //   page.content[0].rows.push(new Row('Обычный контент', `col-sm-${12 / columns}`));
-  //   this.setState({ page });
-  // }
-
   handleChange(event, index) {
     this.setState({ index });
   }
 
   render() {
     const isBordered = true;
-    const { page } = this.state;
     const tabIndex = this.state.index;
     return (
       <Portlet isBordered={isBordered}>
-        <Tabs index={this.state.index} onChange={(event, index) => this.handleChange(event, index)}>
-          {this.props.languages.map(lang => (
-            <Tab label={lang.title} key={lang._id}/>
-          ))
-          }
+        <Tabs
+          className={css(styles.tabs)}
+          index={this.state.index}
+          onChange={(event, index) => this.handleChange(event, index)}
+        >
+          {this.props.languages.map(lang => (<Tab label={lang.title} key={lang._id}/>))}
         </Tabs>
-        <PageForm onSubmit={this.submit} {...this.props} />
+        <PageForm
+          onSubmit={this.submit}
+          {...this.props}
+          selectedTabIndex={tabIndex}
+        />
       </Portlet>
     );
   }
@@ -107,9 +97,5 @@ Page.propTypes = {
   match: PropTypes.object,
 };
 
-Page = withRouter(connect(
-  mapStateToProps,
-  { loadPage, savePage }
-)(Page));
 
 export default Page;

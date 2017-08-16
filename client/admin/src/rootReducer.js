@@ -25,5 +25,9 @@ export const getPageWithTours = (state, page) => fromTours.getPageWithTours(stat
 
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);
 export const getPageWithItems = (state, page) => fromPages.getPageWithItems(state.pages, page);
+export const getContentByLang = (
+  state, contentId, lang
+) => fromPages.getContentByLang(state, contentId, lang);
 
 export const getLanguages = state => fromLanguages.getLanguages(state.languages);
+
