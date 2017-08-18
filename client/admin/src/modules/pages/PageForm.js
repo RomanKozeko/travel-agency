@@ -22,9 +22,45 @@ const styles = StyleSheet.create({
   field: {
     marginBottom: '10px;'
   },
-
-  button: {
-  }
+  tabs: {
+    top: '-20px',
+    zIndex: '1',
+    position: 'relative',
+    borderRadius: '4px 4px 0 0',
+    borderBottom: '1px solid #dae2ea'
+  },
+  row: {
+    height: '200px',
+    position: 'relative',
+    width: '100%',
+    border: '4px solid #aeaeae',
+    borderTop: '23px solid #aeaeae',
+    margin: '20px 0',
+    display: 'flex',
+    padding: '0 5px;'
+  },
+  rowInner: {
+    border: '4px dashed #e6e6e6',
+    margin: '10px 5px;',
+    display: 'flex',
+    flexGrow: '1',
+    justifyContent: 'center',
+    alignItems: 'center',
+    transition: 'all .3s ease',
+    ':hover': {
+      border: '4px dashed #aeaeae',
+    }
+  },
+  dragButton: {
+    position: 'absolute',
+    top: '-35px',
+    left: '-16px'
+  },
+  closeButton: {
+    position: 'absolute',
+    top: '-35px',
+    right: '-16px'
+  },
 });
 
 const renderRows = (size) => {
@@ -42,79 +78,103 @@ const renderRows = (size) => {
 };
 
 class Row {
-  constructor(title, size, type, content, pageLink) {
+  constructor(title, size, type = '', content = '', pageLink = '') {
     this.title = title;
     this.size = size;
     this.type = type;
     this.content = content;
     this.content = pageLink;
+    this.items = [];
+    this.images = [];
   }
 }
 
-let PageForm = props => {
-  const { handleSubmit, page, languages, addRow, selectedTabIndex } = props;
-  return (
-    <form onSubmit={handleSubmit}>
-      {languages.map((lang, i) => (
-        <div key={lang._id}>
-          {selectedTabIndex === i &&
-            <div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <ImagePreview url={page.preview} />
-                </div>
-                <div className="col-sm-5">
-                  <Field name={`${lang.prefix}.title`} component={RenderTextField} label="Заголовок страницы" />
-                  <Field
-                    name={`${lang.prefix}.description`}
-                    component={RenderTextField}
-                    label="Мета описание"
-                    type="text"
-                  />
-                </div>
-              </div>
+class PageForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rowsByLang: { ...this.props.rowsByLang }
+    };
+  }
 
-              <PageCaption text={'Добавить ряд'} />
-              <GridSelector
-                clickHandler={addRow}
-                count={4}
-              />
+  addRow(columns, langId) {
+    const rowsByLang = { ...this.state.rowsByLang };
+    rowsByLang[langId].push(new Row('', `col-md-${12 / columns}`));
+    this.setState({ rowsByLang });
+  }
 
-              <PageCaption text={'Схема страницы'}/>
-
+  render() {
+    const {
+      handleSubmit,
+      page,
+      languages,
+      selectedTabIndex
+    } = this.props;
+    return (
+      <form onSubmit={handleSubmit}>
+        {languages.map((lang, i) => (
+            <div key={lang._id}>
+              {selectedTabIndex === i &&
               <div>
-                {/*{page.content[0].rows.map((row, i) => (*/}
-                {/*<div key={i} className={css(styles.row)}>*/}
-                {/*<IconButton className={css(styles.dragButton)}>*/}
-                {/*<Icon>drag_handle</Icon>*/}
-                {/*</IconButton>*/}
-                {/*<IconButton className={css(styles.closeButton)}>*/}
-                {/*<Icon>close</Icon>*/}
-                {/*</IconButton>*/}
-                {/*{renderRows(row.size)}*/}
-                {/*</div>*/}
-                {/*))}*/}
+                <div className="row">
+                  <div className="col-sm-3">
+                    <ImagePreview url={page.preview} />
+                  </div>
+                  <div className="col-sm-5">
+                    <Field name={`${lang.prefix}.title`} component={RenderTextField} label="Заголовок страницы" />
+                    <Field
+                      name={`${lang.prefix}.description`}
+                      component={RenderTextField}
+                      label="Мета описание"
+                      type="text"
+                    />
+                  </div>
+                </div>
+
+                <PageCaption text={'Добавить ряд'} />
+                <GridSelector
+                  clickHandler={this.addRow.bind(this)}
+                  count={4}
+                  lang={lang._id}
+                />
+
+                <PageCaption text={'Схема страницы'} />
+
+                <div>
+                  {this.state.rowsByLang[lang._id].map((row, i) => (
+                    <div key={i} className={css(styles.row)}>
+                      <IconButton className={css(styles.dragButton)}>
+                        <Icon>drag_handle</Icon>
+                      </IconButton>
+                      <IconButton className={css(styles.closeButton)}>
+                        <Icon>close</Icon>
+                      </IconButton>
+                      {renderRows(row.size)}
+                    </div>
+                  ))}
+                </div>
               </div>
+              }
+
+
             </div>
-          }
+          )
+        )}
 
+        <Button
+          raised
+          color="primary"
+          className={css(styles.button)}
+          onClick={() => this.props.savePage(this.state)}
+        >
+          Сохранить
+        </Button>
 
-        </div>
-        )
-      )}
+      </form>
+    );
+  }
+}
 
-      <Button
-        raised
-        color="primary"
-        className={css(styles.button)}
-        onClick={() => this.props.savePage(this.state)}
-      >
-        Сохранить
-      </Button>
-
-    </form>
-  );
-};
 
 PageForm = reduxForm({
   form: 'pageForm'
@@ -123,18 +183,21 @@ PageForm = reduxForm({
 PageForm = connect((state, ownProps) => {
   const { page, languages } = ownProps;
   const initialValues = { preview: page.preview };
+  const rowsByLang = {};
 
   page.content.forEach((contentId) => {
     languages.forEach((lang) => {
       const content = getContentByLang(state, contentId, lang);
       if (content) {
         initialValues[lang.prefix] = content;
+        rowsByLang[lang._id] = content.rows;
       }
     });
   });
 
   return {
     initialValues,
+    rowsByLang,
     page: ownProps.page
   };
 })(PageForm);

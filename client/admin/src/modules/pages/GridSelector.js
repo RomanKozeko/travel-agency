@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
 
-const GridSelector = ({ count, clickHandler }) => {
+const GridSelector = ({ count, clickHandler, lang }) => {
   const rows = [];
   for (let i = 0; i < count; i++) {
     rows.push(
       <div key={i} className="col-sm-3">
-        <GridIcons count={i + 1} clickHandler={() => clickHandler(count)} />
+        <GridIcons count={i + 1} clickHandler={() => clickHandler(i + 1, lang)} />
       </div>);
   }
 
