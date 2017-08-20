@@ -11,6 +11,7 @@ const pagesSuccess = (state, action) => {
     allIds: [...state.allIds, ...payload.result.items],
     byIds: { ...state.byIds, ...payload.entities.items },
     pagesContent: { ...state.pagesContent, ...payload.entities.content },
+    rows: { ...state.rows, ...payload.entities.rows },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -29,6 +30,7 @@ const pageSuccess = (state, action) => {
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.items },
     pagesContent: { ...state.pagesContent, ...payload.entities.content },
+    rows: { ...state.rows, ...payload.entities.rows },
     isFetching: false,
   };
 };

@@ -57,16 +57,26 @@ export const loadPage = id => (dispatch, getState) => {
   return null;
 };
 
-export const savePage = pageState => (dispatch, getState) => {
+export const savePage = (pageState, pageId) => (dispatch, getState) => {
   const state = getState();
-  // const state = state.form.pageForm.values;
-  // console.log(pageState);
+  const page = { ...state.pages.byIds[pageId] };
+  const pageFormValues = state.form.pageForm.values;
+
+  page.content = [];
+  Object.keys(pageState.rowsByLang).forEach((item) => {
+    const content = pageFormValues[item];
+    content.rows = pageState.rowsByLang[item].map(row => (
+      pageState.allRowsById[row]
+    ));
+    page.content.push(content);
+  });
+
   return dispatch({
     [CALL_API]: {
       types: [PAGE_SAVE_REQUEST, PAGE_SAVE_SUCCESS, PAGE_SAVE_FAILURE],
-      method: 'POST',
-      endpoint: '',
-      body: '',
+      method: 'PUT',
+      endpoint: `/api/pages/${page._id}`,
+      body: page,
       schema: Schemas.PAGE
     }
   });

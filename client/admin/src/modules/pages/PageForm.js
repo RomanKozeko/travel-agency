@@ -1,11 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import IconButton from 'material-ui/IconButton';
 import { CircularProgress } from 'material-ui/Progress';
 
 import RenderTextField from '../ui-elements/form/RenderTextField';
@@ -15,70 +13,19 @@ import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
 import MyEditor from './MyEditor';
 import GridSelector from './GridSelector';
+import Rows from './Rows';
 
-import AddPageItemMenu from './AddPageItemMenu';
+const uniqueId = require('lodash.uniqueid');
 
 const styles = StyleSheet.create({
   field: {
     marginBottom: '10px;'
-  },
-  tabs: {
-    top: '-20px',
-    zIndex: '1',
-    position: 'relative',
-    borderRadius: '4px 4px 0 0',
-    borderBottom: '1px solid #dae2ea'
-  },
-  row: {
-    height: '200px',
-    position: 'relative',
-    width: '100%',
-    border: '4px solid #aeaeae',
-    borderTop: '23px solid #aeaeae',
-    margin: '20px 0',
-    display: 'flex',
-    padding: '0 5px;'
-  },
-  rowInner: {
-    border: '4px dashed #e6e6e6',
-    margin: '10px 5px;',
-    display: 'flex',
-    flexGrow: '1',
-    justifyContent: 'center',
-    alignItems: 'center',
-    transition: 'all .3s ease',
-    ':hover': {
-      border: '4px dashed #aeaeae',
-    }
-  },
-  dragButton: {
-    position: 'absolute',
-    top: '-35px',
-    left: '-16px'
-  },
-  closeButton: {
-    position: 'absolute',
-    top: '-35px',
-    right: '-16px'
-  },
-});
-
-const renderRows = (size) => {
-  const splited = size.split('-');
-  const count = 12 / +splited[splited.length - 1];
-  const rows = [];
-  for (let i = 0; i < count; i++) {
-    rows.push(
-      <div key={i} className={css(styles.rowInner)}>
-        <AddPageItemMenu />
-      </div>);
   }
-
-  return rows;
-};
+});
 
 class Row {
   constructor(title, size, type = '', content = '', pageLink = '') {
+    this.id = uniqueId();
     this.title = title;
     this.size = size;
     this.type = type;
@@ -93,79 +40,91 @@ class PageForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      rowsByLang: { ...this.props.rowsByLang }
+      rowsByLang: { ...this.props.rowsByLang },
+      allRowsById: { ...this.props.allRowsById }
     };
+  }
+
+  getRowsByLang(langId) {
+    return this.state.rowsByLang[langId].map(id => this.state.allRowsById[id]);
   }
 
   addRow(columns, langId) {
     const rowsByLang = { ...this.state.rowsByLang };
-    rowsByLang[langId].push(new Row('', `col-md-${12 / columns}`));
+    const allRowsById = { ...this.state.allRowsById };
+    const row = new Row('', `col-md-${12 / columns}`);
+
+    allRowsById[row._id || row.id] = row;
+    rowsByLang[langId].push(row._id || row.id);
+    this.setState({ rowsByLang, allRowsById });
+  }
+
+  removeRow(langId, rowId) {
+    const rowsByLang = { ...this.state.rowsByLang };
+    const index = rowsByLang[langId].indexOf(rowId);
+
+    if (index > -1) {
+      rowsByLang[langId].splice(index, 1);
+    }
     this.setState({ rowsByLang });
+  }
+
+  savePage(e, pageId) {
+    e.preventDefault();
+    this.props.handleSubmit(this.state, pageId);
   }
 
   render() {
     const {
-      handleSubmit,
       page,
       languages,
       selectedTabIndex
     } = this.props;
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => this.savePage(e, page._id)}>
         {languages.map((lang, i) => (
-            <div key={lang._id}>
-              {selectedTabIndex === i &&
-              <div>
-                <div className="row">
-                  <div className="col-sm-3">
-                    <ImagePreview url={page.preview} />
-                  </div>
-                  <div className="col-sm-5">
-                    <Field name={`${lang.prefix}.title`} component={RenderTextField} label="Заголовок страницы" />
-                    <Field
-                      name={`${lang.prefix}.description`}
-                      component={RenderTextField}
-                      label="Мета описание"
-                      type="text"
-                    />
-                  </div>
+          <div key={lang._id}>
+            {selectedTabIndex === i &&
+            <div>
+              <div className="row">
+                <div className="col-sm-3">
+                  <ImagePreview url={page.preview} />
                 </div>
-
-                <PageCaption text={'Добавить ряд'} />
-                <GridSelector
-                  clickHandler={this.addRow.bind(this)}
-                  count={4}
-                  lang={lang._id}
-                />
-
-                <PageCaption text={'Схема страницы'} />
-
-                <div>
-                  {this.state.rowsByLang[lang._id].map((row, i) => (
-                    <div key={i} className={css(styles.row)}>
-                      <IconButton className={css(styles.dragButton)}>
-                        <Icon>drag_handle</Icon>
-                      </IconButton>
-                      <IconButton className={css(styles.closeButton)}>
-                        <Icon>close</Icon>
-                      </IconButton>
-                      {renderRows(row.size)}
-                    </div>
-                  ))}
+                <div className="col-sm-5">
+                  <Field name={`${lang._id}.title`} component={RenderTextField} label="Заголовок страницы"/>
+                  <Field
+                    name={`${lang._id}.description`}
+                    component={RenderTextField}
+                    label="Мета описание"
+                    type="text"
+                  />
                 </div>
               </div>
-              }
 
+              <PageCaption text={'Добавить ряд'}/>
+              <GridSelector
+                clickHandler={this.addRow.bind(this)}
+                count={4}
+                lang={lang._id}
+              />
 
+              <PageCaption text={'Схема страницы'}/>
+              <Rows
+                rows={this.getRowsByLang(lang._id)}
+                langId={lang._id}
+                removeRow={this.removeRow.bind(this)}
+              />
             </div>
+            }
+          </div>
           )
         )}
 
         <Button
           raised
+          type="submit"
           color="primary"
           className={css(styles.button)}
-          onClick={() => this.props.savePage(this.state)}
         >
           Сохранить
         </Button>
@@ -175,6 +134,12 @@ class PageForm extends React.Component {
   }
 }
 
+PageForm.propTypes = {
+  page: PropTypes.object,
+  languages: PropTypes.array,
+  handleSubmit: PropTypes.func,
+  selectedTabIndex: PropTypes.number,
+};
 
 PageForm = reduxForm({
   form: 'pageForm'
@@ -182,6 +147,7 @@ PageForm = reduxForm({
 
 PageForm = connect((state, ownProps) => {
   const { page, languages } = ownProps;
+  const allRowsById = state.pages.rows;
   const initialValues = { preview: page.preview };
   const rowsByLang = {};
 
@@ -189,7 +155,7 @@ PageForm = connect((state, ownProps) => {
     languages.forEach((lang) => {
       const content = getContentByLang(state, contentId, lang);
       if (content) {
-        initialValues[lang.prefix] = content;
+        initialValues[lang._id] = content;
         rowsByLang[lang._id] = content.rows;
       }
     });
@@ -198,6 +164,7 @@ PageForm = connect((state, ownProps) => {
   return {
     initialValues,
     rowsByLang,
+    allRowsById,
     page: ownProps.page
   };
 })(PageForm);

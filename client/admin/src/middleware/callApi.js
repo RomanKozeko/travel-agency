@@ -30,7 +30,7 @@ export const categorySchema = new schema.Entity('categories', {}, { idAttribute:
 export const categoriesSchema = { items: [categorySchema] };
 
 export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id' });
-export const regionsSchema = {items: [regionSchema] };
+export const regionsSchema = { items: [regionSchema] };
 
 export const tourSchema = new schema.Entity('tours', {
   categories: [categorySchema],
@@ -38,10 +38,13 @@ export const tourSchema = new schema.Entity('tours', {
 }, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
-export const contentSchema = new schema.Entity('content', {}, { idAttribute: '_id' });
+export const rowSchema = new schema.Entity('rows', {}, { idAttribute: '_id' });
+export const contentSchema = new schema.Entity('content', {
+  rows: [rowSchema],
+}, { idAttribute: '_id' });
 
 export const pageSchema = new schema.Entity('items', {
-  content: [contentSchema]
+  content: [contentSchema],
 }, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 

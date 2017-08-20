@@ -1695,20 +1695,21 @@ tbody.collapse.in {
 }
 
 
-.example-enter {
+.row-enter {
   opacity: 0.01;
 }
 
-.example-enter.example-enter-active {
+.row-enter.row-enter-active {
   opacity: 1;
   transition: opacity 500ms ease-in;
 }
 
-.example-leave {
+.row-leave {
   opacity: 1;
+  border-color: #E53935 !important;
 }
 
-.example-leave.example-leave-active {
+.row-leave.row-leave-active {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }

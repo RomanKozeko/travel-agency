@@ -20,14 +20,14 @@ const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
 
 router.post('/login', requireSignIn, AuthCtrl.login);
-router.get('/getMe', requireAuth,  AuthCtrl.getMe);
+router.get('/getMe', requireAuth, AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
 router.get('/tours/:id', ApiToursCtrl.getOne);
-router.post('/tours', requireAuth,  ApiToursCtrl.post);
-router.put('/tours/:id', requireAuth,  ApiToursCtrl.put);
-router.delete('/tours/:id', requireAuth,  ApiToursCtrl.delete);
-router.post('/tours/categories', requireAuth,  ApiCategoriesCtrl.post);
+router.post('/tours', requireAuth, ApiToursCtrl.post);
+router.put('/tours/:id', requireAuth, ApiToursCtrl.put);
+router.delete('/tours/:id', requireAuth, ApiToursCtrl.delete);
+router.post('/tours/categories', requireAuth, ApiCategoriesCtrl.post);
 
 router.get('/regions', ApiRegionsCtrl.get);
 router.post('/regions', ApiRegionsCtrl.post);
@@ -40,6 +40,7 @@ router.post('/languages', ApiLanguagesCtrl.post);
 
 router.get('/pages', ApiPagesCtrl.get);
 router.get('/pages/:id', ApiPagesCtrl.getOne);
+router.put('/pages/:id', ApiPagesCtrl.put);
 router.post('/pages', ApiPagesCtrl.post);
 
 module.exports = router;

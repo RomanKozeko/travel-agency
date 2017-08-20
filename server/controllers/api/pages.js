@@ -27,6 +27,16 @@ module.exports = {
       .catch(next);
   },
 
+  put(req, res, next) {
+    const pageId = req.params.id;
+    const pageProps = req.body;
+
+    Page.findByIdAndUpdate(pageId, pageProps)
+      .then(() => Page.findById(pageId))
+      .then(page => res.json(page))
+      .catch(next);
+  },
+
   post(req, res, next) {
     const page = new Page(req.body);
 

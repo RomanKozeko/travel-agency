@@ -9,8 +9,7 @@ import Spinner from '../ui-elements/Spinner';
 import MyEditor from './MyEditor'
 import BackLink from '../ui-elements/BackLink';
 import { getPage, getLanguages } from '../../rootReducer';
-import { loadPage } from './PagesActions';
-import { addRow } from './pageActions';
+import { loadPage, savePage } from './PagesActions';
 import Page from './Page';
 
 
@@ -65,7 +64,7 @@ PageContainer.propTypes = {
 
 PageContainer = withRouter(connect(
   mapStateToProps,
-  { loadPage, addRow }
+  { loadPage, savePage }
 )(PageContainer));
 
 export default PageContainer;
