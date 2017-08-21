@@ -69,7 +69,7 @@ const Rows = ({ rows, langId, removeRow }) => {
             </IconButton>
             <IconButton
               className={css(styles.closeButton)}
-              onClick={() => removeRow(langId, row._id)}
+              onClick={() => removeRow(langId, row._id || row.id)}
             >
               <Icon>close</Icon>
             </IconButton>

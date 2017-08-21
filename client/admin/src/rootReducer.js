@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import {reducer as toastrReducer} from 'react-redux-toastr';
 import authReducer from './modules/auth/authReducer';
 import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   pages: pagesReducer,
   page: pageReducer,
   regions: regionsReducer,
-  languages: languagesReducer
+  languages: languagesReducer,
+  toastr: toastrReducer
 });
 
 export default rootReducer;

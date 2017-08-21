@@ -1,7 +1,4 @@
-import {
-  PAGES_REQUEST, PAGES_SUCCESS, PAGES_FAILURE, PAGES_GET_PAGE_FROM_CACHE,
-  PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE
-} from './PagesActions';
+import * as actions from './PagesActions';
 import { createReducer, getPageCount } from '../../services/utils';
 
 const pagesSuccess = (state, action) => {
@@ -35,6 +32,10 @@ const pageSuccess = (state, action) => {
   };
 };
 
+const pageSaveSuccess = (state, action) => {
+  return { ...state, isPageSaving: false };
+}
+
 export const defaultState = {
   allIds: [],
   byIds: {},
@@ -46,13 +47,15 @@ export const defaultState = {
 };
 
 const pagesReducer = createReducer(defaultState, {
-  [PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
-  [PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
-  [PAGES_SUCCESS]: pagesSuccess,
-  [PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
-  [PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
-  [PAGE_SUCCESS]: pageSuccess,
-  [PAGES_FAILURE]: state => ({ ...state, isFetching: false })
+  [actions.PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
+  [actions.PAGES_SUCCESS]: pagesSuccess,
+  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
+  [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.PAGE_SUCCESS]: pageSuccess,
+  [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isPageSaving: true }),
+  [actions.PAGE_SAVE_SUCCESS]: state => ({ ...state, isPageSaving: false }),
+  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false })
 });
 
 export default pagesReducer;

@@ -1,5 +1,9 @@
 import { camelizeKeys } from 'humps';
 import { normalize, schema } from 'normalizr';
+import {toastr} from 'react-redux-toastr';
+import React from 'react';
+
+import createToaster from '../modules/ui-elements/createToaster';
 
 const API_ROOT = '/';
 
@@ -65,6 +69,8 @@ export const Schemas = {
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = 'Call API';
 
+
+
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
 export default store => next => (action) => {
@@ -74,7 +80,7 @@ export default store => next => (action) => {
   }
 
   let { endpoint, nextPage } = callAPI;
-  const { schema, types, method, body } = callAPI;
+  const { schema, types, method, body, toasterMsg } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -114,10 +120,15 @@ export default store => next => (action) => {
   };
 
   return callApi(endpoint, requestOptions, schema, nextPage).then(
-    response => next(actionWith({
-      response,
-      type: successType
-    })),
+    (response) => {
+      if (toasterMsg) {
+        toastr.success('', '', createToaster(toasterMsg.success));
+      }
+      return next(actionWith({
+        response,
+        type: successType
+      }));
+    },
     error => next(actionWith({
       type: failureType,
       error: error.message || 'Something bad happened'

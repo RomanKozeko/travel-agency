@@ -78,7 +78,8 @@ class PageForm extends React.Component {
     const {
       page,
       languages,
-      selectedTabIndex
+      selectedTabIndex,
+      isPageSaving
     } = this.props;
     return (
       <form onSubmit={(e) => this.savePage(e, page._id)}>
@@ -124,9 +125,10 @@ class PageForm extends React.Component {
           raised
           type="submit"
           color="primary"
+          disabled={isPageSaving}
           className={css(styles.button)}
         >
-          Сохранить
+          {isPageSaving ? 'Сохраняю...' : 'Сохранить'}
         </Button>
 
       </form>
@@ -147,16 +149,21 @@ PageForm = reduxForm({
 
 PageForm = connect((state, ownProps) => {
   const { page, languages } = ownProps;
-  const allRowsById = state.pages.rows;
+  const allRowsById = { ...state.pages.rows };
   const initialValues = { preview: page.preview };
   const rowsByLang = {};
 
-  page.content.forEach((contentId) => {
+  const pageCopy = { ...page };
+
+  pageCopy.content.forEach((contentId) => {
     languages.forEach((lang) => {
       const content = getContentByLang(state, contentId, lang);
       if (content) {
-        initialValues[lang._id] = content;
-        rowsByLang[lang._id] = content.rows;
+        const contentCopy = { ...content };
+        rowsByLang[lang._id] = contentCopy.rows ? [...contentCopy.rows] : null;
+        delete contentCopy.rows;
+
+        initialValues[lang._id] = contentCopy;
       }
     });
   });
@@ -165,7 +172,8 @@ PageForm = connect((state, ownProps) => {
     initialValues,
     rowsByLang,
     allRowsById,
-    page: ownProps.page
+    isPageSaving: state.pages.isPageSaving,
+    page: pageCopy
   };
 })(PageForm);
 

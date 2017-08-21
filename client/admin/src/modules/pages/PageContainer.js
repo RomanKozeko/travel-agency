@@ -15,11 +15,9 @@ import Page from './Page';
 
 const mapStateToProps = (state, router) => {
   return {
-    initialValues: getPage(state, router.match.params.id),
     page: getPage(state, router.match.params.id),
     languages: getLanguages(state),
-    isFetching: state.pages.isFetching,
-    languagesIsFetching: state.languages.isFetching
+    isFetching: state.pages.isFetching
   };
 };
 

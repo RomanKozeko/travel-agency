@@ -77,6 +77,9 @@ export const savePage = (pageState, pageId) => (dispatch, getState) => {
       method: 'PUT',
       endpoint: `/api/pages/${page._id}`,
       body: page,
+      toasterMsg: {
+        success: 'Page saved'
+      },
       schema: Schemas.PAGE
     }
   });

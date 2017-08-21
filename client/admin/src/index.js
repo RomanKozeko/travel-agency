@@ -6,7 +6,8 @@ import {
 	Switch
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from './store/configureStore'
+import ReduxToastr from 'react-redux-toastr';
+import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import PrivateRoute from './modules/auth/PrivateRoute';
 import { getMeRequest } from './services/apiHelper';
@@ -15,28 +16,39 @@ import { Auth  } from './modules/auth/Auth';
 import './index.css';
 
 getMeRequest().then(res => {
-	const preloadedState = {
-		auth: {
-			isAuth: !!res.userName
-		}
-	};
+  const preloadedState = {
+    auth: {
+      isAuth: !!res.userName
+    }
+  };
 
-	const store = configureStore(preloadedState);
-	ReactDOM.render(
-		<Provider store={store}>
-			<Router>
-				<Switch>
-					<Route path="/login" component={Auth}/>
+  const store = configureStore(preloadedState);
+  ReactDOM.render(
+    <Provider store={store}>
+      <div>
+        <Router>
+          <Switch>
+            <Route path="/login" component={Auth}/>
 
-					<PrivateRoute
-						path="/"
-						component={App}
-					/>
+            <PrivateRoute
+              path="/"
+              component={App}
+            />
 
-				</Switch>
-			</Router>
-		</Provider>,
-		document.getElementById('root'));
-	registerServiceWorker();
+          </Switch>
+        </Router>
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-left"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar
+        />
+      </div>
+    </Provider>,
+    document.getElementById('root'));
+  registerServiceWorker();
 
 });
