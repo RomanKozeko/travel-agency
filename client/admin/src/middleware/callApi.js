@@ -7,9 +7,19 @@ import createToaster from '../modules/ui-elements/createToaster';
 
 const API_ROOT = '/';
 
-const getLangPref = () => {
-  return window.location.href.split('/')[3]
-};
+function createRequestOption(method, body) {
+  if (!method || method === 'GET') {
+    return {
+      method: 'GET'
+    };
+  }
+
+  return {
+    method,
+    headers: { 'Content-Type': 'application/json', authorization: window.localStorage.token },
+    body: JSON.stringify(body)
+  };
+}
 
 const callApi = (endpoint, options, schema, nextPage) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
@@ -69,8 +79,6 @@ export const Schemas = {
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_API = 'Call API';
 
-
-
 // A Redux middleware that interprets actions with CALL_API info specified.
 // Performs the call and promises when such actions are dispatched.
 export default store => next => (action) => {
@@ -108,18 +116,7 @@ export default store => next => (action) => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  const requestOptions = !method || method === 'GET' ?
-  {
-    method: 'GET'
-  }
-  :
-  {
-    method,
-    headers: { 'Content-Type': 'application/json', authorization: window.localStorage.token },
-    body: JSON.stringify(body)
-  };
-
-  return callApi(endpoint, requestOptions, schema, nextPage).then(
+  return callApi(endpoint, createRequestOption(method, body), schema, nextPage).then(
     (response) => {
       if (toasterMsg) {
         toastr.success('', '', createToaster(toasterMsg.success));
@@ -129,10 +126,13 @@ export default store => next => (action) => {
         type: successType
       }));
     },
-    error => next(actionWith({
-      type: failureType,
-      error: error.message || 'Something bad happened'
-    }))
+    (error) => {
+      toastr.error(createToaster(error.message || 'Something bad happened'));
+      return next(actionWith({
+        type: failureType,
+        error: error.message || 'Something bad happened'
+      }));
+    }
   );
 };
 
