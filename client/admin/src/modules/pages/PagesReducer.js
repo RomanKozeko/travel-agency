@@ -29,12 +29,9 @@ const pageSuccess = (state, action) => {
     pagesContent: { ...state.pagesContent, ...payload.entities.content },
     rows: { ...state.rows, ...payload.entities.rows },
     isFetching: false,
+    isPageSaving: false
   };
 };
-
-const pageSaveSuccess = (state, action) => {
-  return { ...state, isPageSaving: false };
-}
 
 export const defaultState = {
   allIds: [],
@@ -54,7 +51,7 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.PAGE_SUCCESS]: pageSuccess,
   [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isPageSaving: true }),
-  [actions.PAGE_SAVE_SUCCESS]: state => ({ ...state, isPageSaving: false }),
+  [actions.PAGE_SAVE_SUCCESS]: pageSuccess,
   [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false })
 });
 

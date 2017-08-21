@@ -7,7 +7,7 @@ import createToaster from '../modules/ui-elements/createToaster';
 
 const API_ROOT = '/';
 
-function createRequestOption(method, body) {
+function createRequestOptions(method, body) {
   if (!method || method === 'GET') {
     return {
       method: 'GET'
@@ -116,7 +116,7 @@ export default store => next => (action) => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, createRequestOption(method, body), schema, nextPage).then(
+  return callApi(endpoint, createRequestOptions(method, body), schema, nextPage).then(
     (response) => {
       if (toasterMsg) {
         toastr.success('', '', createToaster(toasterMsg.success));
