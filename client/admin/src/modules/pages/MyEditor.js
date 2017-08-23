@@ -6,7 +6,7 @@ class MyEditor extends React.Component {
     super(props);
   }
 
-  handleEditorChange = (e) => {
+  handleEditorChange(e) {
     console.log('Content was updated:', e.target.getContent());
   };
 
@@ -16,9 +16,10 @@ class MyEditor extends React.Component {
         <TinyMCE
           content="<p>This is the initial content of the editor</p>"
           config={{
-            plugins: 'link image code'
+            plugins: 'link image code',
+            height : '500'
           }}
-          onChange={this.handleEditorChange}
+          onChange={this.handleEditorChange.bind(this)}
         />
       </div>
     );

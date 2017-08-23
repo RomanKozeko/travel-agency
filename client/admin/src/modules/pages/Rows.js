@@ -8,26 +8,29 @@ import AddPageItemMenu from './AddPageItemMenu';
 
 const styles = StyleSheet.create({
   row: {
-    height: '200px',
     position: 'relative',
     width: '100%',
     border: '4px solid #aeaeae',
     borderTop: '23px solid #aeaeae',
     margin: '20px 0',
-    display: 'flex',
-    padding: '0 5px;'
+    padding: '15px 5px;'
   },
   rowInner: {
     border: '4px dashed #e6e6e6',
+    padding: '20px',
     margin: '10px 5px;',
     display: 'flex',
     flexGrow: '1',
     justifyContent: 'center',
     alignItems: 'center',
-    transition: 'all .3s ease',
+    transition: 'border-color .3s ease',
+    minHeight: '100px',
     ':hover': {
       border: '4px dashed #aeaeae',
     }
+  },
+  rowInnerActive: {
+    border: '4px solid #aeaeae',
   },
   dragButton: {
     position: 'absolute',
@@ -41,21 +44,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const renderRows = (size) => {
-  const splited = size.split('-');
-  const count = 12 / +splited[splited.length - 1];
-  const rows = [];
-  for (let i = 0; i < count; i++) {
-    rows.push(
-      <div key={i} className={css(styles.rowInner)}>
-        <AddPageItemMenu />
-      </div>);
-  }
+const getRowItems = (ids, rowItems) => ids.map(id => rowItems[id]);
 
-  return rows;
-};
-
-const Rows = ({ rows, langId, removeRow }) => {
+const Rows = ({ rows, rowsItems, langId, removeRow, openHtmlEditor }) => {
   return (
     <div>
       <ReactCSSTransitionGroup
@@ -73,7 +64,30 @@ const Rows = ({ rows, langId, removeRow }) => {
             >
               <Icon>close</Icon>
             </IconButton>
-            {renderRows(row.size)}
+            <div className="clearfix">
+              {
+                getRowItems(row.items, rowsItems).map(item => (
+                  <div key={item._id} className={item.size}>
+                    <div className={
+                      item.content
+                        ?
+                          css(styles.rowInner, styles.rowInnerActive)
+                        :
+                          css(styles.rowInner)
+                      }
+                    >
+                      {item.content ?
+                        <div>
+                          <span dangerouslySetInnerHTML={{ __html: item.content }} />
+                        </div>
+                        :
+                        <AddPageItemMenu item={item} openHtmlEditor={openHtmlEditor} />
+                      }
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
           </div>
         ))}
       </ReactCSSTransitionGroup>

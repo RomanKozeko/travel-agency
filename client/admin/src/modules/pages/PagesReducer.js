@@ -9,6 +9,7 @@ const pagesSuccess = (state, action) => {
     byIds: { ...state.byIds, ...payload.entities.items },
     pagesContent: { ...state.pagesContent, ...payload.entities.content },
     rows: { ...state.rows, ...payload.entities.rows },
+    rowsItems: { ...state.rowsItems, ...payload.entities.rowsItems },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -28,6 +29,7 @@ const pageSuccess = (state, action) => {
     byIds: { ...state.byIds, ...payload.entities.items },
     pagesContent: { ...state.pagesContent, ...payload.entities.content },
     rows: { ...state.rows, ...payload.entities.rows },
+    rowsItems: { ...state.rowsItems, ...payload.entities.rowsItems },
     isFetching: false,
     isPageSaving: false
   };

@@ -11,9 +11,9 @@ import ImagePreview from '../ui-elements/ImagePreview';
 import {getPage, getContentByLang} from '../../rootReducer';
 import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
-import MyEditor from './MyEditor';
 import GridSelector from './GridSelector';
 import Rows from './Rows';
+import HtmlEditorPopup from './HtmlEditorPopup';
 
 const uniqueId = require('lodash.uniqueid');
 
@@ -40,7 +40,9 @@ class PageForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      htmlEditorOpen: false,
       rowsByLang: { ...this.props.rowsByLang },
+      rowsItems: { ...this.props.rowsItems },
       allRowsById: { ...this.props.allRowsById }
     };
   }
@@ -72,6 +74,26 @@ class PageForm extends React.Component {
   savePage(e, pageId) {
     e.preventDefault();
     this.props.handleSubmit(this.state, pageId);
+  }
+
+  saveRow(content) {
+    const rowsItems = { ...this.state.rowsItems };
+    rowsItems[this.state.currentRowItem._id || this.state.currentRowItem.id].content = content;
+    this.setState({
+      htmlEditorOpen: false,
+      currentRow: ''
+    });
+  }
+
+  openHtmlEditor(rowItem) {
+    this.setState({
+      htmlEditorOpen: true,
+      currentRowItem: rowItem
+    });
+  }
+
+  closeHtmlEditor() {
+    this.setState({ htmlEditorOpen: false });
   }
 
   render() {
@@ -113,13 +135,21 @@ class PageForm extends React.Component {
               <Rows
                 rows={this.getRowsByLang(lang._id)}
                 langId={lang._id}
+                rowsItems={this.state.rowsItems}
                 removeRow={this.removeRow.bind(this)}
+                openHtmlEditor={this.openHtmlEditor.bind(this)}
               />
             </div>
             }
           </div>
           )
         )}
+
+        <HtmlEditorPopup
+          isOpen={this.state.htmlEditorOpen}
+          saveRow={this.saveRow.bind(this)}
+          handleRequestClose={this.closeHtmlEditor.bind(this)}
+        />
 
         <Button
           raised
@@ -141,6 +171,7 @@ PageForm.propTypes = {
   languages: PropTypes.array,
   handleSubmit: PropTypes.func,
   selectedTabIndex: PropTypes.number,
+  isPageSaving: PropTypes.bool,
 };
 
 PageForm = reduxForm({
@@ -150,6 +181,7 @@ PageForm = reduxForm({
 PageForm = connect((state, ownProps) => {
   const { page, languages } = ownProps;
   const allRowsById = { ...state.pages.rows };
+  const rowsItems = { ...state.pages.rowsItems };
   const initialValues = { preview: page.preview };
   const rowsByLang = {};
 
@@ -171,6 +203,7 @@ PageForm = connect((state, ownProps) => {
   return {
     initialValues,
     rowsByLang,
+    rowsItems,
     allRowsById,
     isPageSaving: state.pages.isPageSaving,
     page: pageCopy

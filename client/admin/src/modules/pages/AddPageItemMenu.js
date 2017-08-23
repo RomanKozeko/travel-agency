@@ -31,6 +31,13 @@ class AddPageItemMenu extends Component {
           open={this.state.open}
           onRequestClose={() => this.handleRequestClose()}
         >
+          <MenuItem onClick={() => {
+            this.handleRequestClose();
+            return this.props.openHtmlEditor(this.props.item);
+          }}
+          >
+            Добавить контент
+          </MenuItem>
           <MenuItem onClick={() => this.handleRequestClose()}>Добавить галерею</MenuItem>
           <MenuItem onClick={() => this.handleRequestClose()}>Добавить картнику</MenuItem>
           <MenuItem onClick={() => this.handleRequestClose()}>Добавить список туров</MenuItem>

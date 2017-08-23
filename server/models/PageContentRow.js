@@ -1,19 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PageContentItemSchema = require('./PageContentItem');
+const PageContentCellSchema = require('./PageContentCell');
 
 const PageContentSchemaRow = new Schema({
   title: String,
-  size: {
-    type: String,
-    required: true
-  },
-  type: String,
-  images: [String],
-  content: String,
-  pageLink: String,
-  items: [PageContentItemSchema]
+  items: [PageContentCellSchema]
 });
 
 module.exports = PageContentSchemaRow;

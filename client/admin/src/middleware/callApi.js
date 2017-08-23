@@ -52,7 +52,11 @@ export const tourSchema = new schema.Entity('tours', {
 }, { idAttribute: '_id' });
 export const toursSchema = { tours: [tourSchema] };
 
-export const rowSchema = new schema.Entity('rows', {}, { idAttribute: '_id' });
+
+export const rowItemSchema = new schema.Entity('rowsItems', {}, { idAttribute: '_id' });
+export const rowSchema = new schema.Entity('rows', {
+  items: [rowItemSchema]
+}, { idAttribute: '_id' });
 export const contentSchema = new schema.Entity('content', {
   rows: [rowSchema],
 }, { idAttribute: '_id' });

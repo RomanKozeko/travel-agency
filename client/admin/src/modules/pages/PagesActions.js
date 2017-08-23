@@ -85,6 +85,3 @@ export const savePage = (pageState, pageId) => (dispatch, getState) => {
   });
 };
 
-const setupPageData = (values, rows) => {
-
-};
