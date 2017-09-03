@@ -8,7 +8,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import RenderTextField from '../ui-elements/form/RenderTextField';
 import ImagePreview from '../ui-elements/ImagePreview';
-import {getPage, getContentByLang} from '../../rootReducer';
+import { getContentByLang } from '../../rootReducer';
 import PageCaption from '../ui-elements/PageCaption';
 import GridIcons from '../ui-elements/gridIcons/GridIcons';
 import GridSelector from './GridSelector';
@@ -23,15 +23,21 @@ const styles = StyleSheet.create({
   }
 });
 
-class Row {
-  constructor(title, size, type = '', content = '', pageLink = '') {
+class RowItem {
+  constructor(size, type = '') {
     this.id = uniqueId();
-    this.title = title;
     this.size = size;
     this.type = type;
+  }
+}
+
+class Row {
+  constructor(title, columns, rowsItems, content = '', pageLink = '') {
+    this.id = uniqueId();
+    this.title = title;
     this.content = content;
     this.content = pageLink;
-    this.items = [];
+    this.items = rowsItems;
     this.images = [];
   }
 }
@@ -54,11 +60,19 @@ class PageForm extends React.Component {
   addRow(columns, langId) {
     const rowsByLang = { ...this.state.rowsByLang };
     const allRowsById = { ...this.state.allRowsById };
-    const row = new Row('', `col-md-${12 / columns}`);
+    const rowsItems = { ...this.state.rowsItems };
+
+    let rowItemsIds = [];
+    for (let i = 0; i < columns; i++) {
+      const rowItem = new RowItem(`col-md-${12 / columns}`);
+      rowItemsIds.push(rowItem.id);
+      rowsItems[rowItem.id] = rowItem;
+    }
+    const row = new Row('', columns, rowItemsIds);
 
     allRowsById[row._id || row.id] = row;
     rowsByLang[langId].push(row._id || row.id);
-    this.setState({ rowsByLang, allRowsById });
+    this.setState({ rowsByLang, allRowsById, rowsItems });
   }
 
   removeRow(langId, rowId) {
@@ -73,7 +87,7 @@ class PageForm extends React.Component {
 
   savePage(e, pageId) {
     e.preventDefault();
-    this.props.handleSubmit(this.state, pageId);
+    this.props.handleSubmit(this.state, pageId, this.props.isNewPage);
   }
 
   saveRow(content) {
@@ -179,23 +193,28 @@ PageForm = reduxForm({
 })(PageForm);
 
 PageForm = connect((state, ownProps) => {
-  const { page, languages } = ownProps;
+  const { page, languages, isNewPage } = ownProps;
+
   const allRowsById = { ...state.pages.rows };
   const rowsItems = { ...state.pages.rowsItems };
   const initialValues = { preview: page.preview };
   const rowsByLang = {};
 
   const pageCopy = { ...page };
-
   pageCopy.content.forEach((contentId) => {
-    languages.forEach((lang) => {
-      const content = getContentByLang(state, contentId, lang);
-      if (content) {
-        const contentCopy = { ...content };
-        rowsByLang[lang._id] = contentCopy.rows ? [...contentCopy.rows] : null;
-        delete contentCopy.rows;
+    languages.forEach((lang, i) => {
+      let content;
+      if (isNewPage) {
+        rowsByLang[lang._id] = page.content[i].rows;
+      } else {
+        content = getContentByLang(state, contentId, lang);
+        if (content) {
+          const contentCopy = { ...content };
+          rowsByLang[lang._id] = contentCopy.rows ? [...contentCopy.rows] : null;
+          delete contentCopy.rows;
 
-        initialValues[lang._id] = contentCopy;
+          initialValues[lang._id] = contentCopy;
+        }
       }
     });
   });
@@ -205,6 +224,7 @@ PageForm = connect((state, ownProps) => {
     rowsByLang,
     rowsItems,
     allRowsById,
+    isNewPage,
     isPageSaving: state.pages.isPageSaving,
     page: pageCopy
   };

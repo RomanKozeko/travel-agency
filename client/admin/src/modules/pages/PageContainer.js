@@ -11,16 +11,46 @@ import BackLink from '../ui-elements/BackLink';
 import { getPage, getLanguages } from '../../rootReducer';
 import { loadPage, savePage } from './PagesActions';
 import Page from './Page';
+const uniqueId = require('lodash.uniqueid');
 
+class PageContent {
+  constructor(language) {
+    this.id = uniqueId();
+    this.title = '';
+    this.description = '';
+    this.rows = [];
+    this.language = language._id;
+  }
+}
 
-const mapStateToProps = (state, router) => {
+const createBlankPage = (languages) => {
+  const content = [];
+  languages.forEach((language) => {
+    content.push(new PageContent(language));
+  });
   return {
-    page: getPage(state, router.match.params.id),
-    languages: getLanguages(state),
-    isFetching: state.pages.isFetching
+    id: uniqueId(),
+    preview: '',
+    content
   };
 };
 
+const mapStateToProps = (state, router) => {
+  let page = getPage(state, router.match.params.id);
+  const isNewPage = router.location.search.split('=')[1] === 'newPage';
+  const languages = getLanguages(state);
+
+  if (isNewPage) {
+    page = createBlankPage(languages);
+  }
+
+  return {
+    page,
+    languages,
+    isNewPage,
+    isFetching: state.pages.isFetching
+  };
+};
 
 class PageContainer extends React.Component {
   constructor(props) {

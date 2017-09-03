@@ -67,16 +67,16 @@ class PagesContainer extends React.Component {
           raised
           color="primary"
           className="addBottomMargin"
-          onClick={() => this.props.savePage(this.state)}
         >
-          Добавить страницу
+          <Link to="/pages/page?state=newPage" style={{color: '#fff'}}>Добавить страницу</Link>
+
         </Button>
         {isFetching
           ?
             <Spinner />
           :
             <Portlet isBordered={false}>
-               <SortableTable data={data} />
+              <SortableTable data={data} />
             </Portlet>
         }
       </div>

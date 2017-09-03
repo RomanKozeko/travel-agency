@@ -23,6 +23,12 @@ const pagesSuccess = (state, action) => {
 
 const pageSuccess = (state, action) => {
   const payload = action.response;
+  let pageItems;
+  if (state.pages[state.pageCount - 1]) {
+    pageItems = [...state.pages[state.pageCount - 1]];
+    pageItems.push(payload.result);
+  }
+
   return {
     ...state,
     allIds: [...state.allIds, payload.result],
@@ -31,7 +37,11 @@ const pageSuccess = (state, action) => {
     rows: { ...state.rows, ...payload.entities.rows },
     rowsItems: { ...state.rowsItems, ...payload.entities.rowsItems },
     isFetching: false,
-    isPageSaving: false
+    isPageSaving: false,
+    pages: {
+      ...state.pages,
+      [state.currPage]: pageItems
+    }
   };
 };
 

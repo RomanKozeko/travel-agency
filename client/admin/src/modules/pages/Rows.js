@@ -67,7 +67,7 @@ const Rows = ({ rows, rowsItems, langId, removeRow, openHtmlEditor }) => {
             <div className="clearfix">
               {
                 getRowItems(row.items, rowsItems).map(item => (
-                  <div key={item._id} className={item.size}>
+                  <div key={item._id || item.id} className={item.size}>
                     <div className={
                       item.content
                         ?

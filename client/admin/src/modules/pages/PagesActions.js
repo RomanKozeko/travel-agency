@@ -58,10 +58,15 @@ export const loadPage = id => (dispatch, getState) => {
 };
 
 const populatePageContent = (pageFormValues, item, pageState) => {
-  const content = pageFormValues[item];
+  const content = pageFormValues[item] || { title: 'Untitled page', description: '', language: item };
+  if (!content.language) {
+    content.language = item;
+  }
   content.rows = pageState.rowsByLang[item].map((row) => {
     const populatedRow = { ...pageState.allRowsById[row] };
-    populatedRow.items = pageState.allRowsById[row].items.map(rowItem => (pageState.rowsItems[rowItem]));
+    populatedRow.items = pageState.allRowsById[row].items.map(rowItem =>
+      (pageState.rowsItems[rowItem])
+    );
 
     return populatedRow;
   });
@@ -77,17 +82,21 @@ const populatePage = (page, pageState, pageFormValues) => {
   return page;
 };
 
-export const savePage = (pageState, pageId) => (dispatch, getState) => {
+export const savePage = (pageState, pageId, isNew) => (dispatch, getState) => {
   const state = getState();
-  let page = { ...state.pages.byIds[pageId], content: [] };
+  let page = { preview: '', content: [] };
+  if (state.pages.byIds[pageId]) {
+    page = { ...state.pages.byIds[pageId] };
+  }
   const pageFormValues = state.form.pageForm.values;
+  page.content = [];
   page = populatePage(page, pageState, pageFormValues);
 
   return dispatch({
     [CALL_API]: {
       types: [PAGE_SAVE_REQUEST, PAGE_SAVE_SUCCESS, PAGE_SAVE_FAILURE],
-      method: 'PUT',
-      endpoint: `/api/pages/${page._id}`,
+      method: isNew ? 'POST' : 'PUT',
+      endpoint: isNew ? '/api/pages/' : `/api/pages/${page._id}`,
       body: page,
       toasterMsg: {
         success: 'Page saved'
@@ -96,4 +105,3 @@ export const savePage = (pageState, pageId) => (dispatch, getState) => {
     }
   });
 };
-
