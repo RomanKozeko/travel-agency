@@ -57,19 +57,31 @@ export const loadPage = id => (dispatch, getState) => {
   return null;
 };
 
-export const savePage = (pageState, pageId) => (dispatch, getState) => {
-  const state = getState();
-  const page = { ...state.pages.byIds[pageId] };
-  const pageFormValues = state.form.pageForm.values;
+const populatePageContent = (pageFormValues, item, pageState) => {
+  const content = pageFormValues[item];
+  content.rows = pageState.rowsByLang[item].map((row) => {
+    const populatedRow = { ...pageState.allRowsById[row] };
+    populatedRow.items = pageState.allRowsById[row].items.map(rowItem => (pageState.rowsItems[rowItem]));
 
-  page.content = [];
+    return populatedRow;
+  });
+  return content;
+};
+
+const populatePage = (page, pageState, pageFormValues) => {
   Object.keys(pageState.rowsByLang).forEach((item) => {
-    const content = pageFormValues[item];
-    content.rows = pageState.rowsByLang[item].map(row => (
-      pageState.allRowsById[row]
-    ));
+    const content = populatePageContent(pageFormValues, item, pageState);
     page.content.push(content);
   });
+
+  return page;
+};
+
+export const savePage = (pageState, pageId) => (dispatch, getState) => {
+  const state = getState();
+  let page = { ...state.pages.byIds[pageId], content: [] };
+  const pageFormValues = state.form.pageForm.values;
+  page = populatePage(page, pageState, pageFormValues);
 
   return dispatch({
     [CALL_API]: {
