@@ -44,22 +44,26 @@ const styles = StyleSheet.create({
   image: {
     maxWidth: '100%',
     width: '100%',
-    border: '1px solid #e7ecf1',
     backgroundColor: '#fff',
     boxShadow: '0 2px 3px 2px rgba(0,0,0,.03);',
     marginTop: '0;',
     borderRadius: '4px;',
     animationName: [opacityKeyframes],
-    animationDuration: '1.3s',
-  },
-  imagePreview: {
-    maxWidth: '100%',
-    width: '100%',
-    opacity: '0.2'
+    animationDuration: '.3s',
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    zIndex: '2',
   },
   wrapper: {
     position: 'relative',
     marginBottom: '25px;',
+    maxWidth: '100%',
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#dadada',
+    paddingTop: '100%',
+    borderRadius: '4px;',
   },
   layer: {
     backgroundImage: 'linear-gradient(-90deg, #fff 0%, rgba(230,230,230, .4) 50%, #fff 100%)',
@@ -88,9 +92,7 @@ class ImagePreview extends React.Component {
     };
   }
   onLoad() {
-    setTimeout(() => {
-      this.setState({ loaded: true });
-    }, 300);
+    this.setState({ loaded: true });
   }
 
   render() {
@@ -98,33 +100,12 @@ class ImagePreview extends React.Component {
       [css(styles.image)]: !this.state.loaded,
       [css(styles.image, styles.imageLoaded)]: this.state.loaded
     });
+    const src = this.props.url || '/landscape.svg';
     return (
       <div className={css(styles.wrapper)}>
-        {this.state.loaded &&
-          <img
-            className={css(styles.image)}
-            src={this.props.url}
-            alt=""
-          />
-        }
-        {!this.state.loaded &&
-          <div>
-            <div className={css(styles.layer)}/>
-            <img
-              className={css(styles.imagePreview)}
-              src="/landscape.svg"
-              alt=""
-            />
-            <div style={{display: 'none'}}>
-              <img
-                src={this.props.url}
-                alt=""
-                onLoad={this.onLoad.bind(this)}
-              />
-            </div>
-          </div>
-        }
-
+        <div className={css(styles.layer)} />
+        {this.state.loaded && <img className={css(styles.image)} src={src} alt="" />}
+        {!this.state.loaded && <img style={{display: 'none'}} src={src} onLoad={this.onLoad.bind(this)} />}
       </div>
     )
   }
