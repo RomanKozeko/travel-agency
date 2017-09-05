@@ -30,38 +30,39 @@ const App = () => (
   <div>
     <div className={css(styles.wrapper)}>
       <HeaderContainer/>
-
-      <Route
-        render={({location}) => (
-          <TransitionGroup component="main">
-            <AnimatedSwitch
-              key={location.key}
-              location={location}
-            >
-              <Route exact path="/" component={Home}/>
-              <Route
-                exact
-                path="/tours"
-                render={props => (
-                  <ToursContainer {...props}  />
-                )}
-              />
-              <Route
-                path="/tour/:id"
-                render={props => (
-                  <Tour {...props} />
-                )}
-              />
-              <Route
-                path="/contacts"
-                render={props => (
-                  <Contacts {...props} />
-                )}
-              />
-            </AnimatedSwitch>
-          </TransitionGroup>
-        )}
-      />
+      <div className="container">
+        <Route
+          render={({location}) => (
+            <TransitionGroup component="main">
+              <AnimatedSwitch
+                key={location.key}
+                location={location}
+              >
+                <Route exact path="/" component={Home}/>
+                <Route
+                  exact
+                  path="/tours"
+                  render={props => (
+                    <ToursContainer {...props}  />
+                  )}
+                />
+                <Route
+                  path="/tour/:id"
+                  render={props => (
+                    <Tour {...props} />
+                  )}
+                />
+                <Route
+                  path="/contacts"
+                  render={props => (
+                    <Contacts {...props} />
+                  )}
+                />
+              </AnimatedSwitch>
+            </TransitionGroup>
+          )}
+        />
+      </div>
     </div>
     <Footer/>
   </div>

@@ -51,9 +51,7 @@ class ToursContainer extends React.Component {
               totalPages={count}
             />
           </div>
-
         }
-        <NewTourForm onSubmit={this.submit.bind(this)} />
       </div>
     )
   }
