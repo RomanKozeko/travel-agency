@@ -10,14 +10,15 @@ const mapStateToProps = (state) => {
     pages: getPages(state),
     isFetching: state.pages.isFetching,
     isFetched: state.pages.isFetched,
-
   };
 };
 
 class PagesContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.pages.length) {
-      this.props.loadPages();
+    const { pages, isFetched, loadPages } = this.props;
+
+    if (!pages.length || !isFetched) {
+      loadPages();
     }
   }
 

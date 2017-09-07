@@ -9,6 +9,7 @@ import Home from './Home'
 import Contacts from './Contacts'
 import ToursContainer from '../tours/ToursContainer';
 import Tour from '../tours/Tour';
+import Page from '../pages/Page';
 import HeaderContainer from '../header/HeaderContainer'
 import Footer from './Footer'
 import TransitionGroup from 'react-transition-group/TransitionGroup';
@@ -30,7 +31,7 @@ const App = () => (
   <div>
     <div className={css(styles.wrapper)}>
       <HeaderContainer/>
-      <div className="container">
+      <div>
         <Route
           render={({location}) => (
             <TransitionGroup component="main">
@@ -39,6 +40,12 @@ const App = () => (
                 location={location}
               >
                 <Route exact path="/" component={Home}/>
+                <Route
+                  path="/pages/:id"
+                  render={props => (
+                    <Page {...props} />
+                  )}
+                />
                 <Route
                   exact
                   path="/tours"

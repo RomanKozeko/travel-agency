@@ -31,7 +31,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     listStyle: 'none',
     margin: '0 0 0 180px;',
-    flexGrow: '1'
+    flexGrow: '1',
+    '@media (max-width: 600px)': {
+      margin: '0',
+      display: 'none'
+    }
   },
   link: {
     textTransform: 'uppercase',
@@ -64,7 +68,6 @@ const MainNav = () => (
           <li><Link className={css(styles.link)} to="/">Home</Link></li>
           <li><Link className={css(styles.link)} to="/contacts">Contacts</Link></li>
           <li><Link className={css(styles.link)} to="/tours">Tours</Link></li>
-          <li><Link className={css(styles.link)} to="/tour/max">tour max</Link></li>
         </ul>
       </nav>
     </div>

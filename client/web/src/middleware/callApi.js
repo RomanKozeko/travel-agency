@@ -34,7 +34,8 @@ export const pagesSchema = { items: [pageSchema] };
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
-  PAGES: pagesSchema
+  PAGES: pagesSchema,
+  PAGE: pageSchema,
 };
 
 

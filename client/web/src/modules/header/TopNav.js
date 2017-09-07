@@ -3,7 +3,6 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: '57px',
     background: '#fff',
     padding: '20px 0',
     boxSizing: 'border-box'
@@ -11,7 +10,8 @@ const styles = StyleSheet.create({
   item: {
     display: 'inline-flex',
     color: '#1593d0',
-    marginRight: '20px'
+    marginRight: '20px',
+    alignItems: 'center'
   },
   text: {
     color: 'rgba(34, 34, 34, 0.6);',

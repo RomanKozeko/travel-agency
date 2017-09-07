@@ -3,6 +3,9 @@ import { CALL_API, Schemas } from '../../middleware/callApi';
 export const PAGES_REQUEST = 'PAGES_REQUEST';
 export const PAGES_SUCCESS = 'PAGES_SUCCESS';
 export const PAGES_FAILURE = 'PAGES_FAILURE';
+export const PAGE_REQUEST = 'PAGE_REQUEST';
+export const PAGE_SUCCESS = 'PAGE_SUCCESS';
+export const PAGE_FAILURE = 'PAGE_FAILURE';
 
 const fetchPages = () => ({
   [CALL_API]: {
@@ -11,5 +14,21 @@ const fetchPages = () => ({
     schema: Schemas.PAGES
   }
 });
+
+const fetchPage = id => ({
+  [CALL_API]: {
+    types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
+    endpoint: `/api/pages/${id}`,
+    schema: Schemas.PAGE,
+  }
+});
+
+export const loadPage = id => (dispatch, getState) => {
+  const state = getState().pages;
+  if (!state.byIds[id]) {
+    return dispatch(fetchPage(id));
+  }
+  return null;
+};
 
 export const loadPages = () => (dispatch) => (dispatch(fetchPages()));

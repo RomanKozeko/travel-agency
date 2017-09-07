@@ -1719,3 +1719,7 @@ html, body {
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+.row + .row {
+    margin-top: 20px;
+}
