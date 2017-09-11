@@ -74,7 +74,7 @@ app.use(session({
 
 app.use('/', indexRouter);
 
-app.use(express.static(path.join(__dirname, '../client/web/build'), { maxAge: -31557600000 }));
+app.use(express.static(path.join(__dirname, '../client'), { maxAge: -31557600000 }));
 
 app.use('/api', apiRouter);
 
