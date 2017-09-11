@@ -8,7 +8,7 @@ router.get('/', HomeCtrl.index);
 router.get('/tours', ToursCtrl.index);
 
 router.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/web/build/admin/index.html'));
+  res.sendFile(path.join(__dirname, '../../client/admin/build/index.html'));
 });
 
 
