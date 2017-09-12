@@ -31,5 +31,5 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3003/",
-  "homepage": "web/build/"
+  "homepage": "/web/build/"
 }

@@ -70,13 +70,10 @@ app.use(session({
 //   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
 // }
 
-
-
+app.use('/api', apiRouter);
 app.use('/', indexRouter);
-
 app.use(express.static(path.join(__dirname, '../client'), { maxAge: -31557600000 }));
 
-app.use('/api', apiRouter);
 
 /**
  * Error Handler.

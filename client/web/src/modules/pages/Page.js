@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: 'url(/v.jpg)',
+    backgroundImage: 'url(/web/build/v.jpg)',
     backgroundSize: 'cover',
   },
   headerTitle: {
