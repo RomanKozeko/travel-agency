@@ -18,7 +18,7 @@ const LanguagesList = ({ items, isFetching }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: 'lang/'
+        linkPrefix: '/admin/lang/'
       },
       {
         name: 'prefix',

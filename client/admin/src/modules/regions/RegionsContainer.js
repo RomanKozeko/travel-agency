@@ -43,7 +43,7 @@ class PagesContainer extends React.Component {
         {
           name: 'title',
           isLink: true,
-          linkPrefix: 'regions/'
+          linkPrefix: '/admin/regions/'
         },
         {
           name: 'description',

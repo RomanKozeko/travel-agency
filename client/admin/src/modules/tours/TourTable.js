@@ -21,7 +21,7 @@ class TourTable extends Component {
 					  return (
               <TableRow key={n._id}>
                 <TableCell>
-	                <Link to={`/tours/${n._id}`}>{n.content[0].title}</Link>
+	                <Link to={`/admin/tours/${n._id}`}>{n.content[0].title}</Link>
                 </TableCell>
                 <TableCell>
 								  {n.content[0].description}

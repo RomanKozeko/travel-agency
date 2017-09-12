@@ -47,7 +47,7 @@ class PagesContainer extends React.Component {
         {
           name: 'title',
           isLink: true,
-          linkPrefix: 'pages/'
+          linkPrefix: '/admin/pages/'
         },
         {
           name: 'description',
@@ -68,7 +68,7 @@ class PagesContainer extends React.Component {
           color="primary"
           className="addBottomMargin"
         >
-          <Link to="/pages/page?state=newPage" style={{color: '#fff'}}>Добавить страницу</Link>
+          <Link to="/admin/pages/page?state=newPage" style={{color: '#fff'}}>Добавить страницу</Link>
 
         </Button>
         {isFetching
