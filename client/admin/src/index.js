@@ -28,7 +28,7 @@ getMeRequest().then(res => {
       <div>
         <Router>
           <Switch>
-            <Route path="/login" component={Auth}/>
+            <Route path="/login" component={Auth} />
 
             <PrivateRoute
               path="/"

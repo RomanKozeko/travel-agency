@@ -51,12 +51,12 @@ const CustomLink = ({ label, to, icon }) => (
 
 const SideBar = () =>  (
 	<ul className={css(styles.sideBarMenu)}>
-		<li className={css(styles.item)}><CustomLink to="/tours" label="Tours" icon="library_books"/></li>
-		<li className={css(styles.item)}><CustomLink to="/regions" label="Regions" icon="place"/></li>
-		<li className={css(styles.item)}><CustomLink to="/hotels" label="Hotels" icon="business"/></li>
-		<li className={css(styles.item)}><CustomLink to="/pages" label="Pages" icon="web"/></li>
-		<li className={css(styles.item)}><CustomLink to="/lang" label="Languages" icon="language"/></li>
-		<li className={css(styles.item)}><CustomLink to="/settings" label="Settings" icon="settings"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/tours" label="Tours" icon="library_books"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/regions" label="Regions" icon="place"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/hotels" label="Hotels" icon="business"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/pages" label="Pages" icon="web"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/lang" label="Languages" icon="language"/></li>
+		<li className={css(styles.item)}><CustomLink to="/admin/settings" label="Settings" icon="settings"/></li>
 	</ul>
 );
 

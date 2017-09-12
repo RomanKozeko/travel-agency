@@ -41,40 +41,40 @@ const styles = StyleSheet.create({
 
 const routes = [
   {
-    path: '/tours',
+    path: '/admin/tours',
     exact: true,
     main: () => <ToursContainer />
   },
   {
-    path: '/tours/:id',
+    path: '/admin/tours/:id',
     exact: true,
     main: () => <Tour />
   },
   {
-    path: '/regions',
+    path: '/admin/regions',
     main: () => <RegionsContainer />
   },
   {
-    path: '/hotels',
+    path: '/admin/hotels',
     exact: true,
     main: () => <h2>Hotels</h2>
   },
   {
-    path: '/pages/:id',
+    path: '/admin/pages/:id',
     main: () => <PageContainer />
   },
   {
-    path: '/pages',
+    path: '/admin/pages',
     exact: true,
     main: () => <PagesContainer />
   },
   {
-    path: '/lang',
+    path: '/admin/lang',
     exact: true,
     main: () => <LanguagesContainer />
   },
   {
-    path: '/settings',
+    path: '/admin/settings',
     main: () => <h2>Settings</h2>
   }
 ];

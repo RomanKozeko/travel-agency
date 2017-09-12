@@ -51,6 +51,11 @@ class PageForm extends React.Component {
       rowsItems: { ...this.props.rowsItems },
       allRowsById: { ...this.props.allRowsById }
     };
+    this.saveRow = this.saveRow.bind(this);
+    this.closeHtmlEditor = this.closeHtmlEditor.bind(this);
+    this.addRow = this.addRow.bind(this);
+    this.removeRow = this.removeRow.bind(this);
+    this.openHtmlEditor = this.removeRow.bind(this);
   }
 
   getRowsByLang(langId) {
@@ -140,7 +145,7 @@ class PageForm extends React.Component {
 
               <PageCaption text={'Добавить ряд'}/>
               <GridSelector
-                clickHandler={this.addRow.bind(this)}
+                clickHandler={this.addRow}
                 count={4}
                 lang={lang._id}
               />
@@ -150,8 +155,8 @@ class PageForm extends React.Component {
                 rows={this.getRowsByLang(lang._id)}
                 langId={lang._id}
                 rowsItems={this.state.rowsItems}
-                removeRow={this.removeRow.bind(this)}
-                openHtmlEditor={this.openHtmlEditor.bind(this)}
+                removeRow={this.removeRow}
+                openHtmlEditor={this.openHtmlEditor}
               />
             </div>
             }
@@ -161,8 +166,8 @@ class PageForm extends React.Component {
 
         <HtmlEditorPopup
           isOpen={this.state.htmlEditorOpen}
-          saveRow={this.saveRow.bind(this)}
-          handleRequestClose={this.closeHtmlEditor.bind(this)}
+          saveRow={this.saveRow}
+          handleRequestClose={this.closeHtmlEditor}
         />
 
         <Button

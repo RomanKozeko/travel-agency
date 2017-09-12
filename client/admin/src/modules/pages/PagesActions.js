@@ -22,7 +22,7 @@ const fetchPages = (nextPageUrl, nextPage) => ({
 
 export const loadPages = (nextPage = 0) => (dispatch, getState) => {
   const {
-    nextPageUrl = `api/pages?page=${nextPage}`,
+    nextPageUrl = `/api/pages?page=${nextPage}`,
     pages,
     pageCount,
   } = getState().pages;

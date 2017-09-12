@@ -22,6 +22,8 @@ class SortableTable extends React.Component {
     super(props);
 
     this.state = { selected: {} };
+    this.countSelected = this.countSelected.bind(this);
+    this.isSelected = this.isSelected.bind(this);
   }
 
   handleSelectAllClick(event, checked) {
@@ -88,7 +90,7 @@ class SortableTable extends React.Component {
 
     return (
       <div>
-        <SortableTableToolbar numSelected={this.countSelected.bind(this)()} />
+        <SortableTableToolbar numSelected={this.countSelected()} />
         <Table>
           <TableHead>
             <TableRow>
@@ -108,7 +110,7 @@ class SortableTable extends React.Component {
                 <TableCell checkbox>
                   <Checkbox
                     onChange={(e, checked) => this.handleSelect(e, checked, item._id)}
-                    checked={this.isSelected.bind(this)(item._id)}
+                    checked={this.isSelected(item._id)}
                   />
                 </TableCell>
                 {this.renderFileds(item, data.fields)}
