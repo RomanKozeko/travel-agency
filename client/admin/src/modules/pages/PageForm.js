@@ -55,7 +55,7 @@ class PageForm extends React.Component {
     this.closeHtmlEditor = this.closeHtmlEditor.bind(this);
     this.addRow = this.addRow.bind(this);
     this.removeRow = this.removeRow.bind(this);
-    this.openHtmlEditor = this.removeRow.bind(this);
+    this.openHtmlEditor = this.openHtmlEditor.bind(this);
   }
 
   getRowsByLang(langId) {
