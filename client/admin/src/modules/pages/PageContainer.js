@@ -76,7 +76,7 @@ class PageContainer extends React.Component {
     return (
       <div>
         <PageHeader text={'Cтраница:'} />
-        <BackLink text="Назад к списку страниц" url="/pages" />
+        <BackLink text="Назад к списку страниц" url="/admin/pages" />
         { isFetching || !page ? <Spinner /> : <Page {...this.props} /> }
       </div>
     );

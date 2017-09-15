@@ -2,6 +2,7 @@ import React from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
+import DeleteIcon from 'material-ui-icons/Delete';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import AddPageItemMenu from './AddPageItemMenu';
@@ -31,6 +32,10 @@ const styles = StyleSheet.create({
   },
   rowInnerActive: {
     border: '4px solid #aeaeae',
+    position: 'relative',
+    ':hover': {
+      border: '4px solid #aeaeae',
+    }
   },
   dragButton: {
     position: 'absolute',
@@ -42,11 +47,33 @@ const styles = StyleSheet.create({
     top: '-35px',
     right: '-16px'
   },
+  itemContent: {
+    position: 'relative'
+  },
+  itemContentButton: {
+    color: '#aeaeae',
+    cursor: 'pointer',
+    ':hover': {
+      color: '#3f51b5'
+    }
+  },
+  itemContentToolbar: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+  }
 });
 
 const getRowItems = (ids, rowItems) => ids.map(id => rowItems[id]);
 
-const Rows = ({ rows, rowsItems, langId, removeRow, openHtmlEditor }) => {
+const Rows = ({
+                rows,
+                rowsItems,
+                langId,
+                removeRow,
+                openHtmlEditor,
+                removeRowItem
+              }) => {
   return (
     <div>
       <ReactCSSTransitionGroup
@@ -78,9 +105,16 @@ const Rows = ({ rows, rowsItems, langId, removeRow, openHtmlEditor }) => {
                     >
                       {item.content ?
                         <div>
+                          <div className={css(styles.itemContentToolbar)}>
+                            <DeleteIcon
+                              className={css(styles.itemContentButton)}
+                              onClick={() => removeRowItem(item._id || item.id)}
+                            />
+                            <Icon className={css(styles.itemContentButton)}>mode_edit</Icon>
+                          </div>
                           <span dangerouslySetInnerHTML={{ __html: item.content }} />
                         </div>
-                        :
+                          :
                         <AddPageItemMenu item={item} openHtmlEditor={openHtmlEditor} />
                       }
                     </div>

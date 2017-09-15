@@ -56,6 +56,7 @@ class PageForm extends React.Component {
     this.addRow = this.addRow.bind(this);
     this.removeRow = this.removeRow.bind(this);
     this.openHtmlEditor = this.openHtmlEditor.bind(this);
+    this.removeRowItem = this.removeRowItem.bind(this);
   }
 
   getRowsByLang(langId) {
@@ -88,6 +89,12 @@ class PageForm extends React.Component {
       rowsByLang[langId].splice(index, 1);
     }
     this.setState({ rowsByLang });
+  }
+
+  removeRowItem(itemId) {
+    const rowsItems = { ...this.state.rowsItems };
+    rowsItems[itemId].content = '';
+    this.setState({ rowsItems });
   }
 
   savePage(e, pageId) {
@@ -143,19 +150,20 @@ class PageForm extends React.Component {
                 </div>
               </div>
 
-              <PageCaption text={'Добавить ряд'}/>
+              <PageCaption text={'Добавить ряд'} />
               <GridSelector
                 clickHandler={this.addRow}
                 count={4}
                 lang={lang._id}
               />
 
-              <PageCaption text={'Схема страницы'}/>
+              <PageCaption text={'Схема страницы'} />
               <Rows
                 rows={this.getRowsByLang(lang._id)}
                 langId={lang._id}
                 rowsItems={this.state.rowsItems}
                 removeRow={this.removeRow}
+                removeRowItem={this.removeRowItem}
                 openHtmlEditor={this.openHtmlEditor}
               />
             </div>
