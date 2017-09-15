@@ -35,7 +35,8 @@ class HtmlEditorPopup extends React.Component {
   }
 
   render() {
-    const {isOpen, handleRequestClose, saveRow} = this.props;
+    const {isOpen, handleRequestClose, saveRow, currentRowItem} = this.props;
+    const content = currentRowItem ? currentRowItem.content : '<p>Page content</p>';
     return (
       <Dialog
         fullScreen
@@ -57,7 +58,7 @@ class HtmlEditorPopup extends React.Component {
           </Toolbar>
         </AppBar>
         <TinyMCE
-          content="<p>This is the initial content of the editor</p>"
+          content={content}
           config={{
             plugins: 'link image code',
             height: '500'

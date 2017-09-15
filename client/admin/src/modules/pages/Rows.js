@@ -61,10 +61,32 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '0',
     right: '0',
+  },
+  rowInnerContent: {
+    width: '100%'
   }
 });
 
 const getRowItems = (ids, rowItems) => ids.map(id => rowItems[id]);
+
+const getItemClassName = (item) => (
+  item.content ? css(styles.rowInner, styles.rowInnerActive) : css(styles.rowInner)
+);
+
+const ItemContentToolBar = ({item, removeRowItem, editRowItem}) => (
+  <div className={css(styles.itemContentToolbar)}>
+    <DeleteIcon
+      className={css(styles.itemContentButton)}
+      onClick={() => removeRowItem(item._id || item.id)}
+    />
+    <Icon
+      className={css(styles.itemContentButton)}
+      onClick={() => editRowItem(item._id || item.id)}
+    >
+      mode_edit
+    </Icon>
+  </div>
+);
 
 const Rows = ({
                 rows,
@@ -72,7 +94,8 @@ const Rows = ({
                 langId,
                 removeRow,
                 openHtmlEditor,
-                removeRowItem
+                removeRowItem,
+                editRowItem
               }) => {
   return (
     <div>
@@ -95,23 +118,10 @@ const Rows = ({
               {
                 getRowItems(row.items, rowsItems).map(item => (
                   <div key={item._id || item.id} className={item.size}>
-                    <div className={
-                      item.content
-                        ?
-                          css(styles.rowInner, styles.rowInnerActive)
-                        :
-                          css(styles.rowInner)
-                      }
-                    >
+                    <div className={getItemClassName(item)}>
                       {item.content ?
-                        <div>
-                          <div className={css(styles.itemContentToolbar)}>
-                            <DeleteIcon
-                              className={css(styles.itemContentButton)}
-                              onClick={() => removeRowItem(item._id || item.id)}
-                            />
-                            <Icon className={css(styles.itemContentButton)}>mode_edit</Icon>
-                          </div>
+                        <div className={css(styles.rowInnerContent)}>
+                          <ItemContentToolBar {...{ item, removeRowItem, editRowItem }} />
                           <span dangerouslySetInnerHTML={{ __html: item.content }} />
                         </div>
                           :

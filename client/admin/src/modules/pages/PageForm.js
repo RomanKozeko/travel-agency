@@ -49,7 +49,8 @@ class PageForm extends React.Component {
       htmlEditorOpen: false,
       rowsByLang: { ...this.props.rowsByLang },
       rowsItems: { ...this.props.rowsItems },
-      allRowsById: { ...this.props.allRowsById }
+      allRowsById: { ...this.props.allRowsById },
+      currRowItem: null
     };
     this.saveRow = this.saveRow.bind(this);
     this.closeHtmlEditor = this.closeHtmlEditor.bind(this);
@@ -57,6 +58,7 @@ class PageForm extends React.Component {
     this.removeRow = this.removeRow.bind(this);
     this.openHtmlEditor = this.openHtmlEditor.bind(this);
     this.removeRowItem = this.removeRowItem.bind(this);
+    this.editRowItem = this.editRowItem.bind(this);
   }
 
   getRowsByLang(langId) {
@@ -97,6 +99,14 @@ class PageForm extends React.Component {
     this.setState({ rowsItems });
   }
 
+  editRowItem(itemId) {
+    const rowsItems = { ...this.state.rowsItems };
+    this.setState({
+      htmlEditorOpen: true,
+      currentRowItem: rowsItems[itemId]
+    });
+  }
+
   savePage(e, pageId) {
     e.preventDefault();
     this.props.handleSubmit(this.state, pageId, this.props.isNewPage);
@@ -119,7 +129,7 @@ class PageForm extends React.Component {
   }
 
   closeHtmlEditor() {
-    this.setState({ htmlEditorOpen: false });
+    this.setState({ htmlEditorOpen: false, currRowItem: null });
   }
 
   render() {
@@ -164,6 +174,7 @@ class PageForm extends React.Component {
                 rowsItems={this.state.rowsItems}
                 removeRow={this.removeRow}
                 removeRowItem={this.removeRowItem}
+                editRowItem={this.editRowItem}
                 openHtmlEditor={this.openHtmlEditor}
               />
             </div>
@@ -174,6 +185,7 @@ class PageForm extends React.Component {
 
         <HtmlEditorPopup
           isOpen={this.state.htmlEditorOpen}
+          currentRowItem={this.state.currentRowItem}
           saveRow={this.saveRow}
           handleRequestClose={this.closeHtmlEditor}
         />
