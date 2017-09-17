@@ -41,6 +41,7 @@ router.post('/languages', ApiLanguagesCtrl.post);
 router.get('/pages', ApiPagesCtrl.get);
 router.get('/pages/:id', ApiPagesCtrl.getOne);
 router.put('/pages/:id', ApiPagesCtrl.put);
+router.delete('/pages', ApiPagesCtrl.delete);
 router.post('/pages', ApiPagesCtrl.post);
 
 module.exports = router;

@@ -21,9 +21,10 @@ class SortableTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selected: {} };
+    this.state = { selected: {}, isSelectedAll: false };
     this.countSelected = this.countSelected.bind(this);
     this.isSelected = this.isSelected.bind(this);
+    this.deletePages = this.deletePages.bind(this);
   }
 
   handleSelectAllClick(event, checked) {
@@ -32,17 +33,33 @@ class SortableTable extends React.Component {
     this.props.data.items.forEach((item) => {
       selected[item._id] = checked;
     });
-    this.setState({ selected });
+    this.setState({ selected, isSelectedAll: checked });
   }
 
   handleSelect(event, checked, id) {
     const selected = { ...this.state.selected };
     selected[id] = checked;
-    this.setState({ selected });
+    this.setState({ selected, isSelectedAll: false });
   }
 
   isSelected(id) {
     return !!this.state.selected[id];
+  }
+
+  getSelectedIDs() {
+    return Object.keys(this.state.selected);
+  }
+
+  deletePages() {
+    const pagesToDelete = Object.keys(this.state.selected).filter(
+      id => (this.state.selected[id] === true)
+    );
+
+    this.props.deletePages(pagesToDelete);
+    this.setState({
+      selected: {},
+      isSelectedAll: false
+    });
   }
 
   countSelected() {
@@ -90,12 +107,12 @@ class SortableTable extends React.Component {
 
     return (
       <div>
-        <SortableTableToolbar numSelected={this.countSelected()} />
+        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deletePages} />
         <Table>
           <TableHead>
             <TableRow>
               <TableCell checkbox className={css(styles.actions)}>
-                <Checkbox onChange={(e, checked) => this.handleSelectAllClick(e, checked)} />
+                <Checkbox checked={this.state.isSelectedAll} onChange={(e, checked) => this.handleSelectAllClick(e, checked)}  />
               </TableCell>
               {data.headers.map((item, i) => (
                 <TableCell key={i + 1}>{item}</TableCell>
@@ -131,7 +148,8 @@ class SortableTable extends React.Component {
 
 SortableTable.propTypes = {
   data: PropTypes.object,
-  languages: PropTypes.object
+  languages: PropTypes.object,
+  deletePages: PropTypes.func
 };
 
 export default SortableTable;

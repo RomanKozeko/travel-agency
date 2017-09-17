@@ -10,7 +10,7 @@ import {
   Link
 } from 'react-router-dom';
 import {CircularProgress} from 'material-ui/Progress';
-import {loadPages} from './PagesActions';
+import {loadPages, deletePages} from './PagesActions';
 import {getPageWithItems} from '../../rootReducer';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
@@ -76,7 +76,7 @@ class PagesContainer extends React.Component {
             <Spinner />
           :
             <Portlet isBordered={false}>
-              <SortableTable data={data} />
+              <SortableTable data={data} deletePages={this.props.deletePages} />
             </Portlet>
         }
       </div>
@@ -86,6 +86,7 @@ class PagesContainer extends React.Component {
 
 PagesContainer.propTypes = {
   loadPages: PropTypes.func,
+  deletePages: PropTypes.func,
   items: PropTypes.array,
   currPage: PropTypes.number,
   pageCount: PropTypes.number,
@@ -95,7 +96,7 @@ PagesContainer.propTypes = {
 
 PagesContainer = connect(
   mapStateToProps,
-  { loadPages }
+  { loadPages, deletePages }
 )(PagesContainer);
 
 export default PagesContainer;

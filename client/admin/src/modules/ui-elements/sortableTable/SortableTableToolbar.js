@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   }
 })
 const SortableTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, deletePages } = props;
 
   return (
     <div>
@@ -28,7 +28,8 @@ const SortableTableToolbar = (props) => {
         <div className={css(styles.wrapper)}>
           <h4 className={css(styles.header)} type="subheading">Выбрано: {numSelected}</h4>
           <IconButton aria-label="Delete">
-            <DeleteIcon />
+            <DeleteIcon onClick={deletePages}
+            />
           </IconButton>
         </div>
         : null}
@@ -37,7 +38,8 @@ const SortableTableToolbar = (props) => {
 };
 
 SortableTableToolbar.propTypes = {
-  numSelected: PropTypes.number
+  numSelected: PropTypes.number,
+  deletePages: PropTypes.func
 };
 
 export default SortableTableToolbar;

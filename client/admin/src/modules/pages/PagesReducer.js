@@ -21,13 +21,37 @@ const pagesSuccess = (state, action) => {
   };
 };
 
+const pagesDeleteSuccess = (state, action) => {
+  const idsToRemove = action.response.result;
+  const byIds = { ...state.byIds };
+  const allIds = [...state.allIds];
+
+  Object.keys(idsToRemove).forEach((id) => {
+    delete byIds[idsToRemove[id]];
+    const index = allIds.indexOf(idsToRemove[id]);
+    if (index > -1) {
+      allIds.splice(index, 1);
+    }
+  });
+
+  return {
+    ...state,
+    allIds,
+    byIds,
+    pages: {
+      ...state.pages,
+      [state.currPage]: allIds
+    }
+  };
+};
+
 const pageSuccess = (state, action) => {
   const payload = action.response;
   let pageItems;
-  if (state.pages[state.pageCount - 1]) {
-    pageItems = [...state.pages[state.pageCount - 1]];
-    pageItems.push(payload.result);
-  }
+
+  // TODO: make support for multiple pages
+  pageItems = [...state.pages[state.currPage]];
+  pageItems.push(payload.result);
 
   return {
     ...state,
@@ -59,6 +83,8 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
   [actions.PAGES_SUCCESS]: pagesSuccess,
+  [actions.PAGES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
+  [actions.PAGES_DELETE_SUCCESS]: pagesDeleteSuccess,
   [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.PAGE_SUCCESS]: pageSuccess,

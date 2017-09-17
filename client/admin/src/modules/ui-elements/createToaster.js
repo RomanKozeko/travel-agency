@@ -44,7 +44,7 @@ const Notifier = ({ msg }) => (
 );
 
 const createToaster = msg => ({
-  timeOut: 600,
+  timeOut: 400,
   icon: (<div />),
   removeOnHover: true,
   showCloseButton: false,

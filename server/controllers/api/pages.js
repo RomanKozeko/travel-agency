@@ -45,5 +45,13 @@ module.exports = {
         res.json(result);
       })
       .catch(next);
+  },
+
+  delete(req, res, next) {
+    const ids = req.body;
+
+    Page.deleteMany({ _id: ids })
+      .then(() => res.json(ids))
+      .catch(next);
   }
 };

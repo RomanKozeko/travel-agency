@@ -3,6 +3,9 @@ import { CALL_API, Schemas } from '../../middleware/callApi';
 export const PAGES_REQUEST = 'PAGES_REQUEST';
 export const PAGES_SUCCESS = 'PAGES_SUCCESS';
 export const PAGES_FAILURE = 'PAGES_FAILURE';
+export const PAGES_DELETE_REQUEST = 'PAGES_DELETE_REQUEST';
+export const PAGES_DELETE_SUCCESS = 'PAGES_DELETE_SUCCESS';
+export const PAGES_DELETE_FAILURE = 'PAGES_DELETE_FAILURE';
 export const PAGES_GET_PAGE_FROM_CACHE = 'PAGES/GET_PAGE_FROM_CACHE';
 export const PAGE_REQUEST = 'PAGE_REQUEST';
 export const PAGE_SUCCESS = 'PAGE_SUCCESS';
@@ -56,6 +59,19 @@ export const loadPage = id => (dispatch, getState) => {
   }
   return null;
 };
+
+export const deletePages = ids => ({
+  [CALL_API]: {
+    types: [PAGES_DELETE_REQUEST, PAGES_DELETE_SUCCESS, PAGES_DELETE_FAILURE],
+    method: 'DELETE',
+    endpoint: '/api/pages',
+    toasterMsg: {
+      success: 'Pages deleted'
+    },
+    body: ids,
+    schema: Schemas.PAGES,
+  }
+});
 
 const populatePageContent = (pageFormValues, item, pageState) => {
   const content = pageFormValues[item] || { title: 'Untitled page', description: '', language: item };
