@@ -1,3 +1,4 @@
+import { browserHistory } from 'react-router';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 export const PAGES_REQUEST = 'PAGES_REQUEST';
@@ -97,6 +98,7 @@ export const savePage = (pageState, pageId, isNew) => (dispatch, getState) => {
       types: [PAGE_SAVE_REQUEST, PAGE_SAVE_SUCCESS, PAGE_SAVE_FAILURE],
       method: isNew ? 'POST' : 'PUT',
       endpoint: isNew ? '/api/pages/' : `/api/pages/${page._id}`,
+      redirectAfterSave: true,
       body: page,
       toasterMsg: {
         success: 'Page saved'
@@ -104,4 +106,5 @@ export const savePage = (pageState, pageId, isNew) => (dispatch, getState) => {
       schema: Schemas.PAGE
     }
   });
+
 };

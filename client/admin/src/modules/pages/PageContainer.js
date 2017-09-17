@@ -66,11 +66,6 @@ class PageContainer extends React.Component {
     }
   }
 
-  submit(values) {
-    // print the form values to the console
-    console.log(values);
-  }
-
   render() {
     const { isFetching, page } = this.props;
     return (

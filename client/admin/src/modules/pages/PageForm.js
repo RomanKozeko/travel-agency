@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import { CircularProgress } from 'material-ui/Progress';
-
+import { withRouter, Link } from 'react-router-dom';
 import RenderTextField from '../ui-elements/form/RenderTextField';
 import ImagePreview from '../ui-elements/ImagePreview';
 import { getContentByLang } from '../../rootReducer';
@@ -109,6 +109,9 @@ class PageForm extends React.Component {
 
   savePage(e, pageId) {
     e.preventDefault();
+    if (this.props.isNewPage) {
+      this.props.history.push('/admin/pages', {});
+    }
     this.props.handleSubmit(this.state, pageId, this.props.isNewPage);
   }
 
@@ -217,7 +220,7 @@ PageForm = reduxForm({
   form: 'pageForm'
 })(PageForm);
 
-PageForm = connect((state, ownProps) => {
+PageForm = withRouter(connect((state, ownProps) => {
   const { page, languages, isNewPage } = ownProps;
 
   const allRowsById = { ...state.pages.rows };
@@ -250,9 +253,10 @@ PageForm = connect((state, ownProps) => {
     rowsItems,
     allRowsById,
     isNewPage,
+    history: ownProps.history,
     isPageSaving: state.pages.isPageSaving,
     page: pageCopy
   };
-})(PageForm);
+})(PageForm));
 
 export default PageForm;
