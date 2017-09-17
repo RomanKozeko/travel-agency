@@ -10,6 +10,7 @@ const regionsSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, ...payload.result.items],
     byIds: { ...state.byIds, ...payload.entities.regions },
+    regionsContent: { ...state.regionsContent, ...payload.entities.content },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -37,48 +38,26 @@ export const defaultState = {
   isFetching: false,
   pageCount: 0,
   currPage: 0,
-  pages: {}
-};
-
-export const byIds = (state = {}, action) => {
-	if (action.response && action.response.entities && action.response.entities.regions) {
-		return {
-			...state,
-      ...action.response.entities.regions
-		};
-	}
-	return state;
-};
-
-export const allIds = (state = {}, action) => {
-	if (action.response && action.response.entities && action.response.entities.regions) {
-		const allIds = Object.keys(action.response.entities.regions);
-		return {
-			...state,
-			allIds
-		};
-	}
-	return state;
+  pages: {},
+  regionsContent: {}
 };
 
 const
   regionsReducer = createReducer(defaultState, {
-  [REGIONS_REQUEST]: state => ({ ...state, isFetching: true }),
-  [REGIONS_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
-  [REGIONS_SUCCESS]: regionsSuccess,
-  [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
-  [REGION_REQUEST]: state => ({ ...state, isFetching: true }),
-  [REGION_SUCCESS]: regionSuccess,
-  [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
-});
+    [REGIONS_REQUEST]: state => ({ ...state, isFetching: true }),
+    [REGIONS_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
+    [REGIONS_SUCCESS]: regionsSuccess,
+    [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
+    [REGION_REQUEST]: state => ({ ...state, isFetching: true }),
+    [REGION_SUCCESS]: regionSuccess,
+    [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
+  });
 
 
 export default regionsReducer;
 
 //  selectors
-export const getRegions = state => {
-	return state.allIds.map(id => state.byIds[id])
-};
+export const getRegions = state => (state.allIds.map(id => state.byIds[id]));
 export const getRegion = (state, id) => {
   if (state.byIds[id]) {
     return state.byIds[id];

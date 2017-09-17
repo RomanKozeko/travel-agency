@@ -20,25 +20,31 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 const mapStateToProps = (state) => {
   return {
     regions: getRegions(state.regions, state.pages.currPage),
+    content: state.regions.regionsContent,
     currPage: state.pages.currPage,
     pageCount: state.pages.pageCount,
     count: state.pages.count,
+    languages: state.languages,
     isFetching: state.pages.isFetching
   };
 };
 
-class PagesContainer extends React.Component {
+class RegionsContainer extends React.Component {
 
   componentDidMount() {
-    this.props.loadRegions();
+    if (this.props.regions.length < 1) {
+      this.props.loadRegions();
+    }
   }
 
   render() {
-    const { regions, isFetching } = this.props;
+    const { regions, content, languages, isFetching } = this.props;
 
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
       items: regions,
+      content,
+      languages,
       fields: [
         {
           name: 'title',
@@ -72,8 +78,8 @@ class PagesContainer extends React.Component {
   }
 }
 
-PagesContainer.propTypes = {
-  loadPages: PropTypes.func,
+RegionsContainer.propTypes = {
+  loadRegions: PropTypes.func,
   regions: PropTypes.array,
   currPage: PropTypes.number,
   pageCount: PropTypes.number,
@@ -81,9 +87,9 @@ PagesContainer.propTypes = {
   isFetching: PropTypes.bool,
 };
 
-PagesContainer = connect(
+RegionsContainer = connect(
   mapStateToProps,
   { loadRegions }
-)(PagesContainer);
+)(RegionsContainer);
 
-export default PagesContainer;
+export default RegionsContainer;

@@ -15,8 +15,6 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
 class SortableTable extends React.Component {
   constructor(props) {
     super(props);
@@ -89,7 +87,7 @@ class SortableTable extends React.Component {
   }
 
 
-  renderFileds(item, fields) {
+  renderFields(item, fields) {
     return fields.map((field, i) => (
       <TableCell key={item._id + i}>
         {field.isLink
@@ -130,7 +128,7 @@ class SortableTable extends React.Component {
                     checked={this.isSelected(item._id)}
                   />
                 </TableCell>
-                {this.renderFileds(item, data.fields)}
+                {this.renderFields(item, data.fields)}
                 <TableCell>
                   <IconButton>
                     <Icon>create</Icon>

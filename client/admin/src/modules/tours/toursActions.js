@@ -1,4 +1,5 @@
-import { CALL_API, Schemas } from '../../middleware/callApi';
+import {CALL_API, Schemas} from '../../middleware/callApi';
+
 export const TOURS_REQUEST = 'TOURS_REQUEST';
 export const TOURS_SUCCESS = 'TOURS_SUCCESS';
 export const TOURS_FAILURE = 'TOURS_FAILURE';
@@ -12,7 +13,7 @@ export const EDIT_TOUR_FAILURE = 'EDIT_TOUR_FAILURE';
 
 const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
-    types: [ TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE ],
+    types: [TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE],
     endpoint: nextPageUrl,
     schema: Schemas.TOURS,
     nextPage
@@ -41,26 +42,51 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
 };
 
 const fetchTour = (id) => ({
-	[CALL_API]: {
-		types: [ TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE ],
-		endpoint: `/api/tours/${id}`,
-		schema: Schemas.TOUR,
-	}
+  [CALL_API]: {
+    types: [TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE],
+    endpoint: `/api/tours/${id}`,
+    schema: Schemas.TOUR,
+  }
 });
 
 export const loadTour = (id) => (dispatch, getState) => {
-	const state = getState().tours;
-	if (!state.byIds[id]) {
-		return dispatch(fetchTour(id))
-	}
+  const state = getState().tours;
+  if (!state.byIds[id]) {
+    return dispatch(fetchTour(id));
+  }
+  return state.byIds[id];
 };
 
-export const editTour = (id, tour) => ({
-	[CALL_API]: {
-		types: [ EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE ],
-		endpoint: `/api/tours/${id}`,
-		schema: Schemas.TOUR,
-		method: 'PUT',
-		body: tour
-	}
-});
+const populateTourContent = (tourFormValues, item) => {
+  const content = tourFormValues[item];
+  if (!content.language) {
+    content.language = item;
+  }
+  return content;
+};
+
+const populateTour = (tourValues, tourFormValues) => {
+  const updatedTour = { content: [] };
+  Object.keys(tourFormValues).forEach((item) => {
+    const content = populateTourContent(tourFormValues, item);
+    updatedTour.content.push(content);
+  });
+
+  return { ...updatedTour, ...tourValues };
+};
+
+export const editTour = (id, tourValues) => (dispatch, getState) => {
+  const state = getState();
+  const tourFormValues = state.form.tourForm.values;
+  const tour = populateTour(tourValues, tourFormValues);
+
+  return dispatch({
+    [CALL_API]: {
+      types: [EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE],
+      endpoint: `/api/tours/${id}`,
+      schema: Schemas.TOUR,
+      method: 'PUT',
+      body: tour
+    }
+  });
+};

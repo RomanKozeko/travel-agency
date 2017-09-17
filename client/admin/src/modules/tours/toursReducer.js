@@ -10,7 +10,8 @@ const toursSuccess = (state, action) => {
   return {
     ...state,
     allIds: [...state.allIds, ...payload.result.tours],
-    byIds: {...state.byIds, ...payload.entities.tours},
+    byIds: { ...state.byIds, ...payload.entities.tours },
+    toursContent: { ...state.toursContent, ...payload.entities.content },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -19,7 +20,7 @@ const toursSuccess = (state, action) => {
       ...state.pages,
       [payload.nextPage]: payload.result.tours
     }
-  }
+  };
 };
 
 const tourSuccess = (state, action) => {
@@ -28,6 +29,7 @@ const tourSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, payload.result],
     byIds: {...state.byIds, ...payload.entities.tours},
+    toursContent: { ...state.toursContent, ...payload.entities.content },
     isFetching: false,
   }
 };
@@ -42,31 +44,41 @@ export const defaultState = {
 };
 
 const toursReducer = createReducer(defaultState, {
-  [TOURS_REQUEST] : (state) => ({...state, isFetching: true}),
-  [TOURS_GET_PAGE_FROM_CACHE] : (state, action) => ({...state, currPage: action.payload}),
-  [TOURS_SUCCESS] : toursSuccess,
-  [TOURS_FAILURE] : (state) => ({...state, isFetching: false}),
-	[TOUR_REQUEST] : (state) => ({...state, isFetching: true}),
-	[TOUR_SUCCESS] : tourSuccess,
-	[TOUR_FAILURE] : (state) => ({...state, isFetching: false}),
-	[EDIT_TOUR_REQUEST] : (state) => ({...state, isFetching: true}),
-	[EDIT_TOUR_SUCCESS] : tourSuccess,
-	[EDIT_TOUR_FAILURE] : (state) => ({...state, isFetching: false})
+  [TOURS_REQUEST]: state => ({ ...state, isFetching: true }),
+  [TOURS_GET_PAGE_FROM_CACHE]: (state, action) => ({...state, currPage: action.payload}),
+  [TOURS_SUCCESS]: toursSuccess,
+  [TOURS_FAILURE]: state => ({ ...state, isFetching: false }),
+	[TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
+	[TOUR_SUCCESS]: tourSuccess,
+	[TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
+	[EDIT_TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
+	[EDIT_TOUR_SUCCESS]: tourSuccess,
+	[EDIT_TOUR_FAILURE]: state => ({ ...state, isFetching: false })
 });
 
 export default toursReducer;
 
-//selectors
+// selectors
 export const getTours = state => (state.allIds.map(id => state.byIds[id]));
 export const getTour = (state, id) => {
- if(state.byIds[id]) {
-	 return state.byIds[id];
- }
+  if (state.byIds[id]) {
+    return state.byIds[id];
+  }
+  return null;
 };
+
 export const getPageWithTours = (state, page) => {
   if (state.pages[page]) {
-    return state.pages[page].map(id => state.byIds[id])
-  } else {
-    return []
+    return state.pages[page].map(id => state.byIds[id]);
   }
+  return [];
+};
+
+export const getContentByLang = (state, contentId, langId) => {
+  const content = state.tours.toursContent;
+
+  if (content[contentId].language === langId) {
+    return content[contentId];
+  }
+  return null;
 };

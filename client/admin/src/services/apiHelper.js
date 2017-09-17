@@ -6,26 +6,25 @@ function callApi(endpoint, options) {
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(json)
+        return Promise.reject(json);
       }
-      return json
+      return json;
     })
     .then(
       response => (response),
-      error => ({error: error.message || 'Something bad happened'})
-    )
+      error => ({ error: error.message || 'Something bad happened' })
+    );
 }
 
 export const loginUserRequest = (creds) =>
   callApi('/login', {
-    method: "POST",
-    headers: {'Content-Type': 'application/json'},
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(creds)
   });
 
 export const getMeRequest = () =>
-	callApi('/getMe', {
-		method: "GET",
-		headers: {'Content-Type': 'application/json', 'authorization': window.localStorage.token},
-	});
-
+  callApi('/getMe', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json', 'authorization': window.localStorage.token },
+  });

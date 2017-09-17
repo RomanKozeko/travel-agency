@@ -39,20 +39,6 @@ const callApi = (endpoint, options, schema, nextPage) => {
     );
 };
 
-
-export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
-export const categoriesSchema = { items: [categorySchema] };
-
-export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id' });
-export const regionsSchema = { items: [regionSchema] };
-
-export const tourSchema = new schema.Entity('tours', {
-  categories: [categorySchema],
-  regions: [regionSchema]
-}, { idAttribute: '_id' });
-export const toursSchema = { tours: [tourSchema] };
-
-
 export const rowItemSchema = new schema.Entity('rowsItems', {}, { idAttribute: '_id' });
 export const rowSchema = new schema.Entity('rows', {
   items: [rowItemSchema]
@@ -60,6 +46,21 @@ export const rowSchema = new schema.Entity('rows', {
 export const contentSchema = new schema.Entity('content', {
   rows: [rowSchema],
 }, { idAttribute: '_id' });
+
+export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
+export const categoriesSchema = { items: [categorySchema] };
+
+export const regionSchema = new schema.Entity('regions', {
+  content: [contentSchema],
+}, { idAttribute: '_id' });
+export const regionsSchema = { items: [regionSchema] };
+
+export const tourSchema = new schema.Entity('tours', {
+  content: [contentSchema],
+  categories: [categorySchema],
+  regions: [regionSchema]
+}, { idAttribute: '_id' });
+export const toursSchema = { tours: [tourSchema] };
 
 export const pageSchema = new schema.Entity('items', {
   content: [contentSchema],
