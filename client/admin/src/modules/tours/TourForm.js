@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
-import { getTour, getContentByLang } from './toursReducer';
-import { getRegion, getRegions } from '../regions/RegionsReducer';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { getContentByLang } from './toursReducer';
 import Button from 'material-ui/Button';
-import RenderTextField from '../ui-elements/form/RenderTextField';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Checkbox from 'material-ui/Checkbox';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
@@ -26,10 +18,21 @@ class TourForm extends Component {
 	constructor(props) {
 		super(props);
 
-    const {tour, regions} = this.props;
+		const { toursState, tour, regions, languagesState } = this.props;
     const idsRegions = regions.map((item) => (item._id));
+    const initialValues = {};
+
+    tour.content.forEach((contentId) => {
+      languagesState.allIds.forEach((lang) => {
+        const content = getContentByLang(toursState, contentId, lang);
+        if (content) {
+          initialValues[lang] = { ...content };
+        }
+      });
+    });
 
 		this.state = {
+      initialValues,
 			anchorEl: undefined,
 			open: false,
 			title: '',
@@ -44,54 +47,73 @@ class TourForm extends Component {
 		this.setState({ checked: ids })
   };
 
-  handleInputChange = (e) => {
+  handleInputChange = (e, langId) => {
     let state = {...this.state};
 
-    state[e.target.name] = e.target.value;
+    state.initialValues[langId] ?
+      state.initialValues[langId][e.target.name] = e.target.value
+	    : state.initialValues[langId] = { language: langId, [e.target.name]: e.target.value };
+
     this.setState(state);
+  };
+
+  handleEditorChange = (e, langId) => {
+    let state = {...this.state};
+    state.initialValues[langId] ?
+      state.initialValues[langId].content = e.target.getContent()
+      : state.initialValues[langId] = { language: langId, content: e.target.getContent() };
   };
 
 	submitForm = (e) => {
 		e.preventDefault();
-    let { checked } = this.state;
+    const { checked, initialValues } = this.state;
 		this.props.onSubmit(
       {
-        regions: checked
+        regions: checked,
+        content: Object.values(initialValues)
       }
 		);
 	};
 
 	render() {
-		const { languages, regions, selectedTabIndex } = this.props;
-		const { idsRegions } = this.state;
+		const { languagesState, selectedTabIndex } = this.props;
+		const { initialValues } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.submitForm(e)}>
-        {languages.map((lang, i) => (
-	        <div key={lang._id}>
+        {languagesState.allIds.map((langId, i) => (
+	        <div key={langId}>
             {selectedTabIndex === i &&
 			        <div className="row">
 				        <div className="col-md-6">
-					        <Field name={`${lang._id}.title`}
-					               onChange={(e) => this.handleInputChange(e)}
-					               component={RenderTextField}
-					               label="Название"/>
-					        <Field name={`${lang._id}.description`}
-					               onChange={(e) => this.handleInputChange(e)}
-					               component={RenderTextField}
-					               label="Описание"/>
-					        <TinyMCE
-						        content='default content'
-						        config={{
-                      plugins: 'link image code',
-                      height: '500'
-                    }}
-						        onChange={(e) => this.handleInputChange(e)}
+					        <TextField
+						        name='title'
+						        defaultValue={initialValues[langId] ? initialValues[langId].title : ''}
+						        onChange={(e) => this.handleInputChange(e, langId)}
+						        fullWidth
+						        className={css(styles.field)}
+						        label='Название'
 					        />
-					        <Field name={`${lang._id}.content`}
-					               onChange={(e) => this.handleInputChange(e)}
-					               component={RenderTextField}
-					               label="Название"/>
+					        <TextField
+						        name='description'
+						        defaultValue={initialValues[langId] ? initialValues[langId].description : ''}
+						        onChange={(e) => this.handleInputChange(e, langId)}
+						        fullWidth
+						        className={css(styles.field)}
+						        label='Мета описание'
+					        />
+					        <div className={css(styles.field)} >
+						        <TinyMCE
+							        content={initialValues[langId] ? initialValues[langId].content : 'default content'}
+											name='content'
+							        config={{
+                        plugins: 'link image code',
+                        height: '500'
+                      }}
+							        onChange={(e) => this.handleEditorChange(e, langId)}
+						        />
+					        </div>
+
 									<ItemsSelector
 										items={this.props.regionsByIDs}
 										content={this.props.regionsContent}
@@ -113,36 +135,5 @@ class TourForm extends Component {
 		)
 	}
 }
-
-TourForm = reduxForm({
-  form: 'tourForm',
-	config: { enableReinitialize: true }
-})(TourForm);
-
-const selector = formValueSelector('tourForm');
-
-TourForm = withRouter(connect(
-  (state, router) => {
-    const { languages } = state;
-  	const tourId = router.match.params.id;
-    const tour = getTour(state.tours, tourId);
-    const initialValues = {};
-
-    const tourCopy = { ...tour };
-
-    tourCopy.content.forEach((contentId) => {
-      languages.allIds.forEach((lang) => {
-        const content = getContentByLang(state, contentId, lang);
-        if (content) {
-
-          initialValues[lang] = { ...content };
-        }
-      });
-    });
-
-  	return {
-		  initialValues
-		}}
-)(TourForm));
 
 export default TourForm;

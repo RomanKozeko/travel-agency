@@ -26,15 +26,17 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, router) => {
 	return {
 		tour: getTour(state.tours, router.match.params.id),
+    toursState: state.tours,
     regionsByIDs: state.regions.byIds,
 		regions: getRegions(state.regions),
     regionsContent: state.regions.regionsContent,
     languages: getLanguages(state),
+    languagesState: state.languages,
 		isFetching: state.tours.isFetching || state.regions.isFetching
 	}
 };
 
-class Tour extends React.Component {
+class TourContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +63,7 @@ class Tour extends React.Component {
   };
 
   render() {
-    const { tour, isFetching, regions, languages }  = this.props;
+    const { tour, isFetching }  = this.props;
     const tabIndex  = this.state.index;
     return (
       <div>
@@ -92,9 +94,9 @@ class Tour extends React.Component {
 }
 
 
-Tour = withRouter(connect(
+TourContainer = withRouter(connect(
 	mapStateToProps,
   { loadTour, editTour, loadRegions }
-)(Tour));
+)(TourContainer));
 
-export default Tour;
+export default TourContainer;

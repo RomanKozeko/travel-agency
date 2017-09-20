@@ -35,7 +35,7 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
     return dispatch({
       type: TOURS_GET_PAGE_FROM_CACHE,
       payload: nextPage
-    })
+    });
   }
 
   return dispatch(fetchTours(nextPageUrl, nextPage))
@@ -57,29 +57,7 @@ export const loadTour = (id) => (dispatch, getState) => {
   return state.byIds[id];
 };
 
-const populateTourContent = (tourFormValues, item) => {
-  const content = tourFormValues[item];
-  if (!content.language) {
-    content.language = item;
-  }
-  return content;
-};
-
-const populateTour = (tourValues, tourFormValues) => {
-  const updatedTour = { content: [] };
-  Object.keys(tourFormValues).forEach((item) => {
-    const content = populateTourContent(tourFormValues, item);
-    updatedTour.content.push(content);
-  });
-
-  return { ...updatedTour, ...tourValues };
-};
-
-export const editTour = (id, tourValues) => (dispatch, getState) => {
-  const state = getState();
-  const tourFormValues = state.form.tourForm.values;
-  const tour = populateTour(tourValues, tourFormValues);
-
+export const editTour = (id, tour) => (dispatch) => {
   return dispatch({
     [CALL_API]: {
       types: [EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE],

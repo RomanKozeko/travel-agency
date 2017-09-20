@@ -12,7 +12,7 @@ import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
 import { LinearProgress } from 'material-ui/Progress';
 import ToursContainer from '../tours/ToursContainer';
-import Tour from '../tours/Tour';
+import TourContainer from '../tours/TourContainer';
 import PagesContainer from '../pages/PagesContainer';
 import PageContainer from '../pages/PageContainer';
 import RegionsContainer from '../regions/RegionsContainer';
@@ -48,7 +48,7 @@ const routes = [
   {
     path: '/admin/tours/:id',
     exact: true,
-    main: () => <Tour />
+    main: () => <TourContainer />
   },
   {
     path: '/admin/regions',

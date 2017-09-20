@@ -75,7 +75,7 @@ export const getPageWithTours = (state, page) => {
 };
 
 export const getContentByLang = (state, contentId, langId) => {
-  const content = state.tours.toursContent;
+  const content = state.toursContent;
 
   if (content[contentId].language === langId) {
     return content[contentId];
