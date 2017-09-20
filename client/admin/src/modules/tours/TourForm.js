@@ -10,6 +10,9 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
+import ItemsSelector from '../ui-elements/form/ItemsSelector';
+import TinyMCE from 'react-tinymce';
+import TextField from 'material-ui/TextField';
 
 const styles = StyleSheet.create({
   field: {
@@ -22,52 +25,24 @@ const styles = StyleSheet.create({
 class TourForm extends Component {
 	constructor(props) {
 		super(props);
+
+    const {tour, regions} = this.props;
+    const idsRegions = regions.map((item) => (item._id));
+
 		this.state = {
 			anchorEl: undefined,
 			open: false,
-			idsRegions: [],
-			checked: [],
 			title: '',
 			description: '',
-			content: ''
+			content: '',
+      idsRegions: idsRegions,
+      checked: tour.regions
 		}
 	}
 
-  componentDidMount() {
-    const {tour, regions} = this.props;
-    const idsRegions = regions.map((item) => (item._id));
-    let tourRegions = tour.regions;
-    this.setState({
-      idsRegions: idsRegions,
-      checked: tourRegions
-    })
-  }
-
-	handleToggle = (event, value) => {
-		const { checked } = this.state;
-		const currentIndex = checked.indexOf(value);
-		const newChecked = [...checked];
-
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
-
-		this.setState({
-			checked: newChecked,
-		});
-	};
-
-
-	handleClickListItem = event => {
-		this.setState({ open: true, anchorEl: event.currentTarget });
-	};
-
-
-	handleRequestClose = () => {
-		this.setState({ open: false });
-	};
+  updateRegions = (ids) => {
+		this.setState({ checked: ids })
+  };
 
   handleInputChange = (e) => {
     let state = {...this.state};
@@ -87,7 +62,7 @@ class TourForm extends Component {
 	};
 
 	render() {
-		const { languages, selectedTabIndex, initialValues, tourCont } = this.props;
+		const { languages, regions, selectedTabIndex } = this.props;
 		const { idsRegions } = this.state;
 
 		return (
@@ -105,44 +80,25 @@ class TourForm extends Component {
 					               onChange={(e) => this.handleInputChange(e)}
 					               component={RenderTextField}
 					               label="Описание"/>
+					        <TinyMCE
+						        content='default content'
+						        config={{
+                      plugins: 'link image code',
+                      height: '500'
+                    }}
+						        onChange={(e) => this.handleInputChange(e)}
+					        />
 					        <Field name={`${lang._id}.content`}
 					               onChange={(e) => this.handleInputChange(e)}
 					               component={RenderTextField}
 					               label="Название"/>
-					        <List>
-						        <ListItem
-							        button
-							        aria-haspopup="true"
-							        aria-controls="lock-menu"
-							        aria-label="Регион"
-							        onClick={this.handleClickListItem}
-						        >
-							        <ListItemText
-								        primary="Регион"
-								        secondary={this.state.checked.length > 0 ? this.state.checked.join(', ') : "Не выбрано"}
-							        />
-						        </ListItem>
-					        </List>
-					        <Menu
-						        id="lock-menu"
-						        anchorEl={this.state.anchorEl}
-						        open={this.state.open}
-						        onRequestClose={this.handleRequestClose}
-					        >
-                    {idsRegions.map((option, index) =>
-							        <MenuItem
-								        key={index}
-								        onClick={event => this.handleToggle(event, option)}
-							        >
-								        <Checkbox
-									        checked={this.state.checked.indexOf(option) !== -1}
-									        tabIndex="-1"
-									        disableRipple
-								        />
-                        {option}
-							        </MenuItem>
-                    )}
-					        </Menu>
+									<ItemsSelector
+										items={this.props.regionsByIDs}
+										content={this.props.regionsContent}
+										handleToggle={this.handleToggle}
+										defaultChecked={this.state.checked}
+										updateRegions={this.updateRegions}
+									/>
 
 					        <Button type="submit" raised color="primary" className={css(styles.button)}>
 						        Изменить
@@ -185,8 +141,7 @@ TourForm = withRouter(connect(
     });
 
   	return {
-		  initialValues,
-		  tourCont: initialValues
+		  initialValues
 		}}
 )(TourForm));
 

@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, router) => {
 	return {
 		tour: getTour(state.tours, router.match.params.id),
-		tours: getTours(state.tours),
+    regionsByIDs: state.regions.byIds,
 		regions: getRegions(state.regions),
+    regionsContent: state.regions.regionsContent,
     languages: getLanguages(state),
 		isFetching: state.tours.isFetching || state.regions.isFetching
 	}

@@ -17,14 +17,10 @@ const mapStateToProps = (state) => {
     count: state.tours.count,
     languages: state.languages,
     isFetching: state.pages.isFetching
-  }
+  };
 };
 
 class ToursContainer extends React.Component {
-  submit(values) {
-
-
-  }
 
   componentDidMount() {
     this.props.loadTours();
@@ -86,4 +82,4 @@ ToursContainer = connect(
   { loadTours }
 )(ToursContainer);
 
-export default ToursContainer
+export default ToursContainer;
