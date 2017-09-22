@@ -22,7 +22,7 @@ class SortableTable extends React.Component {
     this.state = { selected: {}, isSelectedAll: false };
     this.countSelected = this.countSelected.bind(this);
     this.isSelected = this.isSelected.bind(this);
-    this.deletePages = this.deletePages.bind(this);
+    this.deleteItems = this.deleteItems.bind(this);
   }
 
   handleSelectAllClick(event, checked) {
@@ -48,12 +48,12 @@ class SortableTable extends React.Component {
     return Object.keys(this.state.selected);
   }
 
-  deletePages() {
+  deleteItems() {
     const pagesToDelete = Object.keys(this.state.selected).filter(
       id => (this.state.selected[id] === true)
     );
 
-    this.props.deletePages(pagesToDelete);
+    this.props.deleteItems(pagesToDelete);
     this.setState({
       selected: {},
       isSelectedAll: false
@@ -73,16 +73,21 @@ class SortableTable extends React.Component {
 
   getItemContent(item) {
     const { data } = this.props;
-    if (item.content) {
+    if (item.content && data.content) {
+      let resContent = false;
       //  get all content of curr item
       const contentForCurrLang = item.content.find((itemContent) => {
-        const itemContentLang = data.content[itemContent].language;
-
-        return data.languages.byIds[itemContentLang].prefix === data.languages.currLanguage;
+        if (data.content[itemContent]) {
+          const itemContentLang = data.content[itemContent].language;
+          return data.languages.byIds[itemContentLang].prefix === data.languages.currLanguage;
+        }
+        resContent = true;
+        return data.languages.byIds[itemContent.language].prefix === data.languages.currLanguage;
       });
 
-      return data.content[contentForCurrLang];
+      return resContent ? contentForCurrLang : data.content[contentForCurrLang];
     }
+
     return item;
   }
 
@@ -105,12 +110,15 @@ class SortableTable extends React.Component {
 
     return (
       <div>
-        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deletePages} />
+        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deleteItems} />
         <Table>
           <TableHead>
             <TableRow>
               <TableCell checkbox className={css(styles.actions)}>
-                <Checkbox checked={this.state.isSelectedAll} onChange={(e, checked) => this.handleSelectAllClick(e, checked)}  />
+                <Checkbox
+                  checked={this.state.isSelectedAll}
+                  onChange={(e, checked) => this.handleSelectAllClick(e, checked)}
+                />
               </TableCell>
               {data.headers.map((item, i) => (
                 <TableCell key={i + 1}>{item}</TableCell>

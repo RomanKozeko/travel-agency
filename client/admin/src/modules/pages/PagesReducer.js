@@ -47,10 +47,12 @@ const pagesDeleteSuccess = (state, action) => {
 
 const pageSuccess = (state, action) => {
   const payload = action.response;
-  let pageItems;
+  let pageItems = [];
 
   // TODO: make support for multiple pages
-  pageItems = [...state.pages[state.currPage]];
+  if (state.pages[state.currPage]) {
+    pageItems = [...state.pages[state.currPage]];
+  }
   pageItems.push(payload.result);
 
   return {

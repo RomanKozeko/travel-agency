@@ -62,7 +62,10 @@ class PageForm extends React.Component {
   }
 
   getRowsByLang(langId) {
-    return this.state.rowsByLang[langId].map(id => this.state.allRowsById[id]);
+    if (this.state.rowsByLang[langId]) {
+      return this.state.rowsByLang[langId].map(id => this.state.allRowsById[id]);
+    }
+    return [];
   }
 
   addRow(columns, langId) {

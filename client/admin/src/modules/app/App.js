@@ -17,13 +17,14 @@ import PagesContainer from '../pages/PagesContainer';
 import PageContainer from '../pages/PageContainer';
 import RegionsContainer from '../regions/RegionsContainer';
 import LanguagesContainer from '../languages/LanguagesContainer';
+import CategoriesContainer from '../categories/CategoriesContainer';
+import CategoryContainer from '../categories/CategoryContainer';
 import { loadLanguages } from '../languages/LanguagesActions';
 
 const styles = StyleSheet.create({
   pageContainer: {
-    minHeight: '100vh',
-    marginTop: '75px',
-    padding: '20px 20px 0'
+    minHeight: 'calc(100vh - 75px)',
+    padding: '95px 20px 0'
   },
   sideBarWrapper: {
     width: '235px',
@@ -72,6 +73,16 @@ const routes = [
     path: '/admin/lang',
     exact: true,
     main: () => <LanguagesContainer />
+  },
+  {
+    path: '/admin/categories',
+    exact: true,
+    main: () => <CategoriesContainer />
+  },
+  {
+    path: '/admin/categories/:id',
+    exact: true,
+    main: () => <CategoryContainer />
   },
   {
     path: '/admin/settings',

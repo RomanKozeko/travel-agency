@@ -47,8 +47,9 @@ export const contentSchema = new schema.Entity('content', {
   rows: [rowSchema],
 }, { idAttribute: '_id' });
 
-export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
-export const categoriesSchema = { items: [categorySchema] };
+export const categoryContentSchema = new schema.Entity('content', {}, { idAttribute: '_id' });
+export const categorySchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const categoriesSchema = [categorySchema];
 
 export const regionSchema = new schema.Entity('regions', {
   content: [contentSchema],
@@ -67,9 +68,9 @@ export const pageSchema = new schema.Entity('items', {
 }, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 
+
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
-
 
 export const Schemas = {
   TOUR: tourSchema,
@@ -78,7 +79,9 @@ export const Schemas = {
   PAGES: pagesSchema,
   LANGUAGES: languagesSchema,
   REGION: regionSchema,
-  REGIONS: regionsSchema
+  REGIONS: regionsSchema,
+  CATEGORY: categorySchema,
+  CATEGORIES: categoriesSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

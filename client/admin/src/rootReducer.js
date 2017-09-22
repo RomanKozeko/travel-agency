@@ -6,6 +6,7 @@ import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import languagesReducer, * as fromLanguages from './modules/languages/LanguagesReducer';
+import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   pages: pagesReducer,
   regions: regionsReducer,
   languages: languagesReducer,
-  toastr: toastrReducer
+  toastr: toastrReducer,
+  categories: categoriesReducer
 });
 
 export default rootReducer;
@@ -30,4 +32,6 @@ export const getContentByLang = (
 ) => fromPages.getContentByLang(state, contentId, lang);
 
 export const getLanguages = state => fromLanguages.getLanguages(state.languages);
+export const getCategories = state => fromCategories.getCategories(state.categories);
+export const getCategory = (state, id) => fromCategories.getCategory(state.categories, id);
 
