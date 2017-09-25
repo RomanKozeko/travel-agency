@@ -40,7 +40,7 @@ const mapStateToProps = (state, router) => {
   }
 
   return {
-    category,
+    item: category,
     languages,
     isNew,
     languagesIDs: state.languages.byIds,
@@ -59,12 +59,12 @@ class CategoryContainer extends React.Component {
   }
 
   render() {
-    const { isFetching, category, isBordered = true } = this.props;
+    const { isFetching, item, isBordered = true } = this.props;
     return (
       <div>
         <PageHeader text={'Категория:'}/>
         <BackLink text="Назад к списку категорий" url="/admin/categories"/>
-        {isFetching || !category ? <Spinner/> :
+        {isFetching || !item ? <Spinner/> :
           <Portlet isBordered={isBordered}><CategoryForm {...this.props} /></Portlet>
         }
       </div>
@@ -81,7 +81,7 @@ CategoryContainer.propTypes = {
 
 CategoryContainer = withRouter(connect(
   mapStateToProps,
-  { loadCategory, saveCategory }
+  { loadCategory, save: saveCategory }
 )(CategoryContainer));
 
 export default CategoryContainer;
