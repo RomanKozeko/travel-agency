@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import NotificationPanel from '../ui-elements/form/NotificationPanel';
 
 const styles = StyleSheet.create({
   tabs: {
@@ -40,7 +41,8 @@ class CategoryForm extends React.Component {
       contentByLang[key] = {
         title: '',
         description: '',
-        language: key
+        language: key,
+        notValidForm: false
       }
     });
 
@@ -71,12 +73,27 @@ class CategoryForm extends React.Component {
     e.preventDefault();
     const category = {...this.state.category};
     category.content = Object.values(this.state.contentByLang);
-    this.props.saveCategory(category, this.props.isNew);
-
-    if (this.props.isNew) {
-      this.props.history.push('/admin/categories', {});
+    if (this.isValidInputs(category.content)) {
+      this.props.saveCategory(category, this.props.isNew);
+      this.setState({notValidForm: false})
+      if (this.props.isNew) {
+        this.props.history.push('/admin/categories', {});
+      }
+    } else {
+      this.setState({notValidForm: true})
     }
   };
+
+  isValidInputs(content) {
+    let isValid = true;
+    for(let i = 0; i < content.length; i++) {
+      if (!content[i].title) {
+        isValid = false;
+        break;
+      }
+    }
+    return isValid
+  }
 
   render() {
     const { isSaving } = this.props;
@@ -103,12 +120,16 @@ class CategoryForm extends React.Component {
                     value={this.state.contentByLang[lang._id].title}
                     onChange={this.handleChange(lang._id, 'title')}
                     margin="normal"
+                    required
                   />
                 </div>
               </div>
             }
             </div>
           ))
+          }
+          {this.state.notValidForm &&
+            <NotificationPanel>Please fill title for each language</NotificationPanel>
           }
           <Button
             raised
