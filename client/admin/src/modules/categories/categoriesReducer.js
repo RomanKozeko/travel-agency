@@ -4,6 +4,7 @@ import { CALL_API, Schemas } from '../../middleware/callApi';
 // actions
 const actionsObj = createBasicActions('CATEGORIES', 'CATEGORY', 'categories', CALL_API, Schemas);
 
+// Action Creators
 export const actions = actionsObj.actions;
 export const loadCategories = actionsObj.load;
 export const deleteCategories = actionsObj.deleteItem;
