@@ -7,7 +7,7 @@ import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import PageHeader from '../ui-elements/PageHeader';
 import { getCategory, getLanguages } from '../../rootReducer';
-import { loadCategory, saveCategory } from './categoriesActions';
+import { loadCategory, saveCategory } from './categoriesReducer';
 import CategoryForm from './CategoryForm';
 import Portlet from '../ui-elements/Portlet';;
 

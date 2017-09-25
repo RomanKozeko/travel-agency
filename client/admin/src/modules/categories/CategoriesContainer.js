@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 
-import { loadCategories, deleteCategories } from './categoriesActions';
+import { loadCategories, deleteCategories } from './categoriesReducer';
 import { getCategories } from '../../rootReducer';
 import CategoriesList from './CategoriesList';
 

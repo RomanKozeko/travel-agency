@@ -1,50 +1,16 @@
-import { createReducer } from '../../services/utils';
-import { actions } from './categoriesActions';
+import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import { CALL_API, Schemas } from '../../middleware/callApi';
 
-const categoriesSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, ...payload.result],
-    byIds: { ...state.byIds, ...payload.entities.items },
-    content: { ...state.content, ...payload.entities.content },
-    isFetching: false
-  };
-};
+// actions
+const actionsObj = createBasicActions('CATEGORIES', 'CATEGORY', 'categories', CALL_API, Schemas);
 
-const categoriesDeleteSuccess = (state, action) => {
-  const idsToRemove = action.response.result;
-  const byIds = { ...state.byIds };
-  const allIds = [...state.allIds];
+export const actions = actionsObj.actions;
+export const loadCategories = actionsObj.load;
+export const deleteCategories = actionsObj.deleteItem;
+export const loadCategory = actionsObj.loadItem;
+export const saveCategory = actionsObj.saveItem;
 
-  Object.keys(idsToRemove).forEach((id) => {
-    delete byIds[idsToRemove[id]];
-    const index = allIds.indexOf(idsToRemove[id]);
-    if (index > -1) {
-      allIds.splice(index, 1);
-    }
-  });
-
-  return {
-    ...state,
-    allIds,
-    byIds
-  };
-};
-
-const categorySuccess = (state, action) => {
-  const payload = action.response;
-
-  return {
-    ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.items },
-    content: { ...state.content, ...payload.entities.content },
-    isFetching: false,
-    isSaving: false
-  };
-};
-
+// reducers
 export const defaultState = {
   allIds: [],
   byIds: {},
@@ -53,15 +19,15 @@ export const defaultState = {
 
 const categoriesReducer = createReducer(defaultState, {
   [actions.CATEGORIES_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.CATEGORIES_SUCCESS]: categoriesSuccess,
+  [actions.CATEGORIES_SUCCESS]: basicReducerEvents.success,
   [actions.CATEGORIES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.CATEGORIES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
-  [actions.CATEGORIES_DELETE_SUCCESS]: categoriesDeleteSuccess,
+  [actions.CATEGORIES_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
   [actions.CATEGORIES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.CATEGORY_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.CATEGORY_SUCCESS]: categorySuccess,
+  [actions.CATEGORY_SUCCESS]: basicReducerEvents.itemSuccess,
   [actions.CATEGORY_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
-  [actions.CATEGORY_SAVE_SUCCESS]: categorySuccess
+  [actions.CATEGORY_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
 });
 
 export default categoriesReducer;
