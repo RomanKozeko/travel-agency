@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
-import ToursList from './ToursList'
-import NewTourForm from './NewTourForm'
-import Pagination from '../ui-elements/Pagination'
-import { loadTours } from './toursActions'
-import { getPageWithTours } from '../../rootReducer'
+import ToursList from './ToursList';
+import Pagination from '../ui-elements/Pagination';
+import { loadTours } from './toursActions';
+import { getPageWithTours } from '../../rootReducer';
 
 const mapStateToProps = (state) => {
   return {
@@ -53,7 +52,7 @@ class ToursContainer extends React.Component {
           </div>
         }
       </div>
-    )
+    );
   }
 }
 

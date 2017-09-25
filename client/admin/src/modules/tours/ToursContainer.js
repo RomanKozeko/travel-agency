@@ -1,17 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
-import Pagination from '../ui-elements/Pagination'
+import Pagination from '../ui-elements/Pagination';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
-import { loadTours } from './toursActions';
+import { loadTours, deleteTour } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
 
 const mapStateToProps = (state) => {
   return {
     items: getPageWithTours(state, state.tours.currPage),
-    content: state.tours.toursContent,
     currPage: state.tours.currPage,
     pageCount: state.tours.pageCount,
     count: state.tours.count,
@@ -27,14 +28,13 @@ class ToursContainer extends React.Component {
   }
 
   render() {
-    const { items, content, languages, isFetching, currPage, count,
+    const { items, languages, isFetching, currPage, count,
       loadTours, pageCount
     } = this.props;
 
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
       items,
-      content,
       languages,
       fields: [
         {
@@ -55,11 +55,19 @@ class ToursContainer extends React.Component {
 
     return (
       <div className="ToursContainer">
+        <PageHeader text={'Все туры'} />
+        <Button
+          raised
+          color="primary"
+          className="addBottomMargin"
+        >
+          <Link to="/admin/tours/tour?state=new" style={{color: '#fff'}}>Добавить тур</Link>
+
+        </Button>
         {isFetching ?
-          <Spinner/>
+          <Spinner />
           :
           <div>
-            <PageHeader text={'Все туры'} />
             <Portlet isBordered={false}>
               <SortableTable data={data} />
             </Portlet>
@@ -73,13 +81,13 @@ class ToursContainer extends React.Component {
 
         }
       </div>
-    )
+    );
   }
 }
 
 ToursContainer = connect(
   mapStateToProps,
-  { loadTours }
+  { loadTours, deleteTour }
 )(ToursContainer);
 
 export default ToursContainer;

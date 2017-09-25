@@ -24,7 +24,7 @@ class ItemsSelector extends React.Component {
 
   handleRequestClose = () => {
     this.setState({ open: false });
-    this.props.updateRegions(this.state.checked);
+    this.props.updateRegions([...this.state.checked]);
   };
 
   handleToggle = (event, value) => {

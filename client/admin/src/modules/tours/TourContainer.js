@@ -5,11 +5,12 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
+import BackLink from '../ui-elements/BackLink';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import TourForm from './TourForm';
-import { loadTour, editTour } from './toursActions';
+import { loadTour, addTour, editTour } from './toursActions';
 import { loadRegions } from '../regions/RegionsActions';
-import { getTour, getTours } from './toursReducer';
+import { getTour } from './toursReducer';
 import { getRegions } from '../regions/RegionsReducer';
 import { getLanguages } from '../../rootReducer';
 
@@ -23,15 +24,42 @@ const styles = StyleSheet.create({
   }
 });
 
+const uniqueId = require('lodash.uniqueid');
+
+const createBlankPage = (languages) => {
+  const content = [];
+  languages.forEach((language) => {
+    content.push({
+      id: uniqueId(),
+      title: '',
+      description: '',
+      language: language._id
+    });
+  });
+  return {
+    id: uniqueId(),
+    preview: '',
+    content
+  };
+};
+
 const mapStateToProps = (state, router) => {
+  let tour = getTour(state.tours, router.match.params.id);
+  const isNew = router.location.search.split('=')[1] === 'new';
+  const languages = getLanguages(state);
+
+  if (isNew) {
+    tour = createBlankPage(languages);
+  }
 	return {
-		tour: getTour(state.tours, router.match.params.id),
-    toursState: state.tours,
+		tour,
+    isNew,
     regionsByIDs: state.regions.byIds,
 		regions: getRegions(state.regions),
     regionsContent: state.regions.regionsContent,
-    languages: getLanguages(state),
-    languagesState: state.languages,
+    languagesIDs: state.languages.byIds,
+    languages,
+    content: state.tours.content,
 		isFetching: state.tours.isFetching || state.regions.isFetching
 	}
 };
@@ -58,8 +86,10 @@ class TourContainer extends React.Component {
     this.setState({ index });
   }
 
-  submit = (data) => {
-		this.props.editTour(this.props.tour._id, data);
+  submit = (tour, isNew) => {
+    isNew ?
+		this.props.addTour(tour):
+    this.props.editTour(tour);
   };
 
   render() {
@@ -71,7 +101,8 @@ class TourContainer extends React.Component {
 	          <Spinner/>
             :
             <div>
-	            <PageHeader text={`Тур: ${tour.content[0].title}`}/>
+              <BackLink text="Назад к списку туров" url="/admin/tours"/>
+              <PageHeader text={'Тур:'}/>
 	            <Portlet isBordered={true}>
                 <Tabs
                   className={css(styles.tabs)}
@@ -96,7 +127,7 @@ class TourContainer extends React.Component {
 
 TourContainer = withRouter(connect(
 	mapStateToProps,
-  { loadTour, editTour, loadRegions }
+  { loadTour, addTour, editTour, loadRegions }
 )(TourContainer));
 
 export default TourContainer;

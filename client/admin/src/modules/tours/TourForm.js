@@ -18,28 +18,29 @@ class TourForm extends Component {
 	constructor(props) {
 		super(props);
 
-		const { toursState, tour, regions, languagesState } = this.props;
+    const { tour, regions } = this.props;
     const idsRegions = regions.map((item) => (item._id));
-    const initialValues = {};
+    const contentByLang = {...this.props.languagesIDs};
 
-    tour.content.forEach((contentId) => {
-      languagesState.allIds.forEach((lang) => {
-        const content = getContentByLang(toursState, contentId, lang);
-        if (content) {
-          initialValues[lang] = { ...content };
-        }
-      });
+    Object.keys(contentByLang).forEach(key => {
+      contentByLang[key] = {
+        title: '',
+        description: '',
+        language: key
+      }
+    });
+
+    this.props.tour.content.forEach(content => {
+      contentByLang[content.language] = content
     });
 
 		this.state = {
-      initialValues,
+      contentByLang,
 			anchorEl: undefined,
 			open: false,
-			title: '',
-			description: '',
-			content: '',
+      content: this.props.content,
       idsRegions: idsRegions,
-      checked: tour.regions
+      checked: tour.regions || []
 		}
 	}
 
@@ -47,70 +48,66 @@ class TourForm extends Component {
 		this.setState({ checked: ids })
   };
 
-  handleInputChange = (e, langId) => {
-    let state = {...this.state};
-
-    state.initialValues[langId] ?
-      state.initialValues[langId][e.target.name] = e.target.value
-	    : state.initialValues[langId] = { language: langId, [e.target.name]: e.target.value };
-
-    this.setState(state);
+  handleInputChange = (langID, name) => event => {
+    const contentByLang = {...this.state.contentByLang};
+    contentByLang[langID][name] = event.target.value;
+    this.setState({contentByLang});
   };
 
-  handleEditorChange = (e, langId) => {
-    let state = {...this.state};
-    state.initialValues[langId] ?
-      state.initialValues[langId].content = e.target.getContent()
-      : state.initialValues[langId] = { language: langId, content: e.target.getContent() };
+  handleEditorChange = (e, langID) => {
+    const contentByLang = {...this.state.contentByLang};
+    contentByLang[langID].content =e.target.getContent();
+    this.setState({contentByLang});
   };
 
-	submitForm = (e) => {
-		e.preventDefault();
-    const { checked, initialValues } = this.state;
-		this.props.onSubmit(
-      {
-        regions: checked,
-        content: Object.values(initialValues)
-      }
-		);
-	};
+  saveTour = (e) => {
+    e.preventDefault();
+    const tour = {...this.props.tour};
+    tour.content = Object.values(this.state.contentByLang);
+    tour.regions = [...this.state.checked];
+    this.props.onSubmit(tour, this.props.isNew);
+
+    if (this.props.isNew) {
+      this.props.history.push('/admin/tours', {});
+    }
+  };
 
 	render() {
-		const { languagesState, selectedTabIndex } = this.props;
-		const { initialValues } = this.state;
+		const { languages, selectedTabIndex, isSaving } = this.props;
+		const { contentByLang } = this.state;
 
 		return (
-			<form onSubmit={(e) => this.submitForm(e)}>
-        {languagesState.allIds.map((langId, i) => (
-	        <div key={langId}>
+			<form onSubmit={(e) => this.saveTour(e)}>
+        {languages.map((lang, i) => (
+	        <div key={lang._id}>
             {selectedTabIndex === i &&
 			        <div className="row">
 				        <div className="col-md-6">
 					        <TextField
 						        name='title'
-						        defaultValue={initialValues[langId] ? initialValues[langId].title : ''}
-						        onChange={(e) => this.handleInputChange(e, langId)}
+                    value={contentByLang[lang._id].title}
+                    onChange={this.handleInputChange(lang._id, 'title')}
 						        fullWidth
 						        className={css(styles.field)}
 						        label='Название'
 					        />
 					        <TextField
 						        name='description'
-						        defaultValue={initialValues[langId] ? initialValues[langId].description : ''}
-						        onChange={(e) => this.handleInputChange(e, langId)}
+                    value={contentByLang[lang._id].description}
+                    onChange={this.handleInputChange(lang._id, 'description')}
 						        fullWidth
 						        className={css(styles.field)}
 						        label='Мета описание'
 					        />
 					        <div className={css(styles.field)} >
 						        <TinyMCE
-							        content={initialValues[langId] ? initialValues[langId].content : 'default content'}
+							        content={contentByLang[lang._id].content}
 											name='content'
 							        config={{
                         plugins: 'link image code',
                         height: '500'
                       }}
-							        onChange={(e) => this.handleEditorChange(e, langId)}
+							        onChange={(e) => this.handleEditorChange(e, lang._id)}
 						        />
 					        </div>
 
@@ -122,9 +119,14 @@ class TourForm extends Component {
 										updateRegions={this.updateRegions}
 									/>
 
-					        <Button type="submit" raised color="primary" className={css(styles.button)}>
-						        Изменить
-					        </Button>
+                  <Button
+                    raised
+                    type="submit"
+                    color="primary"
+                    disabled={isSaving}
+                  >
+                    {isSaving ? 'Сохраняю...' : 'Сохранить'}
+                  </Button>
 				        </div>
 			        </div>
             }

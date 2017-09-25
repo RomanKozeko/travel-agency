@@ -12,11 +12,10 @@ import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
-const CategoriesList = ({ items, content, languages, isFetching, deleteCategories }) => {
+const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
   const data = {
     headers: ['Заголовок', 'Описание', 'Язык'],
     items,
-    content,
     languages,
     fields: [
       {

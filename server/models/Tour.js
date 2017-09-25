@@ -4,8 +4,7 @@ const ContentSchema = require('./Content');
 
 const TourSchema = new Schema({
   preview: {
-    type: String,
-    required: true
+    type: String
   },
   content: [ContentSchema],
   categories: [{

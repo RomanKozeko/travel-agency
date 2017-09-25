@@ -57,7 +57,6 @@ export const regionSchema = new schema.Entity('regions', {
 export const regionsSchema = { items: [regionSchema] };
 
 export const tourSchema = new schema.Entity('tours', {
-  content: [contentSchema],
   categories: [categorySchema],
   regions: [regionSchema]
 }, { idAttribute: '_id' });

@@ -73,22 +73,23 @@ class SortableTable extends React.Component {
 
   getItemContent(item) {
     const { data } = this.props;
-    if (item.content && data.content) {
-      let resContent = false;
-      //  get all content of curr item
+    if (data.content) {
       const contentForCurrLang = item.content.find((itemContent) => {
         if (data.content[itemContent]) {
           const itemContentLang = data.content[itemContent].language;
           return data.languages.byIds[itemContentLang].prefix === data.languages.currLanguage;
         }
-        resContent = true;
+      });
+      return data.content[contentForCurrLang];
+    } else {
+      //  get all content of curr item
+      return item.content.find((itemContent) => {
+        if (!data.languages.byIds[itemContent.language]) {
+          return false;
+        }
         return data.languages.byIds[itemContent.language].prefix === data.languages.currLanguage;
       });
-
-      return resContent ? contentForCurrLang : data.content[contentForCurrLang];
     }
-
-    return item;
   }
 
 
