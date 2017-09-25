@@ -81,15 +81,17 @@ class SortableTable extends React.Component {
         }
       });
       return data.content[contentForCurrLang];
-    } else {
-      //  get all content of curr item
-      return item.content.find((itemContent) => {
+    }
+    //  get all content of curr item
+    return item.content ?
+      item.content.find((itemContent) => {
         if (!data.languages.byIds[itemContent.language]) {
           return false;
         }
         return data.languages.byIds[itemContent.language].prefix === data.languages.currLanguage;
-      });
-    }
+      })
+    :
+    item;
   }
 
 

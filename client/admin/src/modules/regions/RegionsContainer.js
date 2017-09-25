@@ -43,7 +43,6 @@ class RegionsContainer extends React.Component {
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
       items: regions,
-      content,
       languages,
       fields: [
         {
