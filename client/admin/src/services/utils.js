@@ -65,8 +65,19 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     }
   });
 
-  const saveItem = (id) => {
-    return null;
+  const saveItem = (payload, isNew) => (dispatch) => {
+    return dispatch({
+      [middleware]: {
+        types: [`${aliasPlural}_SAVE_REQUEST`, `${aliasPlural}_SAVE_SUCCESS`, `${aliasPlural}_SAVE_FAILURE`],
+        method: isNew ? 'POST' : 'PUT',
+        endpoint: isNew ? `/api/${endpoint}/` : `/api/${endpoint}/${payload._id}`,
+        body: payload,
+        toasterMsg: {
+          success: 'Saved'
+        },
+        schema: schemas[aliasPlural]
+      }
+    });
   };
 
   const deleteItem = ids => ({
@@ -89,6 +100,10 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     saveItem,
     load
   };
+}
+
+export function generateBasicReducer() {
+
 }
 
 

@@ -32,7 +32,7 @@ router.get('/categories', ApiCategoriesCtrl.get);
 router.get('/categories/:id', ApiCategoriesCtrl.getOne);
 router.post('/categories', requireAuth, ApiCategoriesCtrl.post);
 router.put('/categories/:id', requireAuth, ApiCategoriesCtrl.put);
-router.delete('/categories/:id', requireAuth, ApiCategoriesCtrl.delete);
+router.delete('/categories', requireAuth, ApiCategoriesCtrl.delete);
 
 router.get('/regions', ApiRegionsCtrl.get);
 router.post('/regions', ApiRegionsCtrl.post);

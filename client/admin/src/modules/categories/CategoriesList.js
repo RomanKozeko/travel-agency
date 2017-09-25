@@ -43,7 +43,7 @@ const CategoriesList = ({ items, content, languages, isFetching, deleteCategorie
         color="primary"
         className="addBottomMargin"
       >
-        <Link to="/admin/pages/page?state=newPage" style={{color: '#fff'}}>Добавить категорию</Link>
+        <Link to="/admin/categories/category?state=new" style={{color: '#fff'}}>Добавить категорию</Link>
 
       </Button>
       {isFetching

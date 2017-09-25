@@ -45,7 +45,8 @@ const mapStateToProps = (state, router) => {
     isNew,
     languagesIDs: state.languages.byIds,
     content: state.categories.content,
-    isFetching: state.categories.isFetching
+    isFetching: state.categories.isFetching,
+    isSaving: state.categories.isSaving
   };
 };
 

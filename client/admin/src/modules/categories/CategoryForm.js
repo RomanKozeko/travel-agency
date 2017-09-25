@@ -1,5 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -66,7 +67,19 @@ class CategoryForm extends React.Component {
     this.setState({contentByLang});
   };
 
+  save = (e) => {
+    e.preventDefault();
+    const category = {...this.state.category};
+    category.content = Object.values(this.state.contentByLang);
+    this.props.saveCategory(category, this.props.isNew);
+
+    if (this.props.isNew) {
+      this.props.history.push('/admin/categories', {});
+    }
+  };
+
   render() {
+    const { isSaving } = this.props;
     return (
       <div>
         <Tabs
@@ -77,7 +90,7 @@ class CategoryForm extends React.Component {
           {this.props.languages.map(lang => (<Tab label={lang.title} key={lang._id}/>))}
         </Tabs>
 
-        <form action="">
+        <form action="" onSubmit={this.save}>
           {this.props.languages.map((lang, i) => (
             <div key={lang._id}>
             {this.state.selectedTabIndex === i &&
@@ -97,6 +110,14 @@ class CategoryForm extends React.Component {
             </div>
           ))
           }
+          <Button
+            raised
+            type="submit"
+            color="primary"
+            disabled={isSaving}
+          >
+            {isSaving ? 'Сохраняю...' : 'Сохранить'}
+          </Button>
         </form>
       </div>
     )
