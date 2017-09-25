@@ -10,11 +10,7 @@ class ItemsSelector extends React.Component {
     this.state = {
       anchorEl: undefined,
       open: false,
-      idsRegions: [],
       checked: [...this.props.defaultChecked],
-      title: '',
-      description: '',
-      content: ''
     }
   }
 
@@ -24,7 +20,10 @@ class ItemsSelector extends React.Component {
 
   handleRequestClose = () => {
     this.setState({ open: false });
-    this.props.updateRegions([...this.state.checked]);
+    this.props.updateItems(
+      this.props.itemsName,
+      [...this.state.checked]
+    );
   };
 
   handleToggle = (event, value) => {
@@ -48,7 +47,7 @@ class ItemsSelector extends React.Component {
     this.state.checked.forEach(id => {
       if(items[id]) {
         const contentID = items[id].content[0];
-        str += this.props.content[contentID].title + ', '
+        str += this.props.items[id].content[0].title + ', '
       }
     });
     return str.slice(0, -2);
@@ -63,11 +62,11 @@ class ItemsSelector extends React.Component {
             button
             aria-haspopup="true"
             aria-controls="lock-menu"
-            aria-label="Регион"
+            aria-label={this.props.itemsName}
             onClick={this.handleClickListItem}
           >
             <ListItemText
-              primary="Регион"
+              primary={this.props.itemsName}
               secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
             />
           </ListItem>
@@ -88,7 +87,7 @@ class ItemsSelector extends React.Component {
                 tabIndex="-1"
                 disableRipple
               />
-              {this.props.content[items[option].content[0]].title}
+              {this.props.items[option].content[0].title}
               {this.state.checked.indexOf(option._id) !== -1}
             </MenuItem>
           )}

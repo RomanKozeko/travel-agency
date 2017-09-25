@@ -40,12 +40,14 @@ class TourForm extends Component {
 			open: false,
       content: this.props.content,
       idsRegions: idsRegions,
-      checked: tour.regions || []
+      idsCategories: this.props.categoriesAllIds,
+      checkedRegions: tour.regions || [],
+      checkedCategories: tour.categories || []
 		}
 	}
 
-  updateRegions = (ids) => {
-		this.setState({ checked: ids })
+  updateItems = (items, ids) => {
+		this.setState({ [`checked${items}`]: ids })
   };
 
   handleInputChange = (langID, name) => event => {
@@ -64,7 +66,8 @@ class TourForm extends Component {
     e.preventDefault();
     const tour = {...this.props.tour};
     tour.content = Object.values(this.state.contentByLang);
-    tour.regions = [...this.state.checked];
+    tour.regions = [...this.state.checkedRegions];
+    tour.categories = [...this.state.checkedCategories];
     this.props.onSubmit(tour, this.props.isNew);
 
     if (this.props.isNew) {
@@ -115,9 +118,19 @@ class TourForm extends Component {
 										items={this.props.regionsByIDs}
 										content={this.props.regionsContent}
 										handleToggle={this.handleToggle}
-										defaultChecked={this.state.checked}
-										updateRegions={this.updateRegions}
+										defaultChecked={this.state.checkedRegions}
+                    updateItems={this.updateItems}
+                    itemsName='Regions'
 									/>
+
+                  <ItemsSelector
+                    items={this.props.categoriesByIDs}
+                    content={this.props.regionsContent}
+                    handleToggle={this.handleToggle}
+                    defaultChecked={this.state.checkedCategories}
+                    updateItems={this.updateItems}
+                    itemsName='Categories'
+                  />
 
                   <Button
                     raised

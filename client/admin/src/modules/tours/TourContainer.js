@@ -10,9 +10,10 @@ import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import TourForm from './TourForm';
 import { loadTour, addTour, editTour } from './toursActions';
 import { loadRegions } from '../regions/RegionsActions';
+import { loadCategories } from '../categories/categoriesReducer';
 import { getTour } from './toursReducer';
 import { getRegions } from '../regions/RegionsReducer';
-import { getLanguages } from '../../rootReducer';
+import { getLanguages, getCategories } from '../../rootReducer';
 
 const styles = StyleSheet.create({
   tabs: {
@@ -57,9 +58,11 @@ const mapStateToProps = (state, router) => {
     regionsByIDs: state.regions.byIds,
 		regions: getRegions(state.regions),
     regionsContent: state.regions.regionsContent,
+    categories: getCategories(state),
+    categoriesByIDs: state.categories.byIds,
+    categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
     languages,
-    content: state.tours.content,
 		isFetching: state.tours.isFetching || state.regions.isFetching
 	}
 };
@@ -77,9 +80,12 @@ class TourContainer extends React.Component {
 		if (!this.props.tour) {
 		  this.props.loadTour(this.props.match.params.id);
 		}
-		if (this.props.regions.length < 1) {
+		if (!this.props.regions.length ) {
 			this.props.loadRegions();
 		}
+    if (!this.props.categories.length) {
+      this.props.loadCategories();
+    }
 	}
 
   handleChange(event, index) {
@@ -127,7 +133,7 @@ class TourContainer extends React.Component {
 
 TourContainer = withRouter(connect(
 	mapStateToProps,
-  { loadTour, addTour, editTour, loadRegions }
+  { loadTour, addTour, editTour, loadRegions, loadCategories }
 )(TourContainer));
 
 export default TourContainer;

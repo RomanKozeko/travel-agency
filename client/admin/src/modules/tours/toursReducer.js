@@ -40,10 +40,7 @@ const tourAddedSuccess = (state, action) => {
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.tours },
     isFetching: false,
-    pages: {
-      ...state.pages,
-      [state.currPage]: pageItems
-    }
+    currPage: 0
   };
 };
 
