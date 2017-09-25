@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const CategoryForm = ({ isSaving, parentState, languages, handleChange, save }) => (
-  <form action="" onSubmit={save}>
+const CategoryForm = ({ isSaving, parentState, languages, handleChange, handleSave }) => (
+  <form action="" onSubmit={handleSave}>
     {languages.map((lang, i) => (
       <div key={lang._id}>
         {parentState.selectedTabIndex === i &&

@@ -49,7 +49,7 @@ export default function withTabs(WrappedComponent, backLink ) {
       this.setState({contentByLang});
     };
 
-    save = (e) => {
+    handleSave = (e) => {
       e.preventDefault();
       const item = {...this.state.item};
       item.content = Object.values(this.state.contentByLang);
@@ -87,7 +87,7 @@ export default function withTabs(WrappedComponent, backLink ) {
         <WrappedComponent
           handleTabChange={this.handleTabChange}
           handleChange={this.handleChange}
-          save={this.save}
+          handleSave={this.handleSave}
           parentState={this.state}
           {...this.props}
         />
