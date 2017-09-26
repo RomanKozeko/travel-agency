@@ -8,6 +8,15 @@ export const createReducer = (initialState, handlers) => {
   }
 };
 
+export const getLangPref = () => {
+  const pref = window.location.href.split('/')[3];
+  if (pref.length > 2) {
+    return 'ru'
+  }
+  return window.location.href.split('/')[3]
+};
+
+
 export const makeActionCreator = (type, ...argNames) => {
   return function (...args) {
     const action = { type };

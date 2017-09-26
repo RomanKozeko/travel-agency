@@ -1,10 +1,6 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
-import {
-  Route,
-  Link
-} from 'react-router-dom';
-
+import PrefixLink from '../ui-elements/PrefixLink'
 
 
 const styles = StyleSheet.create({
@@ -65,9 +61,9 @@ const MainNav = () => (
       <nav className={css(styles.nav)}>
         <div className={css(styles.logo)}>Logo</div>
         <ul className={css(styles.menu)}>
-          <li><Link className={css(styles.link)} to="/">Home</Link></li>
-          <li><Link className={css(styles.link)} to="/contacts">Contacts</Link></li>
-          <li><Link className={css(styles.link)} to="/tours">Tours</Link></li>
+          <li><PrefixLink className={css(styles.link)} to="/">Home</PrefixLink></li>
+          <li><PrefixLink className={css(styles.link)} to="/contacts">Contacts</PrefixLink></li>
+          <li><PrefixLink className={css(styles.link)} to="/tours">Tours</PrefixLink></li>
         </ul>
       </nav>
     </div>
