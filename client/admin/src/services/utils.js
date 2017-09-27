@@ -140,8 +140,8 @@ export const basicReducerEvents = {
       return {
         ...state,
         allIds: [...state.allIds, payload.result],
-        byIds: {...state.byIds, ...payload.entities.items},
-        content: {...state.content, ...payload.entities.content},
+        byIds: { ...state.byIds, ...payload.entities.items },
+        content: {...state.content, ...payload.entities.content },
         isFetching: false,
         isSaving: false
       };

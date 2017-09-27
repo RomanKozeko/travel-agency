@@ -9,10 +9,10 @@ import BackLink from '../ui-elements/BackLink';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import TourForm from './TourForm';
 import { loadTour, addTour, editTour } from './toursActions';
-import { loadRegions } from '../regions/RegionsActions';
+import { loadRegions } from '../regions/regionsReducer';
 import { loadCategories } from '../categories/categoriesReducer';
 import { getTour } from './toursReducer';
-import { getRegions } from '../regions/RegionsReducer';
+import { getRegions } from '../regions/regionsReducer';
 import { getLanguages, getCategories } from '../../rootReducer';
 
 const styles = StyleSheet.create({

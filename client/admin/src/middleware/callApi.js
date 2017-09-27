@@ -51,8 +51,8 @@ export const categoryContentSchema = new schema.Entity('content', {}, { idAttrib
 export const categorySchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const categoriesSchema = [categorySchema];
 
-export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id' });
-export const regionsSchema = { items: [regionSchema] };
+export const regionSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const regionsSchema = [regionSchema];
 
 export const tourSchema = new schema.Entity('tours', {
   categories: [categorySchema],
@@ -132,7 +132,7 @@ export default store => next => (action) => {
       }));
     },
     (error) => {
-      toastr.error(createToaster(error.message || 'Something bad happened'));
+      toastr.error('', '', createToaster(error.message || 'Something bad happened'));
       return next(actionWith({
         type: failureType,
         error: error.message || 'Something bad happened'

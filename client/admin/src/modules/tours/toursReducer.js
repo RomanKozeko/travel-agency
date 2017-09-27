@@ -40,18 +40,29 @@ const tourAddedSuccess = (state, action) => {
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.tours },
     isFetching: false,
-    currPage: 0
+    currPage: 0,
   };
 };
 
 const tourDeletedSuccess = (state, action) => {
-  const payload = action.response;
+  const idsToRemove = action.response.result;
+  const byIds = { ...state.byIds };
+  const allIds = [...state.allIds];
+
+  Object.keys(idsToRemove).forEach((id) => {
+    delete byIds[idsToRemove[id]];
+    const index = allIds.indexOf(idsToRemove[id]);
+    if (index > -1) {
+      allIds.splice(index, 1);
+    }
+  });
+
   return {
     ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.tours },
-    isFetching: false,
-  }
+    allIds,
+    byIds,
+    isFetching: false
+  };
 };
 
 const tourSuccess = (state, action) => {
@@ -60,7 +71,7 @@ const tourSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.tours },
-    isFetching: false,
+    isFetching: false
   };
 };
 

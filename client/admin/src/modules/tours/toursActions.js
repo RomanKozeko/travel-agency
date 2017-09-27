@@ -1,4 +1,4 @@
-import {CALL_API, Schemas} from '../../middleware/callApi';
+import { CALL_API, Schemas } from '../../middleware/callApi';
 
 export const TOURS_REQUEST = 'TOURS_REQUEST';
 export const TOURS_SUCCESS = 'TOURS_SUCCESS';
@@ -44,7 +44,7 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
     });
   }
 
-  return dispatch(fetchTours(nextPageUrl, nextPage))
+  return dispatch(fetchTours(nextPageUrl, nextPage));
 };
 
 const fetchTour = (id) => ({
@@ -87,13 +87,14 @@ export const editTour = (tour) => (dispatch) => {
   });
 };
 
-export const deleteTour = (id) => (dispatch) => {
+export const deleteTours = (ids) => (dispatch) => {
   return dispatch({
     [CALL_API]: {
       types: [DELETE_TOUR_REQUEST, DELETE_TOUR_SUCCESS, DELETE_TOUR_FAILURE],
-      endpoint: `/api/tours/${id}`,
+      endpoint: '/api/tours',
       schema: Schemas.TOUR,
       method: 'DELETE',
+      body: ids,
     }
   });
 };

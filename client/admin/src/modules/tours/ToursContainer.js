@@ -7,7 +7,7 @@ import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import Pagination from '../ui-elements/Pagination';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
-import { loadTours, deleteTour } from './toursActions';
+import { loadTours, deleteTours } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
 
 const mapStateToProps = (state) => {
@@ -28,14 +28,14 @@ class ToursContainer extends React.Component {
   }
 
   render() {
-    const { items, languages, isFetching, currPage, count,
-      loadTours, pageCount
+    const { items, languages, isFetching, currPage, count, pageCount,
+      loadTours, deleteTours
     } = this.props;
 
     const data = {
-      headers: ['Заголовок', 'Описание', 'Язык'],
       items,
       languages,
+      headers: ['Заголовок', 'Описание', 'Язык'],
       fields: [
         {
           name: 'title',
@@ -69,7 +69,7 @@ class ToursContainer extends React.Component {
           :
           <div>
             <Portlet isBordered={false}>
-              <SortableTable data={data} />
+              <SortableTable data={data} deleteItems={deleteTours} />
             </Portlet>
             <Pagination
               pageNumber={currPage}
@@ -86,7 +86,7 @@ class ToursContainer extends React.Component {
 
 ToursContainer = connect(
   mapStateToProps,
-  { loadTours, deleteTour }
+  { loadTours, deleteTours }
 )(ToursContainer);
 
 export default ToursContainer;

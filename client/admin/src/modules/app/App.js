@@ -16,6 +16,7 @@ import TourContainer from '../tours/TourContainer';
 import PagesContainer from '../pages/PagesContainer';
 import PageContainer from '../pages/PageContainer';
 import RegionsContainer from '../regions/RegionsContainer';
+import RegionContainer from '../regions/RegionContainer';
 import LanguagesContainer from '../languages/LanguagesContainer';
 import CategoriesContainer from '../categories/CategoriesContainer';
 import CategoryContainer from '../categories/CategoryContainer';
@@ -53,7 +54,13 @@ const routes = [
   },
   {
     path: '/admin/regions',
+    exact: true,
     main: () => <RegionsContainer />
+  },
+  {
+    path: '/admin/regions/:id',
+    exact: true,
+    main: () => <RegionContainer />
   },
   {
     path: '/admin/hotels',

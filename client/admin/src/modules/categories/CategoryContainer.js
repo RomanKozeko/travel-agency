@@ -9,7 +9,7 @@ import PageHeader from '../ui-elements/PageHeader';
 import { getCategory, getLanguages } from '../../rootReducer';
 import { loadCategory, saveCategory } from './categoriesReducer';
 import CategoryForm from './CategoryForm';
-import Portlet from '../ui-elements/Portlet';;
+import Portlet from '../ui-elements/Portlet';
 
 const uniqueId = require('lodash.uniqueid');
 
@@ -53,7 +53,7 @@ const mapStateToProps = (state, router) => {
 
 class CategoryContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.category) {
+    if (!this.props.item) {
       this.props.loadCategory(this.props.match.params.id);
     }
   }
@@ -62,13 +62,13 @@ class CategoryContainer extends React.Component {
     const { isFetching, item, isBordered = true } = this.props;
     return (
       <div>
-        <PageHeader text={'Категория:'}/>
-        <BackLink text="Назад к списку категорий" url="/admin/categories"/>
-        {isFetching || !item ? <Spinner/> :
+        <PageHeader text={'Категория:'} />
+        <BackLink text="Назад к списку категорий" url="/admin/categories" />
+        {isFetching || !item ? <Spinner /> :
           <Portlet isBordered={isBordered}><CategoryForm {...this.props} /></Portlet>
         }
       </div>
-    )
+    );
   }
 }
 
