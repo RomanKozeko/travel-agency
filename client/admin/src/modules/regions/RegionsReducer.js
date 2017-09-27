@@ -1,58 +1,36 @@
-import {
-  REGIONS_REQUEST, REGIONS_SUCCESS, REGIONS_FAILURE, REGIONS_GET_PAGE_FROM_CACHE,
-	REGION_REQUEST, REGION_SUCCESS, REGION_FAILURE
-} from './RegionsActions';
-import { createReducer, getPageCount } from '../../services/utils';
+import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import { CALL_API, Schemas } from '../../middleware/callApi';
 
-const regionsSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, ...payload.result.items],
-    byIds: { ...state.byIds, ...payload.entities.regions },
-    regionsContent: { ...state.regionsContent, ...payload.entities.content },
-    isFetching: false,
-    count: payload.result.count,
-    pageCount: getPageCount(payload.result.count, payload.result.limit),
-    currPage: payload.nextPage,
-    pages: {
-      ...state.pages,
-      [payload.nextPage]: payload.result.regions
-    }
-  };
-};
+// actions
+const actionsObj = createBasicActions('REGIONS', 'REGION', 'regions', CALL_API, Schemas);
 
-const regionSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.regions },
-    isFetching: false,
-  };
-};
+// Action Creators
+export const actions = actionsObj.actions;
+export const loadRegions = actionsObj.load;
+export const deleteRegions = actionsObj.deleteItem;
+export const loadRegion = actionsObj.loadItem;
+export const saveRegion = actionsObj.saveItem;
 
+// reducers
 export const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
-  pageCount: 0,
-  currPage: 0,
-  pages: {},
-  regionsContent: {}
 };
 
-const
-  regionsReducer = createReducer(defaultState, {
-    [REGIONS_REQUEST]: state => ({ ...state, isFetching: true }),
-    [REGIONS_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
-    [REGIONS_SUCCESS]: regionsSuccess,
-    [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
-    [REGION_REQUEST]: state => ({ ...state, isFetching: true }),
-    [REGION_SUCCESS]: regionSuccess,
-    [REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
-  });
-
+const regionsReducer = createReducer(defaultState, {
+  [actions.REGIONS_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.REGIONS_SUCCESS]: basicReducerEvents.success,
+  [actions.REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
+  [actions.REGIONS_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
+  [actions.REGIONS_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
+  [actions.REGION_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false }),
+  [actions.REGION_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.REGION_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.REGION_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
+  [actions.REGION_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.REGION_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
+});
 
 export default regionsReducer;
 
@@ -62,6 +40,5 @@ export const getRegion = (state, id) => {
   if (state.byIds[id]) {
     return state.byIds[id];
   }
-
   return null;
 };
