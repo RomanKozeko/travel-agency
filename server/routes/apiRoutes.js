@@ -35,13 +35,16 @@ router.put('/categories/:id', requireAuth, ApiCategoriesCtrl.put);
 router.delete('/categories', requireAuth, ApiCategoriesCtrl.delete);
 
 router.get('/regions', ApiRegionsCtrl.get);
-router.post('/regions', ApiRegionsCtrl.post);
+router.get('/regions/:id', ApiRegionsCtrl.getOne);
+router.post('/regions', requireAuth, ApiRegionsCtrl.post);
+router.put('/regions/:id', requireAuth, ApiRegionsCtrl.put);
+router.delete('/regions', requireAuth, ApiRegionsCtrl.delete);
 
 router.get('/periods', ApiPeriodsCtrl.get);
-router.post('/periods', ApiPeriodsCtrl.post);
+router.post('/periods', requireAuth, ApiPeriodsCtrl.post);
 
 router.get('/languages', ApiLanguagesCtrl.get);
-router.post('/languages', ApiLanguagesCtrl.post);
+router.post('/languages', requireAuth, ApiLanguagesCtrl.post);
 
 router.get('/pages', ApiPagesCtrl.get);
 router.get('/pages/:id', ApiPagesCtrl.getOne);

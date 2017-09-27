@@ -1,25 +1,45 @@
-const express = require('express');
-const path = require('path');
-const passport = require('passport');
-
 const Region = require('../../models/Region');
 
-module.exports =  {
+module.exports = {
   get(req, res, next) {
-    Region.find().then(result => {
-      res.json({ items: result });
+    Region.find().then((result) => {
+      res.json(result);
     })
     .catch(next);
   },
 
+  getOne(req, res, next) {
+    Region.findById(req.params.id)
+      .then(item => res.json(item))
+      .catch(next);
+  },
+
   post(req, res, next) {
     const { content } = req.body;
-    const region = new Region({content});
+    const region = new Region({ content });
 
     region.save()
-      .then(result => {
+      .then((result) => {
         res.json(result);
       })
+      .catch(next);
+  },
+
+  put(req, res, next) {
+    const regionId = req.params.id;
+    const regionProps = req.body;
+
+    Region.findByIdAndUpdate(regionId, regionProps)
+      .then(() => Region.findById(regionId))
+      .then(region => res.json(region))
+      .catch(next);
+  },
+
+  delete(req, res, next) {
+    const regionId = req.params.id;
+
+    Region.findByIdAndRemove(regionId)
+      .then(region => res.json(region))
       .catch(next);
   }
 };
