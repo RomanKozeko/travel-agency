@@ -2,11 +2,12 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 import authReducer from './modules/auth/authReducer';
-import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
+// import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import languagesReducer, * as fromLanguages from './modules/languages/LanguagesReducer';
 import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
+import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -34,4 +35,6 @@ export const getContentByLang = (
 export const getLanguages = state => fromLanguages.getLanguages(state.languages);
 export const getCategories = state => fromCategories.getCategories(state.categories);
 export const getCategory = (state, id) => fromCategories.getCategory(state.categories, id);
+export const getRegions = state => fromRegions.getRegions(state.regions);
+export const getRegion = (state, id) => fromRegions.getRegion(state.regions, id);
 

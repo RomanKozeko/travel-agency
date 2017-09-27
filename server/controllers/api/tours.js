@@ -48,10 +48,10 @@ module.exports = {
   },
 
   delete(req, res, next) {
-    const tourId = req.params.id;
+    const ids = req.body;
 
-    Tour.findByIdAndRemove(tourId)
-      .then(tour => res.json(tour))
+    Tour.deleteMany({ _id: ids })
+      .then(() => res.json(ids))
       .catch(next);
   }
 };
