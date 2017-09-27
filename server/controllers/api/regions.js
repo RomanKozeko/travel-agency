@@ -36,10 +36,10 @@ module.exports = {
   },
 
   delete(req, res, next) {
-    const regionId = req.params.id;
+    const ids = req.body;
 
-    Region.findByIdAndRemove(regionId)
-      .then(region => res.json(region))
+    Region.deleteMany({ _id: ids })
+      .then(() => res.json(ids))
       .catch(next);
   }
 };
