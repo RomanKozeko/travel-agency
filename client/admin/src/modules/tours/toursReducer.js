@@ -11,15 +11,15 @@ const toursSuccess = (state, action) => {
   const payload = action.response;
   return {
     ...state,
-    allIds: [...state.allIds, ...payload.result.tours],
-    byIds: { ...state.byIds, ...payload.entities.tours },
+    allIds: [...state.allIds, ...payload.result.items],
+    byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false,
     count: payload.result.count,
-    pageCount: getPageCount(payload.result.count, payload.result.limit),
+    pageCount: getPageCount(payload.result.count, state.itemsPerPage),
     currPage: payload.nextPage,
     pages: {
       ...state.pages,
-      [payload.nextPage]: payload.result.tours
+      [payload.nextPage]: payload.result.items
     }
   };
 };
@@ -30,7 +30,7 @@ const tourAddedSuccess = (state, action) => {
   let pageItems = [];
 
   // TODO: make support for multiple pages
-  if (state.pages[state.currPage]) {
+  if (state.pages[state.pageCount]) {
     pageItems = [...state.pages[state.currPage]];
   }
   pageItems.push(payload.result);
@@ -45,17 +45,22 @@ const tourAddedSuccess = (state, action) => {
 };
 
 const tourDeletedSuccess = (state, action) => {
-  const idsToRemove = action.response.result;
+  const idsToRemove = action.response;
   const byIds = { ...state.byIds };
   const allIds = [...state.allIds];
 
-  Object.keys(idsToRemove).forEach((id) => {
-    delete byIds[idsToRemove[id]];
-    const index = allIds.indexOf(idsToRemove[id]);
+  idsToRemove.forEach((id) => {
+    delete byIds[id];
+    const index = allIds.indexOf(id);
     if (index > -1) {
       allIds.splice(index, 1);
     }
   });
+  // state.pages = {}
+  //
+  // allIds.forEach(id => {
+  //
+  // })
 
   return {
     ...state,
@@ -80,6 +85,7 @@ export const defaultState = {
   byIds: {},
   isFetching: false,
   pageCount: 0,
+  itemsPerPage: 5,
   currPage: 0,
   pages: {}
 };

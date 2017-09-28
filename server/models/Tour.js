@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 const ContentSchema = require('./Content');
 
 const TourSchema = new Schema({
+  date: {
+    type: Date,
+    default: Date.now
+  },
   preview: {
     type: String
   },

@@ -1,8 +1,5 @@
-import { camelizeKeys } from 'humps';
 import { normalize, schema } from 'normalizr';
-import {toastr} from 'react-redux-toastr';
-import React from 'react';
-
+import { toastr } from 'react-redux-toastr';
 import createToaster from '../modules/ui-elements/createToaster';
 
 const API_ROOT = '/';
@@ -31,6 +28,10 @@ const callApi = (endpoint, options, schema, nextPage) => {
           return Promise.reject(json);
         }
 
+        if (!schema) {
+          return json;
+        }
+
         return Object.assign({},
           normalize(json, schema),
           { nextPage }
@@ -54,11 +55,11 @@ export const categoriesSchema = [categorySchema];
 export const regionSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const regionsSchema = [regionSchema];
 
-export const tourSchema = new schema.Entity('tours', {
+export const tourSchema = new schema.Entity('items', {
   categories: [categorySchema],
   regions: [regionSchema]
 }, { idAttribute: '_id' });
-export const toursSchema = { tours: [tourSchema] };
+export const toursSchema = { items: [tourSchema] };
 
 export const pageSchema = new schema.Entity('items', {
   content: [contentSchema],
@@ -102,9 +103,7 @@ export default store => next => (action) => {
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.');
   }
-  if (!schema) {
-    throw new Error('Specify one of the exported Schemas.');
-  }
+
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
   }

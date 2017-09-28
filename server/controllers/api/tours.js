@@ -4,14 +4,30 @@ const config = require('../../config/index');
 const ToursQueries = require('../../models/queries/tours');
 
 module.exports = {
-  get(req, res, next) {
-    const offset = +req.query.page * config.itemsPerPageLimit;
+  // get(req, res, next) {
+  //   const offset = +req.query.page * config.itemsPerPageLimit;
+  //
+  //   ToursQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
+  //     .then((result) => {
+  //       res.json({
+  //         offset,
+  //         items: result[0],
+  //         count: result[1],
+  //         limit: config.itemsPerPageLimit
+  //       });
+  //     })
+  //     .catch(next);
+  // },
 
-    ToursQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
+  get(req, res, next) {
+    const offset = +req.params.startIndex || 0;
+    const count = +req.params.count || config.itemsPerPageLimit;
+
+    ToursQueries.getAllWithPagination(offset, count)
       .then((result) => {
         res.json({
           offset,
-          tours: result[0],
+          items: result[0],
           count: result[1],
           limit: config.itemsPerPageLimit
         });

@@ -10,7 +10,7 @@ export const createReducer = (initialState, handlers) => {
 
 export const getPageCount = (count, limit) => {
   const pageCount = count % limit ? 1 : 0;
-  return parseInt(count / limit) + pageCount;
+  return parseInt(count / limit, 10) + pageCount;
 };
 
 export const makeActionCreator = (type, ...argNames) => {

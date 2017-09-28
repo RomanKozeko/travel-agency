@@ -28,10 +28,11 @@ const fetchTours = (nextPageUrl, nextPage) => ({
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   const {
-    nextPageUrl = `/api/tours?page=${nextPage}`,
     pages,
     pageCount,
+    itemsPerPage,
   } = getState().tours;
+  const nextPageUrl = `/api/tours/${nextPage * itemsPerPage}/${itemsPerPage}`;
 
   if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
     return null;
@@ -92,7 +93,6 @@ export const deleteTours = (ids) => (dispatch) => {
     [CALL_API]: {
       types: [DELETE_TOUR_REQUEST, DELETE_TOUR_SUCCESS, DELETE_TOUR_FAILURE],
       endpoint: '/api/tours',
-      schema: Schemas.TOUR,
       method: 'DELETE',
       body: ids,
     }
