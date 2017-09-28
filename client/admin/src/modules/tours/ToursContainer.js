@@ -75,7 +75,6 @@ class ToursContainer extends React.Component {
               pageNumber={currPage}
               pageCount={pageCount}
               requestPage={loadTours}
-              totalPages={count}
             />
           </div>
         }

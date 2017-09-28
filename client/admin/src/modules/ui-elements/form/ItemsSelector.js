@@ -3,6 +3,21 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
+import Chip from 'material-ui/Chip';
+
+const styles = StyleSheet.create({
+  listItem: {
+    display: 'block'
+  },
+  chip: {
+    margin: '10px',
+  },
+  row: {
+    display: 'flex',
+    justifyContent: 'start',
+    flexWrap: 'wrap',
+  },
+});
 
 class ItemsSelector extends React.Component {
   constructor(props) {
@@ -20,10 +35,6 @@ class ItemsSelector extends React.Component {
 
   handleRequestClose = () => {
     this.setState({ open: false });
-    this.props.updateItems(
-      this.props.itemsName,
-      [...this.state.checked]
-    );
   };
 
   handleToggle = (event, value) => {
@@ -36,21 +47,33 @@ class ItemsSelector extends React.Component {
     } else {
       newChecked.splice(currentIndex, 1);
     }
+
+    this.props.updateItems(
+      this.props.itemsName,
+      newChecked
+    );
+
     this.setState({
       checked: newChecked,
     });
+
   };
 
   getSelectedLabels = () => {
-    let str = '';
     const items = this.props.items;
-    this.state.checked.forEach(id => {
-      if(items[id]) {
-        const contentID = items[id].content[0];
-        str += this.props.items[id].content[0].title + ', '
-      }
-    });
-    return str.slice(0, -2);
+    return (
+      <div className={css(styles.row)}>
+        {this.state.checked.map((id, i) =>
+          items[id] &&
+          <Chip
+            label={this.props.items[id].content[0].title}
+            key={id}
+            onRequestDelete={(e) => this.handleToggle(e, id)}
+            className={css(styles.chip)}
+          />
+        )}
+      </div>
+    )
   };
 
   render() {
@@ -66,6 +89,7 @@ class ItemsSelector extends React.Component {
             onClick={this.handleClickListItem}
           >
             <ListItemText
+              className={css(styles.listItem)}
               primary={this.props.itemsName}
               secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
             />

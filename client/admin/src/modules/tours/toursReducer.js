@@ -24,23 +24,27 @@ const toursSuccess = (state, action) => {
   };
 };
 
+const chunk = (r, j) => r.reduce((a, b, i, g) => !(i % j) ? a.concat([g.slice(i, i + j)]) : a, []);
+const updatePages = (pagesIds, itemsPerPage) => (
+  chunk(pagesIds, itemsPerPage)
+    .reduce((acc, cur, i) => {
+      acc[i] = cur;
+      return acc;
+    }, {})
+);
+
 const tourAddedSuccess = (state, action) => {
   const payload = action.response;
-
-  let pageItems = [];
-
-  // TODO: make support for multiple pages
-  if (state.pages[state.pageCount]) {
-    pageItems = [...state.pages[state.currPage]];
-  }
-  pageItems.push(payload.result);
+  const allIds = [payload.result, ...state.allIds];
 
   return {
     ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.tours },
+    allIds,
+    byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false,
     currPage: 0,
+    count: state.count + 1,
+    pages: updatePages(allIds, state.itemsPerPage)
   };
 };
 
@@ -56,17 +60,14 @@ const tourDeletedSuccess = (state, action) => {
       allIds.splice(index, 1);
     }
   });
-  // state.pages = {}
-  //
-  // allIds.forEach(id => {
-  //
-  // })
 
   return {
     ...state,
     allIds,
     byIds,
-    isFetching: false
+    pages: updatePages(allIds, state.itemsPerPage),
+    isFetching: false,
+    count: state.count - idsToRemove.length
   };
 };
 
@@ -75,7 +76,7 @@ const tourSuccess = (state, action) => {
   return {
     ...state,
     allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.tours },
+    byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false
   };
 };
