@@ -75,6 +75,7 @@ export const Schemas = {
   TOURS: toursSchema,
   PAGE: pageSchema,
   PAGES: pagesSchema,
+  LANGUAGE: languageSchema,
   LANGUAGES: languagesSchema,
   REGION: regionSchema,
   REGIONS: regionsSchema,

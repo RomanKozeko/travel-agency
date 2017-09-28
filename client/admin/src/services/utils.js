@@ -110,13 +110,14 @@ export const basicReducerEvents = {
       allIds: [...state.allIds, ...payload.result],
       byIds: {...state.byIds, ...payload.entities.items},
       content: {...state.content, ...payload.entities.content},
-      isFetching: false
+      isFetching: false,
+      isFetched: true
     };
   },
   deleteSuccess:
     (state, action) => {
       const idsToRemove = action.response.result;
-      const byIds = {...state.byIds};
+      const byIds = { ...state.byIds };
       const allIds = [...state.allIds];
 
       Object.keys(idsToRemove).forEach((id) => {
@@ -130,7 +131,8 @@ export const basicReducerEvents = {
       return {
         ...state,
         allIds,
-        byIds
+        byIds,
+        isDeleting: false
       };
     },
   itemSuccess:
@@ -141,7 +143,7 @@ export const basicReducerEvents = {
         ...state,
         allIds: [...state.allIds, payload.result],
         byIds: { ...state.byIds, ...payload.entities.items },
-        content: {...state.content, ...payload.entities.content },
+        content: { ...state.content, ...payload.entities.content },
         isFetching: false,
         isSaving: false
       };

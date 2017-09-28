@@ -20,7 +20,7 @@ import RegionContainer from '../regions/RegionContainer';
 import LanguagesContainer from '../languages/LanguagesContainer';
 import CategoriesContainer from '../categories/CategoriesContainer';
 import CategoryContainer from '../categories/CategoryContainer';
-import { loadLanguages } from '../languages/LanguagesActions';
+import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -109,7 +109,7 @@ const mapStateToProps = (state) => {
 class App extends React.Component {
   componentDidMount() {
     if (!this.props.items.length) {
-      this.props.loadLanguages();
+      this.props.loadLang();
     }
   }
 
@@ -149,13 +149,13 @@ class App extends React.Component {
 App.propTypes = {
   isFetching: PropTypes.bool,
   isFetched: PropTypes.bool,
-  loadLanguages: PropTypes.func,
+  loadLang: PropTypes.func,
   items: PropTypes.array,
 };
 
 App = connect(
   mapStateToProps,
-  { loadLanguages }
+  { loadLang }
 )(App);
 
 

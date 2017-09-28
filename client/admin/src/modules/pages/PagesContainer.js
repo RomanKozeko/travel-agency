@@ -76,7 +76,7 @@ class PagesContainer extends React.Component {
             <Spinner />
           :
             <Portlet isBordered={false}>
-              <SortableTable data={data} deletePages={this.props.deletePages} />
+              <SortableTable data={data} deleteItems={this.props.deletePages} />
             </Portlet>
         }
       </div>

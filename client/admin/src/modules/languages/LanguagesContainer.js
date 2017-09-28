@@ -1,41 +1,49 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { loadLanguages } from './LanguagesActions';
+import { loadLang, saveLang, deleteLang } from './LanguagesReducer';
 import { getLanguages } from '../../rootReducer';
 import LanguagesList from './LanguagesList';
+import Spinner from '../ui-elements/Spinner';
 
 const mapStateToProps = (state) => {
   return {
     items: getLanguages(state),
-    isFetching: state.languages.isFetching
+    isFetching: state.languages.isFetching,
+    isSaving: state.languages.isSaving
   };
 };
 
 class LanguagesContainer extends React.Component {
-
   componentDidMount() {
     if (!this.props.items.length) {
-      this.props.loadLanguages();
+      this.props.loadLang();
     }
   }
 
   render() {
-    return (
-      <LanguagesList {...this.props} />
-    );
+    const { isFetching } = this.props;
+    return (<div>
+      {isFetching ?
+        <Spinner/>
+        :
+        <LanguagesList
+          {...this.props}
+        />
+      }
+    </div>);
   }
 }
 
 LanguagesContainer.propTypes = {
-  loadLanguages: PropTypes.func,
+  loadLang: PropTypes.func,
   items: PropTypes.array,
   isFetching: PropTypes.bool,
 };
 
 LanguagesContainer = connect(
   mapStateToProps,
-  { loadLanguages }
+  { loadLang, saveLang, deleteLang }
 )(LanguagesContainer);
 
 export default LanguagesContainer;

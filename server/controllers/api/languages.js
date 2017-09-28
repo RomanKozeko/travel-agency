@@ -17,5 +17,21 @@ module.exports =  {
         res.json(result);
       })
       .catch(next);
+  },
+
+  put(req, res, next) {
+    const id = req.params.id;
+    Language.findByIdAndUpdate(id, req.body)
+      .then(() => Language.findById(id))
+      .then(region => res.json(region))
+      .catch(next);
+  },
+
+  delete(req, res, next) {
+    const ids = req.body;
+
+    Language.deleteMany({ _id: ids })
+      .then(() => res.json(ids))
+      .catch(next);
   }
 };

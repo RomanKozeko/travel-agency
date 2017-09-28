@@ -102,7 +102,7 @@ class SortableTable extends React.Component {
           ?
           <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>
           :
-          <span>{() => this.getItemContent(item)[field.name]}</span>
+          <span>{this.getItemContent(item)[field.name]}</span>
         }
       </TableCell>
     ));

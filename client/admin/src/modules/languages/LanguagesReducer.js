@@ -1,30 +1,16 @@
-import {
-  LANGUAGES_REQUEST, LANGUAGES_SUCCESS, LANGUAGES_FAILURE, LANGUAGES_GET_LANGUAGE_FROM_CACHE,
-  LANGUAGE_REQUEST, LANGUAGE_SUCCESS, LANGUAGE_FAILURE
-} from './LanguagesActions';
-import { createReducer } from '../../services/utils';
+import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import { CALL_API, Schemas } from '../../middleware/callApi';
 
-const languagesSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, ...payload.result],
-    byIds: { ...state.byIds, ...payload.entities.items },
-    isFetching: false,
-    isFetched: true
-  };
-};
+// actions
+const actionsObj = createBasicActions('LANGUAGES', 'LANGUAGE', 'languages', CALL_API, Schemas);
 
-const languageSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.items },
-    isFetching: false,
-  };
-};
+// Action Creators
+export const actions = actionsObj.actions;
+export const loadLang = actionsObj.load;
+export const deleteLang = actionsObj.deleteItem;
+export const saveLang = actionsObj.saveItem;
 
+// reducers
 export const defaultState = {
   allIds: [],
   byIds: {},
@@ -34,12 +20,18 @@ export const defaultState = {
 };
 
 const languagesReducer = createReducer(defaultState, {
-  [LANGUAGES_REQUEST]: state => ({ ...state, isFetching: true }),
-  [LANGUAGES_SUCCESS]: languagesSuccess,
-  [LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
-  [LANGUAGE_REQUEST]: state => ({ ...state, isFetching: true }),
-  [LANGUAGE_SUCCESS]: languageSuccess,
-  [LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false })
+  [actions.LANGUAGES_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.LANGUAGES_SUCCESS]: basicReducerEvents.success,
+  [actions.LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
+  [actions.LANGUAGES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
+  [actions.LANGUAGES_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
+  [actions.LANGUAGES_DELETE_FAILURE]: state => ({ ...state, isDeleting: false }),
+  [actions.LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
+  [actions.LANGUAGE_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.LANGUAGE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.LANGUAGE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
+  [actions.LANGUAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.LANGUAGE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
 });
 
 export default languagesReducer;

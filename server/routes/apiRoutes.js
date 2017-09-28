@@ -46,6 +46,8 @@ router.post('/periods', requireAuth, ApiPeriodsCtrl.post);
 
 router.get('/languages', ApiLanguagesCtrl.get);
 router.post('/languages', requireAuth, ApiLanguagesCtrl.post);
+router.put('/languages/:id', requireAuth, ApiLanguagesCtrl.put);
+router.delete('/languages', requireAuth, ApiLanguagesCtrl.delete);
 
 router.get('/pages', ApiPagesCtrl.get);
 router.get('/pages/:id', ApiPagesCtrl.getOne);
