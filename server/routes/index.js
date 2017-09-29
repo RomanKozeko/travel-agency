@@ -4,7 +4,7 @@ const path = require('path');
 const HomeCtrl = require('../controllers/home');
 const ToursCtrl = require('../controllers/tours');
 
-router.get(/^(\/admin)\/[^.]*$/, (req, res) => {
+router.get(/^(\/admin)[^.]*$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/admin/build/index.html'));
 });
 
