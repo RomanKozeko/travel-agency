@@ -36,14 +36,15 @@ const updatePages = (pagesIds, itemsPerPage) => (
 const tourAddedSuccess = (state, action) => {
   const payload = action.response;
   const allIds = [payload.result, ...state.allIds];
-
+  const newCount = state.count + 1;
   return {
     ...state,
     allIds,
     byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false,
     currPage: 0,
-    count: state.count + 1,
+    count: newCount,
+    pageCount: getPageCount(newCount, state.itemsPerPage),
     pages: updatePages(allIds, state.itemsPerPage)
   };
 };
@@ -52,6 +53,7 @@ const tourDeletedSuccess = (state, action) => {
   const idsToRemove = action.response;
   const byIds = { ...state.byIds };
   const allIds = [...state.allIds];
+  const newCount = state.count - idsToRemove.length;
 
   idsToRemove.forEach((id) => {
     delete byIds[id];
@@ -66,8 +68,9 @@ const tourDeletedSuccess = (state, action) => {
     allIds,
     byIds,
     pages: updatePages(allIds, state.itemsPerPage),
+    pageCount: getPageCount(newCount, state.itemsPerPage),
     isFetching: false,
-    count: state.count - idsToRemove.length
+    count: newCount
   };
 };
 
