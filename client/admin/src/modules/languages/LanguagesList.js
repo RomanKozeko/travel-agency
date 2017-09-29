@@ -10,9 +10,13 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
-import confirm  from '../ui-elements/form/ConfirmDialog'
+import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
+import createConfirmation  from '../ui-elements/form/createConfirmation'
 const uniqueId = require('lodash.uniqueid');
 
+
+
+const confirm = createConfirmation(ConfirmDialog);
 
 const styles = StyleSheet.create({
   actions: {
@@ -61,7 +65,7 @@ class LanguagesList extends React.Component {
 
   deleteRow = (item) => event => {
     const id = item._id || item.id;
-    if (window.confirm('Are you sure?')) {
+    confirm({title: `Are you sure to delete ${item.title} language?`, body: ''}).then((res) => {
       const items = [...this.state.items];
       const index = items.findIndex(row => row._id === id || row.id === id);
 
@@ -70,7 +74,8 @@ class LanguagesList extends React.Component {
         this.props.deleteLang([item._id])
       }
       this.setState({items});
-    }
+    })
+
   };
 
   addRow = () => {
