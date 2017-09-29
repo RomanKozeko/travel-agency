@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 };
 
 let PrefixLink = ({className, children, to, prefix, defaultLang}) => {
-  const urlPrefix = prefix === defaultLang ? '' : `/${prefix}`;
+  const urlPrefix = prefix === defaultLang || !prefix ? '' : `/${prefix}`;
   return (
     <Link className={className} to={`${urlPrefix}${to}`}>
       {children}

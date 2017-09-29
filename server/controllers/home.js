@@ -11,48 +11,50 @@ const {StyleSheetServer} = require('aphrodite')
 const {default: configureStoreSSR} = require('../../dist/client/store/configureStoreSSR');
 const {default: App} = require('../../dist/client/modules/app/App')
 
-
-//const ReactDOMServer = require('react-dom/server');
-//import {StaticRouter} from 'react-router';
-//import { Provider } from 'react-redux';
-//import React from 'react';
-//import { StyleSheetServer } from 'aphrodite';
-
-//import App from '../../client/web/src/modules/app/App';
-//import configureStoreSSR from '../../client/web/src/store/configureStoreSSR';
-
 /**
  * GET /
  * Home page.
  */
 
+export const getLangPref = () => {
+  if (window) {
+    const pref = window.location.href.split('/')[3];
+    if (pref.length > 2) {
+      return 'ru'
+    }
+    return window.location.href.split('/')[3]
+  }
+
+};
+
 module.exports = {
   index(req, res, next) {
+    const prefix = req.originalUrl.split('/')[1];
     const filePath = path.join(__dirname, '../../client/web/build/index.html');
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
       if (err) {
-        console.error('read err', err);
         return res.status(404).end()
       }
 
       const context = {};
       // Create a new Redux store instance
       const store = configureStoreSSR();
-
-
-
       const {html, css} = StyleSheetServer.renderStatic(() => {
         return renderToString(<Provider store={store}>
           <StaticRouter
             location={req.url}
             context={context}
           >
-            <App />
+            <App languagePrefix={prefix.length > 2 ? '' : prefix} />
           </StaticRouter>
         </Provider>);
       });
 
-      const preloadedState = store.getState();
+      const defaultState = store.getState();
+      const app = {
+        languagePrefix: prefix.length > 2 ? '' : prefix
+      };
+      const preloadedState = Object.assign(defaultState, app);
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
@@ -63,7 +65,6 @@ module.exports = {
           '__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
            StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)}});`
         );
-
 
         res.send(RenderedApp)
       }

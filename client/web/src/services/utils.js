@@ -9,11 +9,15 @@ export const createReducer = (initialState, handlers) => {
 };
 
 export const getLangPref = () => {
-  const pref = window.location.href.split('/')[3];
-  if (pref.length > 2) {
-    return 'ru'
+  try {
+    const pref = window.location.href.split('/')[3];
+    if (pref.length > 2) {
+      return 'ru';
+    }
+    return window.location.href.split('/')[3];
+  } catch (err) {
+    return '';
   }
-  return window.location.href.split('/')[3]
 };
 
 

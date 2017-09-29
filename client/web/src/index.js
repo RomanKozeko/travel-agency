@@ -21,8 +21,6 @@ const preloadedState = window.__PRELOADED_STATE__ || {};
 // Allow the passed state to be garbage-collected
 delete window.__PRELOADED_STATE_
 
-preloadedState.app = { languagePrefix: getLangPref() || 'ru', defaultLang: 'ru' }
-
 const store = configureStore(preloadedState);
 
 ReactDOM.render(

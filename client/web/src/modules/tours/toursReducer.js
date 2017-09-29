@@ -6,15 +6,15 @@ const toursSuccess = (state, action) => {
   const payload = action.response;
   return {
     ...state,
-    allIds: [...state.allIds, ...payload.result.tours],
-    byIds: {...state.byIds, ...payload.entities.tours},
+    allIds: [...state.allIds, ...payload.result.items],
+    byIds: {...state.byIds, ...payload.entities.items},
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
     currPage: payload.nextPage,
     pages: {
       ...state.pages,
-      [payload.nextPage]: payload.result.tours
+      [payload.nextPage]: payload.result.items
     }
   }
 };

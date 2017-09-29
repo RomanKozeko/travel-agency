@@ -16,7 +16,7 @@ const fetchTours = (nextPageUrl, nextPage) => ({
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   const {
-    nextPageUrl = `api/tours?page=${nextPage}`,
+    nextPageUrl = `/api/tours?page=${nextPage}`,
     pages,
     pageCount,
   } = getState().tours;
