@@ -5,6 +5,22 @@ const path = require('path');
 const passport = require('passport');
 const passportService = require('../services/passport');
 
+import multer from 'multer';
+import storage from '../storage';
+
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    const filetypes = /jpeg|jpg|png|gif/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    return cb(null, false);
+  }
+});
 /**
  * Controllers (route handlers).
  */
@@ -15,6 +31,7 @@ const ApiRegionsCtrl = require('../controllers/api/regions');
 const ApiPeriodsCtrl = require('../controllers/api/periods');
 const ApiLanguagesCtrl = require('../controllers/api/languages');
 const ApiPagesCtrl = require('../controllers/api/pages');
+const ApiPhotosCtrl = require('../controllers/api/media');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -54,5 +71,9 @@ router.get('/pages/:id', ApiPagesCtrl.getOne);
 router.put('/pages/:id', ApiPagesCtrl.put);
 router.delete('/pages', ApiPagesCtrl.delete);
 router.post('/pages', ApiPagesCtrl.post);
+
+router.get('/media', ApiPhotosCtrl.get);
+router.get('/media/:id', ApiPhotosCtrl.getOne);
+router.post('/media', upload.single('file'), ApiPhotosCtrl.post);
 
 module.exports = router;

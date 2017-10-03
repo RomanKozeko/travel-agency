@@ -12,15 +12,10 @@ const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
-const multer = require('multer');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/apiRoutes');
-
-
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
