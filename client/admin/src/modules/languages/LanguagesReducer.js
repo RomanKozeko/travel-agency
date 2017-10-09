@@ -7,7 +7,7 @@ const actionsObj = createBasicActions('LANGUAGES', 'LANGUAGE', 'languages', CALL
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadLang = actionsObj.load;
-export const deleteLang = actionsObj.deleteItem;
+export const deleteLang = actionsObj.deleteItems;
 export const saveLang = actionsObj.saveItem;
 
 // reducers

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GridIcons from '../ui-elements/gridIcons/GridIcons';
+import GridIcons from '../../ui-elements/gridIcons/GridIcons';
 
 const GridSelector = ({ count, clickHandler, lang }) => {
   const rows = [];

@@ -61,9 +61,7 @@ export const tourSchema = new schema.Entity('items', {
 }, { idAttribute: '_id' });
 export const toursSchema = { items: [tourSchema] };
 
-export const pageSchema = new schema.Entity('items', {
-  content: [contentSchema],
-}, { idAttribute: '_id' });
+export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 
 

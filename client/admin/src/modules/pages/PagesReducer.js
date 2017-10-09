@@ -1,5 +1,20 @@
-import * as actions from './PagesActions';
-import { createReducer, getPageCount } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+  getPageCount
+} from '../../services/utils';
+import { CALL_API, Schemas } from '../../middleware/callApi';
+
+// actions
+const actionsObj = createBasicActions('PAGES', 'PAGE', 'pages', CALL_API, Schemas);
+
+// Action Creators
+export const actions = actionsObj.actions;
+export const load = actionsObj.loadWithPagination;
+export const deleteItems = actionsObj.deleteItems;
+export const loadItem = actionsObj.loadItem;
+export const saveItem = actionsObj.saveItem;
 
 const pagesSuccess = (state, action) => {
   const payload = action.response;
@@ -7,9 +22,6 @@ const pagesSuccess = (state, action) => {
     ...state,
     allIds: [...state.allIds, ...payload.result.items],
     byIds: { ...state.byIds, ...payload.entities.items },
-    pagesContent: { ...state.pagesContent, ...payload.entities.content },
-    rows: { ...state.rows, ...payload.entities.rows },
-    rowsItems: { ...state.rowsItems, ...payload.entities.rowsItems },
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -45,32 +57,6 @@ const pagesDeleteSuccess = (state, action) => {
   };
 };
 
-const pageSuccess = (state, action) => {
-  const payload = action.response;
-  let pageItems = [];
-
-  // TODO: make support for multiple pages
-  if (state.pages[state.currPage]) {
-    pageItems = [...state.pages[state.currPage]];
-  }
-  pageItems.push(payload.result);
-
-  return {
-    ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.items },
-    pagesContent: { ...state.pagesContent, ...payload.entities.content },
-    rows: { ...state.rows, ...payload.entities.rows },
-    rowsItems: { ...state.rowsItems, ...payload.entities.rowsItems },
-    isFetching: false,
-    isPageSaving: false,
-    pages: {
-      ...state.pages,
-      [state.currPage]: pageItems
-    }
-  };
-};
-
 export const defaultState = {
   allIds: [],
   byIds: {},
@@ -89,10 +75,10 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGES_DELETE_SUCCESS]: pagesDeleteSuccess,
   [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.PAGE_SUCCESS]: pageSuccess,
-  [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isPageSaving: true }),
-  [actions.PAGE_SAVE_SUCCESS]: pageSuccess,
-  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false })
+  [actions.PAGE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
+  [actions.PAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false })
 });
 
 export default pagesReducer;

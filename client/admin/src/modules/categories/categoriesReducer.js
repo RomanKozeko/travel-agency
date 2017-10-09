@@ -7,7 +7,7 @@ const actionsObj = createBasicActions('CATEGORIES', 'CATEGORY', 'categories', CA
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadCategories = actionsObj.load;
-export const deleteCategories = actionsObj.deleteItem;
+export const deleteCategories = actionsObj.deleteItems;
 export const loadCategory = actionsObj.loadItem;
 export const saveCategory = actionsObj.saveItem;
 

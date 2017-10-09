@@ -22,7 +22,7 @@ class SortableTable extends React.Component {
     this.state = { selected: {}, isSelectedAll: false };
     this.countSelected = this.countSelected.bind(this);
     this.isSelected = this.isSelected.bind(this);
-    this.deleteItems = this.deleteItems.bind(this);
+    this.deleteItemss = this.deleteItemss.bind(this);
   }
 
   handleSelectAllClick(event, checked) {
@@ -48,7 +48,7 @@ class SortableTable extends React.Component {
     return Object.keys(this.state.selected);
   }
 
-  deleteItems() {
+  deleteItemss() {
     const pagesToDelete = Object.keys(this.state.selected).filter(
       id => (this.state.selected[id] === true)
     );
@@ -73,15 +73,6 @@ class SortableTable extends React.Component {
 
   getItemContent(item) {
     const { data } = this.props;
-    if (data.content) {
-      const contentForCurrLang = item.content.find((itemContent) => {
-        if (data.content[itemContent]) {
-          const itemContentLang = data.content[itemContent].language;
-          return data.languages.byIds[itemContentLang].prefix === data.languages.currLanguage;
-        }
-      });
-      return data.content[contentForCurrLang];
-    }
     //  get all content of curr item
     return item.content ?
       item.content.find((itemContent) => {
@@ -93,7 +84,6 @@ class SortableTable extends React.Component {
     :
     item;
   }
-
 
   renderFields(item, fields) {
     return fields.map((field, i) => (
@@ -113,7 +103,7 @@ class SortableTable extends React.Component {
 
     return (
       <div>
-        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deleteItems} />
+        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deleteItemss} />
         <Table>
           <TableHead>
             <TableRow>

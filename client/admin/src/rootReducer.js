@@ -5,6 +5,7 @@ import authReducer from './modules/auth/authReducer';
 // import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
+import pageReducer from './modules/pages/pageReducer';
 import languagesReducer, * as fromLanguages from './modules/languages/LanguagesReducer';
 import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
 import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   tours: toursReducer,
   form: formReducer,
   pages: pagesReducer,
+  page: pageReducer,
   regions: regionsReducer,
   languages: languagesReducer,
   toastr: toastrReducer,

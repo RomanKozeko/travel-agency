@@ -31,11 +31,13 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     [`${alias}_DELETE_REQUEST`]: `${alias}_DELETE_REQUEST`,
     [`${alias}_DELETE_SUCCESS`]: `${alias}_DELETE_SUCCESS`,
     [`${alias}_DELETE_FAILURE`]: `${alias}_DELETE_FAILURE`,
+    [`${alias}_GET_PAGE_FROM_CACHE`]: `${alias}_GET_PAGE_FROM_CACHE`,
     [`${aliasPlural}_REQUEST`]: `${aliasPlural}_REQUEST`,
     [`${aliasPlural}_SUCCESS`]: `${aliasPlural}_SUCCESS`,
     [`${aliasPlural}_FAILURE`]: `${aliasPlural}_FAILURE`,
     [`${aliasPlural}_SAVE_REQUEST`]: `${aliasPlural}_SAVE_REQUEST`,
     [`${aliasPlural}_SAVE_SUCCESS`]: `${aliasPlural}_SAVE_SUCCESS`,
+    [`${aliasPlural}_SAVE_FAILURE`]: `${aliasPlural}_SAVE_FAILURE`,
     [`${aliasPlural}_SAVE_FAILURE`]: `${aliasPlural}_SAVE_FAILURE`,
   };
 
@@ -47,6 +49,15 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     }
   });
 
+  const fetchWithPagination = (nextPageUrl, nextPage) => ({
+    [middleware]: {
+      types: [`${alias}_REQUEST`, `${alias}_SUCCESS`, `${alias}_FAILURE`],
+      endpoint: nextPageUrl,
+      schema: schemas[alias],
+      nextPage
+    }
+  });
+
   const load = () => (dispatch, getState) => {
     const { allIds } = getState()[alias.toLowerCase()];
 
@@ -55,6 +66,27 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     }
 
     return null;
+  };
+
+  const loadWithPagination = (nextPage = 0) => (dispatch, getState) => {
+    const {
+      nextPageUrl = `/api/${endpoint}/?page=${nextPage}&limit=100`,
+      pages,
+      pageCount,
+    } = getState().pages;
+
+    if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
+      return null;
+    }
+
+    if (pages[nextPage]) {
+      return dispatch({
+        type: `${alias}_GET_PAGE_FROM_CACHE`,
+        payload: nextPage
+      });
+    }
+
+    return dispatch(fetchWithPagination(nextPageUrl, nextPage));
   };
 
   const loadItem = id => ({
@@ -80,7 +112,7 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     });
   };
 
-  const deleteItem = ids => ({
+  const deleteItems = ids => ({
     [middleware]: {
       types: [`${alias}_DELETE_REQUEST`, `${alias}_DELETE_SUCCESS`, `${alias}_DELETE_FAILURE`],
       method: 'DELETE',
@@ -95,7 +127,8 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
 
   return {
     actions,
-    deleteItem,
+    deleteItems,
+    loadWithPagination,
     loadItem,
     saveItem,
     load
@@ -149,3 +182,12 @@ export const basicReducerEvents = {
       };
     }
 };
+
+const chunk = (r, j) => r.reduce((a, b, i, g) => !(i % j) ? a.concat([g.slice(i, i + j)]) : a, []);
+export const updatePages = (pagesIds, itemsPerPage) => (
+  chunk(pagesIds, itemsPerPage)
+    .reduce((acc, cur, i) => {
+      acc[i] = cur;
+      return acc;
+    }, {})
+);

@@ -5,7 +5,7 @@ import {
   EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE,
   DELETE_TOUR_REQUEST, DELETE_TOUR_SUCCESS, DELETE_TOUR_FAILURE
 } from './toursActions';
-import { createReducer, getPageCount } from '../../services/utils';
+import { createReducer, getPageCount, updatePages } from '../../services/utils';
 
 const toursSuccess = (state, action) => {
   const payload = action.response;
@@ -23,15 +23,6 @@ const toursSuccess = (state, action) => {
     }
   };
 };
-
-const chunk = (r, j) => r.reduce((a, b, i, g) => !(i % j) ? a.concat([g.slice(i, i + j)]) : a, []);
-const updatePages = (pagesIds, itemsPerPage) => (
-  chunk(pagesIds, itemsPerPage)
-    .reduce((acc, cur, i) => {
-      acc[i] = cur;
-      return acc;
-    }, {})
-);
 
 const tourAddedSuccess = (state, action) => {
   const payload = action.response;

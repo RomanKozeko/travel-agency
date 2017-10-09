@@ -3,7 +3,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Portlet from '../ui-elements/Portlet';
+import Portlet from '../../ui-elements/Portlet';
 import PageForm from './PageForm';
 import MyEditor from './MyEditor';
 

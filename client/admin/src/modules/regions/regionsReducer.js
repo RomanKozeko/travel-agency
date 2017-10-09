@@ -7,7 +7,7 @@ const actionsObj = createBasicActions('REGIONS', 'REGION', 'regions', CALL_API, 
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadRegions = actionsObj.load;
-export const deleteRegions = actionsObj.deleteItem;
+export const deleteRegions = actionsObj.deleteItems;
 export const loadRegion = actionsObj.loadItem;
 export const saveRegion = actionsObj.saveItem;
 

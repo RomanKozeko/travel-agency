@@ -1,6 +1,8 @@
 const config = require('../../config/index');
 const PagesQueries = require('../../models/queries/pages');
 const Page = require('../../models/Page');
+const convert = require('cyrillic-to-latin');
+const slugify = require('slugify');
 
 module.exports = {
 
@@ -29,6 +31,9 @@ module.exports = {
 
   put(req, res, next) {
     const pageId = req.params.id;
+    if (!req.body.url) {
+      req.body.url = slugify(convert(req.body.content[0].title));
+    }
     const pageProps = req.body;
 
     Page.findByIdAndUpdate(pageId, pageProps)
@@ -38,6 +43,9 @@ module.exports = {
   },
 
   post(req, res, next) {
+    if (!req.body.url) {
+      req.body.url = slugify(convert(req.body.content[0].title));
+    }
     const page = new Page(req.body);
 
     page.save()

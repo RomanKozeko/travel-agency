@@ -9,22 +9,22 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import {CircularProgress} from 'material-ui/Progress';
-import {loadPages, deletePages} from './PagesActions';
-import {getPageWithItems} from '../../rootReducer';
-import PageHeader from '../ui-elements/PageHeader';
-import Portlet from '../ui-elements/Portlet';
-import Spinner from '../ui-elements/Spinner';
-import SortableTable from '../ui-elements/sortableTable/SortableTable';
+import { CircularProgress } from 'material-ui/Progress';
+import { load, deleteItems } from './../PagesReducer';
+import { getPageWithItems } from '../../../rootReducer';
+import PageHeader from '../../ui-elements/PageHeader';
+import Portlet from '../../ui-elements/Portlet';
+import Spinner from '../../ui-elements/Spinner';
+import SortableTable from '../../ui-elements/sortableTable/SortableTable';
 
 const mapStateToProps = (state) => {
   return {
     items: getPageWithItems(state, state.pages.currPage),
-    content: state.pages.pagesContent,
     currPage: state.pages.currPage,
     pageCount: state.pages.pageCount,
     count: state.pages.count,
     isFetching: state.pages.isFetching,
+    isFetched: state.pages.isFetched,
     languages: state.languages
   };
 };
@@ -32,16 +32,15 @@ const mapStateToProps = (state) => {
 class PagesContainer extends React.Component {
 
   componentDidMount() {
-    this.props.loadPages();
+    this.props.load();
   }
 
   render() {
-    const { items, content, languages, isFetching } = this.props;
+    const { items, languages, isFetching } = this.props;
 
     const data = {
       headers: ['Заголовок', 'Описание', 'Язык'],
       items,
-      content,
       languages,
       fields: [
         {
@@ -63,20 +62,22 @@ class PagesContainer extends React.Component {
     return (
       <div>
         <PageHeader text={'Все страницы'} />
+
         <Button
           raised
           color="primary"
           className="addBottomMargin"
+          component={Link}
+          to="/admin/pages/page?state=newPage"
         >
-          <Link to="/admin/pages/page?state=newPage" style={{color: '#fff'}}>Добавить страницу</Link>
-
+          Добавить страницу
         </Button>
         {isFetching
           ?
             <Spinner />
           :
             <Portlet isBordered={false}>
-              <SortableTable data={data} deleteItems={this.props.deletePages} />
+              <SortableTable data={data} deleteItems={this.props.deleteItems} />
             </Portlet>
         }
       </div>
@@ -85,8 +86,8 @@ class PagesContainer extends React.Component {
 }
 
 PagesContainer.propTypes = {
-  loadPages: PropTypes.func,
-  deletePages: PropTypes.func,
+  load: PropTypes.func,
+  deleteItems: PropTypes.func,
   items: PropTypes.array,
   currPage: PropTypes.number,
   pageCount: PropTypes.number,
@@ -96,7 +97,7 @@ PagesContainer.propTypes = {
 
 PagesContainer = connect(
   mapStateToProps,
-  { loadPages, deletePages }
+  { load, deleteItems }
 )(PagesContainer);
 
 export default PagesContainer;

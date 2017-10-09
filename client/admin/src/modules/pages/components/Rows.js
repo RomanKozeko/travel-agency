@@ -67,8 +67,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const getRowItems = (ids, rowItems) => ids.map(id => rowItems[id]);
-
 const getItemClassName = (item) => (
   item.content ? css(styles.rowInner, styles.rowInnerActive) : css(styles.rowInner)
 );
@@ -89,14 +87,13 @@ const ItemContentToolBar = ({item, removeRowItem, editRowItem}) => (
 );
 
 const Rows = ({
-                rows,
-                rowsItems,
-                langId,
-                removeRow,
-                openHtmlEditor,
-                removeRowItem,
-                editRowItem
-              }) => {
+    rows,
+    langId,
+    removeRow,
+    openHtmlEditor,
+    removeRowItem,
+    editRowItem
+  }) => {
   return (
     <div>
       <ReactCSSTransitionGroup
@@ -116,7 +113,7 @@ const Rows = ({
             </IconButton>
             <div className="clearfix">
               {
-                getRowItems(row.items, rowsItems).map(item => (
+                row.items.map(item => (
                   <div key={item._id || item.id} className={item.size}>
                     <div className={getItemClassName(item)}>
                       {item.content ?

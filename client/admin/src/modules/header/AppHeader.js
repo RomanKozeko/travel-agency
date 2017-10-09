@@ -68,7 +68,7 @@ const options = [
 let AppHeader = ({ dispatch }) => (
   <div className={css(styles.wrapper)}>
     <div className={css(styles.logo)}>
-      <a href="" className={css(styles.logoLink)}>
+      <a href="/" className={css(styles.logoLink)}>
         Назад на сайт
       </a>
       <IconButton className={css(styles.toggleButton)} >

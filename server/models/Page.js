@@ -4,6 +4,7 @@ const PageContentSchema = require('./PageContent');
 
 const PageSchema = new Schema({
   preview: String,
+  url: String,
   content: [PageContentSchema],
 });
 
