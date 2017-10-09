@@ -32,16 +32,10 @@ class PageForm extends React.Component {
     super(props);
     this.state = {
       htmlEditorOpen: false,
-      contentByLang: { ...this.props.parentState.contentByLang },
-      item: { ...this.props.item },
-      rowsByLang: { ...this.props.rowsByLang },
-      rowsItems: { ...this.props.rowsItems },
-      allRowsById: { ...this.props.allRowsById },
       currRowItem: null
     };
     this.saveRow = this.saveRow.bind(this);
     this.closeHtmlEditor = this.closeHtmlEditor.bind(this);
-    this.removeRow = this.removeRow.bind(this);
     this.openHtmlEditor = this.openHtmlEditor.bind(this);
     this.removeRowItem = this.removeRowItem.bind(this);
     this.editRowItem = this.editRowItem.bind(this);
@@ -59,10 +53,6 @@ class PageForm extends React.Component {
   componentWillUnmount() {
     this.props.pageUnmount();
   }
-
-  removeRow = (langId, rowId) => {
-
-  };
 
   removeRowItem(itemId) {
     const rowsItems = { ...this.state.rowsItems };
@@ -82,7 +72,14 @@ class PageForm extends React.Component {
     return true
   }
 
-  handleSave = (e) => handleSave.call(this, e);
+  handleSave = (e) => {
+    e.preventDefault();
+    const { page } = this.props;
+    this.props.save(page.item, this.props.isNew);
+    if (this.props.isNew) {
+      this.props.history.push('/admin/pages', {});
+    }
+  };
 
   saveRow(content) {
     const rowsItems = { ...this.state.rowsItems };
@@ -100,31 +97,22 @@ class PageForm extends React.Component {
     });
   }
 
-  handleChange = (langID, name) => event => {
-    if (langID) {
-      const contentByLang = {...this.state.contentByLang};
-      contentByLang[langID][name] = event.target.value;
-      this.setState({contentByLang});
-    } else {
-      const item = {...this.state.item};
-      item[name] = event.target.value;
-      this.setState({item});
-    }
-  };
-
   closeHtmlEditor() {
     this.setState({ htmlEditorOpen: false, currRowItem: null });
   }
 
   render() {
-    const { item } = this.state;
     const {
       parentState,
       page,
       languages,
       isSaving,
       pageAddRow,
-      pageRemoveRow
+      pageRemoveRow,
+      pageInputChange,
+      openHtmlEditor,
+      closeHtmlEditor,
+      saveRow,
     } = this.props;
     if (!page.item) {
       return null;
@@ -141,34 +129,34 @@ class PageForm extends React.Component {
                 </div>
 
                 <div className="col-sm-6">
-                <TextField
-                  id="title"
-                  label="title"
-                  fullWidth
-                  value={page.contentByLang[lang._id].title}
-                  onChange={this.handleChange(lang._id, 'title')}
-                  margin="normal"
-                  required
-                />
-                <TextField
-                  id="url"
-                  label="url"
-                  fullWidth
-                  value={page.item.url}
-                  onChange={this.handleChange(null, 'url')}
-                  margin="normal"
-                  required
-                />
-                <TextField
-                  id="description"
-                  label="Meta description"
-                  fullWidth
-                  value={page.contentByLang[lang._id].description}
-                  onChange={this.handleChange(lang._id, 'description')}
-                  margin="normal"
-                  required
-                />
-              </div>
+                  <TextField
+                    id="title"
+                    label="title"
+                    fullWidth
+                    value={page.contentByLang[lang._id].title}
+                    onChange={(e) => pageInputChange(lang._id, 'title', e.target.value)}
+                    margin="normal"
+                    required
+                  />
+                  <TextField
+                    id="url"
+                    label="url"
+                    fullWidth
+                    value={page.item.url}
+                    onChange={(e) => pageInputChange(null, 'url', e.target.value)}
+                    margin="normal"
+                    required
+                  />
+                  <TextField
+                    id="description"
+                    label="Meta description"
+                    fullWidth
+                    value={page.contentByLang[lang._id].description}
+                    onChange={(e) => pageInputChange(lang._id, 'description', e.target.value)}
+                    margin="normal"
+                    required
+                  />
+                </div>
               </div>
 
               <PageCaption text={'Добавить ряд'} />
@@ -182,16 +170,24 @@ class PageForm extends React.Component {
               <Rows
                 rows={page.contentByLang[lang._id].rows}
                 langId={lang._id}
-                rowsItems={page.contentByLang[lang._id].rows}
+                rowsItems={page.rowItemsByID}
                 removeRow={pageRemoveRow}
                 removeRowItem={this.removeRowItem}
                 editRowItem={this.editRowItem}
-                openHtmlEditor={this.openHtmlEditor}
+                openHtmlEditor={openHtmlEditor}
               />
             </div>
             }
           </div>
         ))}
+
+        <HtmlEditorPopup
+          isOpen={page.htmlEditorOpen}
+          currentRowItem={this.state.currentRowItem}
+          saveRow={saveRow}
+          handleRequestClose={closeHtmlEditor}
+        />
+
         <Button
           raised
           type="submit"

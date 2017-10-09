@@ -103,7 +103,7 @@ class ImagePreview extends React.Component {
     const src = this.props.url || '/landscape.svg';
     return (
       <div className={css(styles.wrapper)}>
-        <div className={css(styles.layer)} />
+        {!this.state.loaded && <div className={css(styles.layer)} />}
         {this.state.loaded && <img className={css(styles.image)} src={src} alt="" />}
         {!this.state.loaded && <img style={{display: 'none'}} src={src} onLoad={this.onLoad.bind(this)} />}
       </div>

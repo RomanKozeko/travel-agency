@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const getRowItems = (items, rowItems) => items.map(item => rowItems[item.id || item._id]);
+
 const getItemClassName = (item) => (
   item.content ? css(styles.rowInner, styles.rowInnerActive) : css(styles.rowInner)
 );
@@ -88,6 +90,7 @@ const ItemContentToolBar = ({item, removeRowItem, editRowItem}) => (
 
 const Rows = ({
     rows,
+    rowsItems,
     langId,
     removeRow,
     openHtmlEditor,
@@ -113,7 +116,7 @@ const Rows = ({
             </IconButton>
             <div className="clearfix">
               {
-                row.items.map(item => (
+                getRowItems(row.items, rowsItems).map(item => (
                   <div key={item._id || item.id} className={item.size}>
                     <div className={getItemClassName(item)}>
                       {item.content ?

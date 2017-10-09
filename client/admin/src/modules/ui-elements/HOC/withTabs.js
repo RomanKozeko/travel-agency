@@ -25,8 +25,8 @@ export default function withTabs(WrappedComponent, backLink ) {
           language: key,
         }
       });
-
-      this.props.item.content.forEach(content => {
+      const item = {...this.props.item};
+      item.content.forEach(content => {
         contentByLang[content.language] = content
       });
 

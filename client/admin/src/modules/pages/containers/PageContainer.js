@@ -7,12 +7,7 @@ import Spinner from '../../ui-elements/Spinner';
 import BackLink from '../../ui-elements/BackLink';
 import {getLanguages, getPage} from '../../../rootReducer';
 import {loadItem, saveItem} from '../PagesReducer';
-import {
-  pageAddRow,
-  pageDidMount,
-  pageRemoveRow,
-  pageUnmount
-} from '../pageReducer';
+import * as actions from '../pageReducer';
 import Portlet from '../../ui-elements/Portlet';
 import PageForm from '../components/PageForm';
 
@@ -93,11 +88,16 @@ PageContainer.propTypes = {
 
 PageContainer = withRouter(connect(
   mapStateToProps, {
-    loadItem, save: saveItem,
-    pageAddRow,
-    pageDidMount,
-    pageRemoveRow,
-    pageUnmount
+    loadItem,
+    save: saveItem,
+    pageAddRow: actions.pageAddRow,
+    pageDidMount: actions.pageDidMount,
+    pageRemoveRow: actions.pageRemoveRow,
+    pageUnmount: actions.pageUnmount,
+    pageInputChange: actions.pageInputChange,
+    openHtmlEditor: actions.openHtmlEditor,
+    closeHtmlEditor: actions.closeHtmlEditor,
+    saveRow: actions.saveRow
   }
 )(PageContainer));
 

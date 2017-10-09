@@ -19,6 +19,20 @@ class Row {
   }
 }
 
+export function normolizeRowItems(content) {
+  const rowItemsByID = {};
+
+  content.forEach((contentItem) => {
+    contentItem.rows.forEach((row) => {
+      row.items.forEach((rowItem) => {
+        rowItemsByID[rowItem._id || rowItem.id] = { ...rowItem };
+      });
+    });
+  });
+
+  return rowItemsByID;
+}
+
 export function addRow(contentByLang, columns, langId) {
   const rowItems = [];
   for (let i = 0; i < columns; i++) {
@@ -28,9 +42,11 @@ export function addRow(contentByLang, columns, langId) {
   if (!contentByLang[langId].rows) {
     contentByLang[langId].rows = [];
   }
-  contentByLang[langId].rows.push(new Row('', columns, rowItems));
+  const row = new Row('', columns, rowItems);
+  const rowItemsByID = normolizeRowItems([{ rows: [row] }]);
+  contentByLang[langId].rows.push(row);
 
-  return contentByLang;
+  return { rowItemsByID, contentByLang };
 }
 
 export function removeRow(contentByLang, langId, rowId) {
@@ -42,6 +58,22 @@ export function removeRow(contentByLang, langId, rowId) {
   }
 
   return contentByLang;
+}
+
+export function setInputsValues(contentByLang, state, action) {
+  const item = { ...state.item };
+  const { langId, value, name } = action;
+
+  if (langId) {
+    contentByLang[langId][name] = value;
+  } else {
+    item[name] = value;
+  }
+  return {
+    ...state,
+    contentByLang,
+    item
+  };
 }
 
 export function handleSave(e) {

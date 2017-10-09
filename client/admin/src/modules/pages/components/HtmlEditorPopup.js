@@ -30,7 +30,7 @@ class HtmlEditorPopup extends React.Component {
     };
   }
 
-  handleEditorChange(e) {
+  handleEditorChange = (e) => {
     this.state.content = e.target.getContent();
   }
 
@@ -63,7 +63,7 @@ class HtmlEditorPopup extends React.Component {
             plugins: 'link image code',
             height: '500'
           }}
-          onChange={this.handleEditorChange.bind(this)}
+          onChange={this.handleEditorChange}
         />
       </Dialog>
     );
