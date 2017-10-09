@@ -17,7 +17,7 @@ import HtmlEditorPopup from './HtmlEditorPopup';
 import withTabs from '../../ui-elements/HOC/withTabs';
 import TextField from 'material-ui/TextField';
 import pageFormService from '../pageFormService';
-import { handleSave, addRow, removeRow } from '../pageFormService';
+import { denormalizeRowsItems } from '../pageFormService';
 const uniqueId = require('lodash.uniqueid');
 
 const styles = StyleSheet.create({
@@ -28,19 +28,6 @@ const styles = StyleSheet.create({
 
 
 class PageForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      htmlEditorOpen: false,
-      currRowItem: null
-    };
-    this.saveRow = this.saveRow.bind(this);
-    this.closeHtmlEditor = this.closeHtmlEditor.bind(this);
-    this.openHtmlEditor = this.openHtmlEditor.bind(this);
-    this.removeRowItem = this.removeRowItem.bind(this);
-    this.editRowItem = this.editRowItem.bind(this);
-  }
-
   componentDidMount() {
     this.props.pageDidMount({
       htmlEditorOpen: false,
@@ -54,52 +41,17 @@ class PageForm extends React.Component {
     this.props.pageUnmount();
   }
 
-  removeRowItem(itemId) {
-    const rowsItems = { ...this.state.rowsItems };
-    rowsItems[itemId].content = '';
-    this.setState({ rowsItems });
-  }
-
-  editRowItem(itemId) {
-    const rowsItems = { ...this.state.rowsItems };
-    this.setState({
-      htmlEditorOpen: true,
-      currentRowItem: rowsItems[itemId]
-    });
-  }
-
-  isValidInputs() {
-    return true
-  }
-
   handleSave = (e) => {
     e.preventDefault();
     const { page } = this.props;
+
+    page.item.content = denormalizeRowsItems(page.item.content, page.rowItemsByID);
+
     this.props.save(page.item, this.props.isNew);
     if (this.props.isNew) {
       this.props.history.push('/admin/pages', {});
     }
   };
-
-  saveRow(content) {
-    const rowsItems = { ...this.state.rowsItems };
-    rowsItems[this.state.currentRowItem._id || this.state.currentRowItem.id].content = content;
-    this.setState({
-      htmlEditorOpen: false,
-      currentRow: ''
-    });
-  }
-
-  openHtmlEditor(rowItem) {
-    this.setState({
-      htmlEditorOpen: true,
-      currentRowItem: rowItem
-    });
-  }
-
-  closeHtmlEditor() {
-    this.setState({ htmlEditorOpen: false, currRowItem: null });
-  }
 
   render() {
     const {
@@ -112,7 +64,9 @@ class PageForm extends React.Component {
       pageInputChange,
       openHtmlEditor,
       closeHtmlEditor,
+      removeRowItem,
       saveRow,
+      editRowItem,
     } = this.props;
     if (!page.item) {
       return null;
@@ -172,8 +126,8 @@ class PageForm extends React.Component {
                 langId={lang._id}
                 rowsItems={page.rowItemsByID}
                 removeRow={pageRemoveRow}
-                removeRowItem={this.removeRowItem}
-                editRowItem={this.editRowItem}
+                removeRowItem={removeRowItem}
+                editRowItem={editRowItem}
                 openHtmlEditor={openHtmlEditor}
               />
             </div>
@@ -183,7 +137,7 @@ class PageForm extends React.Component {
 
         <HtmlEditorPopup
           isOpen={page.htmlEditorOpen}
-          currentRowItem={this.state.currentRowItem}
+          currentRowItem={page.currRowItem}
           saveRow={saveRow}
           handleRequestClose={closeHtmlEditor}
         />

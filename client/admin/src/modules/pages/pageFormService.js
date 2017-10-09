@@ -33,6 +33,18 @@ export function normolizeRowItems(content) {
   return rowItemsByID;
 }
 
+export function denormalizeRowsItems(content, rowItemsByID) {
+  content.forEach(contentItem => {
+    contentItem.rows.forEach((row) => {
+      row.items.forEach((rowItem, i) => {
+        row.items[i] = rowItemsByID[rowItem._id || rowItem.id];
+      });
+    });
+  });
+
+  return content;
+}
+
 export function addRow(contentByLang, columns, langId) {
   const rowItems = [];
   for (let i = 0; i < columns; i++) {
@@ -74,20 +86,5 @@ export function setInputsValues(contentByLang, state, action) {
     contentByLang,
     item
   };
-}
-
-export function handleSave(e) {
-  e.preventDefault();
-  const item = {...this.state.item};
-  item.content = Object.values(this.state.contentByLang);
-  if (this.isValidInputs(item.content)) {
-    this.props.save(item, this.props.isNew);
-    this.setState({notValidForm: false});
-    if (this.props.isNew) {
-      this.props.history.push('/admin/pages', {});
-    }
-  } else {
-    this.setState({notValidForm: true})
-  }
 }
 

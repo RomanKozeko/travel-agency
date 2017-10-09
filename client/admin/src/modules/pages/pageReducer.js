@@ -10,12 +10,16 @@ const PAGE_REMOVE_ROW = 'PAGE_REMOVE_ROW';
 const PAGE_INPUT_CHANGE = 'PAGE_INPUT_CHANGE';
 const PAGE_OPEN_HTML_EDITOR = 'PAGE_OPEN_HTML_EDITOR';
 const PAGE_CLOSE_HTML_EDITOR = 'CLOSE_HTML_EDITOR';
+const PAGE_REMOVE_ROW_ITEM = 'PAGE_REMOVE_ROW_ITEM';
+const PAGE_EDIT_ROW_ITEM = 'PAGE_EDIT_ROW_ITEM';
 
 // Action Creators
 export const pageDidMount = makeActionCreator(PAGE_DID_MOUNT, 'payload');
 export const pageUnmount = makeActionCreator(PAGE_UNMOUNT);
 export const pageAddRow = makeActionCreator(PAGE_ADD_ROW, 'columns', 'langId');
 export const pageRemoveRow = makeActionCreator(PAGE_REMOVE_ROW, 'langId', 'rowId');
+export const pageRemoveRowItem = makeActionCreator(PAGE_REMOVE_ROW_ITEM, 'itemId');
+export const pageEditRowItem = makeActionCreator(PAGE_EDIT_ROW_ITEM, 'itemId');
 export const pageInputChange = makeActionCreator(PAGE_INPUT_CHANGE, 'langId', 'name', 'value');
 export const openHtmlEditor = makeActionCreator(PAGE_OPEN_HTML_EDITOR, 'rowItem');
 export const closeHtmlEditor = makeActionCreator(PAGE_CLOSE_HTML_EDITOR);
@@ -42,10 +46,28 @@ const saveRowSuccess = (state, action) => {
   };
 };
 
-const removeRowSuccess = (state, action) => ({
+const removeRowSuccess = (state, { langId, rowId }) => ({
   ...state,
-  contentByLang: removeRow({ ...state.contentByLang }, action.langId, action.rowId)
+  contentByLang: removeRow({ ...state.contentByLang }, langId, rowId)
 });
+
+const removeRowItem = (state, { itemId }) => {
+  const rowItemsByID = { ...state.rowItemsByID };
+  rowItemsByID[itemId].content = '';
+  return {
+    ...state,
+    rowItemsByID
+  };
+};
+
+const editRowItem = (state, { itemId }) => {
+  const rowItemsByID = { ...state.rowItemsByID };
+  return {
+    ...state,
+    htmlEditorOpen: true,
+    currRowItem: rowItemsByID[itemId]
+  };
+};
 
 const inputChange = (state, action) => setInputsValues(
   { ...state.contentByLang },
@@ -60,7 +82,6 @@ const openEditor = (state, action) => ({
 
 const setUpState = (state, action) => {
   const rowItemsByID = normolizeRowItems([...action.payload.item.content]);
-
   return {
     ...state,
     ...action.payload,
@@ -79,7 +100,9 @@ const pageReducer = createReducer(defaultState, {
   [PAGE_UNMOUNT]: () => ({ ...defaultState }),
   [PAGE_ADD_ROW]: addRowSuccess,
   [PAGE_REMOVE_ROW]: removeRowSuccess,
+  [PAGE_EDIT_ROW_ITEM]: editRowItem,
   [PAGE_SAVE_ROW_ITEM]: saveRowSuccess,
+  [PAGE_REMOVE_ROW_ITEM]: removeRowItem,
   [PAGE_INPUT_CHANGE]: inputChange,
   [PAGE_OPEN_HTML_EDITOR]: openEditor,
   [PAGE_CLOSE_HTML_EDITOR]: state => ({ ...state, htmlEditorOpen: false, currRowItem: null }),
