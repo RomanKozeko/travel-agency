@@ -5,5 +5,5 @@ module.exports = {
     login: 'Admin',
     password: 'Admin'
   },
-  itemsPerPageLimit: 20
+  itemsPerPageLimit: 40
 };

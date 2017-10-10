@@ -79,7 +79,7 @@ export default function withTabs(WrappedComponent, backLink ) {
       return <div>
         <Tabs
           className={css(styles.tabs)}
-          index={this.state.selectedTabIndex}
+          value={this.state.selectedTabIndex}
           onChange={this.handleTabChange}
         >
           {this.props.languages.map(lang => (<Tab label={lang.title} key={lang._id}/>))}
