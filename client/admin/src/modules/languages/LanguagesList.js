@@ -12,8 +12,8 @@ import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
 import createConfirmation  from '../ui-elements/form/createConfirmation'
+import FormInput from '../ui-elements/form/FormInput';
 const uniqueId = require('lodash.uniqueid');
-
 
 
 const confirm = createConfirmation(ConfirmDialog);
@@ -31,10 +31,10 @@ const renderCells = ({ title, prefix }, id, selectedRow, handleChange) => {
   if (selectedRow === id) {
     return [
       <TableCell key={id} className={css(styles.field)}>
-        <TextField value={title} label="title" onChange={(e) => handleChange(e, 'title', id)} />
+        <FormInput value={title} label="title" handleChange={handleChange} id={id} regExp={/^.{1,10}$/} />
       </TableCell>,
       <TableCell key={id + 1} className={css(styles.field)}>
-        <TextField value={prefix} label="prefix" onChange={(e) => handleChange(e, 'prefix', id)} />
+        <FormInput value={prefix} label="prefix" handleChange={(e) => handleChange(e, 'prefix', id)}  regExp={/^.{1,2}$/} />
       </TableCell>
     ];
   }
@@ -49,7 +49,8 @@ class LanguagesList extends React.Component {
     super(props);
     this.state = {
       selectedRow: null,
-      items:  [...this.props.items]
+      items:  [...this.props.items],
+      isValid: false
     };
 
     this.handleChange = this.handleChange.bind(this)
@@ -84,17 +85,23 @@ class LanguagesList extends React.Component {
     items.push({
       title: '',
       prefix: '',
-      id
+      id,
     });
     this.setState({selectedRow: id, items});
   };
 
-  handleChange(event, name, id) {
+  handleChange(event, name, id, isValid) {
     const items = [...this.state.items];
     const index = items.findIndex(item => (item._id === id || item.id === id));
     items[index][name] = event.target.value;
-    this.setState({items});
+    this.setState({items, isValid});
   };
+
+  handleSave = e => (item, id) => {
+    if (this.state.isValid) {
+      this.props.saveLang(item, !!item.id);
+    }
+  }
 
   render() {
     const { saveLang, isSaving, deleteLang } = this.props;
@@ -127,7 +134,7 @@ class LanguagesList extends React.Component {
                       ?
                       <div>
                         {isSaving ? 'Saving..' :
-                        <IconButton onClick={() => saveLang(item, !!item.id)}>
+                        <IconButton onClick={this.handleSave(item, !!item.id)}>
                           <Icon>save</Icon>
                         </IconButton>
                         }

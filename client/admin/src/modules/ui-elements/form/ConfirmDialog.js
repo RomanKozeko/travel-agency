@@ -8,6 +8,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
+
 class ConfirmDialog extends React.Component {
   state = {
     open: this.props.show,
