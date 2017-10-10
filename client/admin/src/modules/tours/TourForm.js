@@ -3,7 +3,7 @@ import { getContentByLang } from './toursReducer';
 import Button from 'material-ui/Button';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
-import TinyMCE from 'react-tinymce';
+//import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 
 const styles = StyleSheet.create({
@@ -103,15 +103,7 @@ class TourForm extends Component {
 						        label='Мета описание'
 					        />
 					        <div className={css(styles.field)} >
-						        <TinyMCE
-							        content={contentByLang[lang._id].content}
-											name='content'
-							        config={{
-                        plugins: 'link image code',
-                        height: '500'
-                      }}
-							        onChange={(e) => this.handleEditorChange(e, lang._id)}
-						        />
+						        text area
 					        </div>
 
 									<ItemsSelector

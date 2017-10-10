@@ -4,6 +4,20 @@ const Page = require('../../models/Page');
 const convert = require('cyrillic-to-latin');
 const slugify = require('slugify');
 
+function populateEmpty(body) {
+  body.content.forEach((contentItem, i) => {
+    if (!body.content[i].title) {
+      body.content[i].title = 'Untitled';
+    }
+  });
+
+  if (!body.url) {
+    body.url = slugify(convert(body.content[0].title)).toLowerCase();
+  }
+
+  return body;
+}
+
 module.exports = {
 
   get(req, res, next) {
@@ -29,12 +43,17 @@ module.exports = {
       .catch(next);
   },
 
+  getOneByUrl(req, res, next) {
+    const pageId = req.params.id;
+
+    Page.findById(pageId)
+      .then(page => res.json(page))
+      .catch(next);
+  },
+
   put(req, res, next) {
     const pageId = req.params.id;
-    if (!req.body.url) {
-      req.body.url = slugify(convert(req.body.content[0].title));
-    }
-    const pageProps = req.body;
+    const pageProps = populateEmpty(req.body);
 
     Page.findByIdAndUpdate(pageId, pageProps)
       .then(() => Page.findById(pageId))
@@ -43,9 +62,8 @@ module.exports = {
   },
 
   post(req, res, next) {
-    if (!req.body.url) {
-      req.body.url = slugify(convert(req.body.content[0].title));
-    }
+    req.body = populateEmpty(req.body);
+
     const page = new Page(req.body);
 
     page.save()
@@ -63,3 +81,5 @@ module.exports = {
       .catch(next);
   }
 };
+
+

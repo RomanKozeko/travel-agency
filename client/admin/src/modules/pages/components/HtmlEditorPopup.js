@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import TinyMCE from 'react-tinymce';
+//import TinyMCE from 'react-tinymce';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import AppBar from 'material-ui/AppBar';
@@ -11,7 +11,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import {css, StyleSheet} from 'aphrodite/no-important';
-import MyEditor from './MyEditor';
+//import MyEditor from './MyEditor';
 
 const styles = StyleSheet.create({
   appBar: {
@@ -57,14 +57,9 @@ class HtmlEditorPopup extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
-        <TinyMCE
-          content={content}
-          config={{
-            plugins: 'link image code',
-            height: '500'
-          }}
-          onChange={this.handleEditorChange}
-        />
+        <textarea onChange={this.handleEditorChange} name="" id="" cols="30" rows="10">
+
+        </textarea>
       </Dialog>
     );
   }

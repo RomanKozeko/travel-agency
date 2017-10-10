@@ -33,10 +33,10 @@ const createBlankPage = (languages) => {
 
 const mapStateToProps = (state, router) => {
   let page = getPage(state, router.match.params.id);
-  const isNewPage = router.location.search.split('=')[1] === 'newPage';
+  const isNew = router.location.search.split('=')[1] === 'newPage';
   const languages = getLanguages(state);
 
-  if (isNewPage) {
+  if (isNew) {
     page = createBlankPage(languages);
   }
 
@@ -44,7 +44,7 @@ const mapStateToProps = (state, router) => {
     languagesIDs: state.languages.byIds,
     item: page,
     languages,
-    isNewPage,
+    isNew,
     page: state.page,
     isFetching: state.pages.isFetching,
     isSaving: state.pages.isSaving

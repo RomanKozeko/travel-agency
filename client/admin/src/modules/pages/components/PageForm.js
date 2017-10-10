@@ -46,6 +46,7 @@ class PageForm extends React.Component {
     const { page } = this.props;
 
     page.item.content = denormalizeRowsItems(page.item.content, page.rowItemsByID);
+    page.item.url = page.item.url.replace(/\s+/g, '-').toLowerCase();
 
     this.props.save(page.item, this.props.isNew);
     if (this.props.isNew) {
@@ -108,7 +109,6 @@ class PageForm extends React.Component {
                     value={page.contentByLang[lang._id].description}
                     onChange={(e) => pageInputChange(lang._id, 'description', e.target.value)}
                     margin="normal"
-                    required
                   />
                 </div>
               </div>

@@ -4,25 +4,25 @@
   "private": true,
   "dependencies": {
     "animated": "^0.2.0",
-    "aphrodite": "^1.2.3",
-    "babel-polyfill": "^6.23.0",
+    "aphrodite": "^1.2.4",
+    "babel-polyfill": "^6.26.0",
     "humps": "^2.0.1",
-    "jss-vendor-prefixer": "^6.0.0",
-    "normalizr": "^3.2.3",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "jss-vendor-prefixer": "^7.0.0",
+    "normalizr": "^3.2.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-jss": "^6.1.1",
-    "react-redux": "^5.0.5",
-    "react-router-dom": "^4.1.1",
-    "react-transition-group": "^1.2.0",
-    "redux": "^3.7.1",
-    "redux-form": "^6.8.0",
-    "redux-saga": "^0.15.4",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-transition-group": "^1.2.1",
+    "redux": "^3.7.2",
+    "redux-form": "^7.1.0",
+    "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.7",
-    "react-snapshot": "^1.1.0"
+    "react-snapshot": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

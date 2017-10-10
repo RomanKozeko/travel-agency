@@ -77,8 +77,9 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.PAGE_SUCCESS]: basicReducerEvents.itemSuccess,
   [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
+  [actions.PAGE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
   [actions.PAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
-  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false })
+  [actions.PAGES_FAILURE]: (state, action) => ({ ...state, isFetching: false, isSaving: false })
 });
 
 export default pagesReducer;

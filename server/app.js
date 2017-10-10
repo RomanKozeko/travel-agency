@@ -74,7 +74,8 @@ app.use(express.static(path.join(__dirname, '../client'), { maxAge: -31557600000
  * Error Handler.
  */
 app.use((err, req, res, next) => {
-  res.send({error: err.message })
+  res.status(500);
+  res.send({message: err.message })
 });
 
 /**
