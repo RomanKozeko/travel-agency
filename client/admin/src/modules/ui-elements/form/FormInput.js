@@ -47,7 +47,7 @@ class FormInput extends React.Component {
           onChange={(e) => this.handleChange(e, 'title', id, isValidInput)
           }
         />
-        {!isValidInput && this.state.isTouched && <div className={css(styles.error)}>Please fill in the correct fields</div>}
+        {!isValidInput && this.state.isTouched && <div className={css(styles.error)}>Field is not valid</div>}
       </div>
     )
   }
