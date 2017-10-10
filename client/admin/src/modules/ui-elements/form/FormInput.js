@@ -3,11 +3,6 @@ import TextField from 'material-ui/TextField';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
 const styles = StyleSheet.create({
-  wrapper: {
-  },
-  field: {
-    width: '300px'
-  },
   error: {
     color: '#ff1744'
   }
@@ -40,7 +35,7 @@ class FormInput extends React.Component {
     return (
       <div className={css(styles.wrapper)}>
         <TextField
-          error={!isValidInput}
+          error={!isValidInput && this.state.isTouched}
           value={value}
           label={label}
           onBlur={this.setTouched}
