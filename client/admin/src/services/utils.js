@@ -82,13 +82,14 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
       nextPageUrl = `/api/${endpoint}/?page=${nextPage}&limit=100`,
       pages,
       pageCount,
+      isFetched
     } = getState().pages;
 
     if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
       return null;
     }
-
-    if (pages[nextPage]) {
+    // TODO: support pagination
+    if (pages[nextPage] && isFetched) {
       return dispatch({
         type: `${alias}_GET_PAGE_FROM_CACHE`,
         payload: nextPage

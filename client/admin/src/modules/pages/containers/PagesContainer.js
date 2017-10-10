@@ -32,7 +32,9 @@ const mapStateToProps = (state) => {
 class PagesContainer extends React.Component {
 
   componentDidMount() {
-    this.props.load();
+    if (!this.props.isFetched) {
+      this.props.load();
+    }
   }
 
   render() {
