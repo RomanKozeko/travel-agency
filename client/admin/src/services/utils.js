@@ -23,6 +23,15 @@ export const makeActionCreator = (type, ...argNames) => {
   }
 };
 
+const chunk = (r, j) => r.reduce((a, b, i, g) => !(i % j) ? a.concat([g.slice(i, i + j)]) : a, []);
+export const updatePages = (pagesIds, itemsPerPage) => (
+  chunk(pagesIds, itemsPerPage)
+    .reduce((acc, cur, i) => {
+      acc[i] = cur;
+      return acc;
+    }, {})
+);
+
 export function createBasicActions(alias, aliasPlural, endpoint, middleware, schemas) {
   const actions = {
     [`${alias}_REQUEST`]: `${alias}_REQUEST`,
@@ -171,23 +180,17 @@ export const basicReducerEvents = {
   itemSuccess:
     (state, action) => {
       const payload = action.response;
-
+      const allIds = [payload.result, ...state.allIds];
       return {
         ...state,
         allIds: [...state.allIds, payload.result],
         byIds: { ...state.byIds, ...payload.entities.items },
         content: { ...state.content, ...payload.entities.content },
         isFetching: false,
-        isSaving: false
+        isSaving: false,
+        pages: updatePages(allIds, state.itemsPerPage)
       };
     }
 };
 
-const chunk = (r, j) => r.reduce((a, b, i, g) => !(i % j) ? a.concat([g.slice(i, i + j)]) : a, []);
-export const updatePages = (pagesIds, itemsPerPage) => (
-  chunk(pagesIds, itemsPerPage)
-    .reduce((acc, cur, i) => {
-      acc[i] = cur;
-      return acc;
-    }, {})
-);
+

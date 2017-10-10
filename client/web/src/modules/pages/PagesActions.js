@@ -15,10 +15,10 @@ const fetchPages = () => ({
   }
 });
 
-const fetchPage = id => ({
+const fetchPage = url => ({
   [CALL_API]: {
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
-    endpoint: `/api/pages/${id}`,
+    endpoint: `/api/pages/getByUrl/${url}`,
     schema: Schemas.PAGE,
   }
 });

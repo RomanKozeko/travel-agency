@@ -44,9 +44,7 @@ module.exports = {
   },
 
   getOneByUrl(req, res, next) {
-    const pageId = req.params.id;
-
-    Page.findById(pageId)
+    Page.findOne({ url: req.params.url } )
       .then(page => res.json(page))
       .catch(next);
   },

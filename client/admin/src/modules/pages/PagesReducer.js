@@ -64,6 +64,7 @@ export const defaultState = {
   pageCount: 0,
   currPage: 0,
   pages: {},
+  itemsPerPage: 40,
   pagesContent: {}
 };
 

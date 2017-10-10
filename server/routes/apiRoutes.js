@@ -67,6 +67,7 @@ router.put('/languages/:id', requireAuth, ApiLanguagesCtrl.put);
 router.delete('/languages', requireAuth, ApiLanguagesCtrl.delete);
 
 router.get('/pages', ApiPagesCtrl.get);
+router.get('/pages/getByUrl/:url', ApiPagesCtrl.getOneByUrl);
 router.get('/pages/:id', ApiPagesCtrl.getOne);
 router.put('/pages/:id', ApiPagesCtrl.put);
 router.delete('/pages', ApiPagesCtrl.delete);
