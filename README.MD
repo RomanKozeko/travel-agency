@@ -4,9 +4,9 @@ admin: localhost:3006
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/b856677e09fd48689fa1#?env%5BtravelAgency%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoidXJsIiwidmFsdWUiOiJodHRwOi8vbG9jYWxob3N0OjMwMDMiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoidG9rZW4iLCJ2YWx1ZSI6ImV5SjBlWEFpT2lKS1YxUWlMQ0poYkdjaU9pSklVekkxTmlKOS5leUp6ZFdJaU9pSmZaR0Z6Y0c5cE1UTXlZWE5rYVhCaGMyc2lMQ0pwWVhRaU9qRTFNREV4TlRJME56RTBPRFY5LnB1SVJOSGpvTzVjTjhwdGRhRWlFWWlDdC1HdXlyazZjakJrRGxzdTFYRGMiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoidG91cklkIiwidmFsdWUiOiI1OTc5YzFhOGEwZDAwYjRlYmM5NDNiMWMiLCJ0eXBlIjoidGV4dCJ9XQ==)
 
-Working demo: 
-travelagencydemo.info
-admin page: travelagencydemo.info/admin/
-creds: Admin / Admin
+#Working demo: 
+#travelagencydemo.info
+#admin page: travelagencydemo.info/admin/
+#creds: Admin / Admin
  
 
