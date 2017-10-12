@@ -19,12 +19,19 @@ const styles = StyleSheet.create({
   logo: {
     display: 'inline-flex',
     alignItems: 'center',
+    backgroundImage: 'url(/web/build/logo.png)',
+    backgroundSize: 'cover',
     color: '#1593d0',
-    width: '200px'
+    width: '50px',
+    height: '36px',
+    fontSize: '0',
+
   },
   menu: {
     display: 'flex',
     justifyContent: 'space-between',
+    height: '100%',
+    alignItems: 'center',
     listStyle: 'none',
     margin: '0 0 0 180px;',
     flexGrow: '1',
@@ -33,23 +40,34 @@ const styles = StyleSheet.create({
       display: 'none'
     }
   },
+  menuItem: {
+    height: '100%'
+  },
   link: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
+    position: 'relative',
     textTransform: 'uppercase',
+    borderBottom: '3px solid transparent',
     color: '#fff',
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
     ':hover': {
-      color: '#fc1d1d',
-      textDecoration: 'none'
+      color: '#fff',
+      textDecoration: 'none',
+      borderBottom: '3px solid #1593d0',
     },
     ':active': {
-      color: '#fc1d1d',
-      textDecoration: 'none'
+      color: '#fff',
+      textDecoration: 'none',
+      borderBottom: '3px solid #1593d0',
     },
     ':focus': {
-      color: '#fc1d1d',
-      textDecoration: 'none'
+      color: '#fff',
+      textDecoration: 'none',
+      borderBottom: '3px solid #1593d0',
     }
   }
 });
@@ -61,9 +79,9 @@ const MainNav = () => (
       <nav className={css(styles.nav)}>
         <div className={css(styles.logo)}>Logo</div>
         <ul className={css(styles.menu)}>
-          <li><PrefixLink className={css(styles.link)} to="/">Home</PrefixLink></li>
-          <li><PrefixLink className={css(styles.link)} to="/contacts">Contacts</PrefixLink></li>
-          <li><PrefixLink className={css(styles.link)} to="/tours">Tours</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Home</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Tours</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/contacts">Contacts</PrefixLink></li>
         </ul>
       </nav>
     </div>

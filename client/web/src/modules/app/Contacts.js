@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: 'url(/web/build/v.jpg)',
+    backgroundImage: 'url(/web/build/forest.jpg)',
     backgroundSize: 'cover',
   },
   headerTitle: {
