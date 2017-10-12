@@ -1,8 +1,5 @@
 import React from 'react';
 
-import Button from '../ui-elements/button';
-import Input from '../ui-elements/input';
-
 const ToursList = ({tours}) => {
   return (
     <div>

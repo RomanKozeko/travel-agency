@@ -47,7 +47,6 @@ class PageForm extends React.Component {
 
     page.item.content = denormalizeRowsItems(page.item.content, page.rowItemsByID);
     page.item.url = page.item.url.replace(/\s+/g, '-').toLowerCase();
-
     this.props.save(page.item, this.props.isNew);
     if (this.props.isNew) {
       this.props.history.push('/admin/pages', {});
