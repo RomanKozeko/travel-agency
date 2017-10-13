@@ -3,14 +3,28 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from '../ui-elements/Button';
 
 const styles = StyleSheet.create({
+	wrapper: {
+		display: 'flex',
+		flexWrap: 'wrap',
+		marginLeft: '-30px'
+	},
 	tourWrapper: {
 		backgroundColor: '#f8f8f8',
 		marginBottom: '20px',
-		height: '100%'
+		width: '100%',
+		paddingBottom: '70px',
+		position: 'relative',
+		marginLeft: '30px',
+		'@media (min-width: 600px)': {
+			width: 'calc(100% / 2 - 30px)',
+		},
+		'@media (min-width: 1000px)': {
+			width: 'calc(100% / 3 - 30px)',
+		}
 	},
 	preview: {
 		display: 'block',
-		height: '250px',
+		paddingBottom: '80%',
 		width: '100%',
 		backgroundImage: 'url(http://codex-themes.com/codeus/wp-content/uploads/2013/08/g26.jpg)',
 		backgroundSize: 'cover'
@@ -43,26 +57,26 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'baseLine',
-		marginTop: '30px'
+		position: 'absolute',
+		bottom: '0',
+		padding: '0 20px',
+		left: '0',
+		width:'100%'
 	},
 	price: {
 		fontWeight: 'bold',
 		fontSize: '22px',
 		letterSpacing: '2px',
 		color: '#222222',
-	},
-	btn: {
-		margin: '0px'
 	}
 });
 
 const ToursList = ({tours}) => {
 	return (
-		<div className="row">
+		<div className={css(styles.wrapper)}>
 			{tours.map((tour, i) => (
-				<div key={i} className="col-sm-4">
 					<div className={css(styles.tourWrapper)}>
-						<img
+						<div
 							className={css(styles.preview)}
 						/>
 						<div className={css(styles.info)}>
@@ -80,7 +94,6 @@ const ToursList = ({tours}) => {
 							</div>
 						</div>
 					</div>
-				</div>
 			))
 			}
 		</div>

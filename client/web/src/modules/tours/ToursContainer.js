@@ -61,21 +61,14 @@ class ToursContainer extends React.Component {
 		} = this.props;
 
 		return (
-			<div className="ToursContainer">
-				<header className={css(styles.header)}>
-					<h1 className={css(styles.headerTitle)}>Popular tours</h1>
-				</header>
-				<div className="container">
-					<div className={css(styles.pageContent)}>
-						<ToursList tours={tours}/>
-						<Pagination
-							pageNumber={currPage}
-							pageCount={pageCount}
-							requestPage={loadTours}
-							totalPages={count}
-						/>
-					</div>
-				</div>
+			<div>
+				<ToursList tours={tours}/>
+				<Pagination
+					pageNumber={currPage}
+					pageCount={pageCount}
+					requestPage={loadTours}
+					totalPages={count}
+				/>
 			</div>
 		);
 	}

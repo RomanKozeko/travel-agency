@@ -8,7 +8,7 @@ import {
 
 import Home from './Home'
 import Contacts from './Contacts';
-import ToursContainer from '../tours/ToursContainer';
+import ToursPage from '../tours/ToursPage';
 import Tour from '../tours/Tour';
 import Page from '../pages/Page';
 import HeaderContainer from '../header/HeaderContainer';
@@ -46,7 +46,7 @@ let App = ({languagePrefix}) => {
     {
       path: `${urlPrefix}/tours`,
       exact: true,
-      main: () => <ToursContainer />
+      main: () => <ToursPage />
     },
     {
       path: `${urlPrefix}/tours/:id`,

@@ -14,10 +14,10 @@ const styles = StyleSheet.create({
     transition: 'all .3s ease',
     border: 'none',
     borderRadius: '8px',
-    backgroundColor: '#022c54',
+    backgroundColor: '#1593d0',
     outline: 'none',
     ':hover': {
-      backgroundColor:'#1593d0'
+      backgroundColor:'#022c54'
     }
   }
 });
