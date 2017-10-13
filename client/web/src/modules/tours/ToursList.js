@@ -1,17 +1,90 @@
 import React from 'react';
+import {StyleSheet, css} from 'aphrodite/no-important';
+import Button from '../ui-elements/Button';
+
+const styles = StyleSheet.create({
+	tourWrapper: {
+		backgroundColor: '#f8f8f8',
+		marginBottom: '20px',
+		height: '100%'
+	},
+	preview: {
+		display: 'block',
+		height: '250px',
+		width: '100%',
+		backgroundImage: 'url(http://codex-themes.com/codeus/wp-content/uploads/2013/08/g26.jpg)',
+		backgroundSize: 'cover'
+	},
+	info: {
+		padding: '15px 26px 20px',
+		color: '#bebebe'
+	},
+	body: {},
+	period: {
+		fontSize: '12px',
+		lineHeight: '30px',
+		textTransform: 'uppercase'
+	},
+	title: {
+		margin: '0px',
+		marginBottom: '10px',
+		fontSize: '16px',
+		color: '#222222',
+		lineHeight: '30px',
+		letterSpacing: '3px',
+		fontWeight: 'bold',
+		textTransform: 'uppercase'
+	},
+	description: {
+		fontSize: '14px',
+		lineHeight: '24px',
+	},
+	footer: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'baseLine',
+		marginTop: '30px'
+	},
+	price: {
+		fontWeight: 'bold',
+		fontSize: '22px',
+		letterSpacing: '2px',
+		color: '#222222',
+	},
+	btn: {
+		margin: '0px'
+	}
+});
 
 const ToursList = ({tours}) => {
-  return (
-    <div>
-      <h2>Tours</h2>
-      <ul>
-        {tours.map((tour, i) => (
-          <li key={i}>{tour.content[0].title}</li>
-        ))
-        }
-      </ul>
-    </div>
-  );
+	return (
+		<div className="row">
+			{tours.map((tour, i) => (
+				<div key={i} className="col-sm-4">
+					<div className={css(styles.tourWrapper)}>
+						<img
+							className={css(styles.preview)}
+						/>
+						<div className={css(styles.info)}>
+							<div className={css(styles.body)}>
+								<span className={css(styles.period)}>
+									July <b>{Math.floor(Math.random() * 31) + 1}th</b> to August
+									<b> {Math.floor(Math.random() * 31) + 1}th</b>
+								</span>
+								<h2 className={css(styles.title)}>{tour.content[0].title}</h2>
+								<div className={css(styles.description)}>{tour.content[0].description}</div>
+							</div>
+							<div className={css(styles.footer)}>
+								<Button>Book now</Button>
+								<span className={css(styles.price)}>{Math.floor(Math.random() * 500) + 500}$</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			))
+			}
+		</div>
+	);
 };
 
 export default ToursList;
