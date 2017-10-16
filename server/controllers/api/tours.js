@@ -2,6 +2,7 @@ const Tour = require('../../models/Tour');
 const config = require('../../config/index');
 
 const ToursQueries = require('../../models/queries/tours');
+const sliceModelContent = require('../../services/index');
 
 module.exports = {
   // get(req, res, next) {
@@ -27,7 +28,7 @@ module.exports = {
       .then((result) => {
         res.json({
           offset,
-          items: result[0],
+          items: sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1],
           limit: config.itemsPerPageLimit
         });

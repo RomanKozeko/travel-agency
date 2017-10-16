@@ -3,6 +3,7 @@ const PagesQueries = require('../../models/queries/pages');
 const Page = require('../../models/Page');
 const convert = require('cyrillic-to-latin');
 const slugify = require('slugify');
+const sliceModelContent = require('../../services/index');
 
 function populateEmpty(body) {
   body.content.forEach((contentItem, i) => {
@@ -22,12 +23,11 @@ module.exports = {
 
   get(req, res, next) {
     const offset = +req.query.page * config.itemsPerPageLimit;
-
     PagesQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
       .then((result) => {
         res.json({
           offset,
-          items: result[0],
+          items: sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1],
           limit: config.itemsPerPageLimit
         });

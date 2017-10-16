@@ -35,6 +35,7 @@ class LanguagesNav extends React.Component {
 
   componentDidMount() {
     fetchLanguages().then((res) => {
+      window.localStorage.setItem('t_languages', JSON.stringify(res));
       this.setState({
         items: res
       });
@@ -54,7 +55,7 @@ class LanguagesNav extends React.Component {
           });
           const url = item.prefix === this.props.defaultLang ? '' : item.prefix;
           return (
-            <a className={linkClass} href={`/${url}`}>{item.prefix}</a>
+            <a className={linkClass} key={item._id} href={`/${url}`}>{item.prefix}</a>
           )})
         }
       </div>

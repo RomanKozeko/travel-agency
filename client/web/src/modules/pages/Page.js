@@ -58,11 +58,11 @@ class Page extends React.Component {
           :
           <div className={css(styles.page)}>
             <header className={css(styles.header)}>
-              <h1 className={css(styles.headerTitle)}>{page.content[0].title}</h1>
+              <h1 className={css(styles.headerTitle)}>{page.content.title}</h1>
             </header>
             <div className="container">
               <div className={css(styles.pageContent)}>
-                {page.content[0].rows.map(row => (
+                {page.content.rows.map(row => (
                   <div key={row._id} className="row">
                     {row.items.map(item => (
                         <div key={item._id} className={this.getRowItemClass(item.size)}>

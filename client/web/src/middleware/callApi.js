@@ -4,10 +4,26 @@ import { normalize, schema } from 'normalizr'
 const API_ROOT = '/';
 
 const getLangPref = () => {
-  return window.location.href.split('/')[3]
+  const currPrefix = window.location.href.split('/')[3] || 'ru';
+  const languages = JSON.parse(window.localStorage.t_languages);
+  const pref = languages.find(lang => lang.prefix === currPrefix);
+  if (pref) {
+    return pref._id;
+  }
+  return false
+};
+
+const withPrefix = (endpoint) => {
+  const langPref = getLangPref();
+  if(langPref) {
+    const separator = (endpoint.indexOf('?') > -1) ? '&' : '?';
+    return `${endpoint}${separator}lang=${langPref}`
+  }
+  return endpoint
 };
 
 const callApi = (endpoint, schema, nextPage) => {
+  endpoint = withPrefix(endpoint);
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
   return fetch(fullUrl)

@@ -75,7 +75,7 @@ const ToursList = ({tours}) => {
 	return (
 		<div className={css(styles.wrapper)}>
 			{tours.map((tour, i) => (
-					<div className={css(styles.tourWrapper)}>
+					<div key={tour._id} className={css(styles.tourWrapper)}>
 						<div
 							className={css(styles.preview)}
 						/>
@@ -85,8 +85,8 @@ const ToursList = ({tours}) => {
 									July <b>{Math.floor(Math.random() * 31) + 1}th</b> to August
 									<b> {Math.floor(Math.random() * 31) + 1}th</b>
 								</span>
-								<h2 className={css(styles.title)}>{tour.content[0].title}</h2>
-								<div className={css(styles.description)}>{tour.content[0].description}</div>
+								<h2 className={css(styles.title)}>{tour.content.title}</h2>
+								<div className={css(styles.description)}>{tour.content.description}</div>
 							</div>
 							<div className={css(styles.footer)}>
 								<Button>Book now</Button>
