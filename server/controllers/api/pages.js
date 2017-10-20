@@ -3,7 +3,7 @@ const PagesQueries = require('../../models/queries/pages');
 const Page = require('../../models/Page');
 const convert = require('cyrillic-to-latin');
 const slugify = require('slugify');
-const sliceModelContent = require('../../services/index');
+const slicer = require('../../services/index');
 
 function populateEmpty(body) {
   body.content.forEach((contentItem, i) => {
@@ -27,7 +27,7 @@ module.exports = {
       .then((result) => {
         res.json({
           offset,
-          items: sliceModelContent(result[0].concat(), req.query.lang),
+          items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1],
           limit: config.itemsPerPageLimit
         });
@@ -45,7 +45,7 @@ module.exports = {
 
   getOneByUrl(req, res, next) {
     Page.findOne({ url: req.params.url } )
-      .then(page => res.json(page))
+      .then(page => res.json(slicer.sliceModelContentSingle(page, req.query.lang)))
       .catch(next);
   },
 

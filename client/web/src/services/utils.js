@@ -31,6 +31,26 @@ export const makeActionCreator = (type, ...argNames) => {
   }
 };
 
+export const getLangUrlPref = () => {
+	const currPrefix = window.location.href.split('/')[3];
+	const languages = JSON.parse(window.localStorage.t_languages);
+	const pref = languages.find(lang => lang.prefix === currPrefix);
+	if (pref) {
+		return pref._id;
+	}
+	return languages.find(lang => lang.prefix === 'ru')._id;
+};
+
+export const withPrefix = (endpoint) => {
+	const langPref = getLangUrlPref();
+	if(langPref) {
+		const separator = (endpoint.indexOf('?') > -1) ? '&' : '?';
+		return `${endpoint}${separator}lang=${langPref}`
+	}
+	return endpoint
+};
+
+
 
 export const getPageCount = (count, limit) => {
   return parseInt(count/limit) + (count % limit)

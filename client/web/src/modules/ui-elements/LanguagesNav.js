@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { fetchLanguages } from '../../services/apiHelper';
+import { fetchItems } from '../app/appReducer'
+import { getLanguages } from '../../rootReducer'
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
@@ -26,29 +27,19 @@ const styles = StyleSheet.create({
 });
 
 class LanguagesNav extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: []
-    };
-  }
-
-  componentDidMount() {
-    fetchLanguages().then((res) => {
-      window.localStorage.setItem('t_languages', JSON.stringify(res));
-      this.setState({
-        items: res
-      });
-    });
-  }
+	componentDidMount() {
+		if (!this.props.items.length) {
+			this.props.fetchItems();
+		}
+	}
 
   render() {
-    if (!this.state.items.length) {
+    if (!this.props.items.length) {
       return null;
     }
     return (
       <div className={css(styles.wrapper)}>
-        {this.state.items.map(item => {
+        {this.props.items.map(item => {
           const linkClass = classNames({
             [css(styles.link, styles.active)]: item.prefix === this.props.prefix,
             [css(styles.link)]: item.prefix !== this.props.prefix
@@ -65,13 +56,15 @@ class LanguagesNav extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    prefix: state.app.languagePrefix,
-    defaultLang: state.app.defaultLang
+    prefix: state.app.languages.languagePrefix,
+    defaultLang: state.app.languages.defaultLang,
+    items: getLanguages(state)
   };
 };
 
 LanguagesNav = connect(
   mapStateToProps,
+  { fetchItems }
 )(LanguagesNav);
 
 export default LanguagesNav;

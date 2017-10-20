@@ -1,4 +1,5 @@
 import { CALL_API, Schemas } from '../../middleware/callApi';
+import { withPrefix } from '../../services/utils';
 
 export const PAGES_REQUEST = 'PAGES_REQUEST';
 export const PAGES_SUCCESS = 'PAGES_SUCCESS';
@@ -10,7 +11,7 @@ export const PAGE_FAILURE = 'PAGE_FAILURE';
 const fetchPages = () => ({
   [CALL_API]: {
     types: [PAGES_REQUEST, PAGES_SUCCESS, PAGES_FAILURE],
-    endpoint: '/api/pages',
+    endpoint: withPrefix('/api/pages'),
     schema: Schemas.PAGES
   }
 });
@@ -18,7 +19,7 @@ const fetchPages = () => ({
 const fetchPage = url => ({
   [CALL_API]: {
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
-    endpoint: `/api/pages/getByUrl/${url}`,
+    endpoint: withPrefix(`/api/pages/getByUrl/${url}`),
     schema: Schemas.PAGE,
   }
 });

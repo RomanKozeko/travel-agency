@@ -2,11 +2,17 @@ import React from 'react'
 import MainNav from './MainNav'
 import TopNav from './TopNav'
 
-const HeaderContainer = () => (
-  <div>
-    <TopNav/>
-    <MainNav/>
-  </div>
-);
+
+class HeaderContainer extends React.Component {
+  render() {
+    return (
+      <div>
+        <TopNav />
+        <MainNav/>
+      </div>
+    );
+  }
+}
+
 
 export default HeaderContainer;

@@ -64,7 +64,6 @@ export const toursSchema = { items: [tourSchema] };
 export const pageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const pagesSchema = { items: [pageSchema] };
 
-
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
@@ -136,6 +135,6 @@ export default store => next => (action) => {
         error: error.message || 'Something bad happened'
       }));
     }
-  );
+  )
 };
 

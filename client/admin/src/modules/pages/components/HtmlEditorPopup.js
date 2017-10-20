@@ -57,9 +57,14 @@ class HtmlEditorPopup extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
-        <textarea onChange={this.handleEditorChange} name="" id="" cols="30" rows="10">
-
-        </textarea>
+        {/*<TinyMCE*/}
+          {/*content={content}*/}
+          {/*config={{*/}
+            {/*plugins: 'link image code',*/}
+            {/*height: '500'*/}
+          {/*}}*/}
+          {/*onChange={this.handleEditorChange.bind(this)}*/}
+        {/*/>*/}
       </Dialog>
     );
   }
