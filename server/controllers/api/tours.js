@@ -2,24 +2,9 @@ const Tour = require('../../models/Tour');
 const config = require('../../config/index');
 
 const ToursQueries = require('../../models/queries/tours');
-const sliceModelContent = require('../../services/index');
+const slicer = require('../../services/index');
 
 module.exports = {
-  // get(req, res, next) {
-  //   const offset = +req.query.page * config.itemsPerPageLimit;
-  //
-  //   ToursQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
-  //     .then((result) => {
-  //       res.json({
-  //         offset,
-  //         items: result[0],
-  //         count: result[1],
-  //         limit: config.itemsPerPageLimit
-  //       });
-  //     })
-  //     .catch(next);
-  // },
-
   get(req, res, next) {
     const offset = +req.params.startIndex || 0;
     const count = +req.params.count || config.itemsPerPageLimit;
@@ -28,7 +13,7 @@ module.exports = {
       .then((result) => {
         res.json({
           offset,
-          items: sliceModelContent(result[0].concat(), req.query.lang),
+          items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1],
           limit: config.itemsPerPageLimit
         });
