@@ -27,8 +27,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
 let App = ({languagePrefix}) => {
   const prefix = languagePrefix ? languagePrefix : getLangPref();
   const urlPrefix = prefix === 'ru' || !prefix ? '' : `/${prefix}`;
@@ -77,6 +75,6 @@ let App = ({languagePrefix}) => {
       <Footer/>
     </div>
   );
-}
+};
 
 export default App;

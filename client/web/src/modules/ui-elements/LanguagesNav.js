@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { fetchItems } from '../app/appReducer'
 import { getLanguages } from '../../rootReducer'
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -27,12 +26,6 @@ const styles = StyleSheet.create({
 });
 
 class LanguagesNav extends React.Component {
-	componentDidMount() {
-		if (!this.props.items.length) {
-			this.props.fetchItems();
-		}
-	}
-
   render() {
     if (!this.props.items.length) {
       return null;
@@ -56,15 +49,14 @@ class LanguagesNav extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    prefix: state.app.languages.languagePrefix,
+    prefix: state.app.languages.prefix,
     defaultLang: state.app.languages.defaultLang,
-    items: getLanguages(state)
+    items: state.app.languages.items
   };
 };
 
 LanguagesNav = connect(
-  mapStateToProps,
-  { fetchItems }
+  mapStateToProps
 )(LanguagesNav);
 
 export default LanguagesNav;

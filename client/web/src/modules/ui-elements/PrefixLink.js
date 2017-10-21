@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const mapStateToProps = (state) => {
   return {
-    prefix: state.app.languages.languagePrefix,
+    prefix: state.app.languages.prefix,
     defaultLang: state.app.languages.defaultLang
   };
 };

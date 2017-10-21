@@ -1,4 +1,4 @@
-import { createReducer, getLangPref } from '../../services/utils';
+import { createReducer, getLangPref, getLangUrlPref } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 import { combineReducers } from 'redux';
 
@@ -15,7 +15,7 @@ export const fetchItems = () => ({
 });
 
 const defaultState = {
-  languagePrefix: getLangPref(),
+  prefix: getLangPref(),
   defaultLang: 'ru',
 	allIds: [],
 	byIds: {},
@@ -30,7 +30,8 @@ const itemsSuccess = (state, action) => {
 		allIds: [...state.allIds, ...payload.result],
 		byIds: { ...state.byIds, ...payload.entities.items },
 		isFetching: false,
-		isFetched: true
+		isFetched: true,
+		urlPrefix: getLangUrlPref(payload.result, payload.entities.items, state.prefix)
 	};
 };
 

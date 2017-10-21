@@ -9,7 +9,8 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { getLangPref } from './services/utils';
+import { fetchLanguages } from './services/apiHelper';
+import { getLangPref, getLangUrlPref } from './services/utils';
 import App from './modules/app/App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
@@ -19,17 +20,37 @@ import './index.css';
 const preloadedState = window.__PRELOADED_STATE__ || {};
 
 // Allow the passed state to be garbage-collected
-delete window.__PRELOADED_STATE_
+delete window.__PRELOADED_STATE_;
 
-const store = configureStore(preloadedState);
+fetchLanguages().then(res => {
+	const prefix = getLangPref();
+	const preloadedState = {
+		app: {
+			languages: {
+				prefix,
+				urlPrefix: getLangUrlPref(res, prefix),
+				defaultLang: 'ru',
+				allIds: [],
+				byIds: {},
+				isFetching: false,
+				items: res
+			}
+		}
+	};
 
-ReactDOM.render(
+	const store = configureStore(preloadedState);
+
+	ReactDOM.render(
     <Provider store={store}>
       <Router>
         <App />
       </Router>
     </Provider>,
-  document.getElementById('root')
-);
+		document.getElementById('root')
+	);
+
+});
+
+
 
 registerServiceWorker();

@@ -31,9 +31,7 @@ export const makeActionCreator = (type, ...argNames) => {
   }
 };
 
-export const getLangUrlPref = () => {
-	const currPrefix = window.location.href.split('/')[3];
-	const languages = JSON.parse(window.localStorage.t_languages);
+export const getLangUrlPref = (languages, currPrefix) => {
 	const pref = languages.find(lang => lang.prefix === currPrefix);
 	if (pref) {
 		return pref._id;
@@ -41,8 +39,7 @@ export const getLangUrlPref = () => {
 	return languages.find(lang => lang.prefix === 'ru')._id;
 };
 
-export const withPrefix = (endpoint) => {
-	const langPref = getLangUrlPref();
+export const withPrefix = (endpoint, langPref) => {
 	if(langPref) {
 		const separator = (endpoint.indexOf('?') > -1) ? '&' : '?';
 		return `${endpoint}${separator}lang=${langPref}`
