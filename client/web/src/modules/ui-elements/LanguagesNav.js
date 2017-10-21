@@ -48,6 +48,7 @@ class LanguagesNav extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+
   return {
     prefix: state.app.languages.prefix,
     defaultLang: state.app.languages.defaultLang,
