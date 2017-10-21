@@ -10,7 +10,8 @@ admin: localhost:3006
 ##creds: Admin / Admin
 
 #CI server
-##login: admin
-##passowrd: er4m8k
+###http://travelagencydemo.info:8080/
+###login: admin
+###passowrd: er4m8k
  
 
