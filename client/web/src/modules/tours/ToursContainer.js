@@ -4,30 +4,6 @@ import ToursList from './ToursList';
 import Pagination from '../ui-elements/Pagination';
 import { loadTours } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
-import { StyleSheet, css } from 'aphrodite/no-important';
-
-const styles = StyleSheet.create({
-	pageContent: {
-		padding: '70px 0 40px'
-	},
-	header: {
-		height: '287px',
-		marginTop: '-76px',
-		paddingTop: '76px',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundImage: 'url(https://wallpapershome.ru/images/wallpapers/borakay-3504x2336-5k-4k-fillipini-luchshie-plyaji-2017-turizm-kurort-2917.jpg)',
-		backgroundSize: 'cover',
-	},
-	headerTitle: {
-		lineHeight: '27px',
-		fontSize: '38px',
-		fontWeight: 'bold',
-		color: '#fefefe',
-		textTransform: 'uppercase'
-	}
-});
 
 const mapStateToProps = (state) => {
 	return {

@@ -1,3 +1,5 @@
+import { toastr } from 'react-redux-toastr';
+import createToaster from '../../modules/ui-elements/createToaster';
 import { loginUserRequest } from '../../services/apiHelper';
 
 export const requestLogin = () => ({
@@ -5,12 +7,12 @@ export const requestLogin = () => ({
 });
 
 export const loginSuccess = (tours) => ({
-  type: 'REQUEST_LOGIN_SUCCESS',
+  type: 'LOGIN_SUCCESS',
   tours
 });
 
 export const loginFailure = () => ({
-  type: 'REQUEST_LOGIN_FAILURE'
+  type: 'LOGIN_FAILURE'
 });
 
 export const logoutSuccess = () => ({
@@ -22,15 +24,13 @@ export const loginUser = (creds) => (dispatch) => {
     .then(dispatch(requestLogin()))
     .then((res) => {
       if (res.error) {
-        dispatch(loginFailure());
+	      toastr.error('', '', createToaster( res.error.message || 'Wrong credentials'));
+	      dispatch(loginFailure());
       } else if (res.token) {
         localStorage.setItem('token', res.token);
         dispatch(loginSuccess());
       }
     })
-    .catch(() => {
-      dispatch(loginFailure());
-    });
 };
 
 export const logoutUser = () => (dispatch) => {
