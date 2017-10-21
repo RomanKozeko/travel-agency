@@ -16,7 +16,7 @@ const Home = ({ match }) => ([
   <PhotoSlider />,
   <div className="container">
     <div className={css(styles.pageContent)}>
-      <BigTitle key={1} title='Available pages now' subTitle='latest pages'/>
+      <BigTitle key={1} title='Available pages now 123123' subTitle='latest pages'/>
       <PagesContainer />
       <BigTitle key={2} title='Popular sea tours' subTitle='latest tours'/>
       <ToursContainer />
