@@ -20,7 +20,7 @@ const defaultState = {
 	allIds: [],
 	byIds: {},
 	isFetching: false,
-  languages: []
+  items: []
 };
 
 const itemsSuccess = (state, action) => {
