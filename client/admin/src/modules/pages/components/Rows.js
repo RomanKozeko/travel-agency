@@ -89,7 +89,7 @@ const ItemContentToolBar = ({item, removeRowItem, editRowItem}) => (
 );
 
 const Rows = ({
-    rows,
+    rows = [],
     rowsItems,
     langId,
     removeRow,

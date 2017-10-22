@@ -30,7 +30,7 @@ class FormInput extends React.Component {
   }
 
   render() {
-    const {value, label, id, regExp} = this.props;
+    const {value, label, id, regExp, name} = this.props;
     const isValidInput = isValid(value, regExp);
     return (
       <div className={css(styles.wrapper)}>
@@ -38,8 +38,9 @@ class FormInput extends React.Component {
           error={!isValidInput && this.state.isTouched}
           value={value}
           label={label}
+          name={name}
           onBlur={this.setTouched}
-          onChange={(e) => this.handleChange(e, 'title', id, isValidInput)
+          onChange={(e) => this.handleChange(e, name, id, isValidInput)
           }
         />
         {!isValidInput && this.state.isTouched && <div className={css(styles.error)}>Field is not valid</div>}

@@ -31,10 +31,24 @@ const renderCells = ({ title, prefix }, id, selectedRow, handleChange) => {
   if (selectedRow === id) {
     return [
       <TableCell key={id} className={css(styles.field)}>
-        <FormInput value={title} label="title" handleChange={handleChange} id={id} regExp={/^.{1,10}$/} />
+        <FormInput
+          value={title}
+          name="title"
+          label="title"
+          handleChange={handleChange}
+          id={id}
+          regExp={/^.{1,10}$/}
+        />
       </TableCell>,
       <TableCell key={id + 1} className={css(styles.field)}>
-        <FormInput value={prefix} label="prefix" handleChange={(e) => handleChange(e, 'prefix', id)}  regExp={/^.{1,2}$/} />
+        <FormInput
+          value={prefix}
+          name="prefix"
+          label="prefix"
+          handleChange={handleChange}
+          id={id}
+          regExp={/^.{1,2}$/}
+        />
       </TableCell>
     ];
   }
@@ -97,11 +111,11 @@ class LanguagesList extends React.Component {
     this.setState({items, isValid});
   };
 
-  handleSave = e => (item, id) => {
+  handleSave = (item, id) => e => {
     if (this.state.isValid) {
       this.props.saveLang(item, !!item.id);
     }
-  }
+  };
 
   render() {
     const { saveLang, isSaving, deleteLang } = this.props;
