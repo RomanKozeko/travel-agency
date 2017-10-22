@@ -178,20 +178,23 @@ export const basicReducerEvents = {
         isDeleting: false
       };
     },
-  itemSuccess:
-    (state, action) => {
-      const payload = action.response;
-      const allIds = [payload.result, ...state.allIds];
-      return {
-        ...state,
-        allIds: [...state.allIds, payload.result],
-        byIds: { ...state.byIds, ...payload.entities.items },
-        content: { ...state.content, ...payload.entities.content },
-        isFetching: false,
-        isSaving: false,
-        pages: updatePages(allIds, state.itemsPerPage)
-      };
-    }
+	itemSuccess:
+		(state, action) => {
+			const payload = action.response;
+			const allIds = [...state.allIds]
+			if (state.allIds.indexOf(payload.result) === -1) {
+				allIds.push(payload.result)
+			}
+			return {
+				...state,
+				allIds,
+				byIds: {...state.byIds, ...payload.entities.items},
+				content: {...state.content, ...payload.entities.content},
+				isFetching: false,
+				isSaving: false,
+				pages: updatePages(allIds, state.itemsPerPage)
+			};
+		}
 };
 
 
