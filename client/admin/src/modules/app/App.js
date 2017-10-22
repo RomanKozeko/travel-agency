@@ -106,7 +106,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class App extends React.Component {
+export class App extends React.Component {
   componentDidMount() {
     if (!this.props.items.length) {
       this.props.loadLang();
@@ -153,10 +153,7 @@ App.propTypes = {
   items: PropTypes.array,
 };
 
-App = connect(
+export default connect(
   mapStateToProps,
   { loadLang }
 )(App);
-
-
-export default App;

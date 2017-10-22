@@ -65,7 +65,7 @@ const options = [
   'Umbriel',
 ];
 
-let AppHeader = ({ dispatch }) => (
+export let AppHeader = ({ dispatch }) => (
   <div className={css(styles.wrapper)}>
     <div className={css(styles.logo)}>
       <a href="/" className={css(styles.logoLink)}>
