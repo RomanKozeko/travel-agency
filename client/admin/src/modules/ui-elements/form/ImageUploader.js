@@ -8,31 +8,28 @@ const styles = StyleSheet.create({
   }
 });
 
-class ImageUploader extends React.Component {
-  handleImageChange(e) {
-    e.preventDefault();
+const ImageUploader = ({ uploadImg }) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
-    this.props.uploadImg(file);
-  }
+    uploadImg(file);
+  };
 
-  render() {
-    return (
-      <div>
-        <input
-          className={css(styles.input)}
-          name="file"
-          id="file"
-          type="file"
-          onChange={(e) => this.handleImageChange(e)}
-        />
-        <label htmlFor="file">
-          <Button raised component="span" color="primary">
-            Добавить файл
-          </Button>
-        </label>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <input
+        className={css(styles.input)}
+        name="file"
+        id="file"
+        type="file"
+        onChange={(e) => handleImageChange(e)}
+      />
+      <label htmlFor="file">
+        <Button raised component="span" color="primary">
+          Добавить файл
+        </Button>
+      </label>
+    </div>
+  );
+};
 
 export default ImageUploader;
