@@ -1,48 +1,35 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import ImagePreview from '../ImagePreview';
-import classNames from 'classnames';
+import Button from 'material-ui/Button';
 
 const styles = StyleSheet.create({
-  fileInput: {
-
+  input: {
+    display: 'none'
   }
 });
 
 class ImageUploader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imagePreviewUrl: ''
-    };
-  }
-
   handleImageChange(e) {
     e.preventDefault();
-
-    const reader = new FileReader();
     const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        imagePreviewUrl: reader.result
-      });
-    };
-
-    reader.readAsDataURL(file);
     this.props.uploadImg(file);
   }
 
   render() {
     return (
-      <div className="previewComponent">
+      <div>
         <input
-          className={css(styles.fileInput)}
-          type="file"
+          className={css(styles.input)}
           name="file"
+          id="file"
+          type="file"
           onChange={(e) => this.handleImageChange(e)}
         />
-        <ImagePreview url={this.state.imagePreviewUrl} />
+        <label htmlFor="file">
+          <Button raised component="span" color="primary">
+            Добавить файл
+          </Button>
+        </label>
       </div>
     );
   }

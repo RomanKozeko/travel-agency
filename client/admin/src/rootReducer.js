@@ -9,6 +9,7 @@ import pageReducer from './modules/pages/pageReducer';
 import languagesReducer, * as fromLanguages from './modules/languages/LanguagesReducer';
 import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
 import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
+import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFilesReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   regions: regionsReducer,
   languages: languagesReducer,
   toastr: toastrReducer,
-  categories: categoriesReducer
+  categories: categoriesReducer,
+  mediafiles: mediaFilesReducer
 });
 
 export default rootReducer;
@@ -39,4 +41,5 @@ export const getCategories = state => fromCategories.getCategories(state.categor
 export const getCategory = (state, id) => fromCategories.getCategory(state.categories, id);
 export const getRegions = state => fromRegions.getRegions(state.regions);
 export const getRegion = (state, id) => fromRegions.getRegion(state.regions, id);
+export const getMediaFiles = (state, id) => fromMediaFiles.getMediaFiles(state.mediafiles, id);
 
