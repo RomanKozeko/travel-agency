@@ -75,6 +75,7 @@ router.post('/pages', ApiPagesCtrl.post);
 
 router.get('/media', ApiPhotosCtrl.get);
 router.get('/media/:id', ApiPhotosCtrl.getOne);
-router.post('/media', upload.single('file'), ApiPhotosCtrl.post);
+router.post('/media',  upload.single('file'), ApiPhotosCtrl.post);
+router.delete('/media', ApiPhotosCtrl.delete);
 
 module.exports = router;

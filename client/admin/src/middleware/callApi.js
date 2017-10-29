@@ -4,11 +4,18 @@ import createToaster from '../modules/ui-elements/createToaster';
 
 const API_ROOT = '/';
 
-function createRequestOptions(method, body) {
+function createRequestOptions(method, body, contentType) {
   if (!method || method === 'GET') {
     return {
       method: 'GET'
     };
+  }
+
+	if (contentType === 'formData') {
+    return {
+	    method,
+	    body
+    }
   }
 
   return {
@@ -67,6 +74,9 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
+export const mediaFileSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const mediaFilesSchema = [mediaFileSchema];
+
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
@@ -77,7 +87,9 @@ export const Schemas = {
   REGION: regionSchema,
   REGIONS: regionsSchema,
   CATEGORY: categorySchema,
-  CATEGORIES: categoriesSchema
+  CATEGORIES: categoriesSchema,
+  MEDIAFILES: mediaFilesSchema,
+  MEDIAFILE: mediaFileSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -92,7 +104,7 @@ export default store => next => (action) => {
   }
 
   let { endpoint, nextPage } = callAPI;
-  const { schema, types, method, body, toasterMsg } = callAPI;
+  const { schema, types, method, contentType, body, toasterMsg } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -118,7 +130,7 @@ export default store => next => (action) => {
   const [requestType, successType, failureType] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, createRequestOptions(method, body), schema, nextPage).then(
+  return callApi(endpoint, createRequestOptions(method, body, contentType), schema, nextPage).then(
     (response) => {
       if (toasterMsg) {
         toastr.success('', '', createToaster(toasterMsg.success));

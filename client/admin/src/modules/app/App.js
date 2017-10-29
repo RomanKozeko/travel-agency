@@ -20,6 +20,7 @@ import RegionContainer from '../regions/RegionContainer';
 import LanguagesContainer from '../languages/LanguagesContainer';
 import CategoriesContainer from '../categories/CategoriesContainer';
 import CategoryContainer from '../categories/CategoryContainer';
+import MediaFilesConatiner from '../mediaFiles/MediaFilesConatiner';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -28,15 +29,19 @@ const styles = StyleSheet.create({
     padding: '95px 20px 0'
   },
   sideBarWrapper: {
-    width: '235px',
-    float: 'left',
+	  '@media (min-width: 800px)': {
+		  float: 'left',
+		  width: '235px',
+	  },
   },
   contentWrapper: {
     float: 'left',
     width: '100%'
   },
   content: {
-    marginLeft: '235px',
+	  '@media (min-width: 800px)': {
+		  marginLeft: '235px'
+	  },
     padding: '10px 0 0 20px'
   }
 });
@@ -94,6 +99,10 @@ const routes = [
   {
     path: '/admin/settings',
     main: () => <h2>Settings</h2>
+  },
+  {
+    path: '/admin/mediaFiles',
+    main: () => <MediaFilesConatiner />
   }
 ];
 

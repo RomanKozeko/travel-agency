@@ -1,4 +1,5 @@
 const Media = require('../../models/Media');
+const fs = require('fs');
 const path = require('path');
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
   post(req, res, next) {
     if (!req.file) {
       return res.status(400).send({
-        message: 'only image files are allowed'
+        message: 'Bad request'
       });
     }
     const { filename, path } = req.file;
@@ -33,5 +34,22 @@ module.exports = {
         res.json(result);
       })
       .catch(next);
-  }
+  },
+
+	delete(req, res, next) {
+		const ids = req.body['ids'];
+
+		Media.find({ _id: { $in: ids }  })
+			.then(items => {
+				items.forEach(item => {
+					fs.unlink(`client${item.path}`, (err) => {
+						if (err) throw next();
+					});
+				})
+		});
+
+		Media.deleteMany({ _id: ids })
+			.then(() => res.json(ids))
+			.catch(next);
+	}
 };
