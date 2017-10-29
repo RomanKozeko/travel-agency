@@ -3,25 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "aphrodite": "^1.2.4",
+    "aphrodite": "^1.2.5",
     "classnames": "^2.2.5",
-    "draft-js": "^0.10.3",
+    "draft-js": "^0.10.4",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
-    "eslint-config-airbnb": "^16.0.0",
+    "eslint-config-airbnb": "^16.1.0",
     "lodash.uniqueid": "^4.0.1",
-    "material-ui": "^1.0.0-beta.16",
-    "material-ui-icons": "^1.0.0-beta.15",
+    "material-ui": "^1.0.0-beta.18",
+    "material-ui-icons": "^1.0.0-beta.17",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
-    "react-redux-toastr": "^7.1.5",
+    "react-redux-toastr": "^7.1.6",
     "react-router-dom": "^4.2.2",
     "react-test-renderer": "^16.0.0",
-    "react-tinymce": "^0.6.0",
+    "react-tinymce": "^0.7.0",
     "redux": "^3.7.2",
     "redux-form": "^6.8.0"
   },
@@ -29,7 +29,7 @@
     "react-scripts": "1.0.10"
   },
   "jest": {
-    "collectCoverageFrom" : [
+    "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/"
@@ -42,7 +42,9 @@
         "statements": 90
       }
     },
-    "coverageReporters": ["html"]
+    "coverageReporters": [
+      "html"
+    ]
   },
   "scripts": {
     "start": "set PORT=3005 && react-scripts start",
