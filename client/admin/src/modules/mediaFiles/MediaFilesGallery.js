@@ -1,20 +1,21 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import ImageUploader from '../ui-elements/form/ImageUploader';
+import Icon from 'material-ui/Icon';
 
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
 		flexWrap: 'wrap',
 		marginTop: '20px',
-		marginLeft: '-10px'
+		marginLeft: '-10px',
+		paddingTop: '20px'
 	},
-  imgWrap: {
+  imgWrapper: {
 	  backgroundColor: '#f8f8f8',
 	  marginBottom: '10px',
-    height: '200px',
 	  marginLeft: '10px',
 	  overflow: 'hidden',
+	  width: '100%',
 	  '@media (min-width: 800px)': {
 		  width: 'calc(100% / 2 - 10px)',
 	  },
@@ -28,24 +29,60 @@ const styles = StyleSheet.create({
 	  borderRadius: '2px'
   },
   img: {
+		position: 'absolute',
 	  display: 'block',
-	  minHeight: '200px',
-	  width: '100%'
-  }
+	  width: '100%',
+	  top: '50%',
+	  transform: 'translateY(-50%)',
+		left: '0',
+	  maxHeight: '100%'
+  },
+  active: {
+		position: 'relative',
+	  border: '2px solid #5b9bd1',
+  },
+	iconWrapper: {
+		position: 'absolute',
+	  top: '0',
+	  right: '0',
+	  color: '#fff;',
+		width: '25px',
+		height: '25px',
+	  background: '#1678cc',
+	  zIndex: '10000'
+  },
+	inner: {
+		height: '100%',
+		paddingTop: '100%',
+		position: 'relative',
+		display: 'flex',
+		alignItems: 'center'
+	}
 });
 
-const MediaFilesGallery = ({ items, saveItem }) => {
+const MediaFilesGallery = ({ items, clickHandler }) => {
   return (
   	<div>
-		  <ImageUploader uploadImg={saveItem} />
 	    <div className={css(styles.container)}>
 	      {items.map(item => (
-	        <div  key={item._id} className={css(styles.imgWrap)}>
-	          <img
-	            className={css(styles.img)}
-	            src={`http://localhost:3003${item.path}`}
-	            alt=""
-	          />
+	        <div
+		        key={item._id}
+		        onClick={() => clickHandler(item._id)}
+		        className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
+	        >
+		        {item.active &&
+			        <div className={css(styles.iconWrapper)}>
+				        <Icon>check</Icon>
+			        </div>
+		        }
+		        <div className={css(styles.inner)}>
+			        <img
+				        className={css(styles.img)}
+				        src={`http://localhost:3003${item.path}`}
+				        alt=""
+			        />
+		        </div>
+
 	        </div>
 	        ))
 	      }

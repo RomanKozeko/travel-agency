@@ -37,7 +37,7 @@ module.exports = {
   },
 
 	delete(req, res, next) {
-		const ids = req.body['ids'];
+		const ids = req.body;
 
 		Media.find({ _id: { $in: ids }  })
 			.then(items => {

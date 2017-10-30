@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: '1',
     paddingLeft: '20px',
     display: 'flex',
+    flexWrap: 'wrap',
     listStyle: 'none',
     paddingTop: '20px'
   },

@@ -12,7 +12,7 @@ import TextField from 'material-ui/TextField';
 
 const styles = StyleSheet.create({
   popup: {
-    minWidth: '570px'
+    width: '600px'
   },
   input: {
     width: '100%'

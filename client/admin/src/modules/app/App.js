@@ -20,7 +20,7 @@ import RegionContainer from '../regions/RegionContainer';
 import LanguagesContainer from '../languages/LanguagesContainer';
 import CategoriesContainer from '../categories/CategoriesContainer';
 import CategoryContainer from '../categories/CategoryContainer';
-import MediaFilesConatiner from '../mediaFiles/MediaFilesConatiner';
+import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -102,7 +102,7 @@ const routes = [
   },
   {
     path: '/admin/mediaFiles',
-    main: () => <MediaFilesConatiner />
+    main: () => <MediaFilesContainer />
   }
 ];
 

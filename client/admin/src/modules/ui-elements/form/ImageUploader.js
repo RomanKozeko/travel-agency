@@ -3,6 +3,10 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 
 const styles = StyleSheet.create({
+  wrapper: {
+    display: 'inline-block',
+    marginRight: '30px'
+  },
   input: {
     display: 'none'
   }
@@ -10,12 +14,12 @@ const styles = StyleSheet.create({
 
 const ImageUploader = ({ uploadImg }) => {
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    uploadImg(file);
+    uploadImg(e.target.files[0]);
+	  e.target.value = '';
   };
 
   return (
-    <div>
+    <div className={css(styles.wrapper)}>
       <input
         className={css(styles.input)}
         name="file"

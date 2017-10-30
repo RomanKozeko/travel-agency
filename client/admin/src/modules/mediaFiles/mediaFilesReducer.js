@@ -7,7 +7,7 @@ const actionsObj = createBasicActions('MEDIAFILES', 'MEDIAFILE', 'media', CALL_A
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadItems = actionsObj.load;
-export const deleteItem = actionsObj.deleteItem;
+export const deleteItems = actionsObj.deleteItems;
 export const saveItem = (payload) => (dispatch) => {
 	const formData = new FormData();
 	formData.append('file', payload);
