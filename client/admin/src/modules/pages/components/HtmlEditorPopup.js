@@ -51,7 +51,7 @@ class HtmlEditorPopup extends React.Component {
             <Typography type="title" color="inherit" className={css(styles.flex)}>
               Добавить контент
             </Typography>
-            <Button color="contrast" onClick={() => saveRow(this.state.content)}>
+            <Button color="contrast" onClick={() => saveRow(this.state.content, 'content')}>
               Сoхранить
             </Button>
           </Toolbar>

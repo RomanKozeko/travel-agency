@@ -5,6 +5,7 @@ const PageContentItemSchema = require('./PageContentItem');
 
 const PageContentSchemaCell = new Schema({
   title: String,
+  subTitle: String,
   size: {
     type: String,
     required: true
@@ -13,7 +14,7 @@ const PageContentSchemaCell = new Schema({
   images: [String],
   content: String,
   pageLink: String,
-  items: [PageContentItemSchema]
+  filters: String
 });
 
 module.exports = PageContentSchemaCell;

@@ -94,6 +94,7 @@ class FilteredTagSelector extends React.Component {
       return item._id !== id
     });
 
+    this.props.onFilterSelect(this.props.filterType, selectedItems);
     this.setState({
       items,
       selectedItems
@@ -109,6 +110,7 @@ class FilteredTagSelector extends React.Component {
       return item._id !== id
     });
 
+    this.props.onFilterSelect(this.props.filterType, selectedItems);
     this.setState({
       items,
       selectedItems
@@ -150,11 +152,11 @@ class FilteredTagSelector extends React.Component {
           <ListItemsModal coordinates={coordinates} handleClose={this.showDropDown} >
             <ul className={css(styles.dropDown)}>
               {items.map(item => {
-                  if (this.isMatch(item)) {
-                    return (<li className={css(styles.dropDownItem)} key={item._id} onClick={this.addItem(item._id)}>
-                      <HighlightedText text={item.content[0].title} search={filter}/>
-                    </li>)
-                  }
+                if (this.isMatch(item)) {
+                  return (<li className={css(styles.dropDownItem)} key={item._id} onClick={this.addItem(item._id)}>
+                    <HighlightedText text={item.content[0].title} search={filter}/>
+                  </li>)
+                }
                 }
               )}
             </ul>

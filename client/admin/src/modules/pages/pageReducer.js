@@ -26,7 +26,7 @@ export const pageEditRowItem = makeActionCreator(PAGE_EDIT_ROW_ITEM, 'itemId');
 export const pageInputChange = makeActionCreator(PAGE_INPUT_CHANGE, 'langId', 'name', 'value');
 export const openHtmlEditor = makeActionCreator(PAGE_OPEN_HTML_EDITOR, 'rowItem');
 export const closeHtmlEditor = makeActionCreator(PAGE_CLOSE_HTML_EDITOR);
-export const saveRow = makeActionCreator(PAGE_SAVE_ROW_ITEM, 'content');
+export const saveRow = makeActionCreator(PAGE_SAVE_ROW_ITEM, 'content', 'filterType', 'itemsContent');
 export const openAddToursListPopup = makeActionCreator(PAGE_OPEN_TOURS_LIST_POPUP_EDITOR, 'rowItem');
 export const closeAddToursListPopup = makeActionCreator(PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR);
 
@@ -36,18 +36,6 @@ const addRowSuccess = (state, action) => {
     ...state,
     contentByLang: addedRow.contentByLang,
     rowItemsByID: { ...state.rowItemsByID, ...addedRow.rowItemsByID }
-  };
-};
-
-const saveRowSuccess = (state, action) => {
-  const currRowItem = {...state.currRowItem};
-  const rowItemsByID = {...state.rowItemsByID};
-  rowItemsByID[currRowItem.id || currRowItem._id].content = action.content;
-  return {
-    ...state,
-    rowItemsByID,
-    htmlEditorOpen: false,
-    currRowItem: null
   };
 };
 
@@ -100,8 +88,29 @@ const reducerHelper = {
     ...state,
     addToursPopupOpen: true,
     currRowItem: action.rowItem
-  })
-}
+  }),
+  saveRow: (state, action) => {
+    const currRowItem = {...state.currRowItem};
+    const rowItemsByID = {...state.rowItemsByID};
+    if (action.filterType === 'content') {
+      rowItemsByID[currRowItem.id || currRowItem._id].content = action.content;
+    }
+    if (action.filterType === 'tours') {
+      const id = currRowItem.id || currRowItem._id;
+      rowItemsByID[id].type = action.type;
+      rowItemsByID[id].filters = action.itemsContent.filters;
+      rowItemsByID[id].title = action.itemsContent.title;
+      rowItemsByID[id].subTilte = action.itemsContent.subTilte;
+    }
+    return {
+      ...state,
+      rowItemsByID,
+      htmlEditorOpen: false,
+      addToursPopupOpen: false,
+      currRowItem: null
+    };
+  }
+};
 
 const defaultState = {
   htmlEditorOpen: false,
@@ -116,7 +125,7 @@ const pageReducer = createReducer(defaultState, {
   [PAGE_ADD_ROW]: addRowSuccess,
   [PAGE_REMOVE_ROW]: removeRowSuccess,
   [PAGE_EDIT_ROW_ITEM]: editRowItem,
-  [PAGE_SAVE_ROW_ITEM]: saveRowSuccess,
+  [PAGE_SAVE_ROW_ITEM]: reducerHelper.saveRow,
   [PAGE_REMOVE_ROW_ITEM]: removeRowItem,
   [PAGE_INPUT_CHANGE]: inputChange,
   [PAGE_OPEN_HTML_EDITOR]: openEditor,

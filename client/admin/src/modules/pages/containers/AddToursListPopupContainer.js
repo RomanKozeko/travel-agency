@@ -4,6 +4,7 @@ import { closeAddToursListPopup } from '../pageReducer'
 import { loadCategories } from '../../categories/categoriesReducer'
 import { loadRegions } from '../../regions/regionsReducer'
 import { getCategories, getRegions } from '../../../rootReducer';
+import { saveRow } from '../pageReducer';
 import AddToursListPopup from '../components/AddToursListPopup'
 
 const mapStateToProps = state => ({
@@ -34,7 +35,8 @@ AddToursListPopupContainer = connect(
   {
     handleRequestClose: closeAddToursListPopup,
     loadCategories,
-    loadRegions
+    loadRegions,
+    saveRow
   }
 )(AddToursListPopupContainer);
 

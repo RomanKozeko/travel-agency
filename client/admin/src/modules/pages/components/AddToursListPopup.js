@@ -21,32 +21,66 @@ const styles = StyleSheet.create({
 
 
 class AddToursListPopup extends React.Component {
-	render() {
-		const {isOpen, handleRequestClose, categories, regions} = this.props;
+  state = {
+    title: '',
+    subTitle: '',
+    filters: {}
+  };
+
+  inputChange = (name) => (e) => {
+    this.setState({
+      [name]: e.target.value
+    })
+  };
+
+  onFilterSelect = (filterType, filters) => {
+    this.state.filters[filterType] = filters;
+  };
+
+  render() {
+    const {isOpen, handleRequestClose, categories, regions, saveRow} = this.props;
     return (
-			<Dialog open={isOpen} onRequestClose={handleRequestClose} transition={<Slide direction="up" />}>
-				<DialogTitle>Filter tours to display</DialogTitle>
-				<DialogContent className={css(styles.popup)}>
+      <Dialog open={isOpen} onRequestClose={handleRequestClose} transition={<Slide direction="up"/>}>
+        <DialogTitle>Filter tours to display</DialogTitle>
+        <DialogContent className={css(styles.popup)}>
           <TextField
-            label="Header text"
+            label="Header title"
             margin="normal"
-            fullwidth
+            onChange={this.inputChange('title')}
+            value={this.state.title}
             className={css(styles.input)}
           />
-          <FilteredTagSelector items={categories} label='Select categories' />
-          <FilteredTagSelector items={regions} label='Select regions' />
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleRequestClose} color="accent">
-						Cancel
-					</Button>
-					<Button onClick={handleRequestClose} color="primary">
-						Save
-					</Button>
-				</DialogActions>
-			</Dialog>
+          <TextField
+            label="Header sub title"
+            margin="normal"
+            onChange={this.inputChange('subTitle')}
+            value={this.state.subTitle}
+            className={css(styles.input)}
+          />
+          <FilteredTagSelector
+            onFilterSelect={this.onFilterSelect}
+            filterType='categories'
+            items={categories}
+            label='Select categories'
+          />
+          <FilteredTagSelector
+            onFilterSelect={this.onFilterSelect}
+            filterType='regions'
+            items={regions}
+            label='Select regions'
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleRequestClose} color="accent">
+            Cancel
+          </Button>
+          <Button onClick={() => saveRow('', 'tours', this.state)} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     )
-	}
+  }
 }
 
 export default AddToursListPopup;
