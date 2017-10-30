@@ -95,7 +95,8 @@ const Rows = ({
     removeRow,
     openHtmlEditor,
     removeRowItem,
-    editRowItem
+    editRowItem,
+    openAddToursListPopup
   }) => {
   return (
     <div>
@@ -125,7 +126,7 @@ const Rows = ({
                           <span dangerouslySetInnerHTML={{ __html: item.content }} />
                         </div>
                           :
-                        <AddPageItemMenu item={item} openHtmlEditor={openHtmlEditor} />
+                        <AddPageItemMenu item={item} openHtmlEditor={openHtmlEditor} openAddToursListPopup={openAddToursListPopup} />
                       }
                     </div>
                   </div>

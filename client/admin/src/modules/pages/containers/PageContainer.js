@@ -97,6 +97,8 @@ PageContainer = withRouter(connect(
     pageInputChange: actions.pageInputChange,
     openHtmlEditor: actions.openHtmlEditor,
     closeHtmlEditor: actions.closeHtmlEditor,
+    openAddToursListPopup: actions.openAddToursListPopup,
+    closeAddToursListPopup: actions.closeAddToursListPopup,
     saveRow: actions.saveRow,
     removeRowItem: actions.pageRemoveRowItem,
     editRowItem: actions.pageEditRowItem,

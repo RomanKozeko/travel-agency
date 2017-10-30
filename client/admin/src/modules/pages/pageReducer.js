@@ -13,6 +13,9 @@ const PAGE_CLOSE_HTML_EDITOR = 'CLOSE_HTML_EDITOR';
 const PAGE_REMOVE_ROW_ITEM = 'PAGE_REMOVE_ROW_ITEM';
 const PAGE_EDIT_ROW_ITEM = 'PAGE_EDIT_ROW_ITEM';
 
+const PAGE_OPEN_TOURS_LIST_POPUP_EDITOR = 'PAGE_OPEN_TOURS_LIST_POPUP_EDITOR';
+const PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR = 'PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR';
+
 // Action Creators
 export const pageDidMount = makeActionCreator(PAGE_DID_MOUNT, 'payload');
 export const pageUnmount = makeActionCreator(PAGE_UNMOUNT);
@@ -24,6 +27,8 @@ export const pageInputChange = makeActionCreator(PAGE_INPUT_CHANGE, 'langId', 'n
 export const openHtmlEditor = makeActionCreator(PAGE_OPEN_HTML_EDITOR, 'rowItem');
 export const closeHtmlEditor = makeActionCreator(PAGE_CLOSE_HTML_EDITOR);
 export const saveRow = makeActionCreator(PAGE_SAVE_ROW_ITEM, 'content');
+export const openAddToursListPopup = makeActionCreator(PAGE_OPEN_TOURS_LIST_POPUP_EDITOR, 'rowItem');
+export const closeAddToursListPopup = makeActionCreator(PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR);
 
 const addRowSuccess = (state, action) => {
   const addedRow = addRow({ ...state.contentByLang }, action.columns, action.langId);
@@ -80,6 +85,7 @@ const openEditor = (state, action) => ({
   currRowItem: action.rowItem
 });
 
+
 const setUpState = (state, action) => {
   const rowItemsByID = normolizeRowItems([...action.payload.item.content]);
   return {
@@ -89,8 +95,17 @@ const setUpState = (state, action) => {
   };
 };
 
+const reducerHelper = {
+  openAddToursListPopup: (state, action) => ({
+    ...state,
+    addToursPopupOpen: true,
+    currRowItem: action.rowItem
+  })
+}
+
 const defaultState = {
   htmlEditorOpen: false,
+  addToursPopupOpen: false,
   contentByLang: {},
   currRowItem: null
 };
@@ -106,6 +121,9 @@ const pageReducer = createReducer(defaultState, {
   [PAGE_INPUT_CHANGE]: inputChange,
   [PAGE_OPEN_HTML_EDITOR]: openEditor,
   [PAGE_CLOSE_HTML_EDITOR]: state => ({ ...state, htmlEditorOpen: false, currRowItem: null }),
+  [PAGE_OPEN_TOURS_LIST_POPUP_EDITOR]: reducerHelper.openAddToursListPopup,
+  [PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR]: state => ({ ...state, addToursPopupOpen: false, currRowItem: null }),
+
 });
 
 export default pageReducer

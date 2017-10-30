@@ -17,6 +17,7 @@ import HtmlEditorPopup from './HtmlEditorPopup';
 import withTabs from '../../ui-elements/HOC/withTabs';
 import TextField from 'material-ui/TextField';
 import pageFormService from '../pageFormService';
+import AddToursListPopup from './AddToursListPopup'
 import { denormalizeRowsItems } from '../pageFormService';
 const uniqueId = require('lodash.uniqueid');
 
@@ -31,6 +32,7 @@ class PageForm extends React.Component {
   componentDidMount() {
     this.props.pageDidMount({
       htmlEditorOpen: false,
+      addToursPopupOpen: false,
       contentByLang: { ...this.props.parentState.contentByLang },
       item: { ...this.props.item },
       currRowItem: null
@@ -63,6 +65,8 @@ class PageForm extends React.Component {
       pageRemoveRow,
       pageInputChange,
       openHtmlEditor,
+      openAddToursListPopup,
+      closeAddToursListPopup,
       closeHtmlEditor,
       removeRowItem,
       saveRow,
@@ -128,6 +132,7 @@ class PageForm extends React.Component {
                 removeRowItem={removeRowItem}
                 editRowItem={editRowItem}
                 openHtmlEditor={openHtmlEditor}
+                openAddToursListPopup={openAddToursListPopup}
               />
             </div>
             }
@@ -139,6 +144,11 @@ class PageForm extends React.Component {
           currentRowItem={page.currRowItem}
           saveRow={saveRow}
           handleRequestClose={closeHtmlEditor}
+        />
+
+        <AddToursListPopup
+          isOpen={page.addToursPopupOpen}
+          handleRequestClose={closeAddToursListPopup}
         />
 
         <Button
