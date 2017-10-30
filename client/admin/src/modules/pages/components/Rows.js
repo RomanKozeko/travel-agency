@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     right: '0',
   },
   rowInnerContent: {
-    width: '100%'
+    width: '100%',
+    overflow: 'hidden'
   }
 });
 

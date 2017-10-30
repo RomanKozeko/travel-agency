@@ -1,32 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
-import { CircularProgress } from 'material-ui/Progress';
-import { withRouter, Link } from 'react-router-dom';
-import RenderTextField from '../../ui-elements/form/RenderTextField';
 import ImagePreview from '../../ui-elements/ImagePreview';
-import { getContentByLang } from '../../../rootReducer';
 import PageCaption from '../../ui-elements/PageCaption';
-import GridIcons from '../../ui-elements/gridIcons/GridIcons';
 import GridSelector from './GridSelector';
 import Rows from './Rows';
 import HtmlEditorPopup from './HtmlEditorPopup';
 import withTabs from '../../ui-elements/HOC/withTabs';
 import TextField from 'material-ui/TextField';
-import pageFormService from '../pageFormService';
-import AddToursListPopup from './AddToursListPopup'
+import AddToursListPopupContainer from '../containers/AddToursListPopupContainer'
 import { denormalizeRowsItems } from '../pageFormService';
-const uniqueId = require('lodash.uniqueid');
-
-const styles = StyleSheet.create({
-  field: {
-    marginBottom: '10px;'
-  }
-});
-
 
 class PageForm extends React.Component {
   componentDidMount() {
@@ -66,7 +50,6 @@ class PageForm extends React.Component {
       pageInputChange,
       openHtmlEditor,
       openAddToursListPopup,
-      closeAddToursListPopup,
       closeHtmlEditor,
       removeRowItem,
       saveRow,
@@ -146,10 +129,7 @@ class PageForm extends React.Component {
           handleRequestClose={closeHtmlEditor}
         />
 
-        <AddToursListPopup
-          isOpen={page.addToursPopupOpen}
-          handleRequestClose={closeAddToursListPopup}
-        />
+        <AddToursListPopupContainer />
 
         <Button
           raised
