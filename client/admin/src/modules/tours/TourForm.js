@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { getContentByLang } from './toursReducer';
-import Button from 'material-ui/Button';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import ItemsSelector from '../ui-elements/form/ItemsSelector';
+import ImagePreview from '../ui-elements/ImagePreview';
+import AddTourPreviewPopup from './AddTourPreviewPopup';
 
 const styles = StyleSheet.create({
   field: {
@@ -38,6 +39,7 @@ class TourForm extends Component {
       contentByLang,
 			anchorEl: undefined,
 			open: false,
+			preview: tour.preview,
       content: this.props.content,
       idsRegions: idsRegions,
       idsCategories: this.props.categoriesAllIds,
@@ -62,12 +64,25 @@ class TourForm extends Component {
     this.setState({contentByLang});
   };
 
+  addPreview = (id) => {
+  	this.setState({ preview: id })
+  };
+
+	handleClickPreview = event => {
+		this.setState({ open: true });
+	};
+
+	handleRequestClose = () => {
+		this.setState({ open: false });
+	};
+
   saveTour = (e) => {
     e.preventDefault();
     const tour = {...this.props.tour};
     tour.content = Object.values(this.state.contentByLang);
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
+	  tour.preview = this.state.preview;
     this.props.onSubmit(tour, this.props.isNew);
 
     if (this.props.isNew) {
@@ -76,7 +91,7 @@ class TourForm extends Component {
   };
 
 	render() {
-		const { languages, selectedTabIndex, isSaving } = this.props;
+		const { languages, selectedTabIndex, isSaving, tour } = this.props;
 		const { contentByLang } = this.state;
 
 		return (
@@ -85,6 +100,10 @@ class TourForm extends Component {
 	        <div key={lang._id}>
             {selectedTabIndex === i &&
 			        <div className="row">
+				        <div className="col-sm-3" onClick={this.handleClickPreview}>
+					        <ImagePreview url={tour.preview} />
+				        </div>
+				        <AddTourPreviewPopup />
 				        <div className="col-md-6">
 					        <TextField
 						        name='title'

@@ -192,6 +192,7 @@ export const basicReducerEvents = {
 				content: {...state.content, ...payload.entities.content},
 				isFetching: false,
 				isSaving: false,
+				isFetched: true,
 				pages: updatePages(allIds, state.itemsPerPage)
 			};
 		}
