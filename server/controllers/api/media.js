@@ -27,9 +27,9 @@ module.exports = {
     const { filename, path } = req.file;
 
     //TODO: refactor it
-    const newPath = path.split('\\');
-    const finalPath = '/' + newPath[1] + '/' + newPath[2];
-    const mediaFile = new Media({ filename, path: finalPath });
+    // const newPath = path.split('\\');
+    // const finalPath = '/' + newPath[1] + '/' + newPath[2];
+    const mediaFile = new Media({ filename, path: path });
 
     mediaFile.save()
       .then((result) => {
