@@ -77,7 +77,7 @@ const MediaFilesList = ({ items, clickHandler }) => {
 	        <div className={css(styles.inner)}>
 		        <img
 			        className={css(styles.img)}
-			        src={`http://localhost:3003${item.path}`}
+			        src={item.path}
 			        alt=""
 		        />
 	        </div>
