@@ -6,6 +6,7 @@ module.exports = {
       .sort('-date')
       .skip(offset)
       .limit(itemsPerPageLimit)
+	    .populate('preview')
       .populate('categories')
       .populate('regions')
       .populate('periodType');

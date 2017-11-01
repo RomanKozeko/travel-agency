@@ -62,6 +62,9 @@ export const categoriesSchema = [categorySchema];
 export const regionSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const regionsSchema = [regionSchema];
 
+export const mediaFileSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const mediaFilesSchema = [mediaFileSchema];
+
 export const tourSchema = new schema.Entity('items', {
   categories: [categorySchema],
   regions: [regionSchema]
@@ -73,9 +76,6 @@ export const pagesSchema = { items: [pageSchema] };
 
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
-
-export const mediaFileSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
-export const mediaFilesSchema = [mediaFileSchema];
 
 export const Schemas = {
   TOUR: tourSchema,

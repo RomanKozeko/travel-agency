@@ -67,9 +67,15 @@ const tourDeletedSuccess = (state, action) => {
 
 const tourSuccess = (state, action) => {
   const payload = action.response;
+	const allIds = [...state.allIds];
+
+  if (allIds.indexOf(payload.result) === -1) {
+		allIds.push(payload.result)
+	}
+
   return {
     ...state,
-    allIds: [...state.allIds, payload.result],
+    allIds,
     byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false
   };

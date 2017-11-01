@@ -39,7 +39,7 @@ const createBlankPage = (languages) => {
   });
   return {
     id: uniqueId(),
-    preview: '',
+    preview: [],
     content
   };
 };
@@ -63,6 +63,7 @@ const mapStateToProps = (state, router) => {
     categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
     languages,
+		preview: state.mediafiles.selected,
 		isFetching: state.tours.isFetching || state.regions.isFetching
 	}
 };

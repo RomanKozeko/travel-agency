@@ -181,7 +181,7 @@ export const basicReducerEvents = {
 	itemSuccess:
 		(state, action) => {
 			const payload = action.response;
-			const allIds = [...state.allIds]
+			const allIds = [...state.allIds];
 			if (state.allIds.indexOf(payload.result) === -1) {
 				allIds.push(payload.result)
 			}

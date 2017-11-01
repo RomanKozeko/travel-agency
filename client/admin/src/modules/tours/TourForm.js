@@ -64,8 +64,11 @@ class TourForm extends Component {
     this.setState({contentByLang});
   };
 
-  addPreview = (id) => {
-  	this.setState({ preview: id })
+  addPreview = () => {
+  	const selectedPreview = [...this.props.preview];
+  	const preview = [...this.state.preview];
+	  const updatedPreview = preview.concat(selectedPreview.filter(item => preview.indexOf(item) < 0));
+  	this.setState({ preview: updatedPreview })
   };
 
 	handleClickPreview = event => {
@@ -82,7 +85,11 @@ class TourForm extends Component {
     tour.content = Object.values(this.state.contentByLang);
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
-	  tour.preview = this.state.preview;
+
+    if (this.state.preview.length) {
+	    tour.preview = this.state.preview;
+    }
+
     this.props.onSubmit(tour, this.props.isNew);
 
     if (this.props.isNew) {
@@ -101,9 +108,9 @@ class TourForm extends Component {
             {selectedTabIndex === i &&
 			        <div className="row">
 				        <div className="col-sm-3" onClick={this.handleClickPreview}>
-					        <ImagePreview url={tour.preview} />
+					        <ImagePreview />
 				        </div>
-				        <AddTourPreviewPopup />
+				        <AddTourPreviewPopup addPreview={this.addPreview}/>
 				        <div className="col-md-6">
 					        <TextField
 						        name='title'

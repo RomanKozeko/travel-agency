@@ -36,8 +36,8 @@ class AddTourPreviewPopup extends Component {
 		this.setState({ open: false });
 	};
 
-	handleSelect = (id) => {
-		this.props.selectMediaFile(id);
+	handleClick = () => {
+		this.props.addPreview();
 		this.handleRequestClose();
 	};
 
@@ -47,10 +47,10 @@ class AddTourPreviewPopup extends Component {
 				<Button onClick={this.handleClickOpen}>Add preview images</Button>
 				<Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
 					<DialogContent>
-						<MediaFilesContainer selectMediaFile={this.handleSelect}/>
+						<MediaFilesContainer />
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleSelect} color="primary">
+						<Button onClick={this.handleClick} color="primary">
 							Select
 						</Button>
 						<Button onClick={this.handleRequestClose} color="primary" autoFocus>

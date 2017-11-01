@@ -7,12 +7,13 @@ const TourSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  preview: {
-    type: String
-  },
+  preview: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
   content: [ContentSchema],
   categories: [{
-    type: String,
+    type: Schema.Types.ObjectId,
     ref: 'TourCategory'
   }],
   regions: [{

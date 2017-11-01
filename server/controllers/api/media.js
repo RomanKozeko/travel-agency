@@ -4,7 +4,9 @@ const path = require('path');
 
 module.exports = {
   get(req, res, next) {
-    Media.find().then(result => {
+    Media.find()
+	    .sort('-date')
+	    .then(result => {
       res.json(result);
     })
       .catch(next);
