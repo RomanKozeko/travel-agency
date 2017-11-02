@@ -1,6 +1,5 @@
 const Media = require('../../models/Media');
 const fs = require('fs');
-const path = require('path');
 
 module.exports = {
   get(req, res, next) {
@@ -30,6 +29,7 @@ module.exports = {
     console.log(req.file)
     // const newPath = path.split('\\');
     // const finalPath = '/' + newPath[1] + '/' + newPath[2];
+
     const mediaFile = new Media({ filename, path: path });
 
     mediaFile.save()
