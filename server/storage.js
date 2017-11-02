@@ -11,7 +11,7 @@ const ensureExists = (folderPath) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, ensureExists('/uploads/'));
+    cb(null, ensureExists('./client/uploads/'));
   },
   filename: (req, file, cb) => {
     cb(null,  Date.now() + file.originalname);

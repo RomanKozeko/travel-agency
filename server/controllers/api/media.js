@@ -30,7 +30,7 @@ module.exports = {
     // const newPath = path.split('\\');
     // const finalPath = '/' + newPath[1] + '/' + newPath[2];
 
-    const mediaFile = new Media({ filename, path: path });
+    const mediaFile = new Media({ filename, path: path.replace('client', '') });
 
     mediaFile.save()
       .then((result) => {
