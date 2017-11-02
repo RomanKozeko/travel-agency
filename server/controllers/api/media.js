@@ -45,7 +45,7 @@ module.exports = {
 		Media.find({ _id: { $in: ids }  })
 			.then(items => {
 				items.forEach(item => {
-					fs.unlink(`client${item.path}`, (err) => {
+					fs.unlink(item.path, (err) => {
 						if (err) throw next();
 					});
 				})
