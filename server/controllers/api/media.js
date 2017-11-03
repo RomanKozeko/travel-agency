@@ -53,8 +53,8 @@ module.exports = {
 		  })
       .catch((e) => console.log('error!!!!'));
 
-		Media.deleteMany({ _id: ids })
-			.then(() => res.json(ids))
-			.catch(next);
+		// Media.deleteMany({ _id: ids })
+		// 	.then(() => res.json(ids))
+		// 	.catch(next);
 	}
 };
