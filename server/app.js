@@ -1,6 +1,7 @@
 /**
  * Module dependencies.
  */
+require('babel-polyfill');
 require('ignore-styles');
 const express = require('express');
 const compression = require('compression');
