@@ -24,12 +24,6 @@ module.exports = {
       });
     }
     const { filename, path } = req.file;
-
-    //TODO: refactor it
-    console.log(req.file)
-    // const newPath = path.split('\\');
-    // const finalPath = '/' + newPath[1] + '/' + newPath[2];
-
     const mediaFile = new Media({ filename, path: path.replace('client', '') });
 
     mediaFile.save()
@@ -40,21 +34,32 @@ module.exports = {
   },
 
 	delete(req, res, next) {
-		const ids = req.body;
+    const ids = req.body;
 
-		Media.find({ _id: { $in: ids }  })
-			.then(items => {
-				items.forEach(item => {
-				  console.log(`client${item.path}`);
-					fs.unlink(`client${item.path}`, (err) => {
-						if (err) console.log(err);
-					});
-				})
-		  })
-      .catch((e) => console.log('error!!!!'));
+    executeAsyncDeleting()
+      .then(() => res.json(ids));
 
-		// Media.deleteMany({ _id: ids })
-		// 	.then(() => res.json(ids))
-		// 	.catch(next);
-	}
+    async function executeAsyncDeleting() {
+     await deleteFiles();
+     await deleteRecords();
+
+      function deleteFiles() {
+        Media.find({_id: {$in: ids}})
+          .then(items => {
+            items.forEach(item => {
+              fs.unlink(`client${item.path}`, (err) => {
+                if (err) console.log(err);
+              });
+            })
+          })
+          .catch(next);
+      }
+
+      function deleteRecords() {
+        Media.deleteMany({_id: ids})
+          .then(res => res)
+          .catch(next);
+      }
+    }
+  }
 };
