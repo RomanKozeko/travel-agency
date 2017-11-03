@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
 	  color: '#fff;',
 		width: '25px',
 		height: '25px',
-	  background: '#1678cc',
-	  zIndex: '10000'
+	  background: '#1678cc'
   },
 	inner: {
 		height: '100%',
