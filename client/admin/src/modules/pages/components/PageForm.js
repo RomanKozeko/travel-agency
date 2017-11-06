@@ -128,8 +128,7 @@ class PageForm extends React.Component {
           saveRow={saveRow}
           handleRequestClose={closeHtmlEditor}
         />
-
-        <AddToursListPopupContainer />
+        {page.addToursPopupOpen && <AddToursListPopupContainer />}
 
         <Button
           raised

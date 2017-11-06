@@ -67,14 +67,8 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
     }
   });
 
-  const load = () => (dispatch, getState) => {
-    const { allIds } = getState()[alias.toLowerCase()];
-
-    if (!allIds.length) {
+  const load = () => (dispatch) => {
       return dispatch(fetch());
-    }
-
-    return null;
   };
 
   const loadWithPagination = (nextPage = 0) => (dispatch, getState) => {
@@ -192,7 +186,6 @@ export const basicReducerEvents = {
 				content: {...state.content, ...payload.entities.content},
 				isFetching: false,
 				isSaving: false,
-				isFetched: true,
 				pages: updatePages(allIds, state.itemsPerPage)
 			};
 		}

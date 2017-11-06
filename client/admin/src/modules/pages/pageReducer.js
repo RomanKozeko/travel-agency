@@ -98,9 +98,7 @@ const reducerHelper = {
     if (action.filterType === 'tours') {
       const id = currRowItem.id || currRowItem._id;
       rowItemsByID[id].type = action.type;
-      rowItemsByID[id].filters = action.itemsContent.filters;
-      rowItemsByID[id].title = action.itemsContent.title;
-      rowItemsByID[id].subTilte = action.itemsContent.subTilte;
+      rowItemsByID[id] = {...rowItemsByID[id], ...action.itemsContent}
     }
     return {
       ...state,

@@ -57,18 +57,23 @@ class AddToursListPopup extends React.Component {
             value={this.state.subTitle}
             className={css(styles.input)}
           />
-          <FilteredTagSelector
-            onFilterSelect={this.onFilterSelect}
-            filterType='categories'
-            items={categories}
-            label='Select categories'
-          />
-          <FilteredTagSelector
-            onFilterSelect={this.onFilterSelect}
-            filterType='regions'
-            items={regions}
-            label='Select regions'
-          />
+          {categories.length && regions.length &&
+          <div>
+            <FilteredTagSelector
+              onFilterSelect={this.onFilterSelect}
+              filterType='categories'
+              items={categories}
+              label='Select categories'
+            />
+            <FilteredTagSelector
+              onFilterSelect={this.onFilterSelect}
+              filterType='regions'
+              items={regions}
+              label='Select regions'
+            />
+          </div>
+          }
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleRequestClose} color="accent">
