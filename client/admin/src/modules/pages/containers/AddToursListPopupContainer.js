@@ -9,6 +9,7 @@ import AddToursListPopup from '../components/AddToursListPopup'
 
 const mapStateToProps = state => ({
   isOpen: state.page.addToursPopupOpen,
+  currRowItem: state.page.currRowItem,
   categories: getCategories(state),
   regions: getRegions(state)
 });

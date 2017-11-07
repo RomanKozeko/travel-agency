@@ -2,10 +2,9 @@ import React from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
-import DeleteIcon from 'material-ui-icons/Delete';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import AddPageItemMenu from './AddPageItemMenu';
+import ItemContentType from './ItemContentType';
 
 const styles = StyleSheet.create({
   row: {
@@ -50,18 +49,6 @@ const styles = StyleSheet.create({
   itemContent: {
     position: 'relative'
   },
-  itemContentButton: {
-    color: '#aeaeae',
-    cursor: 'pointer',
-    ':hover': {
-      color: '#3f51b5'
-    }
-  },
-  itemContentToolbar: {
-    position: 'absolute',
-    top: '0',
-    right: '0',
-  },
   rowInnerContent: {
     width: '100%',
     overflow: 'hidden'
@@ -71,22 +58,7 @@ const styles = StyleSheet.create({
 const getRowItems = (items, rowItems) => items.map(item => rowItems[item.id || item._id]);
 
 const getItemClassName = (item) => (
-  item.content ? css(styles.rowInner, styles.rowInnerActive) : css(styles.rowInner)
-);
-
-const ItemContentToolBar = ({item, removeRowItem, editRowItem}) => (
-  <div className={css(styles.itemContentToolbar)}>
-    <DeleteIcon
-      className={css(styles.itemContentButton)}
-      onClick={() => removeRowItem(item._id || item.id)}
-    />
-    <Icon
-      className={css(styles.itemContentButton)}
-      onClick={() => editRowItem(item._id || item.id)}
-    >
-      mode_edit
-    </Icon>
-  </div>
+  item.type ? css(styles.rowInner, styles.rowInnerActive) : css(styles.rowInner)
 );
 
 const Rows = ({
@@ -121,14 +93,13 @@ const Rows = ({
                 getRowItems(row.items, rowsItems).map(item => (
                   <div key={item._id || item.id} className={item.size}>
                     <div className={getItemClassName(item)}>
-                      {item.content ?
-                        <div className={css(styles.rowInnerContent)}>
-                          <ItemContentToolBar {...{ item, removeRowItem, editRowItem }} />
-                          <span dangerouslySetInnerHTML={{ __html: item.content }} />
-                        </div>
-                          :
-                        <AddPageItemMenu item={item} openHtmlEditor={openHtmlEditor} openAddToursListPopup={openAddToursListPopup} />
-                      }
+                      <ItemContentType
+                        item={item}
+                        removeRowItem={removeRowItem}
+                        editRowItem={editRowItem}
+                        openHtmlEditor={openHtmlEditor}
+                        openAddToursListPopup={openAddToursListPopup}
+                      />
                     </div>
                   </div>
                 ))

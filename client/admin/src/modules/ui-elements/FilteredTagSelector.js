@@ -60,10 +60,18 @@ const HighlightedText = ({text, search}) => {
 class FilteredTagSelector extends React.Component {
   constructor(props) {
     super(props);
+
+    const selectedItems = this.props.selectedItems || [];
+    const items = this.props.items.filter(item => {
+      return !selectedItems.find(selectedItem => (selectedItem._id === item._id));
+    });
+
     this.state = {
       filter: '',
       showItemsList: false,
-      selectedItems: [],
+      filteredItems: items,
+      items,
+      selectedItems,
       inputId: `FilteredTagSelector-${Date.now()}`,
       dropDownId: `FilteredTagDropdown-${Date.now()}`,
       coordinates: {
@@ -71,9 +79,7 @@ class FilteredTagSelector extends React.Component {
         height: 0,
         x: 0,
         y: 0
-      },
-      filteredItems: [...this.props.items],
-      items: [...this.props.items]
+      }
     }
   }
 

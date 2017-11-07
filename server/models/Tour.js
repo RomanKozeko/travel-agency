@@ -11,6 +11,7 @@ const TourSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media'
   }],
+  isActive: Boolean,
   content: [ContentSchema],
   categories: [{
     type: Schema.Types.ObjectId,

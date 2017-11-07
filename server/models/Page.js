@@ -5,6 +5,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const PageSchema = new Schema({
   preview: String,
+  isActive: Boolean,
   url: { type: String, index: true, unique: true, required: true },
   content: [PageContentSchema],
 });

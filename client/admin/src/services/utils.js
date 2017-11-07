@@ -191,4 +191,15 @@ export const basicReducerEvents = {
 		}
 };
 
+export function getFiltersQuery(filters) {
+  let query = '';
+
+  for (const filter in filters) {
+    query += `${filter}=`;
+    query += filters[filter].map(item => item._id).join(',');
+    query += '&'
+  }
+  return query.slice(0, -1);
+}
+
 

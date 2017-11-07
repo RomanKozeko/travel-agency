@@ -21,11 +21,13 @@ const styles = StyleSheet.create({
 
 
 class AddToursListPopup extends React.Component {
-  state = {
-    title: '',
-    subTitle: '',
-    filters: {}
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      filtersObj: this.props.currRowItem.filtersObj || {}
+    }
+  }
+
 
   inputChange = (name) => (e) => {
     this.setState({
@@ -34,7 +36,7 @@ class AddToursListPopup extends React.Component {
   };
 
   onFilterSelect = (filterType, filters) => {
-    this.state.filters[filterType] = filters;
+    this.state.filtersObj[filterType] = filters;
   };
 
   render() {
@@ -43,29 +45,17 @@ class AddToursListPopup extends React.Component {
       <Dialog open={isOpen} onRequestClose={handleRequestClose} transition={<Slide direction="up"/>}>
         <DialogTitle>Filter tours to display</DialogTitle>
         <DialogContent className={css(styles.popup)}>
-          <TextField
-            label="Header title"
-            margin="normal"
-            onChange={this.inputChange('title')}
-            value={this.state.title}
-            className={css(styles.input)}
-          />
-          <TextField
-            label="Header sub title"
-            margin="normal"
-            onChange={this.inputChange('subTitle')}
-            value={this.state.subTitle}
-            className={css(styles.input)}
-          />
           {categories.length && regions.length &&
           <div>
             <FilteredTagSelector
+              selectedItems={this.state.filtersObj.categories}
               onFilterSelect={this.onFilterSelect}
               filterType='categories'
               items={categories}
               label='Select categories'
             />
             <FilteredTagSelector
+              selectedItems={this.state.filtersObj.regions}
               onFilterSelect={this.onFilterSelect}
               filterType='regions'
               items={regions}

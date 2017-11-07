@@ -1,4 +1,4 @@
-import { createReducer, makeActionCreator } from '../../services/utils';
+import { createReducer, makeActionCreator, getFiltersQuery } from '../../services/utils';
 import { addRow, removeRow, setInputsValues, normolizeRowItems } from './pageFormService';
 
 // actions
@@ -46,7 +46,10 @@ const removeRowSuccess = (state, { langId, rowId }) => ({
 
 const removeRowItem = (state, { itemId }) => {
   const rowItemsByID = { ...state.rowItemsByID };
+  rowItemsByID[itemId].type = '';
   rowItemsByID[itemId].content = '';
+  rowItemsByID[itemId].filters = '';
+  rowItemsByID[itemId].filtersObj = {};
   return {
     ...state,
     rowItemsByID
@@ -57,7 +60,8 @@ const editRowItem = (state, { itemId }) => {
   const rowItemsByID = { ...state.rowItemsByID };
   return {
     ...state,
-    htmlEditorOpen: true,
+    htmlEditorOpen: rowItemsByID[itemId].type === 'content',
+    addToursPopupOpen: rowItemsByID[itemId].type === 'tours',
     currRowItem: rowItemsByID[itemId]
   };
 };
@@ -93,12 +97,15 @@ const reducerHelper = {
     const currRowItem = {...state.currRowItem};
     const rowItemsByID = {...state.rowItemsByID};
     if (action.filterType === 'content') {
-      rowItemsByID[currRowItem.id || currRowItem._id].content = action.content;
+      const id = currRowItem.id || currRowItem._id;
+      rowItemsByID[id].type = action.filterType;
+      rowItemsByID[id].content = action.content;
     }
     if (action.filterType === 'tours') {
       const id = currRowItem.id || currRowItem._id;
-      rowItemsByID[id].type = action.type;
-      rowItemsByID[id] = {...rowItemsByID[id], ...action.itemsContent}
+      rowItemsByID[id].type = action.filterType;
+      rowItemsByID[id] = {...rowItemsByID[id], ...action.itemsContent};
+      rowItemsByID[id].filters = getFiltersQuery(action.itemsContent.filtersObj);
     }
     return {
       ...state,
