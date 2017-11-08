@@ -140,12 +140,12 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
 }
 
 export const basicReducerEvents = {
-  success: (state, action) => {
+  success: (alias) => (state, action) => {
     const payload = action.response;
     return {
       ...state,
       allIds: [...state.allIds, ...payload.result],
-      byIds: {...state.byIds, ...payload.entities.items},
+      byIds: {...state.byIds, ...payload.entities[alias || 'items']},
       content: {...state.content, ...payload.entities.content},
       isFetching: false,
       isFetched: true
@@ -173,7 +173,7 @@ export const basicReducerEvents = {
       };
     },
 	itemSuccess:
-		(state, action) => {
+    (alias) => (state, action) => {
 			const payload = action.response;
 			const allIds = [...state.allIds];
 			if (state.allIds.indexOf(payload.result) === -1) {
@@ -182,7 +182,7 @@ export const basicReducerEvents = {
 			return {
 				...state,
 				allIds,
-				byIds: {...state.byIds, ...payload.entities.items},
+				byIds: {...state.byIds, ...payload.entities[alias || 'items']},
 				content: {...state.content, ...payload.entities.content},
 				isFetching: false,
 				isSaving: false,

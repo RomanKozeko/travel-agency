@@ -32,7 +32,7 @@ const tourAddedSuccess = (state, action) => {
     ...state,
     allIds,
     byIds: { ...state.byIds, ...payload.entities.items },
-    isFetching: false,
+    isSaving: false,
     currPage: 0,
     count: newCount,
     pageCount: getPageCount(newCount, state.itemsPerPage),
@@ -77,6 +77,7 @@ const tourSuccess = (state, action) => {
     ...state,
     allIds,
     byIds: { ...state.byIds, ...payload.entities.items },
+    isSaving: false,
     isFetching: false
   };
 };
@@ -99,12 +100,12 @@ const toursReducer = createReducer(defaultState, {
   [TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
   [TOUR_SUCCESS]: tourSuccess,
   [TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
-  [ADD_TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
+  [ADD_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [ADD_TOUR_SUCCESS]: tourAddedSuccess,
   [ADD_TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
-  [EDIT_TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
+  [EDIT_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [EDIT_TOUR_SUCCESS]: tourSuccess,
-  [EDIT_TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
+  [EDIT_TOUR_FAILURE]: state => ({ ...state, isSaving: false }),
   [DELETE_TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
   [DELETE_TOUR_SUCCESS]: tourDeletedSuccess,
   [DELETE_TOUR_FAILURE]: state => ({ ...state, isFetching: false })
@@ -126,13 +127,4 @@ export const getPageWithTours = (state, page) => {
     return state.pages[page].map(id => state.byIds[id]);
   }
   return [];
-};
-
-export const getContentByLang = (state, contentId, langId) => {
-  const content = state.toursContent;
-
-  if (content[contentId].language === langId) {
-    return content[contentId];
-  }
-  return null;
 };

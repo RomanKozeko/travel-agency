@@ -71,7 +71,10 @@ export const addTour = (tour) => (dispatch) => {
       endpoint: '/api/tours',
       schema: Schemas.TOUR,
       method: 'POST',
-      body: tour
+      body: tour,
+      toasterMsg: {
+        success: 'Saved'
+      }
     }
   });
 };
@@ -83,7 +86,10 @@ export const editTour = (tour) => (dispatch) => {
       endpoint: `/api/tours/${tour._id}`,
       schema: Schemas.TOUR,
       method: 'PUT',
-      body: tour
+      body: tour,
+      toasterMsg: {
+        success: 'Saved'
+      }
     }
   });
 };

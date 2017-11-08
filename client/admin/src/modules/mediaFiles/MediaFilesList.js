@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 		paddingTop: '20px'
 	},
   imgWrapper: {
-	  backgroundColor: '#f8f8f8',
+	  backgroundColor: '#fff',
 	  marginBottom: '10px',
 	  marginLeft: '10px',
 	  overflow: 'hidden',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	  '@media (min-width: 1200px)': {
 		  width: 'calc(100% / 6 - 10px)',
 	  },
-	  boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
+	  boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
 	  borderRadius: '2px'
   },
   img: {
@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
 	  color: '#fff;',
 		width: '25px',
 		height: '25px',
-	  background: '#1678cc'
+	  background: '#1678cc',
+	  zIndex: '5'
   },
 	inner: {
 		height: '100%',

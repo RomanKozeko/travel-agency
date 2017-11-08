@@ -20,15 +20,15 @@ export const defaultState = {
 
 const categoriesReducer = createReducer(defaultState, {
   [actions.CATEGORIES_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.CATEGORIES_SUCCESS]: basicReducerEvents.success,
+  [actions.CATEGORIES_SUCCESS]: basicReducerEvents.success('categories'),
   [actions.CATEGORIES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.CATEGORIES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
   [actions.CATEGORIES_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
   [actions.CATEGORIES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.CATEGORY_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.CATEGORY_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.CATEGORY_SUCCESS]: basicReducerEvents.itemSuccess('categories'),
   [actions.CATEGORY_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
-  [actions.CATEGORY_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.CATEGORY_SAVE_SUCCESS]: basicReducerEvents.itemSuccess('categories'),
 });
 
 export default categoriesReducer;

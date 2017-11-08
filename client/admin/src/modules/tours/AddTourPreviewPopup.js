@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
     marginBottom: '10px;'
   },
   button: {
+  	display: 'block',
+		textAlign: 'center',
+		width: '100%',
+		marginBottom: '15px',
+		backgroundColor: '#f5f5f5',
+		color: '#757575'
   }
 });
 
@@ -44,7 +50,12 @@ class AddTourPreviewPopup extends Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={this.handleClickOpen}>Add preview images</Button>
+				<Button
+					className={css(styles.button)}
+					onClick={this.handleClickOpen}
+				>
+					Add preview images
+				</Button>
 				<Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
 					<DialogContent>
 						<MediaFilesContainer />

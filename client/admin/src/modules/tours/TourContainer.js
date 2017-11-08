@@ -13,7 +13,8 @@ import { loadRegions } from '../regions/regionsReducer';
 import { loadCategories } from '../categories/categoriesReducer';
 import { getTour } from './toursReducer';
 import { getRegions } from '../regions/regionsReducer';
-import { getLanguages, getCategories } from '../../rootReducer';
+import { loadItems } from '../mediaFiles/mediaFilesReducer';
+import { getLanguages, getMediaFiles, getCategories } from '../../rootReducer';
 
 const styles = StyleSheet.create({
   tabs: {
@@ -63,8 +64,10 @@ const mapStateToProps = (state, router) => {
     categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
     languages,
-		preview: state.mediafiles.selected,
-		isFetching: state.tours.isFetching || state.regions.isFetching
+    selectedPreview: state.mediafiles.selected,
+    mediaFiles: state.mediafiles,
+		isFetching: state.tours.isFetching || state.regions.isFetching,
+		isSaving: state.tours.isSaving
 	}
 };
 
@@ -72,7 +75,6 @@ class TourContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tour: this.props.tour,
       index: 0
     }
   }
@@ -113,7 +115,7 @@ class TourContainer extends React.Component {
 	            <Portlet isBordered={true}>
                 <Tabs
                   className={css(styles.tabs)}
-                  index={this.state.index}
+                  value={this.state.index}
                   onChange={(event, index) => this.handleChange(event, index)}
                 >
                   {this.props.languages.map(lang => (<Tab label={lang.title} key={lang._id}/>))}
@@ -134,7 +136,7 @@ class TourContainer extends React.Component {
 
 TourContainer = withRouter(connect(
 	mapStateToProps,
-  { loadTour, addTour, editTour, loadRegions, loadCategories }
+  { loadTour, addTour, editTour, loadRegions, loadCategories,  loadItems }
 )(TourContainer));
 
 export default TourContainer;

@@ -56,10 +56,10 @@ export const contentSchema = new schema.Entity('content', {
 }, { idAttribute: '_id' });
 
 export const categoryContentSchema = new schema.Entity('content', {}, { idAttribute: '_id' });
-export const categorySchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const categorySchema = new schema.Entity('categories', {}, { idAttribute: '_id' });
 export const categoriesSchema = [categorySchema];
 
-export const regionSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const regionSchema = new schema.Entity('regions', {}, { idAttribute: '_id' });
 export const regionsSchema = [regionSchema];
 
 export const mediaFileSchema = new schema.Entity('items', {}, { idAttribute: '_id' });

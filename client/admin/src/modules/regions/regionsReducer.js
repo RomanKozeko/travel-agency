@@ -20,15 +20,15 @@ export const defaultState = {
 
 const regionsReducer = createReducer(defaultState, {
   [actions.REGIONS_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.REGIONS_SUCCESS]: basicReducerEvents.success,
+  [actions.REGIONS_SUCCESS]: basicReducerEvents.success('regions'),
   [actions.REGIONS_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.REGIONS_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
   [actions.REGIONS_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
   [actions.REGION_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false }),
   [actions.REGION_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.REGION_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.REGION_SUCCESS]: basicReducerEvents.itemSuccess('regions'),
   [actions.REGION_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
-  [actions.REGION_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.REGION_SAVE_SUCCESS]: basicReducerEvents.itemSuccess('regions'),
   [actions.REGION_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
 });
 

@@ -20,8 +20,8 @@ export const logoutSuccess = () => ({
 });
 
 export const loginUser = (creds) => (dispatch) => {
+  dispatch(requestLogin());
   loginUserRequest(creds)
-    .then(dispatch(requestLogin()))
     .then((res) => {
       if (res.error) {
 	      toastr.error('', '', createToaster( res.error.message || 'Wrong credentials'));

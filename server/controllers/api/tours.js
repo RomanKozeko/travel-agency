@@ -38,6 +38,7 @@ module.exports = {
     const tourId = req.params.id;
 
     Tour.findById(tourId)
+      .populate('preview')
       .then(tour => res.json(tour))
       .catch(next);
   },
@@ -57,7 +58,7 @@ module.exports = {
     const tourProps = req.body;
 
     Tour.findByIdAndUpdate(tourId, tourProps)
-      .then(() => Tour.findById(tourId))
+      .then(() => Tour.findById(tourId).populate('preview'))
       .then(tour => res.json(tour))
       .catch(next);
   },

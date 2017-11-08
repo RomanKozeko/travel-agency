@@ -78,10 +78,10 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGES_DELETE_SUCCESS]: pagesDeleteSuccess,
   [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.PAGE_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.PAGE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.PAGE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.PAGE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
-  [actions.PAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess,
+  [actions.PAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.PAGES_FAILURE]: (state, action) => ({ ...state, isFetching: false, isSaving: false })
 });
 

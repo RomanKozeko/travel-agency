@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImagePreview from '../ui-elements/ImagePreview';
+import ImageGridList from '../ui-elements/ImageGridList'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 
 const styles = StyleSheet.create({
@@ -58,22 +59,25 @@ class TourForm extends Component {
     this.setState({contentByLang});
   };
 
-  handleEditorChange = (e, langID) => {
+  handleEditorChange = (langID) => (e) => {
     const contentByLang = {...this.state.contentByLang};
     contentByLang[langID].content =e.target.getContent();
     this.setState({contentByLang});
   };
 
   addPreview = () => {
-  	const selectedPreview = [...this.props.preview];
-  	const preview = [...this.state.preview];
-	  const updatedPreview = preview.concat(selectedPreview.filter(item => preview.indexOf(item) < 0));
-  	this.setState({ preview: updatedPreview })
-  };
+    let that = this;
+  	const selectedPreview = [...this.props.selectedPreview];
+  	const updatedPreview = [...this.state.preview];
 
-	handleClickPreview = event => {
-		this.setState({ open: true });
-	};
+    selectedPreview.forEach( item => {
+      if (!item.path) {
+        updatedPreview.push(that.props.mediaFiles.byIds[item]);
+      }
+    });
+
+    this.setState({ preview: updatedPreview });
+  };
 
 	handleRequestClose = () => {
 		this.setState({ open: false });
@@ -98,8 +102,8 @@ class TourForm extends Component {
   };
 
 	render() {
-		const { languages, selectedTabIndex, isSaving, tour } = this.props;
-		const { contentByLang } = this.state;
+		const { languages, selectedTabIndex, isSaving } = this.props;
+		const { contentByLang, preview } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
@@ -107,10 +111,10 @@ class TourForm extends Component {
 	        <div key={lang._id}>
             {selectedTabIndex === i &&
 			        <div className="row">
-				        <div className="col-sm-3" onClick={this.handleClickPreview}>
-					        <ImagePreview />
+				        <div className="col-md-3">
+                  <AddTourPreviewPopup addPreview={this.addPreview}/>
+                  <ImageGridList imgs={preview} />
 				        </div>
-				        <AddTourPreviewPopup addPreview={this.addPreview}/>
 				        <div className="col-md-6">
 					        <TextField
 						        name='title'
@@ -135,7 +139,7 @@ class TourForm extends Component {
                         plugins:'link image code',
                         height: '500'
                       }}
-                      onChange={this.handleEditorChange}
+                      onChange={this.handleEditorChange(lang._id)}
                     />
 					        </div>
 
