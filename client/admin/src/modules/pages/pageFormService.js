@@ -25,7 +25,17 @@ export function normolizeRowItems(content) {
   content.forEach((contentItem) => {
     contentItem.rows.forEach((row) => {
       row.items.forEach((rowItem) => {
-        rowItemsByID[rowItem._id || rowItem.id] = { ...rowItem };
+        const newRowItem = { ...rowItem };
+        const filtersObj = {};
+        if (rowItem.filters) {
+          const filters = rowItem.filters.split('&');
+          filters.forEach(filter => {
+            const filterSplit = filter.split('=');
+            filtersObj[filterSplit[0]] = filterSplit[1].split(',');
+          })
+        }
+        newRowItem.filtersObj = filtersObj;
+        rowItemsByID[rowItem._id || rowItem.id] = newRowItem;
       });
     });
   });

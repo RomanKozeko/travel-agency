@@ -61,7 +61,12 @@ class FilteredTagSelector extends React.Component {
   constructor(props) {
     super(props);
 
-    const selectedItems = this.props.selectedItems || [];
+    let selectedItems = this.props.selectedItems || [];
+    if (!selectedItems[0]._id) {
+      selectedItems = this.props.items.filter(item => {
+        return selectedItems.find(selectedItem => (selectedItem === item._id));
+      });
+    }
     const items = this.props.items.filter(item => {
       return !selectedItems.find(selectedItem => (selectedItem._id === item._id));
     });

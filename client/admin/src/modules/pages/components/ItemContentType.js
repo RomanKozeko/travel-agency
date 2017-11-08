@@ -2,6 +2,7 @@ import React from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import ItemContentToolBar from './ItemContentToolBar';
 import AddPageItemMenu from './AddPageItemMenu';
+import FiltersTags from './FiltersTags';
 import Chip from 'material-ui/Chip';
 
 const styles = StyleSheet.create({
@@ -29,26 +30,6 @@ const styles = StyleSheet.create({
     margin: '2px'
   }
 });
-
-const FiltersTags = ({filters}) => {
-  let allFilters = [];
-  for (const filterType in filters) {
-    if (filters.hasOwnProperty(filterType)) {
-      allFilters = [...allFilters, ...filters[filterType]]
-    }
-  }
-
-  return (<div className={css(styles.chipWrapper)}>
-    Показывать туры:
-    {allFilters.map(item => (
-      <Chip
-        className={css(styles.chipTag)}
-        key={item._id + 1}
-        label={item.content[0].title}
-      />
-    ))}
-  </div>)
-};
 
 const ItemContentType = ({
   item,

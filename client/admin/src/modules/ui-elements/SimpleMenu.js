@@ -29,9 +29,7 @@ class SimpleMenu extends Component {
           onRequestClose={this.handleRequestClose}
         >
           <MenuItem onClick={this.handleRequestClose}>Добавить галерею</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить картнику</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить список туров</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem>
         </Menu>
       </div>
     );
