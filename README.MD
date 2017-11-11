@@ -2,8 +2,8 @@
 This react redux application with server side rendering. Consist of three independent application: Admin (cms) Client, and server povered by express.js
 ### Killer futures
 
- 1. Multi languages uspport
- 2. Client side caching mechanism (imporve user expereanse on slow connection, reduce server load)
+ 1. Multi languages support
+ 2. Client side caching mechanism (improve user experience on slow connection, reduce server load)
 
 ## Architecture overview
 ![enter image description here](https://lh5.googleusercontent.com/7Dv1hDM7S2hWMsvI8W9guIsIbOQ0cDLO9AKd4DkEZeKP29x8V_wLbtOV4FFYM9ARkENul4K85wKPilGTH34c=w1920-h974-rw)
