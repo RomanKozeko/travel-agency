@@ -22,17 +22,17 @@ This react redux application with server side rendering. Consist of three indepe
 
     npm install
 ## run client
-![enter image description here](https://drive.google.com/file/d/1E5-LBliPd1DPRUlNPsiC6Mp1eVcXYgP0/view?usp=sharing)
 
     npm run client
+ ![sda](https://lh5.googleusercontent.com/PCUzKARvfdX8lnQ0EQ_BuVnrw3t_gf0iDI4StBV9pr28te8y7Wabb9H51T1Cbr4-g7bjEPDYRYOdaBC55_Ou=w1920-h974-rw)
+   
+ 
 ## run server
 
     npm run server
 ## run admin
-![enter image description here](https://drive.google.com/file/d/1pu6qwp4A-PaOSYr5ppTPvvl9KGSV_P2o/view?usp=sharing)
-	
-
     npm run admin
+![enter image description here](https://lh5.googleusercontent.com/bl3v4cz-X0c3mZLIv37Unko6Yam7uc6eRpO8ixw4ms25B158BM0B75BbxQDnAxo97qbkRwbfP9d4JXZGlG_R=w1920-h974-rw)
 ## run all
 	npm run start:all
 ## Coverage Reporting
