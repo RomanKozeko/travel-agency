@@ -1,5 +1,5 @@
 ## About Travel application
-This react redux application with server side rendering. Consist of three independent application: [Admin (cms)](http://travelagencydemo.info/admin) [Client](http://travelagencydemo.info/), and server povered by express.js
+This react redux application with server side rendering. Consist of three independent application: [Admin (cms)](http://travelagencydemo.info/admin), [Client](http://travelagencydemo.info/), and server povered by express.js
 ### Killer futures
 
  1. Multi languages support
