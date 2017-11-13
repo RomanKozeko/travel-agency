@@ -6,7 +6,7 @@ This react redux application with server side rendering. Consist of three indepe
  2. Client side caching mechanism (improve user experience on slow connection, reduce server load)
 
 ## Architecture overview
-![enter image description here](https://lh5.googleusercontent.com/7Dv1hDM7S2hWMsvI8W9guIsIbOQ0cDLO9AKd4DkEZeKP29x8V_wLbtOV4FFYM9ARkENul4K85wKPilGTH34c=w1920-h974-rw)
+![enter image description here](https://qshark-moving.com/wp-content/uploads/2017/11/Untitled-Diagram.jpg)
 
 ## Working demo: 
 ### http://travelagencydemo.info
@@ -24,7 +24,7 @@ This react redux application with server side rendering. Consist of three indepe
 ## run client
 
     npm run client
- ![sda](https://lh5.googleusercontent.com/PCUzKARvfdX8lnQ0EQ_BuVnrw3t_gf0iDI4StBV9pr28te8y7Wabb9H51T1Cbr4-g7bjEPDYRYOdaBC55_Ou=w1920-h974-rw)
+ ![sda](https://qshark-moving.com/wp-content/uploads/2017/11/Google-Chrome-Flat-Browser.jpg)
    
  
 ## run server
@@ -32,7 +32,7 @@ This react redux application with server side rendering. Consist of three indepe
     npm run server
 ## run admin
     npm run admin
-![enter image description here](https://lh5.googleusercontent.com/bl3v4cz-X0c3mZLIv37Unko6Yam7uc6eRpO8ixw4ms25B158BM0B75BbxQDnAxo97qbkRwbfP9d4JXZGlG_R=w1920-h974-rw)
+![enter image description here](https://qshark-moving.com/wp-content/uploads/2017/11/Google-Chrome-Flat-Browser-client.jpg)
 ## run all
 	npm run start:all
 ## Coverage Reporting
