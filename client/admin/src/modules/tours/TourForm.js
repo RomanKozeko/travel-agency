@@ -108,14 +108,9 @@ class TourForm extends Component {
 
   deletePreviewItems = () => {
     const { selectedPreviewItems, preview } = this.state;
-    const updatedPreview = preview.filter( item => {
-      let fl;
-      selectedPreviewItems.forEach(selectedItem => {
-        if(selectedItem._id === item._id) fl = true;
-      });
-      return !fl;
-
-    });
+    const updatedPreview = preview.filter(
+      previewItem => !selectedPreviewItems.find(selectedItem => selectedItem._id === previewItem._id)
+    );
 
     this.setState({ preview: updatedPreview, selectedPreviewItems: [] })
   };
@@ -130,10 +125,7 @@ class TourForm extends Component {
     tour.content = Object.values(this.state.contentByLang);
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
-
-    if (this.state.preview.length) {
-	    tour.preview = this.state.preview;
-    }
+    tour.preview = [...this.state.preview];
 
     this.props.onSubmit(tour, this.props.isNew);
 
