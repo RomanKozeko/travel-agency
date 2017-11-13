@@ -1,39 +1,89 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import {GridList, GridListTile} from 'material-ui/GridList';
+import Icon from 'material-ui/Icon';
 
 const styles = StyleSheet.create({
-  root: {
+  gridList: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden'
+    marginTop: '20px',
+    marginLeft: '-10px',
+    paddingTop: '20px'
   },
-  gridList: {
-    maxHeight: 850,
+  gridListItem: {
+    backgroundColor: '#fff',
+    marginBottom: '10px',
+    marginLeft: '10px',
+    overflow: 'hidden',
+    width: 'calc(100% / 2 - 10px)',
+    boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
+    borderRadius: '2px'
   },
-  subheader: {
+  active: {
+    position: 'relative',
+    border: '2px solid #5b9bd1',
+  },
+  imgWrapper: {
+    height: '100%',
+    paddingTop: '100%',
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center'
+  },
+  img: {
+    position: 'absolute',
+    display: 'block',
     width: '100%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    left: '0',
+    maxHeight: '100%'
   },
+  iconWrapper: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    color: '#fff;',
+    width: '25px',
+    height: '25px',
+    background: '#1678cc',
+    zIndex: '5'
+  }
 });
 
-function ImageGridList(imgs) {
+function ImageGridList({ imgs, clickHandler }) {
   return (
-    <div className={css(styles.root)}>
-      <GridList cellHeight={160} className={css(styles.gridList)} cols={2}>
-        {imgs.imgs.map((img, i) => (
-          <GridListTile key={img._id + i} cols={1}>
-            <img src={img.path}/>
-          </GridListTile>
-        ))}
-      </GridList>
+    <div className={css(styles.gridList)}>
+      {imgs.map(item => (
+        <div
+          key={item._id + 1}
+          onClick={() => clickHandler(item)}
+          className={item.active ? css(styles.gridListItem, styles.active) : css(styles.gridListItem)}
+        >
+          {item.active &&
+            <div className={css(styles.iconWrapper)}>
+              <Icon>check</Icon>
+            </div>
+          }
+          <div className={css(styles.imgWrapper)}>
+            <img
+              className={css(styles.img)}
+              src={item.path}
+              alt={item.title || ''}
+            />
+          </div>
+
+        </div>
+      ))
+      }
     </div>
   );
 }
 
 ImageGridList.propTypes = {
-  classes: PropTypes.object.isRequired,
+  imgs: PropTypes.array,
+  clickHandler: PropTypes.func
 };
 
 export default ImageGridList;
