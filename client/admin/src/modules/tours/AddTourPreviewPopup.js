@@ -11,9 +11,6 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 const styles = StyleSheet.create({
-  field: {
-    marginBottom: '10px;'
-  },
   button: {
   	display: 'block',
 		textAlign: 'center',
@@ -32,7 +29,6 @@ class AddTourPreviewPopup extends Component {
 			open: false
 		}
 	}
-
 
 	handleClickOpen = () => {
 		this.setState({ open: true });

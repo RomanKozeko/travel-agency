@@ -4,7 +4,6 @@ import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
-import ImagePreview from '../ui-elements/ImagePreview';
 import ImageGridList from '../ui-elements/ImageGridList'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 
@@ -13,6 +12,12 @@ const styles = StyleSheet.create({
     marginBottom: '10px;'
   },
   button: {
+    display: 'block',
+    textAlign: 'center',
+    width: '100%',
+    marginBottom: '15px',
+    backgroundColor: '#f5f5f5',
+    color: '#757575'
   }
 });
 
@@ -40,7 +45,8 @@ class TourForm extends Component {
       contentByLang,
 			anchorEl: undefined,
 			open: false,
-			preview: tour.preview,
+			preview: [...tour.preview],
+      selectedPreviewItems: [],
       content: this.props.content,
       idsRegions: idsRegions,
       idsCategories: this.props.categoriesAllIds,
@@ -66,17 +72,54 @@ class TourForm extends Component {
   };
 
   addPreview = () => {
-    let that = this;
   	const selectedPreview = [...this.props.selectedPreview];
-  	const updatedPreview = [...this.state.preview];
+  	const preview = [...this.state.preview];
 
-    selectedPreview.forEach( item => {
-      if (!item.path) {
-        updatedPreview.push(that.props.mediaFiles.byIds[item]);
+    selectedPreview.forEach( selectedItem => {
+      const isNotExist = preview.every(previewItem => previewItem._id !== selectedItem);
+      if (isNotExist) {
+        preview.push({ ...this.props.mediaFiles.byIds[selectedItem], active: false });
       }
     });
 
-    this.setState({ preview: updatedPreview });
+    this.setState({ preview });
+  };
+
+  togglePreviewItem = (img) => {
+    const updatedSelected = [ ...this.state.selectedPreviewItems ];
+    const index = updatedSelected.indexOf(img);
+
+     if (index === -1) {
+       updatedSelected.push({...img});
+     } else {
+       updatedSelected.splice(index, 1);
+     }
+
+    const preview = [ ...this.state.preview ];
+    preview.forEach(item => {
+      if (item._id === img._id) {
+        item.active = !item.active;
+      }
+    });
+
+    this.setState({
+      preview,
+      selectedPreviewItems: updatedSelected
+    });
+  };
+
+  deletePreviewItems = () => {
+    const { selectedPreviewItems, preview } = this.state;
+    const updatedPreview = preview.filter( item => {
+      let fl;
+      selectedPreviewItems.forEach(selectedItem => {
+        if(selectedItem._id === item._id) fl = true;
+      });
+      return !fl;
+
+    });
+
+    this.setState({ preview: updatedPreview, selectedPreviewItems: [] })
   };
 
 	handleRequestClose = () => {
@@ -113,7 +156,17 @@ class TourForm extends Component {
 			        <div className="row">
 				        <div className="col-md-3">
                   <AddTourPreviewPopup addPreview={this.addPreview}/>
-                  <ImageGridList imgs={preview} />
+                  <Button
+                    onClick={this.deletePreviewItems}
+                    className={css(styles.button)}
+                    component="span"
+                    color="accent"
+                    raised
+                    disabled={!this.state.selectedPreviewItems.length}
+                  >
+                    Удалить выбранные
+                  </Button>
+                  <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
 				        </div>
 				        <div className="col-md-6">
 					        <TextField
