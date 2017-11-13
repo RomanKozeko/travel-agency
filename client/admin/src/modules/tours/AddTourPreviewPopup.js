@@ -2,22 +2,14 @@ import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
-
-import Dialog, {
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-} from 'material-ui/Dialog';
+import Dialog, { DialogActions,	DialogContent } from 'material-ui/Dialog';
 
 const styles = StyleSheet.create({
   button: {
   	display: 'block',
 		textAlign: 'center',
 		width: '100%',
-		marginBottom: '15px',
-		backgroundColor: '#f5f5f5',
-		color: '#757575'
+		marginBottom: '15px'
   }
 });
 
@@ -49,6 +41,8 @@ class AddTourPreviewPopup extends Component {
 				<Button
 					className={css(styles.button)}
 					onClick={this.handleClickOpen}
+					component="span"
+					raised
 				>
 					Add preview images
 				</Button>
@@ -57,7 +51,7 @@ class AddTourPreviewPopup extends Component {
 						<MediaFilesContainer />
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleClick} color="primary">
+						<Button raised onClick={this.handleClick} color="primary">
 							Select
 						</Button>
 						<Button onClick={this.handleRequestClose} color="primary" autoFocus>

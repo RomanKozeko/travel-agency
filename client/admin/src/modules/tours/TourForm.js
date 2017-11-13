@@ -15,9 +15,7 @@ const styles = StyleSheet.create({
     display: 'block',
     textAlign: 'center',
     width: '100%',
-    marginBottom: '15px',
-    backgroundColor: '#f5f5f5',
-    color: '#757575'
+    marginBottom: '15px'
   }
 });
 
@@ -86,14 +84,14 @@ class TourForm extends Component {
   };
 
   togglePreviewItem = (img) => {
-    const updatedSelected = [ ...this.state.selectedPreviewItems ];
-    const index = updatedSelected.indexOf(img);
+    const selectedPreview = [ ...this.state.selectedPreviewItems ];
+    const index = selectedPreview.findIndex(item => item._id === img._id);
 
-     if (index === -1) {
-       updatedSelected.push({...img});
-     } else {
-       updatedSelected.splice(index, 1);
-     }
+    if (index === -1) {
+      selectedPreview.push({...img});
+    } else {
+      selectedPreview.splice(index, 1);
+    }
 
     const preview = [ ...this.state.preview ];
     preview.forEach(item => {
@@ -104,7 +102,7 @@ class TourForm extends Component {
 
     this.setState({
       preview,
-      selectedPreviewItems: updatedSelected
+      selectedPreviewItems: selectedPreview
     });
   };
 
