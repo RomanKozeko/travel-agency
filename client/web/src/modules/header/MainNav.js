@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import PrefixLink from '../ui-elements/PrefixLink'
+import {Link} from 'react-router-dom';
 
 
 const styles = StyleSheet.create({
@@ -77,7 +78,7 @@ const MainNav = () => (
   <div className={css(styles.wrapper)}>
     <div className="container" style={{height: '100%'}}>
       <nav className={css(styles.nav)}>
-        <div className={css(styles.logo)}>Logo</div>
+        <Link to="/" className={css(styles.logo)}>Logo</Link>
         <ul className={css(styles.menu)}>
           <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Home</PrefixLink></li>
           <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Tours</PrefixLink></li>
