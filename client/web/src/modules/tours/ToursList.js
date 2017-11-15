@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
 		display: 'block',
 		paddingBottom: '80%',
 		width: '100%',
-		backgroundImage: 'url(http://codex-themes.com/codeus/wp-content/uploads/2013/08/g26.jpg)',
 		backgroundSize: 'cover'
 	},
 	info: {
@@ -76,9 +75,7 @@ const ToursList = ({tours}) => {
 		<div className={css(styles.wrapper)}>
 			{tours.map((tour, i) => (
 					<div key={tour._id} className={css(styles.tourWrapper)}>
-						<div
-							className={css(styles.preview)}
-						/>
+						<div className={css(styles.preview)}	style={{ backgroundImage: `url(${tour.preview[0].path}`}}/>
 						<div className={css(styles.info)}>
 							<div className={css(styles.body)}>
 								<span className={css(styles.period)}>

@@ -24,8 +24,7 @@ module.exports = {
       });
     }
     const { filename, path } = req.file;
-    const mediaFile = new Media({ filename, path: path.replace('client', '') });
-
+    const mediaFile = new Media({ filename, path: path.replace('client', '').replace(/\\/g, '/') });
     mediaFile.save()
       .then((result) => {
         res.json(result);
