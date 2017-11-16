@@ -46,11 +46,24 @@ module.exports = {
   post(req, res, next) {
     const tour = new Tour(req.body);
 
-    tour.save()
-      .then((result) => {
-        res.json(result);
-      })
+    saveAndPopulateTour()
+      .then(result => res.json(result))
       .catch(next);
+
+    async function saveAndPopulateTour() {
+      const savedTour = await save();
+      const populatedTour = await populate(savedTour);
+
+      function save() {
+        return tour.save();
+      }
+
+      function populate(savedTour) {
+        return Tour.findById(savedTour._id).populate('preview');
+      }
+
+      return populatedTour;
+    }
   },
 
   put(req, res, next) {

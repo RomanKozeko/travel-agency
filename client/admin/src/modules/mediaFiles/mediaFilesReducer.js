@@ -114,7 +114,6 @@ const mediaFilesReducer = createReducer(defaultState, {
   [actions.MEDIAFILE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.MEDIAFILE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.MEDIAFILE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
-  [actions.MEDIAFILE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
   [MEDIA_TOGGLE_ITEM]: reducerHelper.toggleItem,
   [MEDIA_RESET_ITEMS]: reducerHelper.resetItems,
 });
