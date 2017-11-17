@@ -101,6 +101,9 @@ export const deleteTours = (ids) => (dispatch) => {
       endpoint: '/api/tours',
       method: 'DELETE',
       body: ids,
+      toasterMsg: {
+        success: 'Deleted'
+      }
     }
   });
 };

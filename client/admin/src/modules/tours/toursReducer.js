@@ -102,7 +102,7 @@ const toursReducer = createReducer(defaultState, {
   [TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
   [ADD_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [ADD_TOUR_SUCCESS]: tourAddedSuccess,
-  [ADD_TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
+  [ADD_TOUR_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false }),
   [EDIT_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [EDIT_TOUR_SUCCESS]: tourSuccess,
   [EDIT_TOUR_FAILURE]: state => ({ ...state, isSaving: false }),

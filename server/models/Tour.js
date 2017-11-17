@@ -7,6 +7,10 @@ const TourSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  enabled: {
+    type: Boolean,
+    default: true
+  },
   preview: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'

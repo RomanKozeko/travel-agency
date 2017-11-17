@@ -40,6 +40,7 @@ const createBlankPage = (languages) => {
   });
   return {
     id: uniqueId(),
+    enabled: true,
     preview: [],
     content
   };

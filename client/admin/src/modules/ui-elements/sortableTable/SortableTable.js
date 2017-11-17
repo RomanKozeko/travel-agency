@@ -12,6 +12,9 @@ import SortableTableToolbar from './SortableTableToolbar';
 const styles = StyleSheet.create({
   actions: {
     width: '100px'
+  },
+  disabled: {
+    backgroundColor: '#eee'
   }
 });
 
@@ -122,7 +125,7 @@ class SortableTable extends React.Component {
           </TableHead>
           <TableBody>
             {data.items.map(item => (
-              <TableRow key={item._id}>
+              <TableRow key={item._id} className={item.enabled !== false ? '' : css(styles.disabled)}>
                 <TableCell checkbox>
                   <Checkbox
                     onChange={(e, checked) => this.handleSelect(e, checked, item._id)}

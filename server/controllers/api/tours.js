@@ -52,7 +52,6 @@ module.exports = {
 
     async function saveAndPopulateTour() {
       const savedTour = await save();
-      const populatedTour = await populate(savedTour);
 
       function save() {
         return tour.save();
@@ -62,7 +61,7 @@ module.exports = {
         return Tour.findById(savedTour._id).populate('preview');
       }
 
-      return populatedTour;
+      return await populate(savedTour);
     }
   },
 

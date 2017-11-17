@@ -3,6 +3,8 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import Switch from 'material-ui/Switch';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
@@ -43,6 +45,7 @@ class TourForm extends Component {
       contentByLang,
 			anchorEl: undefined,
 			open: false,
+			enabled: tour.enabled,
 			preview: [...tour.preview],
       selectedPreviewItems: [],
       content: this.props.content,
@@ -126,6 +129,7 @@ class TourForm extends Component {
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
     tour.preview = [...this.state.preview];
+    tour.enabled = this.state.enabled;
 
     this.props.onSubmit(tour, this.props.isNew);
 
@@ -136,7 +140,7 @@ class TourForm extends Component {
 
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
-		const { contentByLang, preview } = this.state;
+		const { contentByLang, preview, enabled } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
@@ -159,6 +163,16 @@ class TourForm extends Component {
                   <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
 				        </div>
 				        <div className="col-md-6">
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={enabled}
+                        onChange={(event, checked) => this.setState({ enabled: checked })}
+                        aria-label="checkedD"
+                      />
+                    }
+                    label={ enabled ? 'Tour is enabled' : 'Tour is disabled'}
+                  />
 					        <TextField
 						        name='title'
                     value={contentByLang[lang._id].title}
