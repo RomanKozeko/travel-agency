@@ -62,7 +62,7 @@ class FilteredTagSelector extends React.Component {
     super(props);
 
     let selectedItems = this.props.selectedItems || [];
-    if (!selectedItems[0]._id) {
+    if (!selectedItems[0]) {
       selectedItems = this.props.items.filter(item => {
         return selectedItems.find(selectedItem => (selectedItem === item._id));
       });
@@ -168,7 +168,7 @@ class FilteredTagSelector extends React.Component {
                     <HighlightedText text={item.content[0].title} search={filter}/>
                   </li>)
                 }
-                }
+              }
               )}
             </ul>
           </ListItemsModal>
