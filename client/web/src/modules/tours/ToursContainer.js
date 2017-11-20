@@ -16,12 +16,6 @@ const mapStateToProps = (state) => {
 };
 
 class ToursContainer extends React.Component {
-	submit(values) {
-		// print the form values to the console
-		console.log(values);
-
-	}
-
 	componentDidMount() {
 		this.props.loadTours();
 	}

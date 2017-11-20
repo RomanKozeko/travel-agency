@@ -64,6 +64,7 @@ class FiltersTags extends React.Component {
     return (<div className={css(styles.chipWrapper)}>
       Показывать туры:
       {allFilters.map(item => {
+        if (!item) return null;
         const chipItem = item._id ? item : categoriesByIDs[item] || regionsByIDs[item];
         return (
           <Chip

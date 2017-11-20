@@ -8,30 +8,18 @@ module.exports = {
   get(req, res, next) {
     const offset = +req.params.startIndex || 0;
     const count = +req.params.count || config.itemsPerPageLimit;
-    if (req.query.regions || req.query.categories) {
-      const { regions, categories } = req.query;
-      ToursQueries.getAllWithFilter(offset, count, {regions, categories})
-        .then((result) => {
-          res.json({
-            offset,
-            items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
-            count: result[1],
-            limit: config.itemsPerPageLimit
-          });
-        })
-        .catch(next);
-    } else {
-      ToursQueries.getAllWithPagination(offset, count)
-        .then((result) => {
-          res.json({
-            offset,
-            items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
-            count: result[1],
-            limit: config.itemsPerPageLimit
-          });
-        })
-        .catch(next);
-    }
+    const { regions, categories } = req.query;
+
+    ToursQueries.getAllWithFilter(offset, count, {regions, categories})
+      .then((result) => {
+        res.json({
+          offset,
+          items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
+          count: result[1],
+          limit: config.itemsPerPageLimit
+        });
+      })
+      .catch(next);
   },
 
   getOne(req, res, next) {

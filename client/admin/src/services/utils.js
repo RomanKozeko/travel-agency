@@ -196,7 +196,7 @@ export function getFiltersQuery(filters) {
 
   for (const filter in filters) {
     query += `${filter}=`;
-    query += filters[filter].map(item => item._id).join(',');
+    query += filters[filter].map(item => item._id || item).join(',');
     query += '&'
   }
   return query.slice(0, -1);

@@ -5,6 +5,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { withRouter, Link } from 'react-router-dom';
 import { getPage } from '../../rootReducer';
 import { loadPage } from './PagesActions';
+import FilteredToursContainer from '../tours/FilteredToursContainer';
 
 const styles = StyleSheet.create({
   page: {
@@ -38,6 +39,19 @@ const mapStateToProps = (state, router) => ({
   isFetching: state.pages.isFetching
 });
 
+const PageColumn = ({ item }) => {
+  switch(item.type) {
+    case 'content': {
+      return <div dangerouslySetInnerHTML={{ __html: item.content }} />
+    }
+    case 'tours': {
+      return <FilteredToursContainer query={item.filters} />
+    }
+    default:
+      return <div dangerouslySetInnerHTML={{ __html: item.content }} />
+  }
+}
+
 class Page extends React.Component {
   componentDidMount() {
     if (!this.props.page) {
@@ -66,7 +80,7 @@ class Page extends React.Component {
                   <div key={row._id} className="row">
                     {row.items.map(item => (
                         <div key={item._id} className={this.getRowItemClass(item.size)}>
-                          <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                          <PageColumn item={item} />
                         </div>
                       ))
                     }

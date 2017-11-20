@@ -3,7 +3,7 @@ import { normalize, schema } from 'normalizr'
 
 const API_ROOT = '/';
 
-const callApi = (endpoint, schema, nextPage) => {
+const callApi = (endpoint, schema, nextPage, query) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
   return fetch(fullUrl)
@@ -15,7 +15,7 @@ const callApi = (endpoint, schema, nextPage) => {
 
         return Object.assign({},
           normalize(json, schema),
-          { nextPage }
+          { nextPage, query }
         )
       })
     )
@@ -50,7 +50,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, nextPage } = callAPI;
+  let { endpoint, nextPage, query } = callAPI;
   const { schema, types } = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -79,7 +79,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema, nextPage).then(
+  return callApi(endpoint, schema, nextPage, query).then(
     response => next(actionWith({
       response,
       type: successType
