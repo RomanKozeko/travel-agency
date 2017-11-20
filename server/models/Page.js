@@ -5,7 +5,14 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 const PageSchema = new Schema({
   preview: String,
-  isActive: Boolean,
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  enabled: {
+    type: Boolean,
+    default: true
+  },
   url: { type: String, index: true, unique: true, required: true },
   content: [PageContentSchema],
 });

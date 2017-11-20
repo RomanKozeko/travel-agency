@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import * as moment from 'moment';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
+import Switch from 'material-ui/Switch';
 
 import SortableTableToolbar from './SortableTableToolbar';
 
@@ -91,14 +93,29 @@ class SortableTable extends React.Component {
   renderFields(item, fields) {
     return fields.map((field, i) => (
       <TableCell key={item._id + i}>
-        {field.isLink
-          ?
-          <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>
-          :
-          <span>{this.getItemContent(item)[field.name]}</span>
-        }
+        {this.renderCellItem(item, field)}
       </TableCell>
     ));
+  }
+
+  renderCellItem(item, field) {
+    switch (field.isLink) {
+      case 'toggle': {
+        return <Switch
+          checked={item[field.name]}
+          aria-label="checkedA"
+        />
+      }
+      case 'date': {
+        return <span>{moment(item.date).format('DD/MM/YYYY')}</span>
+      }
+      case true: {
+        return <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>
+      }
+      default: {
+       return <span>{this.getItemContent(item)[field.name]}</span>
+      }
+    }
   }
 
   render() {

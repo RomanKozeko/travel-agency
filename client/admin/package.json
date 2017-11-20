@@ -12,6 +12,7 @@
     "lodash.uniqueid": "^4.0.1",
     "material-ui": "^1.0.0-beta.18",
     "material-ui-icons": "^1.0.0-beta.17",
+    "moment": "^2.19.2",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",

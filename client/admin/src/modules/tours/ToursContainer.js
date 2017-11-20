@@ -35,7 +35,7 @@ class ToursContainer extends React.Component {
     const data = {
       items,
       languages,
-      headers: ['Заголовок', 'Описание', 'Язык'],
+      headers: ['Заголовок', 'Активный/Неактивный', 'Дата создания'],
       fields: [
         {
           name: 'title',
@@ -43,12 +43,12 @@ class ToursContainer extends React.Component {
           linkPrefix: 'tours/'
         },
         {
-          name: 'description',
-          isLink: false
+          name: 'enabled',
+          isLink: 'toggle',
         },
         {
-          name: 'language',
-          isLink: false
+          name: 'date',
+          isLink: 'date'
         }
       ]
     };

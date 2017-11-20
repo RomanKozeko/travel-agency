@@ -41,7 +41,7 @@ class PagesContainer extends React.Component {
     const { items, languages, isFetching } = this.props;
 
     const data = {
-      headers: ['Заголовок', 'Описание', 'Язык'],
+      headers: ['Заголовок', 'Активен/Неактивен', 'Дата создания'],
       items,
       languages,
       fields: [
@@ -51,12 +51,12 @@ class PagesContainer extends React.Component {
           linkPrefix: '/admin/pages/'
         },
         {
-          name: 'description',
-          isLink: false
+          name: 'enabled',
+          isLink: 'toggle'
         },
         {
-          name: 'language',
-          isLink: false
+          name: 'date',
+          isLink: 'date'
         }
       ]
     };
