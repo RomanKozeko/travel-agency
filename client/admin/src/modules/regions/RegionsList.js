@@ -9,7 +9,7 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
 const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
   const data = {
-    headers: ['Заголовок', 'Описание', 'Язык'],
+    headers: ['Заголовок', 'Описание', 'Дата создания'],
     items,
     languages,
     fields: [
@@ -23,8 +23,8 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
         isLink: false
       },
       {
-        name: 'language',
-        isLink: false
+        name: 'date',
+        isLink: 'date'
       }
     ]
   };

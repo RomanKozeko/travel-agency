@@ -14,7 +14,7 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
 const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
   const data = {
-    headers: ['Заголовок', 'Описание', 'Язык'],
+    headers: ['Заголовок', 'Описание', 'Дата создания'],
     items,
     languages,
     fields: [
@@ -28,8 +28,8 @@ const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
         isLink: false
       },
       {
-        name: 'language',
-        isLink: false
+        name: 'date',
+        isLink: 'date'
       }
     ]
   };
