@@ -3,11 +3,12 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
+import TourProgram from './TourProgram';
 
 const styles = StyleSheet.create({
   field: {
@@ -122,6 +123,12 @@ class TourForm extends Component {
 		this.setState({ open: false });
 	};
 
+  saveProgram = langID => program => {
+    const contentByLang = {...this.state.contentByLang};
+    contentByLang[langID].program = program;
+    this.setState({contentByLang});
+  };
+
   saveTour = (e) => {
     e.preventDefault();
     const tour = {...this.props.tour};
@@ -153,7 +160,6 @@ class TourForm extends Component {
                   <Button
                     onClick={this.deletePreviewItems}
                     className={css(styles.button)}
-                    component="span"
                     color="accent"
                     raised
                     disabled={!this.state.selectedPreviewItems.length}
@@ -171,7 +177,7 @@ class TourForm extends Component {
                         aria-label="checkedD"
                       />
                     }
-                    label={ enabled ? 'Tour is enabled' : 'Tour is disabled'}
+                    label={ enabled ? 'Активный' : 'Неактивный'}
                   />
 					        <TextField
 						        name='title'
@@ -216,6 +222,11 @@ class TourForm extends Component {
                     defaultChecked={this.state.checkedCategories}
                     updateItems={this.updateItems}
                     itemsName='Categories'
+                  />
+
+                  <TourProgram
+                    program={contentByLang[lang._id].program}
+                    save={this.saveProgram(lang._id)}
                   />
 
                   <Button

@@ -44,7 +44,7 @@ class AddTourPreviewPopup extends Component {
 					component="span"
 					raised
 				>
-					Add preview images
+					Добавить картинку
 				</Button>
 				<Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
 					<DialogContent>

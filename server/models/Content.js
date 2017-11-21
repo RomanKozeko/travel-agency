@@ -9,6 +9,7 @@ const ContentSchema = new Schema({
   description: String,
   address: String,
   content: String,
+  program: [String],
   language: String
 });
 

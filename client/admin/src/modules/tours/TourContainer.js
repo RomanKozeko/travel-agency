@@ -35,6 +35,7 @@ const createBlankPage = (languages) => {
       id: uniqueId(),
       title: '',
       description: '',
+      program: [],
       language: language._id
     });
   });
@@ -45,6 +46,7 @@ const createBlankPage = (languages) => {
     content
   };
 };
+
 
 const mapStateToProps = (state, router) => {
   let tour = getTour(state.tours, router.match.params.id);
