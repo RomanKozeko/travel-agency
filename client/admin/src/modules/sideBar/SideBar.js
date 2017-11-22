@@ -54,7 +54,7 @@ const SideBar = () => (
     <li className={css(styles.item)}><CustomLink to="/admin/tours" label="Tours" icon="library_books"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/categories" label="Categories" icon="widgets"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/regions" label="Regions" icon="place"/></li>
-    <li className={css(styles.item)}><CustomLink to="/admin/hotels" label="Hotels" icon="business"/></li>
+    <li className={css(styles.item)}><CustomLink to="/admin/hotels" label="Отели" icon="business"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/pages" label="Pages" icon="web"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/lang" label="Languages" icon="language"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/mediaFiles" label="Media Files" icon="image"/></li>

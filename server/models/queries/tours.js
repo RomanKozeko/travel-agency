@@ -1,19 +1,6 @@
 const Tour = require('../Tour');
-const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
-  getAllWithPagination(offset, itemsPerPageLimit) {
-    const query = Tour.find({})
-      .sort('-date')
-      .skip(offset)
-      .limit(itemsPerPageLimit)
-	    .populate('preview')
-      .populate('categories')
-      .populate('regions')
-      .populate('periodType');
-
-    return Promise.all([query, Tour.count()]);
-  },
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
     const filterObj = createFilterObj(filter) || {};
     const query = Tour.find(filterObj)

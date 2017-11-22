@@ -32,6 +32,7 @@ const ApiPeriodsCtrl = require('../controllers/api/periods');
 const ApiLanguagesCtrl = require('../controllers/api/languages');
 const ApiPagesCtrl = require('../controllers/api/pages');
 const ApiPhotosCtrl = require('../controllers/api/media');
+const ApiHotelsCtrl = require('../controllers/api/hotels');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -77,5 +78,10 @@ router.get('/media', ApiPhotosCtrl.get);
 router.get('/media/:id', ApiPhotosCtrl.getOne);
 router.post('/media',  upload.single('file'), ApiPhotosCtrl.post);
 router.delete('/media', ApiPhotosCtrl.delete);
+
+router.get('/hotels', ApiHotelsCtrl.get);
+router.get('/hotels/:id', ApiHotelsCtrl.getOne);
+router.post('/hotels', ApiHotelsCtrl.post);
+router.delete('/hotels', ApiHotelsCtrl.delete);
 
 module.exports = router;

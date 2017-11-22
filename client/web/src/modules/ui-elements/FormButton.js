@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     display: 'inline-block',
     color: '#fff',
     textTransform: 'uppercase',
-    lineHeight: '50px',
+    lineHeight: '40px',
     minWidth: '150px',
     marginBottom: '20px;',
     padding: '5px 20px',

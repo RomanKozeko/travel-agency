@@ -7,6 +7,7 @@ const ContentSchema = new Schema({
     required: true
   },
   description: String,
+  address: String,
   content: String,
   language: String
 });
