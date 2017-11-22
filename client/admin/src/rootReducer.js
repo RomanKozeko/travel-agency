@@ -44,5 +44,6 @@ export const getCategory = (state, id) => fromCategories.getCategory(state.categ
 export const getRegions = state => fromRegions.getRegions(state.regions);
 export const getRegion = (state, id) => fromRegions.getRegion(state.regions, id);
 export const getMediaFiles = (state, id) => fromMediaFiles.getMediaFiles(state.mediafiles, id);
-export const getHotels = (state, id) => fromMHotels.getHotels(state.hotels, id);
+export const getHotels = (state) => fromMHotels.getHotels(state.hotels);
+export const getHotel = (state, id) => fromMHotels.getHotel(state.hotels, id);
 

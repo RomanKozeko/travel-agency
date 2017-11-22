@@ -145,7 +145,7 @@ export const basicReducerEvents = {
     const allIdsResult = (payload.result instanceof Array) ? payload.result : payload.result.items
     return {
       ...state,
-      allIds: [...state.allIds, ...allIdsResult],
+      allIds: [...allIdsResult],
       byIds: {...state.byIds, ...payload.entities[alias || 'items']},
       content: {...state.content, ...payload.entities.content},
       isFetching: false,

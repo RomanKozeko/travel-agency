@@ -9,18 +9,22 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
 const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
   const data = {
-    headers: ['Название', 'Звезды', 'Дата создания'],
+    headers: ['Название', 'Звезды', 'Активен/Неактивен', 'Дата создания'],
     items,
     languages,
     fields: [
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/regions/'
+        linkPrefix: '/admin/hotels/'
       },
       {
         name: 'stars',
         isLink: 'stars'
+      },
+      {
+        name: 'enabled',
+        isLink: 'toggle'
       },
       {
         name: 'date',
@@ -37,7 +41,7 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
         color="primary"
         className="addBottomMargin"
         component={Link}
-        to="/admin/hotels/page?state=newPage"
+        to="/admin/hotels/item?state=newItem"
       >
         Добавить новый отель
       </Button>

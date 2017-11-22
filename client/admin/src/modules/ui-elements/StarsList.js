@@ -24,8 +24,7 @@ const StarsList = ({starsCount, maxStars = 5}) => {
     starsArr.push(<Star key={i} color={color} />)
   }
 
-  return (<div className={css(styles.wrapper)}>{starsArr}</div>
-  )
+  return (<div className={css(styles.wrapper)}>{starsArr}</div>)
 };
 
 export default StarsList;

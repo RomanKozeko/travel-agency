@@ -7,6 +7,7 @@ const actionsObj = createBasicActions('HOTELS', 'HOTEL', 'hotels', CALL_API, Sch
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadItems = actionsObj.loadWithPagination;
+export const loadItem = actionsObj.loadItem;
 export const deleteItems = actionsObj.deleteItems;
 export const saveItem = actionsObj.saveItem;
 
@@ -38,4 +39,5 @@ export default hotelsReducer;
 
 //  selectors
 export const getHotels = state => (state.allIds.map(id => state.byIds[id]));
+export const getHotel = (state, id) => (state.byIds[id]);
 

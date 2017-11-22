@@ -8,7 +8,8 @@ import Spinner from '../ui-elements/Spinner';
 const mapStateToProps = (state) => {
   return {
     items: getHotels(state),
-    isFetching: state.languages.isFetching,
+    isFetching: state.hotels.isFetching,
+    isFetched: state.hotels.isFetched,
     isSaving: state.languages.isSaving,
     languages: state.languages
   };
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
 
 class HotelsContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.items.length) {
+    if (!this.props.isFetched) {
       this.props.loadItems();
     }
   }
