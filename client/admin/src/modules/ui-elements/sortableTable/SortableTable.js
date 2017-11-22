@@ -8,6 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
 import Switch from 'material-ui/Switch';
+import StarsList from '../StarsList';
 
 import SortableTableToolbar from './SortableTableToolbar';
 
@@ -108,6 +109,9 @@ class SortableTable extends React.Component {
       }
       case 'date': {
         return <span>{moment(item.date).format('DD/MM/YYYY')}</span>
+      }
+      case 'stars': {
+        return <StarsList starsCount={item.stars} />
       }
       case true: {
         return <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>

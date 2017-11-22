@@ -10,6 +10,7 @@ import languagesReducer, * as fromLanguages from './modules/languages/LanguagesR
 import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
 import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
 import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFilesReducer';
+import hotelsReducer, * as fromMHotels from './modules/hotels/HotelsReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   languages: languagesReducer,
   toastr: toastrReducer,
   categories: categoriesReducer,
-  mediafiles: mediaFilesReducer
+  mediafiles: mediaFilesReducer,
+  hotels: hotelsReducer
 });
 
 export default rootReducer;
@@ -42,4 +44,5 @@ export const getCategory = (state, id) => fromCategories.getCategory(state.categ
 export const getRegions = state => fromRegions.getRegions(state.regions);
 export const getRegion = (state, id) => fromRegions.getRegion(state.regions, id);
 export const getMediaFiles = (state, id) => fromMediaFiles.getMediaFiles(state.mediafiles, id);
+export const getHotels = (state, id) => fromMHotels.getHotels(state.hotels, id);
 

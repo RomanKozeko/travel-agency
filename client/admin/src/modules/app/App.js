@@ -21,6 +21,7 @@ import LanguagesContainer from '../languages/LanguagesContainer';
 import CategoriesContainer from '../categories/CategoriesContainer';
 import CategoryContainer from '../categories/CategoryContainer';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
+import HotelsContainer from '../hotels/HotelsContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -70,7 +71,7 @@ const routes = [
   {
     path: '/admin/hotels',
     exact: true,
-    main: () => <h2>Hotels</h2>
+    main: () => <HotelsContainer />
   },
   {
     path: '/admin/pages/:id',

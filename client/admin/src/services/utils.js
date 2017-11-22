@@ -142,9 +142,10 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
 export const basicReducerEvents = {
   success: (alias) => (state, action) => {
     const payload = action.response;
+    const allIdsResult = (payload.result instanceof Array) ? payload.result : payload.result.items
     return {
       ...state,
-      allIds: [...state.allIds, ...payload.result],
+      allIds: [...state.allIds, ...allIdsResult],
       byIds: {...state.byIds, ...payload.entities[alias || 'items']},
       content: {...state.content, ...payload.entities.content},
       isFetching: false,

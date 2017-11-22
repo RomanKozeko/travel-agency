@@ -77,6 +77,9 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
+export const hotelSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const hotelsSchema = { items: [hotelSchema] };
+
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
@@ -89,7 +92,8 @@ export const Schemas = {
   CATEGORY: categorySchema,
   CATEGORIES: categoriesSchema,
   MEDIAFILES: mediaFilesSchema,
-  MEDIAFILE: mediaFileSchema
+  HOTEL: hotelSchema,
+  HOTELS: hotelsSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.
