@@ -7,6 +7,7 @@ import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList'
+import CollapseComponent from '../ui-elements/Collapse'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
 
@@ -169,6 +170,7 @@ class TourForm extends Component {
                   <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
 				        </div>
 				        <div className="col-md-6">
+
                   <FormControlLabel
                     control={
                       <Switch
@@ -200,7 +202,7 @@ class TourForm extends Component {
                       content={contentByLang[lang._id].content}
                       config={{
                         plugins:'link image code',
-                        height: '500'
+                        height: '200'
                       }}
                       onChange={this.handleEditorChange(lang._id)}
                     />
@@ -224,10 +226,12 @@ class TourForm extends Component {
                     itemsName='Categories'
                   />
 
-                  <TourProgram
-                    program={contentByLang[lang._id].program}
-                    save={this.saveProgram(lang._id)}
-                  />
+                  <CollapseComponent title='Программа тура'>
+                    <TourProgram
+                      days={contentByLang[lang._id].program}
+                      save={this.saveProgram(lang._id)}
+                    />
+                  </CollapseComponent>
 
                   <Button
                     raised

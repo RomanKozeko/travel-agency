@@ -8,88 +8,78 @@ const uniqueId = require('lodash.uniqueid');
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#f9f8f8'
+    position: 'relative',
+    padding: '10px 0'
+  },
+  addButton: {
+
+
   },
   daySettings: {
+    position: 'relative',
   },
   dayDescription: {
-    display: 'inline-block',
-    lineHeight: '48px'
+    margin: '25px 0 10px 0',
+    fontWeight: 'bold'
   },
   deleteIcon: {
-
+    position: 'absolute',
+    right: '0',
+    top: '-15px'
   }
 });
 
 class TourProgram extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      days: []
-    }
-  }
-
-  handleEditorChange = (id) => (e) => {
-    let days = [...this.state.days];
-    const index = days.findIndex(day => day.id === id);
-    days[index].text = e.target.getContent();
-    this.state.days = days;
+  handleEditorChange = (index) => (e) => {
+    let days = [...this.props.days];
+    days[index] = e.target.getContent();
+    this.props.save(days);
   };
 
-  deleteDay = id => {
-    let days = [...this.state.days];
-    const index = days.findIndex(day => day.id === id);
+  deleteDay = index => {
+    let days = [...this.props.days];
     days.splice(index, 1);
-    this.setState({ days });
+    this.props.save(days)
   };
 
   addDay = () => {
-    let days = [...this.state.days];
-    days.push( {id: uniqueId(), text: ''});
-    this.setState({ days })
+    let days = [...this.props.days];
+    days.push('');
+    this.props.save(days)
   };
 
   render() {
-    const { days } = this.state;
+    const { days } = this.props;
     return (
       <div className={css(styles.root)}>
         <Button
           raised
           color="contrast"
-          className=""
+          className={css(styles.addButton)}
           onClick={this.addDay}
         >
-         Добавить день
+         Добавить новый день
         </Button>
         {
           days.map((item, index, array) => (
-            <div key={item.id}>
+            <div key={uniqueId()}>
               <div className={css(styles.daySettings)}>
                 <p className={css(styles.dayDescription)}> День {index + 1}</p>
-                <IconButton className={css(styles.deleteIcon)} onClick={() => this.deleteDay(item.id)}>
+                <IconButton className={css(styles.deleteIcon)} onClick={() => this.deleteDay(index)}>
                   <Icon>delete</Icon>
                 </IconButton>
               </div>
               <TinyMCE
-                content={item.text}
+                content={item}
                 config={{
                   plugins:'link image code',
                   height: '100'
                 }}
-                onChange={this.handleEditorChange(item.id)}
+                onChange={this.handleEditorChange(index)}
               />
             </div>
           ))
         }
-
-        <Button
-          raised
-          color="accent"
-          className=""
-          onClick={() => this.props.save(days)}
-        >
-          save
-        </Button>
       </div>
     )
   }

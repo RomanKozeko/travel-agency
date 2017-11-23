@@ -60,9 +60,10 @@ class ToursContainer extends React.Component {
           raised
           color="primary"
           className="addBottomMargin"
+          component={Link}
+          to="/admin/tours/tour?state=new"
         >
-          <Link to="/admin/tours/tour?state=new" style={{color: '#fff'}}>Добавить тур</Link>
-
+          Добавить тур
         </Button>
         {isFetching ?
           <Spinner />

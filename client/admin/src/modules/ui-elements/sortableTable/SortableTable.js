@@ -102,10 +102,7 @@ class SortableTable extends React.Component {
   renderCellItem(item, field) {
     switch (field.isLink) {
       case 'toggle': {
-        return <Switch
-          checked={item[field.name]}
-          aria-label="checkedA"
-        />
+        return <Switch checked={item[field.name]} />
       }
       case 'date': {
         return <span>{moment(item.date).format('DD/MM/YYYY')}</span>

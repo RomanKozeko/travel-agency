@@ -36,9 +36,10 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
         raised
         color="primary"
         className="addBottomMargin"
+        component={Link}
+        to="/admin/regions/region?state=new"
       >
-        <Link to="/admin/regions/region?state=new" style={{ color: '#fff' }}>Добавить регион</Link>
-
+        Добавить регион
       </Button>
       {isFetching
         ?
