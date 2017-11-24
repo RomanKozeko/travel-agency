@@ -66,7 +66,7 @@ const MediaFilesList = ({ items, clickHandler }) => {
       {items.map(item => (
         <div
 	        key={item._id}
-	        onClick={() => clickHandler(item._id)}
+	        onClick={() => clickHandler(item)}
 	        className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
         >
 	        {item.active &&

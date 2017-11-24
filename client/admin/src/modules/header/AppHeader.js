@@ -11,9 +11,6 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '75px',
     width: '100%',
-    position: 'fixed',
-    left: '0',
-    top: '0',
     background: '#3B3F51',
     color: '#8c95a5',
     display: 'flex',

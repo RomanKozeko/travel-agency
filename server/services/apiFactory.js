@@ -1,6 +1,6 @@
 const config = require('../config/index');
 
-const slicer = require('../services/index');
+const slicer = require('../../services/index');
 
 const getOne = model => (req, res, next) => {
   model.findById(req.params.id)

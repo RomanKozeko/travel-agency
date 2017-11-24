@@ -35,7 +35,7 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
 
   return (
     <div>
-      <PageHeader text={'Все Отели'} />
+      <PageHeader text={'Все отели'} />
       <Button
         raised
         color="primary"

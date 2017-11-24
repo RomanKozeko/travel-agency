@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginLeft: '10px',
     overflow: 'hidden',
     width: 'calc(100% / 2 - 10px)',
-    boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
     borderRadius: '2px'
   },
   active: {

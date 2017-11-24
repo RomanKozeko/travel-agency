@@ -52,10 +52,10 @@ class AddTourPreviewPopup extends Component {
 					</DialogContent>
 					<DialogActions>
 						<Button raised onClick={this.handleClick} color="primary">
-							Select
+							Добавить
 						</Button>
 						<Button onClick={this.handleRequestClose} color="primary" autoFocus>
-							Cancel
+							Отмена
 						</Button>
 					</DialogActions>
 				</Dialog>

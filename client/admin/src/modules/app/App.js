@@ -28,7 +28,7 @@ import { loadLang } from '../languages/LanguagesReducer';
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
-    padding: '95px 20px 0'
+    padding: '20px 20px 0'
   },
   sideBarWrapper: {
 	  '@media (min-width: 800px)': {

@@ -70,7 +70,9 @@ class HotelContainer extends React.Component {
         {isFetching || !item ? <Spinner /> :
           <div>
             <PageHeader text={item.content[0].title}/>
-            <Portlet isBordered={isBordered}><HotelForm {...this.props} /></Portlet>
+            <Portlet isBordered={isBordered}>
+              <HotelForm {...this.props} />
+            </Portlet>
           </div>
         }
       </div>

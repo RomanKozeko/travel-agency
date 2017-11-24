@@ -20,7 +20,7 @@ const StarsList = ({starsCount, maxStars = 5}) => {
   const starsArr = [];
 
   for(let i = 0; i < maxStars; i++) {
-    const color = i < starsCount ? '#ffea00' : '#9e9e9e';
+    const color = i < starsCount ? '#ffb300' : '#9e9e9e';
     starsArr.push(<Star key={i} color={color} />)
   }
 

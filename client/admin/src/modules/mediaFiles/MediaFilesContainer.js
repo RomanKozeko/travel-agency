@@ -19,13 +19,21 @@ class MediaFilesContainer extends React.Component {
       this.props.loadItems();
     }
   }
+
+  toggleImg = (item) => {
+    if (this.props.handleToggledItem) {
+      this.props.handleToggledItem(item)
+    }
+    this.props.toggleItem(item._id);
+  };
+
   render() {
   	const { isFetched } = this.props;
 	  if (!isFetched) {
 		  return null;
 	  }
     return (
-	    <MediaFilesGallery {...this.props} />
+	    <MediaFilesGallery {...this.props} toggleImg={this.toggleImg} />
     );
   }
 }

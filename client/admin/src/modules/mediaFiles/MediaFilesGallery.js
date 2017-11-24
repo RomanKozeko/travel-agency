@@ -14,7 +14,7 @@ class MediaFilesGallery extends React.Component {
 	};
 
   render() {
-    const { saveItem, toggleItem } = this.props;
+    const { saveItem, toggleImg } = this.props;
     return (
       <div>
         <PageHeader text={'Картинки'} />
@@ -30,7 +30,7 @@ class MediaFilesGallery extends React.Component {
 	      </Button>
         <MediaFilesList
           items={this.props.items}
-          clickHandler={toggleItem}
+          clickHandler={toggleImg}
         />
       </div>
     );
