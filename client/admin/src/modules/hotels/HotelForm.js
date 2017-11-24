@@ -8,6 +8,8 @@ import Button from 'material-ui/Button';
 import withTabs from '../ui-elements/HOC/withTabs';
 import ImageGridList from '../ui-elements/ImageGridList'
 import AddPreviewPopup from '../ui-elements/form/AddPreviewPopup';
+import StarsList from '../ui-elements/StarsList';
+import NotificationPanel from '../ui-elements/form/NotificationPanel';
 
 const styles = StyleSheet.create({
   field: {
@@ -25,13 +27,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '100%',
     marginBottom: '15px'
+  },
+  starsWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    marginTop: '20px'
+  },
+  starsWrapperInput: {
+    width: '40px',
+    marginRight: '10px',
+    borderWidth: '0 0 1px 0',
+    borderColor: 'rgba(0, 0, 0, 0.42)'
   }
 });
 
 class HotelForm extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+
   render() {
     const {
       languages,
@@ -40,10 +51,12 @@ class HotelForm extends React.Component {
       handleToggle,
       addPreview,
       deletePreviewItems,
-      togglePreviewItem
+      togglePreviewItem,
+      isSaving,
+      handleSave
     } = this.props;
     return (
-      <form action="" onSubmit={this.handleSave}>
+      <form action="" onSubmit={handleSave}>
         <div className="row">
 
           <div className="col-md-3">
@@ -88,6 +101,17 @@ class HotelForm extends React.Component {
                       fullWidth
                       className={css(styles.field)}
                       label='Название'
+                      required
+                    />
+                    <TextField
+                      id="url"
+                      label="url"
+                      name='url'
+                      fullWidth
+                      value={parentState.item.url}
+                      className={css(styles.field)}
+                      onChange={handleChange(null, 'url')}
+                      required
                     />
                     <TextField
                       name='description'
@@ -97,6 +121,27 @@ class HotelForm extends React.Component {
                       className={css(styles.field)}
                       label='Мета описание'
                     />
+                    <TextField
+                      name='address'
+                      value={parentState.contentByLang[lang._id].description}
+                      onChange={handleChange(lang._id, 'address')}
+                      fullWidth
+                      className={css(styles.field)}
+                      label='Адрес'
+                    />
+                    <div className={css(styles.starsWrapper)}>
+                      <input
+                        type="number"
+                        max="5"
+                        min='0'
+                        step='1'
+                        value={parentState.item.stars}
+                        onChange={handleChange(null, 'stars')}
+                        className={css(styles.starsWrapperInput)}
+                      />
+                      <StarsList starsCount={parentState.item.stars} />
+                    </div>
+
                     <div className={css(styles.tinyMCIWrapper)} >
                       <TinyMCE
                         content={parentState.contentByLang[lang._id].content}
@@ -114,6 +159,19 @@ class HotelForm extends React.Component {
           </div>
 
         </div>
+
+        {parentState.notValidForm &&
+        <NotificationPanel>Please fill title for each language</NotificationPanel>
+        }
+
+        <Button
+          raised
+          type="submit"
+          color="primary"
+          disabled={isSaving}
+        >
+          {isSaving ? 'Сохраняю...' : 'Сохранить'}
+        </Button>
 
       </form>)
   }

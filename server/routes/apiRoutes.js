@@ -81,6 +81,7 @@ router.delete('/media', ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
 router.get('/hotels/:id', ApiHotelsCtrl.getOne);
+router.put('/hotels/:id', ApiHotelsCtrl.put);
 router.post('/hotels', ApiHotelsCtrl.post);
 router.delete('/hotels', ApiHotelsCtrl.delete);
 

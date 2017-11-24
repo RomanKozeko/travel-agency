@@ -128,7 +128,7 @@ class SortableTable extends React.Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell checkbox className={css(styles.actions)}>
+              <TableCell className={css(styles.actions)}>
                 <Checkbox
                   checked={this.state.isSelectedAll}
                   onChange={(e, checked) => this.handleSelectAllClick(e, checked)}
@@ -144,7 +144,7 @@ class SortableTable extends React.Component {
           <TableBody>
             {data.items.map(item => (
               <TableRow key={item._id} className={item.enabled !== false ? '' : css(styles.disabled)}>
-                <TableCell checkbox>
+                <TableCell>
                   <Checkbox
                     onChange={(e, checked) => this.handleSelect(e, checked, item._id)}
                     checked={this.isSelected(item._id)}

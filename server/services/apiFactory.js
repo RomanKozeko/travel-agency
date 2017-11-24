@@ -1,6 +1,21 @@
+const slugify = require('slugify');
 const config = require('../config/index');
+const slicer = require('../services/index');
+const convert = require('cyrillic-to-latin');
 
-const slicer = require('../../services/index');
+function populateEmpty(body) {
+  body.content.forEach((contentItem, i) => {
+    if (!body.content[i].title) {
+      body.content[i].title = 'Untitled';
+    }
+  });
+
+  if (!body.url) {
+    body.url = slugify(convert(body.content[0].title)).toLowerCase();
+  }
+
+  return body;
+}
 
 const getOne = model => (req, res, next) => {
   model.findById(req.params.id)
@@ -31,6 +46,7 @@ const getAll = model => (req, res, next) => {
 };
 
 const post = model => (req, res, next) => {
+  req.body = populateEmpty(req.body);
   const item = new model(req.body);
 
   saveAndPopulate()
@@ -54,7 +70,9 @@ const post = model => (req, res, next) => {
 
 const put = model => (req, res, next) => {
   const id = req.params.id;
-  model.findByIdAndUpdate(id, req.body)
+  const props = populateEmpty(req.body);
+
+  model.findByIdAndUpdate(id, props)
     .then(() => model.findById(id).populate('preview'))
     .then(item => res.json(item))
     .catch(next);

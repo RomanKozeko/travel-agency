@@ -79,10 +79,10 @@ class HotelContainer extends React.Component {
     );
   }
 }
-
 HotelContainer = withRouter(connect(
   mapStateToProps, {
-    loadItem
+    loadItem,
+    save: saveItem
   }
 )(HotelContainer));
 

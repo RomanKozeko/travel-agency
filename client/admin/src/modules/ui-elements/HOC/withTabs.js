@@ -45,14 +45,21 @@ export default function withTabs(WrappedComponent, backLink ) {
     };
 
     handleChange = (langID, name) => event => {
-      const contentByLang = {...this.state.contentByLang};
-      contentByLang[langID][name] = event.target.value;
-      this.setState({contentByLang});
+      if (langID) {
+        const contentByLang = {...this.state.contentByLang};
+        contentByLang[langID][name] = event.target.value;
+        this.setState({contentByLang});
+      } else {
+        const item = { ...this.state.item };
+        item[name] = event.target.value;
+        this.setState({ item });
+      }
     };
 
     handleToggle = (event, fieldName, checked) => {
       const item = { ...this.state.item };
       item[fieldName] = checked;
+
       this.setState({ item });
     };
 

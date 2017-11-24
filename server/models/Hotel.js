@@ -5,6 +5,7 @@ const ContentSchema = require('./Content');
 const HotelSchema = new Schema({
   stars: Number,
   price: String,
+  url: { type: String, index: true, unique: true, required: true },
   date: {
     type: Date,
     default: Date.now
