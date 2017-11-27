@@ -95,14 +95,18 @@ export default function withTabs(WrappedComponent, backLink ) {
       const item = {...this.state.item};
       item.content = _.flatMap({...this.state.contentByLang});
 
+      if (item.url) {
+        item.url = item.url.replace(/\s+/g, '-').toLowerCase();
+      }
+
       if (this.isValidInputs(item.content)) {
         this.props.save(item, this.props.isNew);
-        this.setState({notValidForm: false});
+        this.setState({notValidForm: false, item});
         if (this.props.isNew) {
           this.props.history.push(backLink, {});
         }
       } else {
-        this.setState({notValidForm: true})
+        this.setState({notValidForm: true, item})
       }
     };
 
