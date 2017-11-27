@@ -75,12 +75,12 @@ export default function withTabs(WrappedComponent, backLink ) {
     };
 
     deletePreviewItems = () => {
-      const { selectedPreviewItems, preview } = this.state;
-      const updatedPreview = preview.filter(
-        previewItem => !selectedPreviewItems.find(selectedItem => selectedItem._id === previewItem._id)
+      const { item, previewItemsToDelete } = {...this.state};
+      item.preview = item.preview.filter(
+        previewItem => !previewItemsToDelete.find(selectedItem => selectedItem._id === previewItem._id)
       );
 
-      this.setState({ preview: updatedPreview, selectedPreviewItems: [] })
+      this.setState({ item, previewItemsToDelete: [] })
     };
 
     handleSave = (e) => {

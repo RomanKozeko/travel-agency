@@ -123,7 +123,7 @@ class HotelForm extends React.Component {
                     />
                     <TextField
                       name='address'
-                      value={parentState.contentByLang[lang._id].description}
+                      value={parentState.contentByLang[lang._id].address}
                       onChange={handleChange(lang._id, 'address')}
                       fullWidth
                       className={css(styles.field)}
