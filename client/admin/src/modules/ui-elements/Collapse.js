@@ -1,19 +1,24 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { Collapse } from 'react-collapse';
+import Icon from 'material-ui/Icon';
 
 const styles = StyleSheet.create({
   root: {
     marginBottom: '15px'
   },
   title: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    cursor: 'pointer',
     ':hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.12)',
       transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
     },
-    padding: '20px 5px',
+    padding: '20px 20px',
     fontSize: '20px',
     marginBottom: '0',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
   }
 });
 
@@ -24,7 +29,6 @@ class CollapseComponent extends React.Component {
       isOpen: false
     }
   }
-
   toggle = () => {
     this.setState({ isOpen: !this.state.isOpen })
   };
@@ -34,6 +38,12 @@ class CollapseComponent extends React.Component {
       <div className={css(styles.root)}>
         <h4 className={css(styles.title)} onClick={this.toggle}>
           {this.props.title}
+          {this.state.isOpen ?
+            <Icon className={css(styles.icon)}>keyboard_arrow_up</Icon>
+            :
+            <Icon className={css(styles.icon)}>keyboard_arrow_down</Icon>
+          }
+
         </h4>
         <Collapse isOpened={this.state.isOpen}>
           {this.props.children}

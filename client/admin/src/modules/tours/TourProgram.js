@@ -54,7 +54,6 @@ class TourProgram extends React.Component {
       <div className={css(styles.root)}>
         <Button
           raised
-          color="contrast"
           className={css(styles.addButton)}
           onClick={this.addDay}
         >
