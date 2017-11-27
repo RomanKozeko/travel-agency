@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
+const _ = require('lodash');
 
 const styles = StyleSheet.create({
   tabs: {
@@ -56,6 +57,12 @@ export default function withTabs(WrappedComponent, backLink ) {
       }
     };
 
+    handleEditorChange = (langID) => (e) => {
+      const contentByLang = {...this.state.contentByLang};
+      contentByLang[langID].content = e.target.getContent();
+      this.setState({contentByLang});
+    };
+
     handleToggle = (event, fieldName, checked) => {
       const item = { ...this.state.item };
       item[fieldName] = checked;
@@ -86,7 +93,8 @@ export default function withTabs(WrappedComponent, backLink ) {
     handleSave = (e) => {
       e.preventDefault();
       const item = {...this.state.item};
-      item.content = Object.values(this.state.contentByLang);
+      item.content = _.flatMap({...this.state.contentByLang});
+
       if (this.isValidInputs(item.content)) {
         this.props.save(item, this.props.isNew);
         this.setState({notValidForm: false});
@@ -140,6 +148,7 @@ export default function withTabs(WrappedComponent, backLink ) {
           addPreview={this.addPreview}
           togglePreviewItem={this.togglePreviewItem}
           deletePreviewItems={this.deletePreviewItems}
+          handleEditorChange={this.handleEditorChange}
           parentState={this.state}
           {...this.props}
         />

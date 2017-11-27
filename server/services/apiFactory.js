@@ -26,8 +26,10 @@ const getOne = model => (req, res, next) => {
 
 const getAllWithPagination = (offset, itemsPerPageLimit, model) => {
   const query = model.find({})
+    .sort('-date')
     .skip(offset)
-    .limit(itemsPerPageLimit);
+    .limit(itemsPerPageLimit)
+    .populate('preview');
   return Promise.all([query, model.count()]);
 };
 

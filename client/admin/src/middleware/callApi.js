@@ -92,6 +92,7 @@ export const Schemas = {
   CATEGORY: categorySchema,
   CATEGORIES: categoriesSchema,
   MEDIAFILES: mediaFilesSchema,
+  MEDIAFILE: mediaFileSchema,
   HOTEL: hotelSchema,
   HOTELS: hotelsSchema
 };

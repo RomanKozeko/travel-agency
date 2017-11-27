@@ -53,7 +53,8 @@ class HotelForm extends React.Component {
       deletePreviewItems,
       togglePreviewItem,
       isSaving,
-      handleSave
+      handleSave,
+      handleEditorChange
     } = this.props;
     return (
       <form action="" onSubmit={handleSave}>
@@ -149,7 +150,7 @@ class HotelForm extends React.Component {
                           plugins:'link image code',
                           height: '500'
                         }}
-                        onChange={handleChange(lang._id)}
+                        onChange={handleEditorChange(lang._id)}
                       />
                     </div>
                   </div>
