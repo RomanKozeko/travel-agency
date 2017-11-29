@@ -5,7 +5,66 @@ import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
+import DeleteIcon from 'material-ui-icons/Delete';
+import IconButton from 'material-ui/IconButton';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
+import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
+import createConfirmation  from '../ui-elements/form/createConfirmation'
+
+const styles = StyleSheet.create({
+  actions: {
+    width: '100px'
+  },
+  disabled: {
+    backgroundColor: '#eee'
+  },
+  wrapper: {
+    listStyle: 'none',
+    marginBottom: '0'
+  },
+  li: {
+    display: 'flex',
+    alignItems: 'center',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
+    padding: '0 20px',
+    background: '#fff',
+    marginTop: '1px',
+    minHeight: '48px'
+  },
+  treeWrapper: {
+    marginLeft: '-40px',
+    marginBottom: '20px'
+  }
+});
+
+const confirm = createConfirmation(ConfirmDialog);
+
+const deleteRow = (item, deleteItems) => event => {
+  confirm({title: `Вы уверены что хотите удалить ${item.content[0].title}`, body: ''}).then((res) => {
+    deleteItems([item._id])
+  })
+};
+
+const TreeItems = ({items, deleteItems}) => (
+  <div>
+    {items.map(item => (
+      <ul key={item._id} className={css(styles.wrapper)}>
+        <li className={css(styles.li)}>
+          <Link to={'/admin/regions/' + item._id}>{item.content[0].title}</Link>
+          {!item.childrens &&
+            <IconButton aria-label="Delete">
+              <DeleteIcon onClick={deleteRow(item, deleteItems)}/>
+            </IconButton>
+          }
+        </li>
+        {item.childrens &&
+        <TreeItems items={item.childrens} deleteItems={deleteItems} />
+        }
+      </ul>
+    ))
+    }
+  </div>
+);
 
 const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
   const data = {
@@ -29,6 +88,47 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
     ]
   };
 
+  function findChildrens(entities) {
+
+    const _parents = [];
+
+    entities.forEach(item => {
+      // первый родитель
+      if (!item.parent) {
+        _parents.push({...item})
+      }
+
+    });
+
+    return populateChildrens(entities, _parents)
+
+  }
+
+  function populateChildrens(entities, _parents) {
+    _parents.forEach(parent => {
+
+      entities.forEach(item => {
+
+        if (item.ancestors[item.ancestors.length - 1] === parent._id) {
+          if (!parent.hasOwnProperty('childrens')) {
+            parent.childrens = []
+          }
+          parent.childrens.push({...item});
+        }
+
+      });
+
+      if (parent.childrens) {
+        populateChildrens(entities, parent.childrens)
+      }
+
+    });
+
+    return _parents
+  }
+
+  const tree = findChildrens(items);
+
   return (
     <div>
       <PageHeader text={'Все регионы'} />
@@ -45,8 +145,10 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
         ?
         <Spinner />
         :
-        <Portlet isBordered={false}>
-          <SortableTable data={data} deleteItems={deleteRegions} />
+        <Portlet isBordered={true}>
+          <div className={css(styles.treeWrapper)}>
+            <TreeItems items={tree} deleteItems={deleteRegions} />
+          </div>
         </Portlet>
       }
     </div>

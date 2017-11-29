@@ -15,8 +15,7 @@ module.exports = {
   },
 
   post(req, res, next) {
-    const { content } = req.body;
-    const region = new Region({ content });
+    const region = new Region(req.body);
 
     region.save()
       .then((result) => {

@@ -57,6 +57,16 @@ export default function withTabs(WrappedComponent, backLink ) {
       }
     };
 
+    handleInputChange = (name, ...rest) => event => {
+      let item = { ...this.state.item };
+      item[name] = event.target.value;
+      rest.forEach(restItem => {
+        item = { ...item, ...restItem };
+      });
+
+      this.setState({ item });
+    };
+
     handleEditorChange = (langID) => (e) => {
       const contentByLang = {...this.state.contentByLang};
       contentByLang[langID].content = e.target.getContent();
@@ -153,6 +163,7 @@ export default function withTabs(WrappedComponent, backLink ) {
           togglePreviewItem={this.togglePreviewItem}
           deletePreviewItems={this.deletePreviewItems}
           handleEditorChange={this.handleEditorChange}
+          handleInputChange={this.handleInputChange}
           parentState={this.state}
           {...this.props}
         />

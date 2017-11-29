@@ -6,8 +6,8 @@ import { withRouter } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import PageHeader from '../ui-elements/PageHeader';
-import { getRegion, getLanguages } from '../../rootReducer';
-import { loadRegion, saveRegion } from './regionsReducer';
+import { getRegion, getLanguages, getRegions } from '../../rootReducer';
+import { loadRegion, saveRegion, loadRegions } from './regionsReducer';
 import RegionForm from './RegionForm';
 import Portlet from '../ui-elements/Portlet';
 
@@ -26,12 +26,15 @@ const createBlankPage = (languages) => {
   return {
     id: uniqueId(),
     preview: '',
+    ancestors: [],
+    parent: '',
     content
   };
 };
 
 const mapStateToProps = (state, router) => {
   let region = getRegion(state, router.match.params.id);
+  const regions = getRegions(state, router.match.params.id);
   const isNew = router.location.search.split('=')[1] === 'new';
   const languages = getLanguages(state);
 
@@ -41,6 +44,7 @@ const mapStateToProps = (state, router) => {
 
   return {
     item: region,
+    regions,
     languages,
     isNew,
     languagesIDs: state.languages.byIds,
@@ -53,8 +57,8 @@ const mapStateToProps = (state, router) => {
 
 class RegionContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.item) {
-      this.props.loadRegion(this.props.match.params.id);
+    if (!this.props.regions.length) {
+      this.props.loadRegions();
     }
   }
 
@@ -81,7 +85,7 @@ RegionContainer.propTypes = {
 
 RegionContainer = withRouter(connect(
   mapStateToProps,
-  { loadRegion, save: saveRegion }
+  { loadRegion, save: saveRegion, loadRegions }
 )(RegionContainer));
 
 export default RegionContainer;
