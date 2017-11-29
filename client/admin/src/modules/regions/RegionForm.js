@@ -32,10 +32,9 @@ const RegionForm = ({
                       handleSave,
                       regions,
                       handleInputChange
-}) => {
+                    }) => {
 
   const setupAncestors = parent => {
-
     let ancestors = [parent._id];
 
     if (parent.parent) {
@@ -46,9 +45,14 @@ const RegionForm = ({
   };
 
   const appendAncestors = name => event => {
-    const parent = regions.find(region => (region._id === event.target.value));
-    const ancestors = setupAncestors(parent);
-    handleInputChange(name, { ancestors, parent: event.target.value })(event)
+    let ancestors = [];
+    const val = event.target.value;
+    const parent = regions.find(region => (region._id === val));
+    if (parent) {
+      ancestors = setupAncestors(parent);
+    }
+
+    handleInputChange(name, { ancestors, parent: val === 'noParent' ? null : val })(event)
   };
 
   return (
@@ -76,11 +80,12 @@ const RegionForm = ({
           <FormControl className={css(styles.selectWrapper)}>
             <InputLabel htmlFor="parentRegion">Родительский регион</InputLabel>
             <Select
-              value={parentState.item.parent || 1}
+              value={parentState.item.parent || 'noParent'}
               onChange={appendAncestors('parent')}
               input={<Input id="parentRegion" />}
               autoWidth
             >
+              <MenuItem key='1' value={'noParent'}>Нет родителя</MenuItem>
               {regions.map(region => {
                 if (
                   parentState.item._id !== region._id &&
