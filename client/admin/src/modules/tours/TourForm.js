@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import uniqueId from 'lodash.uniqueid';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
@@ -8,9 +9,9 @@ import Switch from 'material-ui/Switch';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList'
 import CollapseComponent from '../ui-elements/Collapse'
+import Map from '../ui-elements/Map'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
-const uniqueId = require('lodash.uniqueid');
 
 const styles = StyleSheet.create({
   field: {
@@ -179,7 +180,7 @@ class TourForm extends Component {
                   <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
 				        </div>
 				        <div className="col-md-6">
-
+                  <Map />
                   <FormControlLabel
                     control={
                       <Switch
