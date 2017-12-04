@@ -10,6 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
 import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
 import createConfirmation  from '../ui-elements/form/createConfirmation'
+import { populateTree }  from './RegionService'
 
 const styles = StyleSheet.create({
   actions: {
@@ -88,46 +89,9 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
     ]
   };
 
-  function findChildrens(entities) {
 
-    const _parents = [];
 
-    entities.forEach(item => {
-      // первый родитель
-      if (!item.parent) {
-        _parents.push({...item})
-      }
-
-    });
-
-    return populateChildrens(entities, _parents)
-
-  }
-
-  function populateChildrens(entities, _parents) {
-    _parents.forEach(parent => {
-
-      entities.forEach(item => {
-
-        if (item.ancestors[item.ancestors.length - 1] === parent._id) {
-          if (!parent.hasOwnProperty('childrens')) {
-            parent.childrens = []
-          }
-          parent.childrens.push({...item});
-        }
-
-      });
-
-      if (parent.childrens) {
-        populateChildrens(entities, parent.childrens)
-      }
-
-    });
-
-    return _parents
-  }
-
-  const tree = findChildrens(items);
+  const tree = populateTree(items);
 
   return (
     <div>
@@ -141,7 +105,7 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
       >
         Добавить регион
       </Button>
-      {isFetching
+        {isFetching
         ?
         <Spinner />
         :

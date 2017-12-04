@@ -59,7 +59,10 @@ export default function withTabs(WrappedComponent, backLink ) {
 
     handleInputChange = (name, ...rest) => event => {
       let item = { ...this.state.item };
-      item[name] = event.target.value;
+      if (name) {
+        item[name] = event.target.value;
+      }
+
       rest.forEach(restItem => {
         item = { ...item, ...restItem };
       });

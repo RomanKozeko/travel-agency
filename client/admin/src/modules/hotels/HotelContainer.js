@@ -4,10 +4,12 @@ import React from 'react';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
-import {getLanguages, getHotel} from '../../rootReducer';
+import { getLanguages, getHotel, getRegions } from '../../rootReducer';
+import { loadRegions } from '../regions/regionsReducer';
 import {loadItem, saveItem} from './HotelsReducer';
 import Portlet from '../ui-elements/Portlet';
 import HotelForm from './HotelForm';
+import { populateTree } from '../regions/RegionService';
 
 const uniqueId = require('lodash.uniqueid');
 
@@ -40,10 +42,12 @@ const mapStateToProps = (state, router) => {
 
   return {
     languagesIDs: {...state.languages.byIds},
+    regions: populateTree(getRegions(state)),
     item,
     languages,
     isNew,
     isFetching: state.hotels.isFetching,
+    regionsIsFetched: state.regions.regionsIsFetched,
     isSaving: state.hotels.isSaving
   };
 };
@@ -59,6 +63,9 @@ class HotelContainer extends React.Component {
   componentDidMount() {
     if (!this.props.item) {
       this.props.loadItem(this.props.match.params.id);
+    }
+    if (!this.props.regionsIsFetched) {
+      this.props.loadRegions();
     }
   }
 
@@ -82,7 +89,8 @@ class HotelContainer extends React.Component {
 HotelContainer = withRouter(connect(
   mapStateToProps, {
     loadItem,
-    save: saveItem
+    save: saveItem,
+    loadRegions
   }
 )(HotelContainer));
 

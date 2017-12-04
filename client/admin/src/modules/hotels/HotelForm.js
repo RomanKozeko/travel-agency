@@ -10,6 +10,8 @@ import ImageGridList from '../ui-elements/ImageGridList'
 import AddPreviewPopup from '../ui-elements/form/AddPreviewPopup';
 import StarsList from '../ui-elements/StarsList';
 import NotificationPanel from '../ui-elements/form/NotificationPanel';
+import TreeList from '../ui-elements/TreeList'
+
 
 const styles = StyleSheet.create({
   field: {
@@ -38,10 +40,24 @@ const styles = StyleSheet.create({
     marginRight: '10px',
     borderWidth: '0 0 1px 0',
     borderColor: 'rgba(0, 0, 0, 0.42)'
+  },
+  regionWrapper: {
+    marginLeft: '-40px'
   }
 });
 
 class HotelForm extends React.Component {
+
+  selectRegions = (e) => {
+    const regions = [...this.props.parentState.item.regions];
+    const index = regions.indexOf(e.target.value);
+    if (index === -1) {
+      regions.push(e.target.value)
+    } else {
+      regions.splice(index, 1)
+    }
+    this.props.handleInputChange(null, {regions})()
+  };
 
   render() {
     const {
@@ -75,10 +91,16 @@ class HotelForm extends React.Component {
                 Удалить выбранные
               </Button>
               <ImageGridList imgs={parentState.item.preview} clickHandler={togglePreviewItem} />
-              <h3>Категории</h3>
+              <h3>Регионы</h3>
+              <div className={css(styles.regionWrapper)}>
+                <TreeList
+                  selectedItems={this.props.parentState.item.regions}
+                  items={this.props.regions}
+                  selectItems={this.selectRegions.bind(this)}
+                />
+              </div>
             </div>
           </div>
-
           <div className="col-md-9">
             {languages.map((lang, i) => (
               <div key={lang._id}>
@@ -162,7 +184,7 @@ class HotelForm extends React.Component {
         </div>
 
         {parentState.notValidForm &&
-        <NotificationPanel>Please fill title for each language</NotificationPanel>
+          <NotificationPanel>Please fill title for each language</NotificationPanel>
         }
 
         <Button

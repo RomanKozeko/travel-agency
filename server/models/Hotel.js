@@ -14,6 +14,10 @@ const HotelSchema = new Schema({
     type: Boolean,
     default: true
   },
+  regions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Region'
+  }],
   preview: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'
