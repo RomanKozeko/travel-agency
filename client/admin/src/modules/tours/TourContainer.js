@@ -43,6 +43,7 @@ const createBlankPage = (languages) => {
     id: uniqueId(),
     enabled: true,
     preview: [],
+    map: [],
     content
   };
 };

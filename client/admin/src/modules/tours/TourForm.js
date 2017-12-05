@@ -61,7 +61,8 @@ class TourForm extends Component {
       idsRegions: idsRegions,
       idsCategories: this.props.categoriesAllIds,
       checkedRegions: tour.regions || [],
-      checkedCategories: tour.categories || []
+      checkedCategories: tour.categories || [],
+      map: tour.map || []
 		}
 	}
 
@@ -148,6 +149,7 @@ class TourForm extends Component {
     tour.categories = [...this.state.checkedCategories];
     tour.preview = [...this.state.preview];
     tour.enabled = this.state.enabled;
+    tour.map = this.state.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
     this.props.onSubmit(tour, this.props.isNew);
 
@@ -156,9 +158,13 @@ class TourForm extends Component {
     }
   };
 
+  updateMapDetails = (places) => {
+    this.setState({ map: places })
+  };
+
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
-		const { contentByLang, preview, enabled } = this.state;
+		const { contentByLang, preview, map, enabled } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
@@ -180,7 +186,7 @@ class TourForm extends Component {
                   <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
 				        </div>
 				        <div className="col-md-6">
-                  <Map />
+                  <Map save={this.updateMapDetails} places={map} />
                   <FormControlLabel
                     control={
                       <Switch

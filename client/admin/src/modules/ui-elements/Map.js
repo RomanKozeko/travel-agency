@@ -4,6 +4,8 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import TextField from 'material-ui/TextField';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
+import { toastr } from 'react-redux-toastr';
+import createToaster from './createToaster';
 
 const styles = StyleSheet.create({
   root: {
@@ -12,6 +14,12 @@ const styles = StyleSheet.create({
   map: {
     height: '500px',
     width: '100%',
+  },
+  settingsBar: {
+    display: 'flex',
+    justifyContent: 'space-Between',
+    alignItems: 'baseline',
+    marginBottom: '15px'
   },
   place: {
     display: 'flex',
@@ -27,6 +35,9 @@ const styles = StyleSheet.create({
     fontSize: '18px',
     backgroundColor: '#5C6BC0',
     borderRadius: '50%'
+  },
+  icon: {
+    fontSize: '32px'
   }
 });
 
@@ -34,23 +45,49 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: []
+      places: this.props.places || []
     };
   }
 
   componentDidMount() {
+    this.createInitialMap();
+    this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
+    this.autocomplete.bindTo('bounds', this.map);
+    this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
+  }
+
+  createInitialMap() {
     this.directionsService = new window.google.maps.DirectionsService;
     this.directionsDisplay = new window.google.maps.DirectionsRenderer;
-    let map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
+    this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
       mapTypeControl: false,
       zoom: 6,
-      center: { lat: 53.90, lng:  27.43 }
+      center: { lat: 0, lng: 0 }
     });
-    this.directionsDisplay.setMap(map);
+    this.directionsDisplay.setMap(this.map);
+    this.placesService = new window.google.maps.places.PlacesService(this.map);
 
-    this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search), { placeIdOnly: true });
-    this.autocomplete.bindTo('bounds', map);
-    this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
+    switch (this.state.places.length) {
+      case 0:
+        this.updateLocation();
+        break;
+      case 1:
+        this.createMarker(this.state.places[0]);
+        break;
+      default:
+        this.calculateRoute();
+    }
+  }
+
+  updateLocation() {
+    if (window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(position => {
+        this.map.setCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+      });
+    }
   }
 
   handlePlaceChanged() {
@@ -61,53 +98,100 @@ class Map extends React.Component {
       return;
     }
 
+    this.search.value = '';
+
     if(!~places.findIndex(item => item.place_id === place.place_id)) {
       places.push(place);
+    } else {
+      return;
     }
-
-    if (places.length > 1) {
+    if(places.length === 1) {
+      this.createMarker(place);
+    } else {
+      this.removeMarker();
       this.calculateRoute(places);
     }
-
-    this.search.value = '';
     this.setState({ places });
+    this.props.save(places);
   }
 
-  calculateRoute(places) {
-    const that = this;
-    let waypts = places.slice(1, places.length-1);
+  createMarker(place) {
+    const create = (place) => {
+      this.marker = new window.google.maps.Marker({
+        position: place.geometry.location,
+        map: this.map,
+        title: place.formatted_address,
+      });
+      this.map.panTo(this.marker.getPosition());
+    };
 
-    waypts.forEach((item, index, array) => {
-      array[index] = {
-        location: { 'placeId': item.place_id },
-        stopover: true
+    if (place.geometry) {
+      create(place);
+      return;
+    }
+
+    this.placesService.getDetails({
+      placeId: place.place_id
+    }, (place, status) => {
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+        create(place);
       }
     });
+  }
+
+  calculateRoute(places = this.state.places) {
+    const that = this;
+    const waypts = places.slice(1, places.length-1);
+    const updatedWaypoints = waypts.map(item => ({ location: item.formatted_address, stopover: true }));
 
     this.directionsService.route({
-      origin: { 'placeId': places[0].place_id },
-      destination: { 'placeId': places[places.length-1].place_id },
-      waypoints: waypts,
+      origin: places[0].formatted_address,
+      destination: places[places.length-1].formatted_address,
+      waypoints: updatedWaypoints,
       optimizeWaypoints: true,
       travelMode: 'DRIVING'
     }, (response) => {
-      response.status === 'OK' ?
+      if(response.status === 'OK') {
         that.directionsDisplay.setDirections(response)
-        :
-        window.alert('Directions request failed due to ' + response.status);
-
+      } else {
+        that.resetMap();
+        toastr.error('', '', createToaster('Маршрут не найден'));
+      }
     });
   }
 
-  deletePlace(id) {
+  deletePlace(place) {
     let places = [...this.state.places];
-    let index = places.findIndex(item => item.place_id === id);
-    places.splice(index, 1);
-
-    if (places.length) {
-      this.calculateRoute(places);
-    }
+    const placeIndex = places.findIndex(item => item.place_id === place.place_id);
+    places.splice(placeIndex, 1);
     this.setState({ places });
+
+    switch (places.length) {
+      case 0:
+        this.resetMap();
+        break;
+      case 1:
+        this.directionsDisplay.setMap(null);
+        this.createMarker(places[0]);
+        break;
+      default:
+        this.calculateRoute(places);
+    }
+
+    this.props.save(places);
+  }
+
+  removeMarker() {
+    if (this.marker) {
+      this.marker.setMap(null);
+    }
+  }
+
+  resetMap() {
+    this.removeMarker();
+    this.directionsDisplay.setMap(null);
+    this.setState({ places: []});
+    this.props.save([]);
   }
 
   render() {
@@ -115,21 +199,33 @@ class Map extends React.Component {
     return (
       <div className={css(styles.root)}>
         <div ref='map' className={css(styles.map)}></div>
-        <TextField
-          label="Добавить место"
-          placeholder="Место"
-          inputRef={(node => this.search = node)}
-          margin="normal"
-        />
+        <div className={css(styles.settingsBar)}>
+          <TextField
+            label="Добавить место"
+            placeholder="Новое место"
+            inputRef={(node => this.search = node)}
+            margin="normal"
+          />
+          <div>
+            <IconButton
+              label='Очистить карту'
+              color="primary"
+              disabled={!this.state.places.length}
+              onClick={() => this.resetMap()}
+            >
+              <Icon className={css(styles.icon)}>brush</Icon>
+            </IconButton>
+          </div>
+        </div>
         {
           places.map((item, i, array) => (
-            <div key={item.place_id} className={css(styles.place)}>
-              <span className={css(styles.placeMarker)}>{String.fromCharCode("A".charCodeAt(0) + i)}</span>
-              {item.name}
-              <IconButton onClick={() => this.deletePlace(item.place_id)}>
-                <Icon>delete</Icon>
-              </IconButton>
-            </div>
+              <div key={item.place_id} className={css(styles.place)}>
+                <span className={css(styles.placeMarker)}>{String.fromCharCode("A".charCodeAt(0) + i)}</span>
+                {item.formatted_address}
+                <IconButton onClick={() => this.deletePlace(item)}>
+                  <Icon>delete</Icon>
+                </IconButton>
+              </div>
             )
           )
         }
