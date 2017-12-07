@@ -23,6 +23,7 @@ import CategoryContainer from '../categories/CategoryContainer';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
 import HotelsContainer from '../hotels/HotelsContainer';
 import HotelContainer from '../hotels/HotelContainer';
+import ShowPlacesContainer from '../showPlaces/ShowPlacesContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -110,6 +111,10 @@ const routes = [
   {
     path: '/admin/mediaFiles',
     main: () => <MediaFilesContainer />
+  },
+  {
+    path: '/admin/show-places',
+    main: () => <ShowPlacesContainer />
   }
 ];
 
