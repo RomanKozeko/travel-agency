@@ -5,7 +5,8 @@ import Checkbox from 'material-ui/Checkbox';
 
 const styles = StyleSheet.create({
   wrapper: {
-    listStyle: 'none'
+    listStyle: 'none',
+    marginBottom: '0'
   },
   listWrapper: {
   },
