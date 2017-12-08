@@ -57,11 +57,11 @@ class Map extends React.Component {
   componentDidMount() {
     this.createInitialMap();
     this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
-    this.autocomplete.bindTo('bounds', this.map);
+    // this.autocomplete.bindTo('bounds', this.map);
     this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
   }
 
-  createInitialMap() {
+  createInitialMap = () => {
     this.directionsService = new window.google.maps.DirectionsService;
     this.directionsDisplay = new window.google.maps.DirectionsRenderer;
     this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
@@ -82,9 +82,9 @@ class Map extends React.Component {
       default:
         this.calculateRoute();
     }
-  }
+  };
 
-  updateLocation() {
+  updateLocation = () => {
     if (window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(position => {
         this.map.setCenter({
@@ -93,7 +93,7 @@ class Map extends React.Component {
         });
       });
     }
-  }
+  };
 
   handlePlaceChanged = () => {
     let places = [...this.state.places];
@@ -120,9 +120,9 @@ class Map extends React.Component {
 
     this.setState({ places });
     this.props.save(places);
-  }
+  };
 
-  createMarker(place) {
+  createMarker = (place) => {
     const create = (place) => {
       this.marker = new window.google.maps.Marker({
         position: place.geometry.location,
@@ -144,10 +144,9 @@ class Map extends React.Component {
         create(place);
       }
     });
-  }
+  };
 
-  calculateRoute(places = this.state.places) {
-    const that = this;
+  calculateRoute = (places = this.state.places) => {
     const waypts = places.slice(1, places.length-1);
     const updatedWaypoints = waypts.map(item => ({ location: item.formatted_address, stopover: true }));
 
@@ -159,15 +158,15 @@ class Map extends React.Component {
       travelMode: 'DRIVING'
     }, (response) => {
       if(response.status === 'OK') {
-        that.directionsDisplay.setDirections(response)
+        this.directionsDisplay.setDirections(response)
       } else {
-        that.resetMap();
+        this.resetMap();
         toastr.error('', '', createToaster('Маршрут не найден'));
       }
     });
-  }
+  };
 
-  deletePlace(place) {
+  deletePlace = (place) => {
     let places = [...this.state.places];
     const placeIndex = places.findIndex(item => item.place_id === place.place_id);
     places.splice(placeIndex, 1);
@@ -186,20 +185,20 @@ class Map extends React.Component {
     }
 
     this.props.save(places);
-  }
+  };
 
-  removeMarker() {
+  removeMarker = () => {
     if (this.marker) {
       this.marker.setMap(null);
     }
-  }
+  };
 
-  resetMap() {
+  resetMap = () => {
     this.removeMarker();
     this.directionsDisplay.setMap(null);
     this.setState({ places: []});
     this.props.save([]);
-  }
+  };
 
   render() {
     const { places } = this.state;

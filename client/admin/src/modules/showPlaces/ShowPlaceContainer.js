@@ -28,6 +28,7 @@ const createBlankPage = (languages) => {
     id: uniqueId(),
     preview: [],
     regions: [],
+    enabled: true,
     content
   };
 };

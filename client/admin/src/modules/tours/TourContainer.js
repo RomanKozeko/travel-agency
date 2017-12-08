@@ -35,6 +35,7 @@ const createBlankPage = (languages) => {
       id: uniqueId(),
       title: '',
       description: '',
+      mapName: '',
       program: [],
       language: language._id
     });

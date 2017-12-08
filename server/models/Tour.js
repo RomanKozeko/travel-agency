@@ -19,7 +19,6 @@ const TourSchema = new Schema({
     formatted_address: String,
     place_id: String
   }],
-  isActive: Boolean,
   content: [ContentSchema],
   categories: [{
     type: Schema.Types.ObjectId,
