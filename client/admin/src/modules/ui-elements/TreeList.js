@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
     listStyle: 'none'
   },
   listWrapper: {
+  },
+  li: {
+    marginTop: '1px',
+    background: '#fff',
+    paddingLeft: '15px',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
   }
 });
 
