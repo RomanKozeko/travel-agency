@@ -24,6 +24,7 @@ import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
 import HotelsContainer from '../hotels/HotelsContainer';
 import HotelContainer from '../hotels/HotelContainer';
 import ShowPlacesContainer from '../showPlaces/ShowPlacesContainer';
+import ShowPlaceContainer from '../showPlaces/ShowPlaceContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -114,8 +115,14 @@ const routes = [
   },
   {
     path: '/admin/show-places',
+    exact: true,
     main: () => <ShowPlacesContainer />
-  }
+  },
+  {
+    path: '/admin/show-places/:id',
+    exact: true,
+    main: () => <ShowPlaceContainer />
+  },
 ];
 
 
