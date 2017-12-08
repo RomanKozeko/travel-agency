@@ -37,6 +37,7 @@ class TourForm extends Component {
       contentByLang[key] = {
         title: '',
         description: '',
+        mapName: '',
         language: key
       }
     });
@@ -168,102 +169,121 @@ class TourForm extends Component {
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
-        {languages.map((lang, i) => (
-	        <div key={lang._id}>
-            {selectedTabIndex === i &&
-			        <div className="row">
-				        <div className="col-md-3">
-                  <AddTourPreviewPopup addPreview={this.addPreview}/>
-                  <Button
-                    onClick={this.deletePreviewItems}
-                    className={css(styles.button)}
-                    color="accent"
-                    raised
-                    disabled={!this.state.selectedPreviewItems.length}
-                  >
-                    Удалить выбранные
-                  </Button>
-                  <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
-				        </div>
-				        <div className="col-md-6">
-                  <Map save={this.updateMapDetails} places={map} />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={enabled}
-                        onChange={(event, checked) => this.setState({ enabled: checked })}
-                        aria-label="checkedD"
+        <div className="row">
+          <div className="col-md-4">
+            <AddTourPreviewPopup addPreview={this.addPreview}/>
+            <Button
+              onClick={this.deletePreviewItems}
+              className={css(styles.button)}
+              color="accent"
+              raised
+              disabled={!this.state.selectedPreviewItems.length}
+            >
+              Удалить выбранные
+            </Button>
+            <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
+            {languages.map((lang, i) => (
+              <div key={lang._id + i}>
+                {selectedTabIndex === i &&
+                  <TextField
+                    name='mapName'
+                    value={contentByLang[lang._id].mapName}
+                    onChange={this.handleInputChange(lang._id, 'mapName')}
+                    fullWidth
+                    margin='normal'
+                    className={css(styles.field)}
+                    label='Название карты'
+                  />
+                }
+              </div>
+            ))}
+            <Map save={this.updateMapDetails} places={map} />
+          </div>
+          <div className="col-md-8">
+            {languages.map((lang, i) => (
+              <div key={lang._id}>
+                {selectedTabIndex === i &&
+                  <div>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={enabled}
+                            onChange={(event, checked) => this.setState({ enabled: checked })}
+                            aria-label="checkedD"
+                          />
+                        }
+                        label={ enabled ? 'Активный' : 'Неактивный'}
                       />
-                    }
-                    label={ enabled ? 'Активный' : 'Неактивный'}
-                  />
-					        <TextField
-						        name='title'
-                    value={contentByLang[lang._id].title}
-                    onChange={this.handleInputChange(lang._id, 'title')}
-						        fullWidth
-						        className={css(styles.field)}
-						        label='Название'
-					        />
-					        <TextField
-						        name='description'
-                    value={contentByLang[lang._id].description}
-                    onChange={this.handleInputChange(lang._id, 'description')}
-						        fullWidth
-						        className={css(styles.field)}
-						        label='Мета описание'
-					        />
-					        <div className={css(styles.field)} >
-						        <TinyMCE
-                      content={contentByLang[lang._id].content}
-                      config={{
-                        plugins:'link image code',
-                        height: '200'
-                      }}
-                      onChange={this.handleEditorChange(lang._id)}
-                    />
-					        </div>
-
-									<ItemsSelector
-										items={this.props.regionsByIDs}
-										content={this.props.regionsContent}
-										handleToggle={this.handleToggle}
-										defaultChecked={this.state.checkedRegions}
-                    updateItems={this.updateItems}
-                    itemsName='Regions'
-									/>
-
-                  <ItemsSelector
-                    items={this.props.categoriesByIDs}
-                    content={this.props.regionsContent}
-                    handleToggle={this.handleToggle}
-                    defaultChecked={this.state.checkedCategories}
-                    updateItems={this.updateItems}
-                    itemsName='Categories'
-                  />
-
-                  <CollapseComponent title='Программа тура'>
-                    <TourProgram
-                      days={contentByLang[lang._id].program}
-                      save={this.saveProgram(lang._id)}
-                    />
-                  </CollapseComponent>
-
-                  <Button
-                    raised
-                    type="submit"
-                    color="primary"
-                    disabled={isSaving}
-                  >
-                    {isSaving ? 'Сохраняю...' : 'Сохранить'}
-                  </Button>
-				        </div>
-			        </div>
-            }
-	        </div>
-          )
-        )}
-			</form>
+                      <TextField
+                        name='title'
+                        value={contentByLang[lang._id].title}
+                        onChange={this.handleInputChange(lang._id, 'title')}
+                        fullWidth
+                        className={css(styles.field)}
+                        label='Название'
+                      />
+                      <TextField
+                        name='description'
+                        value={contentByLang[lang._id].description}
+                        onChange={this.handleInputChange(lang._id, 'description')}
+                        fullWidth
+                        className={css(styles.field)}
+                        label='Мета описание'
+                      />
+                      <div className={css(styles.field)} >
+                        <TinyMCE
+                          content={contentByLang[lang._id].content}
+                          config={{
+                            plugins:'link image code',
+                            height: '200',
+                            fontsize_formats: '30px'
+                          }}
+                          onChange={this.handleEditorChange(lang._id)}
+                        />
+                      </div>
+                      <CollapseComponent title='Программа тура'>
+                        <TourProgram
+                          days={contentByLang[lang._id].program}
+                          save={this.saveProgram(lang._id)}
+                        />
+                      </CollapseComponent>
+                  </div>
+                }
+              </div>
+            ))}
+            <ItemsSelector
+              items={this.props.regionsByIDs}
+              content={this.props.regionsContent}
+              handleToggle={this.handleToggle}
+              defaultChecked={this.state.checkedRegions}
+              updateItems={this.updateItems}
+              itemsName='Regions'
+            />
+            <ItemsSelector
+              items={this.props.categoriesByIDs}
+              content={this.props.regionsContent}
+              handleToggle={this.handleToggle}
+              defaultChecked={this.state.checkedCategories}
+              updateItems={this.updateItems}
+              itemsName='Categories'
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+          </div>
+          <div className="col-md-8">
+            <Button
+              raised
+              type="submit"
+              color="primary"
+              disabled={isSaving}
+            >
+              {isSaving ? 'Сохраняю...' : 'Сохранить'}
+            </Button>
+          </div>
+        </div>
+      </form>
 		)
 	}
 }

@@ -6,6 +6,10 @@ import Checkbox from 'material-ui/Checkbox';
 import Chip from 'material-ui/Chip';
 
 const styles = StyleSheet.create({
+  root: {
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
+    marginBottom: '20px'
+  },
   listItem: {
     display: 'block'
   },
@@ -79,7 +83,7 @@ class ItemsSelector extends React.Component {
   render() {
     const {items} = this.props;
     return (
-      <div>
+      <div className={css(styles.root)}>
         <List>
           <ListItem
             button

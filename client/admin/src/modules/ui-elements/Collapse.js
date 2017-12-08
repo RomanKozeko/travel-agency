@@ -5,7 +5,8 @@ import Icon from 'material-ui/Icon';
 
 const styles = StyleSheet.create({
   root: {
-    marginBottom: '15px'
+    marginBottom: '15px',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
   },
   title: {
     display: 'flex',

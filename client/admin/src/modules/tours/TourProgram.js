@@ -9,10 +9,10 @@ const uniqueId = require('lodash.uniqueid');
 const styles = StyleSheet.create({
   root: {
     position: 'relative',
-    padding: '10px 0'
+    padding: '10px'
   },
   addButton: {
-
+    marginTop: '15px'
 
   },
   daySettings: {
@@ -55,7 +55,7 @@ class TourProgram extends React.Component {
     return (
       <div className={css(styles.root)}>
         <Button
-          raised
+          color="primary"
           className={css(styles.addButton)}
           onClick={this.addDay}
         >

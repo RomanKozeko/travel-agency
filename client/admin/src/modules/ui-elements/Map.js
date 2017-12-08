@@ -6,14 +6,19 @@ import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import { toastr } from 'react-redux-toastr';
 import createToaster from './createToaster';
+import Tooltip from 'material-ui/Tooltip';
 
 const styles = StyleSheet.create({
   root: {
-    marginBottom: '30px'
+    marginBottom: '5px 0 30px',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
   },
   map: {
     height: '500px',
     width: '100%',
+  },
+  info: {
+    padding: '0 5px 20px 20px'
   },
   settingsBar: {
     display: 'flex',
@@ -53,7 +58,7 @@ class Map extends React.Component {
     this.createInitialMap();
     this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
     this.autocomplete.bindTo('bounds', this.map);
-    this.autocomplete.addListener('place_changed', this.handlePlaceChanged.bind(this));
+    this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
   }
 
   createInitialMap() {
@@ -90,7 +95,7 @@ class Map extends React.Component {
     }
   }
 
-  handlePlaceChanged() {
+  handlePlaceChanged = () => {
     let places = [...this.state.places];
     const place = this.autocomplete.getPlace();
 
@@ -100,17 +105,19 @@ class Map extends React.Component {
 
     this.search.value = '';
 
-    if(!~places.findIndex(item => item.place_id === place.place_id)) {
-      places.push(place);
-    } else {
+    if(~places.findIndex(item => item.place_id === place.place_id)) {
       return;
     }
+
+    places.push(place);
+
     if(places.length === 1) {
       this.createMarker(place);
     } else {
       this.removeMarker();
       this.calculateRoute(places);
     }
+
     this.setState({ places });
     this.props.save(places);
   }
@@ -199,36 +206,39 @@ class Map extends React.Component {
     return (
       <div className={css(styles.root)}>
         <div ref='map' className={css(styles.map)}></div>
-        <div className={css(styles.settingsBar)}>
-          <TextField
-            label="Добавить место"
-            placeholder="Новое место"
-            inputRef={(node => this.search = node)}
-            margin="normal"
-          />
-          <div>
-            <IconButton
-              label='Очистить карту'
-              color="primary"
-              disabled={!this.state.places.length}
-              onClick={() => this.resetMap()}
-            >
-              <Icon className={css(styles.icon)}>brush</Icon>
-            </IconButton>
-          </div>
-        </div>
-        {
-          places.map((item, i, array) => (
-              <div key={item.place_id} className={css(styles.place)}>
-                <span className={css(styles.placeMarker)}>{String.fromCharCode("A".charCodeAt(0) + i)}</span>
-                {item.formatted_address}
-                <IconButton onClick={() => this.deletePlace(item)}>
-                  <Icon>delete</Icon>
+        <div className={css(styles.info)}>
+          <div className={css(styles.settingsBar)}>
+            <TextField
+              label="Добавить место"
+              placeholder="Новое место"
+              inputRef={(node => this.search = node)}
+            />
+            <div>
+              <Tooltip title="Очистить карту" placement="bottom">
+                <IconButton
+                  label='Очистить карту'
+                  color="primary"
+                  disabled={!this.state.places.length}
+                  onClick={() => this.resetMap()}
+                >
+                  <Icon className={css(styles.icon)}>brush</Icon>
                 </IconButton>
-              </div>
+              </Tooltip>
+            </div>
+          </div>
+          {
+            places.map((item, i, array) => (
+                <div key={item.place_id} className={css(styles.place)}>
+                  <span className={css(styles.placeMarker)}>{String.fromCharCode("A".charCodeAt(0) + i)}</span>
+                  {item.formatted_address}
+                  <IconButton onClick={() => this.deletePlace(item)}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                </div>
+              )
             )
-          )
-        }
+          }
+        </div>
       </div>
     )
   }
