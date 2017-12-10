@@ -9,7 +9,9 @@ const ContentSchema = new Schema({
   description: String,
   address: String,
   content: String,
-  program: [String],
+  program: [{
+    description: String
+  }],
   mapName: String,
   language: String
 });

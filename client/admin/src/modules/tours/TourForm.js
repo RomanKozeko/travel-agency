@@ -43,11 +43,6 @@ class TourForm extends Component {
     });
 
     this.props.tour.content.forEach(content => {
-      if (content.program.length && !content.program[0].id) {
-        content.program.forEach((item, i, array) => {
-          array[i] = { id: uniqueId(), value: item };
-        });
-      }
       contentByLang[content.language] = content
     });
 
@@ -143,9 +138,6 @@ class TourForm extends Component {
     e.preventDefault();
     const tour = {...this.props.tour};
     tour.content = Object.values(this.state.contentByLang);
-    tour.content.forEach(content => {
-      content.program = content.program.map(item => item.value)
-    });
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
     tour.preview = [...this.state.preview];

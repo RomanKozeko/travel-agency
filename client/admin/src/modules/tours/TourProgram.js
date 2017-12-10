@@ -32,21 +32,21 @@ const styles = StyleSheet.create({
 class TourProgram extends React.Component {
   handleEditorChange = (id) => (e) => {
     let days = [...this.props.days];
-    let item = days.find(item => item.id === id);
-    item.value = e.target.getContent();
+    let item = days.find(item => (item._id|| item.id) === id);
+    item.description = e.target.getContent();
     this.props.save(days);
   };
 
   deleteDay = id => {
     let days = [...this.props.days];
-    let index = days.findIndex(item => item.id === id);
+    let index = days.findIndex(item => (item._id|| item.id)=== id);
     days.splice(index, 1);
     this.props.save(days);
   };
 
   addDay = () => {
     let days = [...this.props.days];
-    days.push({ id: uniqueId(), value: '' });
+    days.push({ id: uniqueId(), description: '' });
     this.props.save(days)
   };
 
@@ -63,20 +63,20 @@ class TourProgram extends React.Component {
         </Button>
         {
           days.map((item, index, array) => (
-            <div key={item.id}>
+            <div key={item._id || item.id}>
               <div className={css(styles.daySettings)}>
                 <p className={css(styles.dayDescription)}> День {index + 1}</p>
-                <IconButton className={css(styles.deleteIcon)} onClick={() => this.deleteDay(item.id)}>
+                <IconButton className={css(styles.deleteIcon)} onClick={() => this.deleteDay(item._id || item.id)}>
                   <Icon>delete</Icon>
                 </IconButton>
               </div>
               <TinyMCE
-                content={item.value}
+                content={item.description}
                 config={{
                   plugins:'link image code',
                   height: '100'
                 }}
-                onChange={this.handleEditorChange(item.id)}
+                onChange={this.handleEditorChange(item._id || item.id)}
               />
             </div>
           ))
