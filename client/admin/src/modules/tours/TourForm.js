@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import uniqueId from 'lodash.uniqueid';
 import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
@@ -58,6 +57,7 @@ class TourForm extends Component {
       idsCategories: this.props.categoriesAllIds,
       checkedRegions: tour.regions || [],
       checkedCategories: tour.categories || [],
+      url: tour.url,
       map: tour.map || []
 		}
 	}
@@ -67,9 +67,13 @@ class TourForm extends Component {
   };
 
   handleInputChange = (langID, name) => event => {
-    const contentByLang = {...this.state.contentByLang};
-    contentByLang[langID][name] = event.target.value;
-    this.setState({contentByLang});
+    if (langID) {
+      const contentByLang = {...this.state.contentByLang};
+      contentByLang[langID][name] = event.target.value;
+      this.setState({ contentByLang });
+    } else {
+      this.setState({ [name]: event.target.value })
+    }
   };
 
   handleEditorChange = (langID) => (e) => {
@@ -137,6 +141,7 @@ class TourForm extends Component {
   saveTour = (e) => {
     e.preventDefault();
     const tour = {...this.props.tour};
+    tour.url = this.state.url.replace(/\s+/g, '-').toLowerCase();
     tour.content = Object.values(this.state.contentByLang);
     tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
@@ -157,7 +162,7 @@ class TourForm extends Component {
 
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
-		const { contentByLang, preview, map, enabled } = this.state;
+		const { contentByLang, preview, map, url, enabled } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
@@ -192,25 +197,35 @@ class TourForm extends Component {
             <Map save={this.updateMapDetails} places={map} />
           </div>
           <div className="col-md-8">
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={enabled}
+                  onChange={(event, checked) => this.setState({ enabled: checked })}
+                  aria-label="checkedD"
+                />
+              }
+              label={ enabled ? 'Активный' : 'Неактивный'}
+            />
+            <TextField
+              name='url'
+              value={url}
+              onChange={this.handleInputChange(null, 'url')}
+              fullWidth
+              required
+              className={css(styles.field)}
+              label='url'
+            />
             {languages.map((lang, i) => (
               <div key={lang._id}>
                 {selectedTabIndex === i &&
                   <div>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={enabled}
-                            onChange={(event, checked) => this.setState({ enabled: checked })}
-                            aria-label="checkedD"
-                          />
-                        }
-                        label={ enabled ? 'Активный' : 'Неактивный'}
-                      />
                       <TextField
                         name='title'
                         value={contentByLang[lang._id].title}
                         onChange={this.handleInputChange(lang._id, 'title')}
                         fullWidth
+                        required
                         className={css(styles.field)}
                         label='Название'
                       />

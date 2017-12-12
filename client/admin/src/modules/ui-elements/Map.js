@@ -57,7 +57,6 @@ class Map extends React.Component {
   componentDidMount() {
     this.createInitialMap();
     this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
-    // this.autocomplete.bindTo('bounds', this.map);
     this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
   }
 
@@ -220,7 +219,7 @@ class Map extends React.Component {
                   disabled={!this.state.places.length}
                   onClick={() => this.resetMap()}
                 >
-                  <Icon className={css(styles.icon)}>brush</Icon>
+                  <Icon className={css(styles.icon)}>filter_none</Icon>
                 </IconButton>
               </Tooltip>
             </div>

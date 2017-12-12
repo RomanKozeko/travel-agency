@@ -30,7 +30,9 @@ import { loadLang } from '../languages/LanguagesReducer';
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
-    padding: '20px 20px 0'
+    '@media (min-width: 800px)': {
+      padding: '20px 20px 0'
+    },
   },
   sideBarWrapper: {
 	  '@media (min-width: 800px)': {
@@ -44,9 +46,10 @@ const styles = StyleSheet.create({
   },
   content: {
 	  '@media (min-width: 800px)': {
-		  marginLeft: '235px'
-	  },
-    padding: '10px 0 0 20px'
+		  marginLeft: '235px',
+      padding: '10px 20px'
+    },
+    padding: '10px'
   }
 });
 

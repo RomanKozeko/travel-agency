@@ -11,6 +11,12 @@ const TourSchema = new Schema({
     type: Boolean,
     default: true
   },
+  url: {
+    type: String,
+    index: true,
+    unique: true,
+    required: true
+  },
   preview: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'

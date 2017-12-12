@@ -31,6 +31,12 @@ module.exports = {
       .catch(next);
   },
 
+  getOneByUrl(req, res, next) {
+    Tour.findOne({ url: req.params.url } )
+    .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
+    .catch(next);
+  },
+
   post(req, res, next) {
     const tour = new Tour(req.body);
 
