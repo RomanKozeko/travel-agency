@@ -36,6 +36,7 @@ const createBlankPage = (languages) => {
       title: '',
       description: '',
       mapName: '',
+      duration: '',
       program: [],
       language: language._id
     });

@@ -11,6 +11,7 @@ import CollapseComponent from '../ui-elements/Collapse'
 import Map from '../ui-elements/Map'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
+import TourDuration from './TourDuration';
 
 const styles = StyleSheet.create({
   field: {
@@ -254,6 +255,12 @@ class TourForm extends Component {
                           save={this.saveProgram(lang._id)}
                         />
                       </CollapseComponent>
+
+                      <TourDuration
+                        val={contentByLang[lang._id].duration}
+                        langId={lang._id}
+                        handleChange={this.handleInputChange}
+                      />
                   </div>
                 }
               </div>

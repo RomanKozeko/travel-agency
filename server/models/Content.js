@@ -12,6 +12,7 @@ const ContentSchema = new Schema({
   program: [{
     description: String
   }],
+  duration: String,
   mapName: String,
   language: String
 });
