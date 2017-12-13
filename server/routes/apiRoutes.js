@@ -34,6 +34,7 @@ const ApiPagesCtrl = require('../controllers/api/pages');
 const ApiPhotosCtrl = require('../controllers/api/media');
 const ApiHotelsCtrl = require('../controllers/api/hotels');
 const ApiShowPlacesCtrl = require('../controllers/api/showPlaces');
+const ApiFoodCtrl = require('../controllers/api/food');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -92,5 +93,11 @@ router.get('/showPlaces/:id', ApiShowPlacesCtrl.getOne);
 router.put('/showPlaces/:id', ApiShowPlacesCtrl.put);
 router.post('/showPlaces', ApiShowPlacesCtrl.post);
 router.delete('/showPlaces', ApiShowPlacesCtrl.delete);
+
+router.get('/food', ApiFoodCtrl.get);
+router.get('/food/:id', ApiFoodCtrl.getOne);
+router.put('/food/:id', ApiFoodCtrl.put);
+router.post('/food', ApiFoodCtrl.post);
+router.delete('/food', ApiFoodCtrl.delete);
 
 module.exports = router;

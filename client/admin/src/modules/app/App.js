@@ -25,6 +25,8 @@ import HotelsContainer from '../hotels/HotelsContainer';
 import HotelContainer from '../hotels/HotelContainer';
 import ShowPlacesContainer from '../showPlaces/ShowPlacesContainer';
 import ShowPlaceContainer from '../showPlaces/ShowPlaceContainer';
+import FoodContainer from '../food/FoodContainer';
+import FoodItemContainer from '../food/FoodItemContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 
 const styles = StyleSheet.create({
@@ -126,6 +128,17 @@ const routes = [
     exact: true,
     main: () => <ShowPlaceContainer />
   },
+  {
+    path: '/admin/food',
+    exact: true,
+    main: () => <FoodContainer />
+  },
+  {
+    path: '/admin/food/:id',
+    exact: true,
+    main: () => <FoodItemContainer />
+  },
+
 ];
 
 

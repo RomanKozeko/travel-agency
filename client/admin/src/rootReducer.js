@@ -12,6 +12,7 @@ import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
 import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFilesReducer';
 import hotelsReducer, * as fromMHotels from './modules/hotels/HotelsReducer';
 import showPlacesReducer, * as fromShowPlaces from './modules/showPlaces/showPlacesReducer';
+import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   categories: categoriesReducer,
   mediafiles: mediaFilesReducer,
   hotels: hotelsReducer,
-  showPlaces: showPlacesReducer
+  showPlaces: showPlacesReducer,
+  food: foodReducer
 });
 
 export default rootReducer;
@@ -54,4 +56,7 @@ export const getHotel = (state, id) => fromMHotels.getHotel(state.hotels, id);
 
 export const getShowPlaces = (state) => fromShowPlaces.getShowPlaces(state.showPlaces);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showPlaces, id);
+
+export const getFood = (state) => fromFoodReducer.getFood(state.food);
+export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
 

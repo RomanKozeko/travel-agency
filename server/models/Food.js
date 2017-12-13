@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const TourCategorySchema = new Schema({
+const FoodSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
@@ -19,4 +19,4 @@ const TourCategorySchema = new Schema({
   }]
 });
 
-module.exports = mongoose.model('TourCategory', TourCategorySchema);
+module.exports = mongoose.model('Food', FoodSchema);

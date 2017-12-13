@@ -17,6 +17,7 @@ const TourSchema = new Schema({
     unique: true,
     required: true
   },
+  days: Number,
   preview: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'

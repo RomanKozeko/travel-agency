@@ -9,6 +9,9 @@ const ContentSchema = new Schema({
   description: String,
   address: String,
   content: String,
+  priceInclude: String,
+  priceNotInclude: String,
+  departureInfo: String,
   program: [{
     description: String
   }],

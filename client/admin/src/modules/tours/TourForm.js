@@ -11,11 +11,13 @@ import CollapseComponent from '../ui-elements/Collapse'
 import Map from '../ui-elements/Map'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
-import TourDuration from './TourDuration';
 
 const styles = StyleSheet.create({
   field: {
     marginBottom: '10px;'
+  },
+  colWrapper: {
+    padding: '20px'
   },
   button: {
     display: 'block',
@@ -59,7 +61,8 @@ class TourForm extends Component {
       checkedRegions: tour.regions || [],
       checkedCategories: tour.categories || [],
       url: tour.url,
-      map: tour.map || []
+      map: tour.map || [],
+      days: tour.days || 0
 		}
 	}
 
@@ -77,9 +80,9 @@ class TourForm extends Component {
     }
   };
 
-  handleEditorChange = (langID) => (e) => {
+  handleEditorChange = (langID, field = 'content') => (e) => {
     const contentByLang = {...this.state.contentByLang};
-    contentByLang[langID].content =e.target.getContent();
+    contentByLang[langID][field] =e.target.getContent();
     this.setState({contentByLang});
   };
 
@@ -148,6 +151,7 @@ class TourForm extends Component {
     tour.categories = [...this.state.checkedCategories];
     tour.preview = [...this.state.preview];
     tour.enabled = this.state.enabled;
+    tour.days = this.state.days;
     tour.map = this.state.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
     this.props.onSubmit(tour, this.props.isNew);
@@ -163,7 +167,7 @@ class TourForm extends Component {
 
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
-		const { contentByLang, preview, map, url, enabled } = this.state;
+		const { contentByLang, preview, map, url, enabled, days } = this.state;
 
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
@@ -190,7 +194,7 @@ class TourForm extends Component {
                     fullWidth
                     margin='normal'
                     className={css(styles.field)}
-                    label='Название карты'
+                    label='Название карты (маршрут)'
                   />
                 }
               </div>
@@ -238,17 +242,70 @@ class TourForm extends Component {
                         className={css(styles.field)}
                         label='Мета описание'
                       />
-                      <div className={css(styles.field)} >
-                        <TinyMCE
-                          content={contentByLang[lang._id].content}
-                          config={{
-                            plugins:'link image code',
-                            height: '200',
-                            fontsize_formats: '30px'
-                          }}
-                          onChange={this.handleEditorChange(lang._id)}
-                        />
-                      </div>
+                      <TextField
+                        label="Дата проведения"
+                        value={contentByLang[lang._id].duration}
+                        onChange={this.handleInputChange(lang._id, 'duration')}
+                        margin="normal"
+                        className={css(styles.field)}
+                        fullWidth
+                      />
+                      <TextField
+                        label="Время и место отправления"
+                        value={contentByLang[lang._id].departureInfo}
+                        onChange={this.handleInputChange(lang._id, 'departureInfo')}
+                        margin="normal"
+                        className={css(styles.field)}
+                        fullWidth
+                      />
+                      <TextField
+                        label="Количество дней"
+                        type="number"
+                        value={days}
+                        onChange={this.handleInputChange(null, 'days')}
+                        margin="normal"
+                        className={css(styles.field)}
+                        fullWidth
+                      />
+                      <CollapseComponent title='Описание тура'>
+                        <div className={css(styles.field)} >
+                          <TinyMCE
+                            content={contentByLang[lang._id].content}
+                            config={{
+                              plugins:'link image code',
+                              height: '200',
+                              fontsize_formats: '30px'
+                            }}
+                            onChange={this.handleEditorChange(lang._id, 'content')}
+                          />
+                        </div>
+                      </CollapseComponent>
+                      <CollapseComponent title='В стоимость тура входит'>
+                        <div className={css(styles.field)} >
+                          <TinyMCE
+                            content={contentByLang[lang._id].priceInclude}
+                            config={{
+                              plugins:'link image code',
+                              height: '200',
+                              fontsize_formats: '30px'
+                            }}
+                            onChange={this.handleEditorChange(lang._id, 'priceInclude')}
+                          />
+                        </div>
+                      </CollapseComponent>
+                      <CollapseComponent title='В стоимость тура не входит'>
+                        <div className={css(styles.field)} >
+                          <TinyMCE
+                            content={contentByLang[lang._id].priceNotInclude}
+                            config={{
+                              plugins:'link image code',
+                              height: '200',
+                              fontsize_formats: '30px'
+                            }}
+                            onChange={this.handleEditorChange(lang._id, 'priceNotInclude')}
+                          />
+                        </div>
+                      </CollapseComponent>
                       <CollapseComponent title='Программа тура'>
                         <TourProgram
                           days={contentByLang[lang._id].program}
@@ -256,11 +313,6 @@ class TourForm extends Component {
                         />
                       </CollapseComponent>
 
-                      <TourDuration
-                        val={contentByLang[lang._id].duration}
-                        langId={lang._id}
-                        handleChange={this.handleInputChange}
-                      />
                   </div>
                 }
               </div>
