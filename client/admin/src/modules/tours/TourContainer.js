@@ -11,10 +11,11 @@ import TourForm from './TourForm';
 import { loadTour, addTour, editTour } from './toursActions';
 import { loadRegions } from '../regions/regionsReducer';
 import { loadCategories } from '../categories/categoriesReducer';
+import * as fromFoodReducer from '../food/foodReducer';
 import { getTour } from './toursReducer';
-import { getRegions } from '../regions/regionsReducer';
 import { loadItems } from '../mediaFiles/mediaFilesReducer';
-import { getLanguages, getMediaFiles, getCategories } from '../../rootReducer';
+import { getLanguages, getMediaFiles, getCategories, getFood, getRegions } from '../../rootReducer';
+import { populateTree } from '../regions/RegionService';
 
 const styles = StyleSheet.create({
   tabs: {
@@ -63,12 +64,13 @@ const mapStateToProps = (state, router) => {
 		tour,
     isNew,
     regionsByIDs: state.regions.byIds,
-		regions: getRegions(state.regions),
+    regions: populateTree(getRegions(state)),
     regionsContent: state.regions.regionsContent,
     categories: getCategories(state),
     categoriesByIDs: state.categories.byIds,
     categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
+    food: getFood(state),
     languages,
     selectedPreview: state.mediafiles.selected,
     mediaFiles: state.mediafiles,
@@ -94,6 +96,9 @@ class TourContainer extends React.Component {
 		}
     if (!this.props.categories.length) {
       this.props.loadCategories();
+    }
+    if (!this.props.food.length) {
+      this.props.loadFoodItems();
     }
 	}
 
@@ -142,7 +147,15 @@ class TourContainer extends React.Component {
 
 TourContainer = withRouter(connect(
 	mapStateToProps,
-  { loadTour, addTour, editTour, loadRegions, loadCategories,  loadItems }
+  {
+    loadTour,
+    addTour,
+    editTour,
+    loadRegions,
+    loadCategories,
+    loadItems,
+    loadFoodItems: fromFoodReducer.loadItems
+  }
 )(TourContainer));
 
 export default TourContainer;

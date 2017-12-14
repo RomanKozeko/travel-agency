@@ -11,6 +11,11 @@ import CollapseComponent from '../ui-elements/Collapse'
 import Map from '../ui-elements/Map'
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import TreeList from '../ui-elements/TreeList'
 
 const styles = StyleSheet.create({
   field: {
@@ -24,6 +29,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '100%',
     marginBottom: '15px'
+  },
+  selectWrapper: {
+    marginBottom: '15px',
+    marginTop: '15px'
+  },
+  select: {
+    width: '100%',
+    whiteSpace: 'nowrap'
+  },
+  regionWrapper: {
+    marginLeft: '-40px'
+  },
+  noMB: {
+    marginBottom: '0'
   }
 });
 
@@ -32,7 +51,6 @@ class TourForm extends Component {
 		super(props);
 
     const { tour, regions } = this.props;
-    const idsRegions = regions.map((item) => (item._id));
     const contentByLang = {...this.props.languagesIDs};
 
     Object.keys(contentByLang).forEach(key => {
@@ -56,11 +74,11 @@ class TourForm extends Component {
 			preview: [...tour.preview],
       selectedPreviewItems: [],
       content: this.props.content,
-      idsRegions: idsRegions,
       idsCategories: this.props.categoriesAllIds,
-      checkedRegions: tour.regions || [],
       checkedCategories: tour.categories || [],
       url: tour.url,
+      food: tour.food,
+      regions: tour.regions,
       map: tour.map || [],
       days: tour.days || 0
 		}
@@ -147,11 +165,12 @@ class TourForm extends Component {
     const tour = {...this.props.tour};
     tour.url = this.state.url.replace(/\s+/g, '-').toLowerCase();
     tour.content = Object.values(this.state.contentByLang);
-    tour.regions = [...this.state.checkedRegions];
     tour.categories = [...this.state.checkedCategories];
     tour.preview = [...this.state.preview];
     tour.enabled = this.state.enabled;
     tour.days = this.state.days;
+    tour.food = this.state.food;
+    tour.regions = this.state.regions;
     tour.map = this.state.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
     this.props.onSubmit(tour, this.props.isNew);
@@ -165,6 +184,17 @@ class TourForm extends Component {
     this.setState({ map: places })
   };
 
+  selectRegions = (e) => {
+    const regions = [...this.state.regions];
+    const index = regions.indexOf(e.target.value);
+    if (index === -1) {
+      regions.push(e.target.value)
+    } else {
+      regions.splice(index, 1)
+    }
+    this.setState({regions});
+  };
+
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
 		const { contentByLang, preview, map, url, enabled, days } = this.state;
@@ -173,6 +203,7 @@ class TourForm extends Component {
 			<form onSubmit={(e) => this.saveTour(e)}>
         <div className="row">
           <div className="col-md-4">
+            <h3>Галерея</h3>
             <AddTourPreviewPopup addPreview={this.addPreview}/>
             <Button
               onClick={this.deletePreviewItems}
@@ -184,6 +215,7 @@ class TourForm extends Component {
               Удалить выбранные
             </Button>
             <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
+            <h3 className={css(styles.noMB)}>Карта</h3>
             {languages.map((lang, i) => (
               <div key={lang._id + i}>
                 {selectedTabIndex === i &&
@@ -200,6 +232,14 @@ class TourForm extends Component {
               </div>
             ))}
             <Map save={this.updateMapDetails} places={map} />
+            <h3>Регионы</h3>
+            <div className={css(styles.regionWrapper)}>
+              <TreeList
+                selectedItems={this.state.regions}
+                items={this.props.regions}
+                selectItems={this.selectRegions.bind(this)}
+              />
+            </div>
           </div>
           <div className="col-md-8">
             <FormControlLabel
@@ -267,6 +307,26 @@ class TourForm extends Component {
                         className={css(styles.field)}
                         fullWidth
                       />
+                      <div className={css(styles.selectWrapper)}>
+                        <FormControl>
+                          <InputLabel htmlFor="parentRegion" className={css(styles.select)}>Тип питания</InputLabel>
+                          <Select
+                            className={css(styles.select)}
+                            value={this.state.food || '1'}
+                            onChange={this.handleInputChange(null, 'food')}
+                            input={<Input id="food" className={css(styles.select)} fullWidth/>}
+                            fullWidth
+                          >
+                            <MenuItem className={css(styles.select)} key='1' value={'noParent'}>...</MenuItem>
+                            {this.props.food.map(foodItem => {
+                                return (
+                                  <MenuItem key={foodItem._id} value={foodItem._id}>{foodItem.content[0].title}</MenuItem>
+                                );
+                            })
+                            }
+                          </Select>
+                        </FormControl>
+                      </div>
                       <CollapseComponent title='Описание тура'>
                         <div className={css(styles.field)} >
                           <TinyMCE
@@ -317,14 +377,6 @@ class TourForm extends Component {
                 }
               </div>
             ))}
-            <ItemsSelector
-              items={this.props.regionsByIDs}
-              content={this.props.regionsContent}
-              handleToggle={this.handleToggle}
-              defaultChecked={this.state.checkedRegions}
-              updateItems={this.updateItems}
-              itemsName='Regions'
-            />
             <ItemsSelector
               items={this.props.categoriesByIDs}
               content={this.props.regionsContent}

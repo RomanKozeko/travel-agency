@@ -14,6 +14,10 @@ const HotelSchema = new Schema({
     type: Boolean,
     default: true
   },
+  food: {
+    type: Schema.Types.ObjectId,
+    ref: 'Food'
+  },
   regions: [{
     type: Schema.Types.ObjectId,
     ref: 'Region'

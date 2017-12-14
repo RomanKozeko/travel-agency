@@ -11,6 +11,10 @@ const TourSchema = new Schema({
     type: Boolean,
     default: true
   },
+  food: {
+    type: Schema.Types.ObjectId,
+    ref: 'Food'
+  },
   url: {
     type: String,
     index: true,
