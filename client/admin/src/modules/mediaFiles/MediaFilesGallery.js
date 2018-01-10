@@ -1,8 +1,18 @@
 import React, {Component} from 'react';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import MediaFilesList from './MediaFilesList';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import ImageUploader from '../ui-elements/form/ImageUploader';
+
+const styles = StyleSheet.create({
+  button: {
+    marginTop: '15px',
+    '@media (max-width: 800px)': {
+      width: '100%'
+    }
+  }
+});
 
 class MediaFilesGallery extends React.Component {
 	componentWillUnmount() {
@@ -21,9 +31,10 @@ class MediaFilesGallery extends React.Component {
         <ImageUploader uploadImg={saveItem} />
 	      <Button
 		      onClick={this.deleteMediaFiles}
-		      component="span"
+					className={css(styles.button)}
 		      color="accent"
-		      raised
+					raised
+					margin="normal"
 		      disabled={!this.props.selected.length}
 	      >
 		      Удалить выбранные

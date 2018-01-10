@@ -4,11 +4,21 @@ import Button from 'material-ui/Button';
 
 const styles = StyleSheet.create({
   wrapper: {
-    display: 'inline-block',
-    marginRight: '30px'
+    width: '100%',
+    marginRight: '30px',
+    '@media (min-width: 800px)': {
+      display: 'inline-block',
+      width: 'auto'
+    },
   },
   input: {
     display: 'none'
+  },
+  button: {
+    marginTop: '15px',
+    '@media (max-width: 800px)': {
+      width: '100%'
+    }
   }
 });
 
@@ -28,7 +38,7 @@ const ImageUploader = ({ uploadImg }) => {
         onChange={(e) => handleImageChange(e)}
       />
       <label htmlFor="file">
-        <Button raised component="span" color="primary">
+        <Button className={css(styles.button)} raised color="primary">
           Добавить файл
         </Button>
       </label>

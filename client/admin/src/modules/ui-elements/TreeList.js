@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import { FormControlLabel } from 'material-ui/Form';
 import Checkbox from 'material-ui/Checkbox';
 
 const styles = StyleSheet.create({

@@ -19,7 +19,8 @@ function populateChildrens(entities, _parents) {
 
     entities.forEach(item => {
 
-      if (item.ancestors[item.ancestors.length - 1] === parent._id) {
+      //if (item.ancestors[item.ancestors.length - 1] === parent._id) {
+      if (item.parent === parent._id) {
         if (!parent.hasOwnProperty('childrens')) {
           parent.childrens = []
         }

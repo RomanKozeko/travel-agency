@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
 		flexWrap: 'wrap',
-		marginTop: '20px',
 		marginLeft: '-10px',
 		paddingTop: '20px'
 	},

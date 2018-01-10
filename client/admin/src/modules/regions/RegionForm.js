@@ -36,7 +36,6 @@ const RegionForm = ({
 
   const setupAncestors = parent => {
     let ancestors = [parent._id];
-
     if (parent.parent) {
       ancestors = [...parent.ancestors, ...ancestors];
     }
