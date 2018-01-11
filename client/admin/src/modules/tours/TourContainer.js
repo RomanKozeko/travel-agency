@@ -12,9 +12,10 @@ import { loadTour, addTour, editTour } from './toursActions';
 import { loadRegions } from '../regions/regionsReducer';
 import { loadCategories } from '../categories/categoriesReducer';
 import * as fromFoodReducer from '../food/foodReducer';
+import * as fromHotelsReducer from '../hotels/hotelsReducer';
 import { getTour } from './toursReducer';
 import { loadItems } from '../mediaFiles/mediaFilesReducer';
-import { getLanguages, getMediaFiles, getCategories, getFood, getRegions } from '../../rootReducer';
+import { getLanguages, getHotels, getCategories, getFood, getRegions } from '../../rootReducer';
 import { populateTree } from '../regions/RegionService';
 
 const styles = StyleSheet.create({
@@ -67,6 +68,7 @@ const mapStateToProps = (state, router) => {
     regions: populateTree(getRegions(state)),
     regionsContent: state.regions.regionsContent,
     categories: getCategories(state),
+    hotels: getHotels(state),
     categoriesByIDs: state.categories.byIds,
     categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
@@ -96,6 +98,9 @@ class TourContainer extends React.Component {
 		}
     if (!this.props.categories.length) {
       this.props.loadCategories();
+    }
+    if (!this.props.hotels.length) {
+      this.props.loadHotelItems();
     }
     if (!this.props.food.length) {
       this.props.loadFoodItems();
@@ -154,7 +159,8 @@ TourContainer = withRouter(connect(
     loadRegions,
     loadCategories,
     loadItems,
-    loadFoodItems: fromFoodReducer.loadItems
+    loadFoodItems: fromFoodReducer.loadItems,
+    loadHotelItems: fromHotelsReducer.loadItems
   }
 )(TourContainer));
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { loadItems, saveItem, deleteItems } from './HotelsReducer';
+import { loadItems, saveItem, deleteItems } from './hotelsReducer';
 import { getHotels } from '../../rootReducer';
 import HotelsList from './HotelsList';
 import Spinner from '../ui-elements/Spinner';

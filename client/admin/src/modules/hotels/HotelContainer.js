@@ -6,7 +6,7 @@ import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import { getLanguages, getHotel, getRegions } from '../../rootReducer';
 import { loadRegions } from '../regions/regionsReducer';
-import {loadItem, saveItem} from './HotelsReducer';
+import {loadItem, saveItem} from './hotelsReducer';
 import Portlet from '../ui-elements/Portlet';
 import HotelForm from './HotelForm';
 import { populateTree } from '../regions/RegionService';
@@ -35,12 +35,19 @@ const createBlankPage = (languages) => {
 
 const mapStateToProps = (state, router) => {
   let item = getHotel(state, router.match.params.id);
+
   const isNew = router.location.search.split('=')[1] === 'newItem';
   const languages = getLanguages(state);
+
+  if (item && item.regions) {
+    item.regions = item.regions.map(region => region._id);
+  }
 
   if (isNew) {
     item = createBlankPage(languages);
   }
+
+
 
   return {
     languagesIDs: {...state.languages.byIds},

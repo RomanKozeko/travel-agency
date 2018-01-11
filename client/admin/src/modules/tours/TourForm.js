@@ -14,8 +14,8 @@ import TourProgram from './TourProgram';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import TreeList from '../ui-elements/TreeList'
+import { FormControl } from 'material-ui/Form';
+import TreeList from '../ui-elements/TreeList';
 
 const styles = StyleSheet.create({
   field: {
@@ -50,7 +50,7 @@ class TourForm extends Component {
 	constructor(props) {
 		super(props);
 
-    const { tour, regions } = this.props;
+    const { tour } = this.props;
     const contentByLang = {...this.props.languagesIDs};
 
     Object.keys(contentByLang).forEach(key => {
@@ -237,7 +237,7 @@ class TourForm extends Component {
               <TreeList
                 selectedItems={this.state.regions}
                 items={this.props.regions}
-                selectItems={this.selectRegions.bind(this)}
+                selectItems={this.selectRegions}
               />
             </div>
           </div>

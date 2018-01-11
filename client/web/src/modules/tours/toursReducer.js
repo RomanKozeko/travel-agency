@@ -1,12 +1,5 @@
-import {
-  TOURS_REQUEST,
-  TOURS_SUCCESS,
-  TOURS_FAILURE,
-  TOURS_GET_PAGE_FROM_CACHE,
-  TOURS_FILTERED_REQUEST,
-  TOURS_FILTERED_SUCCESS,
-  TOURS_FILTERED_FAILURE
-} from './toursActions';
+import * as actions from './toursActions';
+
 import { createReducer, getPageCount } from '../../services/utils';
 
 
@@ -15,7 +8,7 @@ const toursSuccess = (state, action) => {
   return {
     ...state,
     allIds: [...state.allIds, ...payload.result.items],
-    byIds: {...state.byIds, ...payload.entities.items},
+    byIds: {...state.byIds, ...payload.entities.tours},
     isFetching: false,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
@@ -39,6 +32,16 @@ const filteredToursSuccess = (state, action) => {
   }
 };
 
+const tourSuccess = (state, action) => {
+  const payload = action.response;
+  return {
+    ...state,
+    allIds: [...state.allIds, payload.result],
+    byIds: { ...state.byIds, ...payload.entities.pages },
+    isFetching: false,
+  };
+};
+
 export const defaultState = {
   allIds: [],
   byIds: {},
@@ -50,13 +53,14 @@ export const defaultState = {
 };
 
 const toursReducer = createReducer(defaultState, {
-  [TOURS_REQUEST] : (state) => ({...state, isFetching: true}),
-  [TOURS_GET_PAGE_FROM_CACHE] : (state, action) => ({...state, currPage: action.payload}),
-  [TOURS_SUCCESS] : toursSuccess,
-  [TOURS_FAILURE]: (state) => ({...state, isFetching: false}),
-  [TOURS_FILTERED_REQUEST]: (state) => ({...state, isFetching: true}),
-  [TOURS_FILTERED_SUCCESS]: filteredToursSuccess,
-  [TOURS_FILTERED_FAILURE]: (state) => ({...state, isFetching: false}),
+  [actions.TOURS_REQUEST] : (state) => ({...state, isFetching: true}),
+  [actions.TOURS_GET_PAGE_FROM_CACHE] : (state, action) => ({...state, currPage: action.payload}),
+  [actions.TOURS_SUCCESS] : toursSuccess,
+  [actions.TOURS_FAILURE]: (state) => ({...state, isFetching: false}),
+  [actions.TOURS_FILTERED_REQUEST]: (state) => ({...state, isFetching: true}),
+  [actions.TOURS_FILTERED_SUCCESS]: filteredToursSuccess,
+  [actions.TOURS_FILTERED_FAILURE]: (state) => ({...state, isFetching: false}),
+  [actions.TOUR_SUCCESS]: tourSuccess
 });
 
 export default toursReducer;
@@ -77,4 +81,12 @@ export const getPageWithTours = (state, page) => {
   } else {
     return []
   }
+};
+
+export const getTour = (state, id) => {
+  if (state.byIds[id]) {
+    return state.byIds[id];
+  }
+
+  return null;
 };

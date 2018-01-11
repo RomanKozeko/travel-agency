@@ -21,7 +21,7 @@ const callApi = (endpoint, schema, nextPage, query) => {
     )
 };
 
-export const tourSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const tourSchema = new schema.Entity('tours', {}, { idAttribute: 'url' });
 export const toursSchema = { items: [tourSchema] };
 
 export const pageSchema = new schema.Entity('pages', {}, { idAttribute: 'url' });

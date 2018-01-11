@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from '../ui-elements/Button';
+import PrefixLink from '../ui-elements/PrefixLink'
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -86,6 +87,7 @@ const ToursList = ({tours}) => {
 								<div className={css(styles.description)}>{tour.content.description}</div>
 							</div>
 							<div className={css(styles.footer)}>
+								<PrefixLink to={`/tours/${tour.url}`}>SHOW DETAILS</PrefixLink>
 								<Button>Book now</Button>
 								<span className={css(styles.price)}>{Math.floor(Math.random() * 500) + 500}$</span>
 							</div>

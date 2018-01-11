@@ -20,6 +20,7 @@ function populateEmpty(body) {
 const getOne = model => (req, res, next) => {
   model.findById(req.params.id)
     .populate('preview')
+    .populate('regions')
     .then(item => res.json(item))
     .catch(next);
 };

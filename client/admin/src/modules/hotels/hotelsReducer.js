@@ -39,5 +39,5 @@ export default hotelsReducer;
 
 //  selectors
 export const getHotels = state => (state.allIds.map(id => state.byIds[id]));
-export const getHotel = (state, id) => (state.byIds[id]);
+export const getHotel = (state, id) => (state.byIds[id] ? {...state.byIds[id]} : false);
 

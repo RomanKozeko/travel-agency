@@ -1,6 +1,9 @@
 import { CALL_API, Schemas } from '../../middleware/callApi';
 import { withPrefix } from '../../services/utils';
 
+export const TOUR_REQUEST = 'TOUR_REQUEST';
+export const TOUR_SUCCESS = 'TOUR_SUCCESS';
+export const TOUR_FAILURE = 'TOUR_FAILURE';
 export const TOURS_REQUEST = 'TOURS_REQUEST';
 export const TOURS_SUCCESS = 'TOURS_SUCCESS';
 export const TOURS_FAILURE = 'TOURS_FAILURE';
@@ -17,6 +20,23 @@ const fetchTours = (nextPageUrl, nextPage) => ({
     nextPage
   }
 });
+
+// const fetchTours = (urlPrefix) => ({
+//   [CALL_API]: {
+//     types: [TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE],
+//     endpoint: withPrefix('/api/tours', urlPrefix),
+//     schema: Schemas.PAGES
+//   }
+// });
+
+const fetchTour = (url, urlPrefix) => ({
+  [CALL_API]: {
+    types: [TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE],
+    endpoint: withPrefix(`/api/tours/getByUrl/${url}`, urlPrefix),
+    schema: Schemas.TOUR,
+  }
+});
+
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   const {
@@ -48,4 +68,12 @@ export const fetchFilteredTours = (filterQuery) => (dispatch, getState) => {
       query: filterQuery
     }
   })
+};
+
+export const loadTour = url => (dispatch, getState) => {
+  const state = getState();
+  if (!state.tours.byIds[url]) {
+    return dispatch(fetchTour(url, state.app.languages.urlPrefix));
+  }
+  return null;
 };

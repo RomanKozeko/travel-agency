@@ -16,6 +16,7 @@ export default rootReducer;
 
 //selectors
 export const getTours = state => fromTours.getTours(state.tours);
+export const getTour = (state, id) => fromTours.getTour(state.tours, id);
 export const getToursByQuery = (state, query) => fromTours.getToursByQuery(state.tours, query);
 export const getPages = state => fromPages.getPages(state.pages);
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);

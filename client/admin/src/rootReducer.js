@@ -10,7 +10,7 @@ import languagesReducer, * as fromLanguages from './modules/languages/LanguagesR
 import categoriesReducer, * as fromCategories from './modules/categories/categoriesReducer';
 import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
 import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFilesReducer';
-import hotelsReducer, * as fromMHotels from './modules/hotels/HotelsReducer';
+import hotelsReducer, * as fromMHotels from './modules/hotels/hotelsReducer';
 import showPlacesReducer, * as fromShowPlaces from './modules/showPlaces/showPlacesReducer';
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 
