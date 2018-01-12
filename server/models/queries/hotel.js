@@ -9,22 +9,30 @@ const Region = require('../Region');
 
 module.exports = {
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
-    // const query = Hotel.find({})
-    // .sort('-date')
-    // .skip(parseInt(offset))
-    // .limit(parseInt(itemsPerPageLimit))
-    // .populate('preview')
-    // .populate('categories')
-    // .populate('regions')
+
+    if (!filter.regions) {
+      const query = Hotel.find({})
+        .sort('-date')
+        .skip(parseInt(offset))
+        .limit(parseInt(itemsPerPageLimit))
+        .populate('preview')
+        .populate('categories')
+        .populate('regions')
+
+      return Promise.all([query, Hotel.count()]);
+    }
+
+    const regionsFilterIds = filter.regions.split(',');
+    const idsToFilter = [];
+
+    regionsFilterIds.forEach(id => {
+      idsToFilter.push({ _id: ObjectId(id)});
+      idsToFilter.push({ ancestors: id})
+    });
 
     const regions = Region.aggregate([
       {
-        $match: {
-          $or: [
-            { _id: ObjectId('5a57ca94c63c7434ecc8ff15') },
-            { ancestors: '5a57ca94c63c7434ecc8ff15' }
-          ]
-        }
+        $match: {$or: idsToFilter}
       }
     ]);
 
