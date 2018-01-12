@@ -47,8 +47,6 @@ const mapStateToProps = (state, router) => {
     item = createBlankPage(languages);
   }
 
-
-
   return {
     languagesIDs: {...state.languages.byIds},
     regions: populateTree(getRegions(state)),

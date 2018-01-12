@@ -64,7 +64,7 @@ const post = model => (req, res, next) => {
     }
 
     function populate(savedItem) {
-      return model.findById(savedItem._id).populate('preview');
+      return model.findById(savedItem._id).populate('preview').populate('regions');
     }
 
     return await populate(savedItem);
@@ -76,7 +76,7 @@ const put = model => (req, res, next) => {
   const props = populateEmpty(req.body);
 
   model.findByIdAndUpdate(id, props)
-    .then(() => model.findById(id).populate('preview'))
+    .then(() => model.findById(id).populate('preview').populate('regions'))
     .then(item => res.json(item))
     .catch(next);
 };
