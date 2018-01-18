@@ -39,6 +39,14 @@ const TourSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Region'
   }],
+  hotels: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Hotel'
+  }],
+  showplaces: [{
+    type: Schema.Types.ObjectId,
+    ref: 'ShowPlace'
+  }],
   periodType: [{
     type: String,
     ref: 'Period'

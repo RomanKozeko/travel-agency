@@ -39,10 +39,6 @@ const mapStateToProps = (state, router) => {
   const isNew = router.location.search.split('=')[1] === 'newItem';
   const languages = getLanguages(state);
 
-  if (item && item.regions) {
-    item.regions = item.regions.map(region => region._id);
-  }
-
   if (isNew) {
     item = createBlankPage(languages);
   }

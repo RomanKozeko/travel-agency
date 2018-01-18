@@ -4,9 +4,6 @@ const ObjectId = mongoose.Types.ObjectId;
 const Hotel = require('../Hotel');
 const Region = require('../Region');
 
-
-//5a29568839f910fd1cfa00d1 - piter
-
 module.exports = {
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
 

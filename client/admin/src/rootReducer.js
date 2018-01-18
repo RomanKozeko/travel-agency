@@ -13,6 +13,7 @@ import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFi
 import hotelsReducer, * as fromMHotels from './modules/hotels/hotelsReducer';
 import showPlacesReducer, * as fromShowPlaces from './modules/showPlaces/showPlacesReducer';
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
+import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   mediafiles: mediaFilesReducer,
   hotels: hotelsReducer,
   showPlaces: showPlacesReducer,
-  food: foodReducer
+  food: foodReducer,
+  entities: entitiesReducer
 });
 
 export default rootReducer;
@@ -38,21 +40,20 @@ export const getPageWithTours = (state, page) => fromTours.getPageWithTours(stat
 
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);
 export const getPageWithItems = (state, page) => fromPages.getPageWithItems(state.pages, page);
-export const getContentByLang = (
-  state, contentId, lang
-) => fromPages.getContentByLang(state, contentId, lang);
+
 export const getLanguages = state => fromLanguages.getLanguages(state.languages);
 
 export const getCategories = state => fromCategories.getCategories(state.categories);
 export const getCategory = (state, id) => fromCategories.getCategory(state.categories, id);
 
-export const getRegions = state => fromRegions.getRegions(state.regions);
-export const getRegion = (state, id) => fromRegions.getRegion(state.regions, id);
+export const getRegions = state =>  fromEntities.getRegions(state.entities.regions);
+export const getRegion = (state, id) =>  fromEntities.getRegion(state.entities.regions, id);
 
 export const getMediaFiles = (state, id) => fromMediaFiles.getMediaFiles(state.mediafiles, id);
 
-export const getHotels = (state) => fromMHotels.getHotels(state.hotels);
-export const getHotel = (state, id) => fromMHotels.getHotel(state.hotels, id);
+export const getHotels = (state) => fromEntities.getHotels(state.entities.hotels);
+export const getHotel = (state, id) => fromEntities.getHotel(state.entities.hotels, id);
+export const getHotelsByFilter = (state, filter) => fromEntities.getHotelsByFilter(state.entities.hotels, filter);
 
 export const getShowPlaces = (state) => fromShowPlaces.getShowPlaces(state.showPlaces);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showPlaces, id);

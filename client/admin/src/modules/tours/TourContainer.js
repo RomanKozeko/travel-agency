@@ -68,7 +68,7 @@ const mapStateToProps = (state, router) => {
     regions: populateTree(getRegions(state)),
     regionsContent: state.regions.regionsContent,
     categories: getCategories(state),
-    hotels: getHotels(state),
+    hotelsByIDs: state.hotels.byIds,
     categoriesByIDs: state.categories.byIds,
     categoriesAllIds: state.categories.allIds,
     languagesIDs: state.languages.byIds,
@@ -76,8 +76,8 @@ const mapStateToProps = (state, router) => {
     languages,
     selectedPreview: state.mediafiles.selected,
     mediaFiles: state.mediafiles,
-		isFetching: state.tours.isFetching || state.regions.isFetching,
-		isSaving: state.tours.isSaving
+		isFetching: state.tours.isFetching || state.regions.isFetching || state.hotels.isFetching,
+		isSaving: state.tours.isSaving,
 	}
 };
 
@@ -99,9 +99,7 @@ class TourContainer extends React.Component {
     if (!this.props.categories.length) {
       this.props.loadCategories();
     }
-    if (!this.props.hotels.length) {
-      this.props.loadHotelItems();
-    }
+
     if (!this.props.food.length) {
       this.props.loadFoodItems();
     }
@@ -160,7 +158,6 @@ TourContainer = withRouter(connect(
     loadCategories,
     loadItems,
     loadFoodItems: fromFoodReducer.loadItems,
-    loadHotelItems: fromHotelsReducer.loadItems
   }
 )(TourContainer));
 

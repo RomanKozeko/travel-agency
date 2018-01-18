@@ -32,14 +32,6 @@ export const saveItem = (payload) => (dispatch) => {
 	});
 };
 
-const selectFileSuccess = (state, action) => ({
-	...state,
-	selected : [
-		...state.selected,
-		action.selected
-	]
-});
-
 export const defaultState = {
   allIds: [],
   byIds: {},

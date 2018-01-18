@@ -27,6 +27,7 @@ module.exports = {
 
     Tour.findById(tourId)
       .populate('preview')
+      .populate('hotels')
       .then(tour => res.json(tour))
       .catch(next);
   },

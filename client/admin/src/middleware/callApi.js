@@ -77,7 +77,9 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
-export const hotelSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const hotelSchema = new schema.Entity('items', {
+  regions: [regionSchema]
+},  { idAttribute: '_id' });
 export const hotelsSchema = { items: [hotelSchema] };
 
 export const showPlaceSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
@@ -152,6 +154,7 @@ export default store => next => (action) => {
       }
       return next(actionWith({
         response,
+        endpoint,
         type: successType
       }));
     },

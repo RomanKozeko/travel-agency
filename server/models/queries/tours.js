@@ -10,6 +10,8 @@ module.exports = {
     .populate('preview')
     .populate('categories')
     .populate('regions')
+    .populate('hotels')
+    .populate('showplaces')
     .populate('periodType');
 
     return Promise.all([query, Tour.count()]);

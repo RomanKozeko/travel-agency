@@ -16,6 +16,7 @@ import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import TreeList from '../ui-elements/TreeList';
+import ItemsFilterByRegions from '../regions/ItemsFilterByRegions';
 
 const styles = StyleSheet.create({
   field: {
@@ -79,8 +80,9 @@ class TourForm extends Component {
       url: tour.url,
       food: tour.food,
       regions: tour.regions,
+      tourHotels: tour.hotels.map(item => item._id || item) ,
       map: tour.map || [],
-      days: tour.days || 0
+      days: tour.days || 0,
 		}
 	}
 
@@ -171,6 +173,7 @@ class TourForm extends Component {
     tour.days = this.state.days;
     tour.food = this.state.food;
     tour.regions = this.state.regions;
+    tour.hotels = this.state.tourHotels;
     tour.map = this.state.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
     this.props.onSubmit(tour, this.props.isNew);
@@ -195,10 +198,20 @@ class TourForm extends Component {
     this.setState({regions});
   };
 
+  toggleItem = (e, id) => {
+    const tourHotels = [...this.state.tourHotels];
+    const index = tourHotels.indexOf(id);
+    if (index === -1) {
+      tourHotels.push(id)
+    } else {
+      tourHotels.splice(index, 1)
+    }
+    this.setState({tourHotels});
+  };
+
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
 		const { contentByLang, preview, map, url, enabled, days } = this.state;
-
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
         <div className="row">
@@ -384,6 +397,10 @@ class TourForm extends Component {
               defaultChecked={this.state.checkedCategories}
               updateItems={this.updateItems}
               itemsName='Categories'
+            />
+            <ItemsFilterByRegions
+              selectedItems={this.state.tourHotels}
+              toggleItem={this.toggleItem}
             />
           </div>
         </div>
