@@ -38,7 +38,7 @@ const ImageUploader = ({ uploadImg }) => {
         onChange={(e) => handleImageChange(e)}
       />
       <label htmlFor="file">
-        <Button className={css(styles.button)} raised color="primary">
+        <Button className={css(styles.button)} component="span" raised color="primary">
           Добавить файл
         </Button>
       </label>

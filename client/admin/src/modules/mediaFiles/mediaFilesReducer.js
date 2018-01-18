@@ -24,9 +24,6 @@ export const saveItem = (payload) => (dispatch) => {
 			endpoint: '/api/media',
 			body: formData,
 			contentType: 'formData',
-			toasterMsg: {
-				success: 'Saved'
-			},
 			schema: Schemas['MEDIAFILE']
 		}
 	});

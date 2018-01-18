@@ -8,7 +8,6 @@ import Button from 'material-ui/Button';
 import withTabs from '../ui-elements/HOC/withTabs';
 import ImageGridList from '../ui-elements/ImageGridList'
 import AddPreviewPopup from '../ui-elements/form/AddPreviewPopup';
-import StarsList from '../ui-elements/StarsList';
 import NotificationPanel from '../ui-elements/form/NotificationPanel';
 import TreeList from '../ui-elements/TreeList'
 

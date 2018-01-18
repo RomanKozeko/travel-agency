@@ -50,8 +50,6 @@ const styles = StyleSheet.create({
 class TourForm extends Component {
 	constructor(props) {
 		super(props);
-
-    const { tour } = this.props;
     const contentByLang = {...this.props.languagesIDs};
 
     Object.keys(contentByLang).forEach(key => {
@@ -67,27 +65,23 @@ class TourForm extends Component {
       contentByLang[content.language] = content
     });
 
+    const tour = {
+      ...this.props.tour,
+      hotels: this.props.tour.hotels.map(item => item._id || item),
+    };
+
 		this.state = {
+      tour,
       contentByLang,
-			anchorEl: undefined,
 			open: false,
-			enabled: tour.enabled,
-			preview: [...tour.preview],
       selectedPreviewItems: [],
       content: this.props.content,
       idsCategories: this.props.categoriesAllIds,
-      checkedCategories: tour.categories || [],
-      url: tour.url,
-      food: tour.food,
-      regions: tour.regions,
-      tourHotels: tour.hotels.map(item => item._id || item) ,
-      map: tour.map || [],
-      days: tour.days || 0,
 		}
 	}
 
   updateItems = (items, ids) => {
-		this.setState({ [`checked${items}`]: ids })
+		this.setState({ tour: { ...this.state.tour, [items]: ids } })
   };
 
   handleInputChange = (langID, name) => event => {
@@ -96,7 +90,7 @@ class TourForm extends Component {
       contentByLang[langID][name] = event.target.value;
       this.setState({ contentByLang });
     } else {
-      this.setState({ [name]: event.target.value })
+      this.setState({ tour: { ...this.state.tour, [name]: event.target.value } })
     }
   };
 
@@ -108,7 +102,7 @@ class TourForm extends Component {
 
   addPreview = () => {
   	const selectedPreview = [...this.props.selectedPreview];
-  	const preview = [...this.state.preview];
+  	const preview = [...this.state.tour.preview];
 
     selectedPreview.forEach( selectedItem => {
       const isNotExist = preview.every(previewItem => previewItem._id !== selectedItem);
@@ -117,7 +111,7 @@ class TourForm extends Component {
       }
     });
 
-    this.setState({ preview });
+    this.setState({ tour: {...this.state.tour, preview} });
   };
 
   togglePreviewItem = (img) => {
@@ -130,7 +124,7 @@ class TourForm extends Component {
       selectedPreview.splice(index, 1);
     }
 
-    const preview = [ ...this.state.preview ];
+    const preview = [...this.state.tour.preview];
     preview.forEach(item => {
       if (item._id === img._id) {
         item.active = !item.active;
@@ -138,18 +132,18 @@ class TourForm extends Component {
     });
 
     this.setState({
-      preview,
+      tour: { ...this.state.tour, preview },
       selectedPreviewItems: selectedPreview
     });
   };
 
   deletePreviewItems = () => {
-    const { selectedPreviewItems, preview } = this.state;
-    const updatedPreview = preview.filter(
+    const { selectedPreviewItems, tour } = this.state;
+    const preview = tour.preview.filter(
       previewItem => !selectedPreviewItems.find(selectedItem => selectedItem._id === previewItem._id)
     );
 
-    this.setState({ preview: updatedPreview, selectedPreviewItems: [] })
+    this.setState({ tour: { ...this.state.tour, preview } , selectedPreviewItems: [] })
   };
 
 	handleRequestClose = () => {
@@ -164,17 +158,10 @@ class TourForm extends Component {
 
   saveTour = (e) => {
     e.preventDefault();
-    const tour = {...this.props.tour};
-    tour.url = this.state.url.replace(/\s+/g, '-').toLowerCase();
+    const tour = {...this.state.tour};
+    tour.url = tour.url.replace(/\s+/g, '-').toLowerCase();
     tour.content = Object.values(this.state.contentByLang);
-    tour.categories = [...this.state.checkedCategories];
-    tour.preview = [...this.state.preview];
-    tour.enabled = this.state.enabled;
-    tour.days = this.state.days;
-    tour.food = this.state.food;
-    tour.regions = this.state.regions;
-    tour.hotels = this.state.tourHotels;
-    tour.map = this.state.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
+    tour.map = tour.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
     this.props.onSubmit(tour, this.props.isNew);
 
@@ -184,34 +171,35 @@ class TourForm extends Component {
   };
 
   updateMapDetails = (places) => {
-    this.setState({ map: places })
+    this.setState({ tour: { ...this.state.tour, map: places } })
   };
 
   selectRegions = (e) => {
-    const regions = [...this.state.regions];
+    const regions = [...this.state.tour.regions];
     const index = regions.indexOf(e.target.value);
     if (index === -1) {
       regions.push(e.target.value)
     } else {
       regions.splice(index, 1)
     }
-    this.setState({regions});
+    this.setState({ tour: { ...this.state.tour, regions } });
   };
 
   toggleItem = (e, id) => {
-    const tourHotels = [...this.state.tourHotels];
-    const index = tourHotels.indexOf(id);
+    const hotels = [...this.state.tour.hotels];
+    const index = hotels.indexOf(id);
     if (index === -1) {
-      tourHotels.push(id)
+      hotels.push(id)
     } else {
-      tourHotels.splice(index, 1)
+      hotels.splice(index, 1)
     }
-    this.setState({tourHotels});
+    this.setState({ tour: { ...this.state.tour, hotels } });
   };
 
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
-		const { contentByLang, preview, map, url, enabled, days } = this.state;
+		const { contentByLang } = this.state;
+		const tour = {...this.state.tour};
 		return (
 			<form onSubmit={(e) => this.saveTour(e)}>
         <div className="row">
@@ -227,7 +215,7 @@ class TourForm extends Component {
             >
               Удалить выбранные
             </Button>
-            <ImageGridList imgs={preview} clickHandler={this.togglePreviewItem} />
+            <ImageGridList imgs={tour.preview} clickHandler={this.togglePreviewItem} />
             <h3 className={css(styles.noMB)}>Карта</h3>
             {languages.map((lang, i) => (
               <div key={lang._id + i}>
@@ -244,11 +232,11 @@ class TourForm extends Component {
                 }
               </div>
             ))}
-            <Map save={this.updateMapDetails} places={map} />
+            <Map save={this.updateMapDetails} places={tour.map} />
             <h3>Регионы</h3>
             <div className={css(styles.regionWrapper)}>
               <TreeList
-                selectedItems={this.state.regions}
+                selectedItems={tour.regions}
                 items={this.props.regions}
                 selectItems={this.selectRegions}
               />
@@ -258,16 +246,16 @@ class TourForm extends Component {
             <FormControlLabel
               control={
                 <Switch
-                  checked={enabled}
-                  onChange={(event, checked) => this.setState({ enabled: checked })}
+                  checked={tour.enabled}
+                  onChange={(event, checked) => this.setState({ tour: { ...this.state.tour, enabled: checked } })}
                   aria-label="checkedD"
                 />
               }
-              label={ enabled ? 'Активный' : 'Неактивный'}
+              label={ tour.enabled ? 'Активный' : 'Неактивный'}
             />
             <TextField
               name='url'
-              value={url}
+              value={tour.url}
               onChange={this.handleInputChange(null, 'url')}
               fullWidth
               required
@@ -314,7 +302,7 @@ class TourForm extends Component {
                       <TextField
                         label="Количество дней"
                         type="number"
-                        value={days}
+                        value={tour.days}
                         onChange={this.handleInputChange(null, 'days')}
                         margin="normal"
                         className={css(styles.field)}
@@ -325,7 +313,7 @@ class TourForm extends Component {
                           <InputLabel htmlFor="parentRegion" className={css(styles.select)}>Тип питания</InputLabel>
                           <Select
                             className={css(styles.select)}
-                            value={this.state.food || '1'}
+                            value={tour.food || '1'}
                             onChange={this.handleInputChange(null, 'food')}
                             input={<Input id="food" className={css(styles.select)} fullWidth/>}
                             fullWidth
@@ -394,12 +382,12 @@ class TourForm extends Component {
               items={this.props.categoriesByIDs}
               content={this.props.regionsContent}
               handleToggle={this.handleToggle}
-              defaultChecked={this.state.checkedCategories}
+              defaultChecked={tour.categories}
               updateItems={this.updateItems}
-              itemsName='Categories'
+              itemsName='categories'
             />
             <ItemsFilterByRegions
-              selectedItems={this.state.tourHotels}
+              selectedItems={tour.hotels}
               toggleItem={this.toggleItem}
             />
           </div>
