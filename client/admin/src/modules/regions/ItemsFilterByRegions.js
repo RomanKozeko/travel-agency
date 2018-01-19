@@ -68,7 +68,7 @@ class ItemsFilterByRegions extends React.Component {
             <Chip
               label={this.getTitle(this.props.hotels, selectedItemId)}
               key={selectedItemId}
-              onRequestDelete={(e) => this.props.toggleItem(e, selectedItemId)}
+              onDelete={(e) => this.props.toggleItem(e, selectedItemId)}
               className={css(styles.chip)}
             />
           )}

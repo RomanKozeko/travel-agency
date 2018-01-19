@@ -72,7 +72,7 @@ class ItemsSelector extends React.Component {
           <Chip
             label={this.props.items[id].content[0].title}
             key={id}
-            onRequestDelete={(e) => this.handleToggle(e, id)}
+            onDelete={(e) => this.handleToggle(e, id)}
             className={css(styles.chip)}
           />
         )}
@@ -103,7 +103,7 @@ class ItemsSelector extends React.Component {
           id="lock-menu"
           anchorEl={this.state.anchorEl}
           open={this.state.open}
-          onRequestClose={this.handleRequestClose}
+          onClose={this.handleRequestClose}
         >
           {Object.keys(items).map((option, index) =>
             <MenuItem

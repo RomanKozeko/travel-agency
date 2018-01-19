@@ -386,10 +386,12 @@ class TourForm extends Component {
               updateItems={this.updateItems}
               itemsName='categories'
             />
-            <ItemsFilterByRegions
-              selectedItems={tour.hotels}
-              toggleItem={this.toggleItem}
-            />
+            <CollapseComponent title='Отели'>
+              <ItemsFilterByRegions
+                selectedItems={tour.hotels}
+                toggleItem={this.toggleItem}
+              />
+            </CollapseComponent>
           </div>
         </div>
         <div className="row">
