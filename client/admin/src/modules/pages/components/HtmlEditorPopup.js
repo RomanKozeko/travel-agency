@@ -15,10 +15,18 @@ import {css, StyleSheet} from 'aphrodite/no-important';
 const styles = StyleSheet.create({
   appBar: {
     position: 'relative',
+    background: '#3f51b5',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   flex: {
     flex: 1,
   },
+  title: {
+    color: '#fff',
+    margin: '0'
+  }
 });
 
 class HtmlEditorPopup extends React.Component {
@@ -40,22 +48,19 @@ class HtmlEditorPopup extends React.Component {
       <Dialog
         fullScreen
         open={isOpen}
-        onRequestClose={handleRequestClose}
-        transition={<Slide direction="up"/>}
+        onClose={handleRequestClose}
       >
-        <AppBar className={css(styles.appBar)}>
-          <Toolbar>
-            <IconButton color="contrast" onClick={handleRequestClose} aria-label="Close">
-              <CloseIcon/>
-            </IconButton>
-            <Typography type="title" color="inherit" className={css(styles.flex)}>
-              Добавить контент
-            </Typography>
-            <Button color="contrast" onClick={() => saveRow(this.state.content, 'content')}>
-              Сoхранить
-            </Button>
-          </Toolbar>
-        </AppBar>
+        <div className={css(styles.appBar)}>
+          <IconButton color="contrast" onClick={handleRequestClose} aria-label="Close">
+            <CloseIcon/>
+          </IconButton>
+          <h3 type="title" color="inherit" className={css(styles.title)}>
+            Добавить контент
+          </h3>
+          <Button color="contrast" onClick={() => saveRow(this.state.content, 'content')}>
+            Сoхранить
+          </Button>
+        </div>
         <TinyMCE
           content={content}
           config={{

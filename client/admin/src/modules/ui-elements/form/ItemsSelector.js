@@ -37,7 +37,7 @@ class ItemsSelector extends React.Component {
     this.setState({ open: true, anchorEl: event.currentTarget });
   };
 
-  handleRequestClose = () => {
+  handleClose = () => {
     this.setState({ open: false });
   };
 
@@ -84,26 +84,28 @@ class ItemsSelector extends React.Component {
     const {items} = this.props;
     return (
       <div className={css(styles.root)}>
-        <List>
-          <ListItem
-            button
-            aria-haspopup="true"
-            aria-controls="lock-menu"
-            aria-label={this.props.itemsName}
-            onClick={this.handleClickListItem}
-          >
-            <ListItemText
-              className={css(styles.listItem)}
-              primary={this.props.itemsName}
-              secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
-            />
-          </ListItem>
-        </List>
+        <div>
+          <List>
+            <ListItem
+              button
+              aria-haspopup="true"
+              aria-controls="lock-menu"
+              aria-label={this.props.itemsName}
+              onClick={this.handleClickListItem}
+            >
+              <ListItemText
+                className={css(styles.listItem)}
+                primary={this.props.itemsName}
+                secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
+              />
+            </ListItem>
+          </List>
+        </div>
         <Menu
           id="lock-menu"
           anchorEl={this.state.anchorEl}
           open={this.state.open}
-          onClose={this.handleRequestClose}
+          onClose={this.handleClose}
         >
           {Object.keys(items).map((option, index) =>
             <MenuItem

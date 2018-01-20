@@ -42,7 +42,7 @@ class AddToursListPopup extends React.Component {
   render() {
     const {isOpen, handleRequestClose, categories, regions, saveRow} = this.props;
     return (
-      <Dialog open={isOpen} onRequestClose={handleRequestClose} transition={<Slide direction="up"/>}>
+      <Dialog open={isOpen} onRequestClose={handleRequestClose}>
         <DialogTitle>Filter tours to display</DialogTitle>
         <DialogContent className={css(styles.popup)}>
           {categories.length && regions.length &&

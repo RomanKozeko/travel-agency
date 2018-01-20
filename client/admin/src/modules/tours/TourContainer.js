@@ -47,7 +47,11 @@ const createBlankPage = (languages) => {
     id: uniqueId(),
     enabled: true,
     preview: [],
+    hotels: [],
+    showPlaces: [],
+    regions: [],
     map: [],
+    categories: [],
     content
   };
 };

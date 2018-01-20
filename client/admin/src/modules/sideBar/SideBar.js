@@ -51,7 +51,7 @@ const CustomLink = ({label, to, icon}) => (
 const SideBar = () => (
   <ul className={css(styles.sideBarMenu)}>
     <li className={css(styles.item)}><CustomLink to="/admin/tours" label="Туры" icon="library_books"/></li>
-    <li className={css(styles.item)}><CustomLink to="/admin/categories" label="Категории" icon="widgets"/></li>
+    <li className={css(styles.item)}><CustomLink to="/admin/categories" label="Категории туров" icon="widgets"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/regions" label="Регионы" icon="place"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/food" label="Типы питания" icon="local_dining"/></li>
     <li className={css(styles.item)}>

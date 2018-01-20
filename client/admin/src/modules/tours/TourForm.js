@@ -17,6 +17,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import TreeList from '../ui-elements/TreeList';
 import ItemsFilterByRegions from '../regions/ItemsFilterByRegions';
+import FilteredTagSelector from '../ui-elements/FilteredTagSelector';
 
 const styles = StyleSheet.create({
   field: {
@@ -67,7 +68,7 @@ class TourForm extends Component {
 
     const tour = {
       ...this.props.tour,
-      hotels: this.props.tour.hotels.map(item => item._id || item),
+      hotels: this.props.tour.hotels.map(item => item._id || item)
     };
 
 		this.state = {
@@ -194,6 +195,12 @@ class TourForm extends Component {
       hotels.splice(index, 1)
     }
     this.setState({ tour: { ...this.state.tour, hotels } });
+  };
+
+  onFilterSelect = (filterType, filters) => {
+    const tour = {...this.state.tour};
+    tour.categories = filters;
+    this.setState({tour});
   };
 
 	render() {
@@ -384,7 +391,15 @@ class TourForm extends Component {
               handleToggle={this.handleToggle}
               defaultChecked={tour.categories}
               updateItems={this.updateItems}
-              itemsName='categories'
+              itemsName='Категории тура'
+            />
+
+            <FilteredTagSelector
+              selectedItems={this.state.tour.categories}
+              onFilterSelect={this.onFilterSelect}
+              filterType='categories'
+              items={this.props.categories}
+              label='Выбрать категории туров'
             />
             <CollapseComponent title='Отели'>
               <ItemsFilterByRegions
