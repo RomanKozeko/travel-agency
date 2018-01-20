@@ -175,6 +175,7 @@ class FilteredTagSelector extends React.Component {
           }
         </div>
 
+
         <ul className={css(styles.tags)}>
           {selectedItems.map(item => (
             <Chip

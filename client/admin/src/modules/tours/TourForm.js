@@ -394,13 +394,7 @@ class TourForm extends Component {
               itemsName='Категории тура'
             />
 
-            <FilteredTagSelector
-              selectedItems={this.state.tour.categories}
-              onFilterSelect={this.onFilterSelect}
-              filterType='categories'
-              items={this.props.categories}
-              label='Выбрать категории туров'
-            />
+
             <CollapseComponent title='Отели'>
               <ItemsFilterByRegions
                 selectedItems={tour.hotels}
