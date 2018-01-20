@@ -28,7 +28,7 @@ const hotelReducer = {
     let hotels = {...state.hotels};
     let regions = {...state.regions};
 
-    let regionsAllIds = Object.keys(res.entities.regions);
+    let regionsAllIds = res.entities.regions ? Object.keys(res.entities.regions) : [];
     let hotelsIDs = res.result.items ? res.result.items : [res.result];
 
     regions = {
