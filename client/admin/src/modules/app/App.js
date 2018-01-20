@@ -37,9 +37,11 @@ const styles = StyleSheet.create({
     },
   },
   sideBarWrapper: {
-	  '@media (min-width: 800px)': {
+    padding: '10px',
+	  '@media (min-width: 1280px)': {
 		  float: 'left',
 		  width: '235px',
+      padding: '0',
 	  },
   },
   contentWrapper: {
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   content: {
-	  '@media (min-width: 800px)': {
+	  '@media (min-width: 1280px)': {
 		  marginLeft: '235px',
       padding: '10px 20px'
     },

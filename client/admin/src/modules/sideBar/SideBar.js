@@ -10,30 +10,51 @@ const styles = StyleSheet.create({
     borderRadius: '4px',
     backgroundColor: '#fff',
     boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
-    listStyle: 'none'
+    listStyle: 'none',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media (min-width: 1280px)': {
+      display: 'block'
+    },
   },
   item: {
     display: 'block'
   },
   link: {
-    display: 'block',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     color: '#678098',
     margin: '1px 0 0',
-    padding: '12px 15px',
+    padding: '5px',
+    fontSize: '0',
     ':hover': {
       color: '#5b9bd1;',
       background: '#f2f6f9',
-    }
+    },
+    '@media (min-width: 830px)': {
+      fontSize: 'inherit',
+    },
+    '@media (min-width: 1280px)': {
+      display: 'block',
+      padding: '12px 15px',
+    },
   },
   active: {
-    borderLeft: '3px solid #5C9ACF',
-    marginLeft: '-3px',
     color: '#5b9bd1;',
-    background: '#f2f6f9'
+    background: '#f2f6f9',
+    '@media (min-width: 1280px)': {
+      borderLeft: '3px solid #5C9ACF',
+      marginLeft: '-3px',
+    },
   },
   icon: {
     verticalAlign: 'bottom',
-    marginRight: '8px'
+    display: 'block',
+    '@media (min-width: 1280px)': {
+      display: 'inline-block',
+      marginRight: '8px',
+    },
   }
 });
 
