@@ -16,7 +16,8 @@ import { MenuItem } from 'material-ui/Menu';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import TreeList from '../ui-elements/TreeList';
-import ItemsFilterByRegions from '../regions/ItemsFilterByRegions';
+import HotelsFilterContainer from './HotelsFilterContainer';
+import ShowplacesFilterContainer from './ShowplacesFilterContainer';
 import NotificationPanel from '../ui-elements/form/NotificationPanel';
 
 const styles = StyleSheet.create({
@@ -68,7 +69,8 @@ class TourForm extends Component {
 
     const tour = {
       ...this.props.tour,
-      hotels: this.props.tour.hotels.map(item => item._id || item)
+      hotels: this.props.tour.hotels.map(item => item._id || item),
+      showplaces: this.props.tour.showplaces.map(item => item._id || item)
     };
 
 		this.state = {
@@ -191,15 +193,15 @@ class TourForm extends Component {
     this.setState({ tour: { ...this.state.tour, regions } });
   };
 
-  toggleItem = (e, id) => {
-    const hotels = [...this.state.tour.hotels];
-    const index = hotels.indexOf(id);
+  toggleItem = (itemName) => (e, id) => {
+    const items = [...this.state.tour[itemName]];
+    const index = items.indexOf(id);
     if (index === -1) {
-      hotels.push(id)
+      items.push(id)
     } else {
-      hotels.splice(index, 1)
+      items.splice(index, 1)
     }
-    this.setState({ tour: { ...this.state.tour, hotels } });
+    this.setState({ tour: { ...this.state.tour, [itemName]: items } });
   };
 
   onFilterSelect = (filterType, filters) => {
@@ -289,114 +291,113 @@ class TourForm extends Component {
               <div key={lang._id}>
                 {selectedTabIndex === i &&
                   <div>
-                      <TextField
-                        name='title'
-                        value={contentByLang[lang._id].title}
-                        onChange={this.handleInputChange(lang._id, 'title')}
-                        fullWidth
-                        required
-                        className={css(styles.field)}
-                        label='Название'
-                      />
-                      <TextField
-                        name='description'
-                        value={contentByLang[lang._id].description}
-                        onChange={this.handleInputChange(lang._id, 'description')}
-                        fullWidth
-                        className={css(styles.field)}
-                        label='Мета описание'
-                      />
-                      <TextField
-                        label="Дата проведения"
-                        value={contentByLang[lang._id].duration}
-                        onChange={this.handleInputChange(lang._id, 'duration')}
-                        margin="normal"
-                        className={css(styles.field)}
-                        fullWidth
-                      />
-                      <TextField
-                        label="Время и место отправления"
-                        value={contentByLang[lang._id].departureInfo}
-                        onChange={this.handleInputChange(lang._id, 'departureInfo')}
-                        margin="normal"
-                        className={css(styles.field)}
-                        fullWidth
-                      />
-                      <TextField
-                        label="Количество дней"
-                        type="number"
-                        value={tour.days}
-                        onChange={this.handleInputChange(null, 'days')}
-                        margin="normal"
-                        className={css(styles.field)}
-                        fullWidth
-                      />
-                      <div className={css(styles.selectWrapper)}>
-                        <FormControl>
-                          <InputLabel htmlFor="parentRegion" className={css(styles.select)}>Тип питания</InputLabel>
-                          <Select
-                            className={css(styles.select)}
-                            value={tour.food || '1'}
-                            onChange={this.handleInputChange(null, 'food')}
-                            input={<Input id="food" className={css(styles.select)} fullWidth/>}
-                            fullWidth
-                          >
-                            <MenuItem className={css(styles.select)} key='1' value={'noParent'}>...</MenuItem>
-                            {this.props.food.map(foodItem => {
-                                return (
-                                  <MenuItem key={foodItem._id} value={foodItem._id}>{foodItem.content[0].title}</MenuItem>
-                                );
-                            })
-                            }
-                          </Select>
-                        </FormControl>
-                      </div>
-                      <CollapseComponent title='Описание тура'>
-                        <div className={css(styles.field)} >
-                          <TinyMCE
-                            content={contentByLang[lang._id].content}
-                            config={{
-                              plugins:'link image code',
-                              height: '200',
-                              fontsize_formats: '30px'
-                            }}
-                            onChange={this.handleEditorChange(lang._id, 'content')}
-                          />
-                        </div>
-                      </CollapseComponent>
-                      <CollapseComponent title='В стоимость тура входит'>
-                        <div className={css(styles.field)} >
-                          <TinyMCE
-                            content={contentByLang[lang._id].priceInclude}
-                            config={{
-                              plugins:'link image code',
-                              height: '200',
-                              fontsize_formats: '30px'
-                            }}
-                            onChange={this.handleEditorChange(lang._id, 'priceInclude')}
-                          />
-                        </div>
-                      </CollapseComponent>
-                      <CollapseComponent title='В стоимость тура не входит'>
-                        <div className={css(styles.field)} >
-                          <TinyMCE
-                            content={contentByLang[lang._id].priceNotInclude}
-                            config={{
-                              plugins:'link image code',
-                              height: '200',
-                              fontsize_formats: '30px'
-                            }}
-                            onChange={this.handleEditorChange(lang._id, 'priceNotInclude')}
-                          />
-                        </div>
-                      </CollapseComponent>
-                      <CollapseComponent title='Программа тура'>
-                        <TourProgram
-                          days={contentByLang[lang._id].program}
-                          save={this.saveProgram(lang._id)}
+                    <TextField
+                      name='title'
+                      value={contentByLang[lang._id].title}
+                      onChange={this.handleInputChange(lang._id, 'title')}
+                      fullWidth
+                      required
+                      className={css(styles.field)}
+                      label='Название'
+                    />
+                    <TextField
+                      name='description'
+                      value={contentByLang[lang._id].description}
+                      onChange={this.handleInputChange(lang._id, 'description')}
+                      fullWidth
+                      className={css(styles.field)}
+                      label='Мета описание'
+                    />
+                    <TextField
+                      label="Дата проведения"
+                      value={contentByLang[lang._id].duration}
+                      onChange={this.handleInputChange(lang._id, 'duration')}
+                      margin="normal"
+                      className={css(styles.field)}
+                      fullWidth
+                    />
+                    <TextField
+                      label="Время и место отправления"
+                      value={contentByLang[lang._id].departureInfo}
+                      onChange={this.handleInputChange(lang._id, 'departureInfo')}
+                      margin="normal"
+                      className={css(styles.field)}
+                      fullWidth
+                    />
+                    <TextField
+                      label="Количество дней"
+                      type="number"
+                      value={tour.days}
+                      onChange={this.handleInputChange(null, 'days')}
+                      margin="normal"
+                      className={css(styles.field)}
+                      fullWidth
+                    />
+                    <div className={css(styles.selectWrapper)}>
+                      <FormControl>
+                        <InputLabel htmlFor="parentRegion" className={css(styles.select)}>Тип питания</InputLabel>
+                        <Select
+                          className={css(styles.select)}
+                          value={tour.food || '1'}
+                          onChange={this.handleInputChange(null, 'food')}
+                          input={<Input id="food" className={css(styles.select)} fullWidth/>}
+                          fullWidth
+                        >
+                          <MenuItem className={css(styles.select)} key='1' value={'noParent'}>...</MenuItem>
+                          {this.props.food.map(foodItem => {
+                              return (
+                                <MenuItem key={foodItem._id} value={foodItem._id}>{foodItem.content[0].title}</MenuItem>
+                              );
+                          })
+                          }
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <CollapseComponent title='Описание тура'>
+                      <div className={css(styles.field)} >
+                        <TinyMCE
+                          content={contentByLang[lang._id].content}
+                          config={{
+                            plugins:'link image code',
+                            height: '200',
+                            fontsize_formats: '30px'
+                          }}
+                          onChange={this.handleEditorChange(lang._id, 'content')}
                         />
-                      </CollapseComponent>
-
+                      </div>
+                    </CollapseComponent>
+                    <CollapseComponent title='В стоимость тура входит'>
+                      <div className={css(styles.field)} >
+                        <TinyMCE
+                          content={contentByLang[lang._id].priceInclude}
+                          config={{
+                            plugins:'link image code',
+                            height: '200',
+                            fontsize_formats: '30px'
+                          }}
+                          onChange={this.handleEditorChange(lang._id, 'priceInclude')}
+                        />
+                      </div>
+                    </CollapseComponent>
+                    <CollapseComponent title='В стоимость тура не входит'>
+                      <div className={css(styles.field)} >
+                        <TinyMCE
+                          content={contentByLang[lang._id].priceNotInclude}
+                          config={{
+                            plugins:'link image code',
+                            height: '200',
+                            fontsize_formats: '30px'
+                          }}
+                          onChange={this.handleEditorChange(lang._id, 'priceNotInclude')}
+                        />
+                      </div>
+                    </CollapseComponent>
+                    <CollapseComponent title='Программа тура'>
+                      <TourProgram
+                        days={contentByLang[lang._id].program}
+                        save={this.saveProgram(lang._id)}
+                      />
+                    </CollapseComponent>
                   </div>
                 }
               </div>
@@ -409,17 +410,20 @@ class TourForm extends Component {
               updateItems={this.updateItems}
               itemsName='Категории тура'
             />
-
-
             <CollapseComponent title='Отели'>
-              <ItemsFilterByRegions
+              <HotelsFilterContainer
                 selectedItems={tour.hotels}
-                toggleItem={this.toggleItem}
+                toggleItem={this.toggleItem('hotels')}
+              />
+            </CollapseComponent>
+            <CollapseComponent title='Достопримечательности'>
+              <ShowplacesFilterContainer
+                selectedItems={tour.showplaces}
+                toggleItem={this.toggleItem('showplaces')}
               />
             </CollapseComponent>
           </div>
         </div>
-
         {!this.state.isValidForm &&
           <NotificationPanel>Пожалуйста, заполните все обязательные поля для всех языков</NotificationPanel>
         }

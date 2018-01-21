@@ -1,15 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import Chip from 'material-ui/Chip';
 import TreeList from '../ui-elements/TreeList'
 import StarsList from '../ui-elements/StarsList';
-import { getRegions, getHotels, getHotelsByFilter } from '../../rootReducer';
+import { getRegions } from '../../rootReducer';
 import { populateTree } from '../regions/RegionService';
 import { loadRegions } from '../regions/regionsReducer';
-import { loadItems, loadHotelsByRegions } from '../hotels/hotelsReducer';
+import withEntities from "../ui-elements/HOC/withEntities";
 
 const styles = StyleSheet.create({
   root: {
@@ -47,12 +46,12 @@ const styles = StyleSheet.create({
     marginLeft: '10px',
     marginBottom: '10px'
   },
-  hotelLink: {
+  itemLink: {
     width: '150px',
   }
 });
 
-class ItemsFilterByRegions extends React.Component {
+class FilterByRegions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,40 +59,32 @@ class ItemsFilterByRegions extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (!this.props.isRegionsFetched) {
-      this.props.loadRegions();
-    }
-    if (!this.props.isHotelsFetched) {
-      this.props.loadHotels();
-    }
-  }
-
   selectRegions = (e) => {
-    const selectedRegions = [...this.state.selectedRegions];
-    const index = selectedRegions.indexOf(e.target.value);
-    if (index === -1) {
-      selectedRegions.push(e.target.value)
-    } else {
-      selectedRegions.splice(index, 1)
-    }
-    this.setState({selectedRegions});
-    this.props.loadHotelsByRegions(selectedRegions);
+    const updatedItems = this.toggleItem(this.state.selectedRegions, e.target.value);
+    this.setState({ selectedRegions : updatedItems });
+    this.props.loadItemsByRegions(updatedItems);
   };
 
-  getTitle = (hotels, id) => {
-    const hotel = hotels.find(hotel => hotel._id === id);
-    return hotel ? hotel.content[0].title : '';
+  toggleItem = (itemsArray, item) => {
+    const itemsToReturn = [...itemsArray];
+    const index = itemsToReturn.indexOf(item);
+    index === -1 ? itemsToReturn.push(item) : itemsToReturn.splice(index, 1);
+    return itemsToReturn;
+  };
+
+  getTitle = (items, id) => {
+    const item = items.find(item => item._id === id);
+    return item ? item.content[0].title : '';
   };
 
   render() {
-    const { regions, filteredItems } = this.props;
+    const { regions, filteredItems, itemsNameToFilter } = this.props;
     return (
       <div className={css(styles.root)}>
         <div className={css(styles.selectedItemsContainer)}>
           {this.props.selectedItems.map(selectedItemId =>
             <Chip
-              label={this.getTitle(this.props.hotels, selectedItemId)}
+              label={this.getTitle(this.props[itemsNameToFilter], selectedItemId)}
               key={selectedItemId}
               onDelete={(e) => this.props.toggleItem(e, selectedItemId)}
               className={css(styles.chip)}
@@ -112,8 +103,8 @@ class ItemsFilterByRegions extends React.Component {
             {filteredItems.map((filteredItem, i) => (
               !this.props.selectedItems.find(selectedItemId => filteredItem._id === selectedItemId) &&
               <div key={filteredItem._id} className={css(styles.filteredItem)}>
-                <div className={css(styles.hotelLink)}>
-                  <Link to={`/admin/hotels/${filteredItem._id}`}>{filteredItem.content[0].title}</Link>
+                <div className={css(styles.itemLink)}>
+                  <Link to={`/admin/${itemsNameToFilter}/${filteredItem._id}`}>{filteredItem.content[0].title}</Link>
                 </div>
                 <StarsList starsCount={filteredItem.stars} />
                 <Button
@@ -132,23 +123,11 @@ class ItemsFilterByRegions extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state) => {
-  const hotels = getHotels(state);
-  return {
-    hotels,
-    filteredItems: state.hotels.activeFilter ? (getHotelsByFilter(state, state.hotels.activeFilter) || []) : hotels,
-    regions: populateTree(getRegions(state)),
-    isHotelsFetched: state.hotels.isFetched,
-    isRegionsFetched: state.regions.isFetched,
+const options = {
+  regions: {
+    loadItems: loadRegions,
+    getItems: (state) => populateTree(getRegions(state))
   }
 };
 
-export default connect(
-  mapStateToProps,
-  {
-    loadRegions,
-    loadHotelsByRegions,
-    loadHotels: loadItems
-  },
-)(ItemsFilterByRegions);
+export default withEntities(FilterByRegions, options);

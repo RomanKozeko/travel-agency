@@ -4,11 +4,11 @@ import React from 'react';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
-import { getLanguages, getShowPlace, getRegions } from '../../rootReducer';
+import { getLanguages, getShowplace, getRegions } from '../../rootReducer';
 import { loadRegions } from '../regions/regionsReducer';
-import {loadItem, saveItem} from './showPlacesReducer';
+import {loadItem, saveItem} from './showplacesReducer';
 import Portlet from '../ui-elements/Portlet';
-import ShowPlaceForm from './ShowPlaceForm';
+import ShowPlaceForm from './ShowplaceForm';
 import { populateTree } from '../regions/RegionService';
 
 const uniqueId = require('lodash.uniqueid');
@@ -34,7 +34,7 @@ const createBlankPage = (languages) => {
 };
 
 const mapStateToProps = (state, router) => {
-  let item = getShowPlace(state, router.match.params.id);
+  let item = getShowplace(state, router.match.params.id);
   const isNew = router.location.search.split('=')[1] === 'newItem';
   const languages = getLanguages(state);
 
@@ -75,7 +75,7 @@ class ShowPlaceContainer extends React.Component {
     const { isFetching, item, isBordered = true } = this.props;
     return (
       <div>
-        <BackLink text="Назад к списку страниц" url="/admin/show-places" />
+        <BackLink text="Назад к списку страниц" url="/admin/showplaces" />
         {isFetching || !item ? <Spinner /> :
           <div>
             <PageHeader text={item.content[0].title}/>

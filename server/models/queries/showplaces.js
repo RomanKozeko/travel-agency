@@ -1,22 +1,22 @@
 var mongoose = require('mongoose');
 
 const ObjectId = mongoose.Types.ObjectId;
-const Hotel = require('../Hotel');
+const ShowPlace = require('../Showplace');
 const Region = require('../Region');
 
 module.exports = {
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
 
     if (!filter.regions) {
-      const query = Hotel.find({})
+      const query = ShowPlace.find({})
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
         .populate('preview')
         .populate('categories')
-        .populate('regions')
+        .populate('regions');
 
-      return Promise.all([query, Hotel.count()]);
+      return Promise.all([query, ShowPlace.count()]);
     }
 
     const regionsFilterIds = filter.regions.split(',');
@@ -36,7 +36,7 @@ module.exports = {
     return regions.then(res => {
       const regionsIDs = res.map(region => ({ regions: region._id }));
 
-      const query = Hotel.find({ $or: regionsIDs})
+      const query = ShowPlace.find({ $or: regionsIDs})
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
@@ -44,7 +44,7 @@ module.exports = {
         .populate('categories')
         .populate('regions')
 
-      return Promise.all([query, Hotel.count()]);
+      return Promise.all([query, ShowPlace.count()]);
 
     });
   }

@@ -6,7 +6,6 @@ import {
 import {StyleSheet, css} from 'aphrodite/no-important';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-
 import './App.css';
 import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
@@ -23,12 +22,11 @@ import CategoryContainer from '../categories/CategoryContainer';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
 import HotelsContainer from '../hotels/HotelsContainer';
 import HotelContainer from '../hotels/HotelContainer';
-import ShowPlacesContainer from '../showPlaces/ShowPlacesContainer';
-import ShowPlaceContainer from '../showPlaces/ShowPlaceContainer';
+import ShowPlacesContainer from '../showPlaces/ShowplacesContainer';
+import ShowPlaceContainer from '../showPlaces/ShowplaceContainer';
 import FoodContainer from '../food/FoodContainer';
 import FoodItemContainer from '../food/FoodItemContainer';
 import { loadLang } from '../languages/LanguagesReducer';
-
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
@@ -121,12 +119,12 @@ const routes = [
     main: () => <MediaFilesContainer />
   },
   {
-    path: '/admin/show-places',
+    path: '/admin/showplaces',
     exact: true,
     main: () => <ShowPlacesContainer />
   },
   {
-    path: '/admin/show-places/:id',
+    path: '/admin/showplaces/:id',
     exact: true,
     main: () => <ShowPlaceContainer />
   },
@@ -140,7 +138,6 @@ const routes = [
     exact: true,
     main: () => <FoodItemContainer />
   },
-
 ];
 
 

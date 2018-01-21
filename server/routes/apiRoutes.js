@@ -33,7 +33,7 @@ const ApiLanguagesCtrl = require('../controllers/api/languages');
 const ApiPagesCtrl = require('../controllers/api/pages');
 const ApiPhotosCtrl = require('../controllers/api/media');
 const ApiHotelsCtrl = require('../controllers/api/hotels');
-const ApiShowPlacesCtrl = require('../controllers/api/showPlaces');
+const ApiShowPlacesCtrl = require('../controllers/api/showplaces');
 const ApiFoodCtrl = require('../controllers/api/food');
 
 const requireSignIn = passport.authenticate('local', { session: false });

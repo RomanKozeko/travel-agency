@@ -1,16 +1,16 @@
-const Hotel = require('../../models/Hotel');
-const HotelsQueries = require('../../models/queries/hotels');
+const Showplace = require('../../models/Showplace');
+const ShowplacesQueries = require('../../models/queries/showplaces');
 const config = require('../../config/index');
 const slicer = require('../../services/index');
 const createCRUD = require('../../services/apiFactory');
 
 module.exports = createCRUD(
-  Hotel,
+  Showplace,
   {
     get: (req, res, next) => {
       const { regions, offset = 0, limit = config.itemsPerPageLimit } = req.query;
 
-      HotelsQueries.getAllWithFilter(offset, limit, {regions})
+      ShowplacesQueries.getAllWithFilter(offset, limit, {regions})
       .then((result) => {
         res.json({
           offset: parseInt(offset),

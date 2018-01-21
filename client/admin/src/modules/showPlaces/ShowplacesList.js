@@ -16,7 +16,7 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/show-places/'
+        linkPrefix: '/admin/showplaces/'
       },
       {
         name: 'enabled',
@@ -37,7 +37,7 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
         color="primary"
         className="addBottomMargin"
         component={Link}
-        to="/admin/show-places/item?state=newItem"
+        to="/admin/showplaces/item?state=newItem"
       >
         Добавить достопримечательность
       </Button>

@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import { loadItems, saveItem, deleteItems } from './showPlacesReducer';
-import { getShowPlaces } from '../../rootReducer';
-import ShowPlacesList from './ShowPlacesList';
+import { loadItems, saveItem, deleteItems } from './showplacesReducer';
+import { getShowplaces } from '../../rootReducer';
+import ShowPlacesList from './ShowplacesList';
 import Spinner from '../ui-elements/Spinner';
 
 const mapStateToProps = (state) => {
   return {
-    items: getShowPlaces(state),
-    isFetching: state.hotels.isFetching,
-    isFetched: state.hotels.isFetched,
+    items: getShowplaces(state),
+    isFetching: state.showplaces.isFetching,
+    isFetched: state.showplaces.isFetched,
     isSaving: state.languages.isSaving,
     languages: state.languages
   };

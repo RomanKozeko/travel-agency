@@ -187,4 +187,4 @@ class ShowPlaceForm extends React.Component {
   }
 }
 
-export default withTabs(ShowPlaceForm, '/admin/hotels')
+export default withTabs(ShowPlaceForm, '/admin/showplaces')

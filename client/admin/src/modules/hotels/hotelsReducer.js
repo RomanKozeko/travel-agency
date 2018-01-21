@@ -1,4 +1,4 @@
-import { createReducer, basicReducerEvents, createBasicActions, getFiltersQuery } from '../../services/utils';
+import { createReducer, createBasicActions, getFiltersQuery } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions

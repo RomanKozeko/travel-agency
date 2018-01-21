@@ -76,7 +76,7 @@ const SideBar = () => (
     <li className={css(styles.item)}><CustomLink to="/admin/regions" label="Регионы" icon="place"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/food" label="Типы питания" icon="local_dining"/></li>
     <li className={css(styles.item)}>
-      <CustomLink to="/admin/show-places" label="Достопримечательности" icon="account_balance"/>
+      <CustomLink to="/admin/showplaces" label="Достопримечательности" icon="account_balance"/>
     </li>
     <li className={css(styles.item)}><CustomLink to="/admin/hotels" label="Отели" icon="business"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/pages" label="Страницы" icon="web"/></li>

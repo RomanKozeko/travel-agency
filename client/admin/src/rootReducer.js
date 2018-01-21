@@ -11,7 +11,7 @@ import categoriesReducer, * as fromCategories from './modules/categories/categor
 import regionsReducer, * as fromRegions from './modules/regions/regionsReducer';
 import mediaFilesReducer, * as fromMediaFiles from './modules/mediaFiles/mediaFilesReducer';
 import hotelsReducer, * as fromMHotels from './modules/hotels/hotelsReducer';
-import showPlacesReducer, * as fromShowPlaces from './modules/showPlaces/showPlacesReducer';
+import showPlacesReducer, * as fromShowplaces from './modules/showPlaces/showplacesReducer';
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
 
@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
   categories: categoriesReducer,
   mediafiles: mediaFilesReducer,
   hotels: hotelsReducer,
-  showPlaces: showPlacesReducer,
+  showplaces: showPlacesReducer,
   food: foodReducer,
   entities: entitiesReducer
 });
@@ -55,8 +55,9 @@ export const getHotels = (state) => fromEntities.getHotels(state.entities.hotels
 export const getHotel = (state, id) => fromEntities.getHotel(state.entities.hotels, id);
 export const getHotelsByFilter = (state, filter) => fromEntities.getHotelsByFilter(state.entities.hotels, filter);
 
-export const getShowPlaces = (state) => fromShowPlaces.getShowPlaces(state.showPlaces);
-export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showPlaces, id);
+export const getShowplaces = (state) => fromEntities.getShowplaces(state.entities.showplaces);
+export const getShowplace = (state, id) => fromEntities.getShowplace(state.entities.showplaces, id);
+export const getShowplacesByFilter = (state, filter) => fromEntities.getShowplacesByFilter(state.entities.showplaces, filter);
 
 export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);

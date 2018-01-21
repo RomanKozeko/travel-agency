@@ -1,57 +1,34 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Skeleton from 'react-loading-skeleton';
-
-import { loadItems, loadHotelsByRegions } from '../../hotels/hotelsReducer';
-import { loadRegions } from '../../regions/regionsReducer';
-
-const options = {
-  hotels: {
-    actions: {
-      hotels: loadItems,
-      loadWithFilter: loadHotelsByRegions,
-    }
-  },
-  regions: {
-    actions: {
-      regions: loadRegions,
-    }
-  }
-};
 
 function withEntities(WrappedComponent, options) {
-  class BaseConatiner extends React.Component {
-
-
+  class BaseContainer extends React.Component {
     componentDidMount() {
-      this.props.isRegionsFetched
+      Object.keys(options).forEach(key => {
+        if (!this.props.state[key].isFetched) {
+          this.props.dispatch(options[key].loadItems());
+        }
+      })
     }
 
     render() {
       return (
-        <div>
-          {this.props.isFetching &&
-          <div>
-            <Skeleton/>
-            <Skeleton count={5}/>
-            <WrappedComponent/>
-          </div>
-          }
-        </div>
+        <WrappedComponent {...this.props} />
       );
     }
   }
 
   const mapStateToProps = (state) => {
-    return {
-
-    };
+    const obj = { state };
+    Object.keys(options).forEach(key => {
+      obj[key] = options[key].getItems(state);
+    });
+    return obj
   };
 
   return connect(
-    mapStateToProps,
-    {}
-  )(BaseConatiner);
+    mapStateToProps
+  )(BaseContainer);
 }
 
 export default withEntities;
