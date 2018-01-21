@@ -17,7 +17,7 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 import TreeList from '../ui-elements/TreeList';
 import ItemsFilterByRegions from '../regions/ItemsFilterByRegions';
-import FilteredTagSelector from '../ui-elements/FilteredTagSelector';
+import NotificationPanel from '../ui-elements/form/NotificationPanel';
 
 const styles = StyleSheet.create({
   field: {
@@ -74,6 +74,7 @@ class TourForm extends Component {
 		this.state = {
       tour,
       contentByLang,
+      isValidForm: true,
 			open: false,
       selectedPreviewItems: [],
       content: this.props.content,
@@ -164,10 +165,14 @@ class TourForm extends Component {
     tour.content = Object.values(this.state.contentByLang);
     tour.map = tour.map.map(item => ({ formatted_address: item.formatted_address, place_id: item.place_id }));
 
-    this.props.onSubmit(tour, this.props.isNew);
-
-    if (this.props.isNew) {
-      this.props.history.push('/admin/tours', {});
+    if (this.isValidForm(tour.content)) {
+      this.props.onSubmit(tour, this.props.isNew);
+      this.setState({ isValidForm: true });
+      if (this.props.isNew) {
+        this.props.history.push('/admin/tours', {});
+      }
+    } else {
+      this.setState({ isValidForm: false })
     }
   };
 
@@ -201,6 +206,17 @@ class TourForm extends Component {
     const tour = {...this.state.tour};
     tour.categories = filters;
     this.setState({tour});
+  };
+
+  isValidForm = (content) => {
+    let isValid = true;
+    for(let i = 0; i < content.length; i++) {
+      if (!content[i].title) {
+        isValid = false;
+        break;
+      }
+    }
+    return isValid
   };
 
 	render() {
@@ -403,20 +419,19 @@ class TourForm extends Component {
             </CollapseComponent>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-4">
-          </div>
-          <div className="col-md-8">
-            <Button
-              raised
-              type="submit"
-              color="primary"
-              disabled={isSaving}
-            >
-              {isSaving ? 'Сохраняю...' : 'Сохранить'}
-            </Button>
-          </div>
-        </div>
+
+        {!this.state.isValidForm &&
+          <NotificationPanel>Пожалуйста, заполните все обязательные поля для всех языков</NotificationPanel>
+        }
+        <Button
+          raised
+          type="submit"
+          color="primary"
+          disabled={isSaving}
+        >
+          {isSaving ? 'Сохраняю...' : 'Сохранить'}
+        </Button>
+
       </form>
 		)
 	}

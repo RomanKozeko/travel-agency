@@ -125,6 +125,7 @@ class ItemsFilterByRegions extends React.Component {
                 </Button>
               </div>
             ))}
+            {!filteredItems.length && <h4>Данные не найдены</h4>}
           </div>
         </div>
       </div>
