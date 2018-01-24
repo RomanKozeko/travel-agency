@@ -27,27 +27,28 @@ class CollapseComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpened: false
     }
   }
   toggle = () => {
-    this.setState({ isOpen: !this.state.isOpen })
+    this.setState({ isOpened: !this.state.isOpened })
   };
 
   render() {
+    const { isOpened } = this.state;
     return (
       <div className={css(styles.root)}>
         <h4 className={css(styles.title)} onClick={this.toggle}>
           {this.props.title}
-          {this.state.isOpen ?
+          {isOpened ?
             <Icon className={css(styles.icon)}>keyboard_arrow_up</Icon>
             :
             <Icon className={css(styles.icon)}>keyboard_arrow_down</Icon>
           }
 
         </h4>
-        <Collapse isOpened={this.state.isOpen}>
-          {this.props.children}
+        <Collapse isOpened={isOpened}>
+          {isOpened && this.props.children}
         </Collapse>
       </div>
     )
