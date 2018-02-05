@@ -104,7 +104,11 @@ class Map extends React.Component {
 
     this.search.value = '';
 
-    if(~places.findIndex(item => item.place_id === place.place_id)) {
+    // if(~places.findIndex(item => item.place_id === place.place_id)) {
+    //   return;
+    // }
+
+    if (places.length && places[places.length - 1].place_id === place.place_id) {
       return;
     }
 
@@ -165,10 +169,10 @@ class Map extends React.Component {
     });
   };
 
-  deletePlace = (place) => {
+  deletePlace = (place, index) => {
     let places = [...this.state.places];
-    const placeIndex = places.findIndex(item => item.place_id === place.place_id);
-    places.splice(placeIndex, 1);
+    // const placeIndex = places[index].findIndex(item => item.place_id === place.place_id);
+    places.splice(index, 1);
     this.setState({ places });
 
     switch (places.length) {
@@ -226,10 +230,10 @@ class Map extends React.Component {
           </div>
           {
             places.map((item, i, array) => (
-                <div key={item.place_id} className={css(styles.place)}>
+                <div key={item.place_id + i} className={css(styles.place)}>
                   <span className={css(styles.placeMarker)}>{String.fromCharCode("A".charCodeAt(0) + i)}</span>
                   {item.formatted_address}
-                  <IconButton onClick={() => this.deletePlace(item)}>
+                  <IconButton onClick={() => this.deletePlace(item, i)}>
                     <Icon>delete</Icon>
                   </IconButton>
                 </div>
