@@ -80,9 +80,9 @@ const MainNav = () => (
       <nav className={css(styles.nav)}>
         <Link to="/" className={css(styles.logo)}>Logo</Link>
         <ul className={css(styles.menu)}>
-          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Home</PrefixLink></li>
-          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Tours</PrefixLink></li>
-          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/contacts">Contacts</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Главная</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Поиск туров</PrefixLink></li>
+          <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/contacts">Контакты</PrefixLink></li>
         </ul>
       </nav>
     </div>

@@ -1,0 +1,41 @@
+.ta-checkbox {
+    margin-right: 15px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.ta-checkbox--block {
+    display: block;
+}
+
+.ta-checkbox__label {
+    position: relative;
+    padding-left: 30px;
+}
+
+.ta-checkbox__label:after {
+    content: '';
+    display: block;
+    width: 19px;
+    height: 19px;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+    border: 1px solid #eaeaea;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.ta-checkbox__input:checked + .ta-checkbox__label:after {
+    background: #1593d0 url('./ic_done_black_24px.svg') no-repeat center center;
+    background-size: 92%;
+    border: 1px solid #1593d0;
+}
+
+
+.ta-checkbox__input {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: -9999px;
+}

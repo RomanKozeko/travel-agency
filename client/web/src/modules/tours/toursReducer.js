@@ -8,8 +8,9 @@ const toursSuccess = (state, action) => {
   return {
     ...state,
     allIds: [...state.allIds, ...payload.result.items],
-    byIds: {...state.byIds, ...payload.entities.tours},
+    byIds: {...state.byIds, ...payload.entities.items},
     isFetching: false,
+    isFetched: true,
     count: payload.result.count,
     pageCount: getPageCount(payload.result.count, payload.result.limit),
     currPage: payload.nextPage,
@@ -20,14 +21,24 @@ const toursSuccess = (state, action) => {
   }
 };
 
-const filteredToursSuccess = (state, action) => {
+const filteredToursSuccess = (state, { response: {result, entities, query} }) => {
+
+	const allIds = [...state.allIds]
+
+	result.items.forEach(item => {
+		if (state.allIds.indexOf(item) === -1) {
+			allIds.push(item)
+		}
+  });
+
   return {
     ...state,
-    byIds: {...state.byIds, ...action.response.entities.items},
+	  allIds,
+    byIds: {...state.byIds, ...entities.items},
     isFetching: false,
     byQueries: {
       ...state.byQueries,
-      [action.response.query]: action.response.result.items
+      [query]: result.items
     }
   }
 };
@@ -69,6 +80,9 @@ export default toursReducer;
 //selectors
 export const getTours = state => (state.allIds.map(id => state.byIds[id]));
 export const getToursByQuery = (state, query) => {
+  if (!query) {
+    return state.allIds.map(id => state.byIds[id])
+  }
   if (state.byQueries[query]) {
     return state.byQueries[query].map(id => state.byIds[id])
   } else {

@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { connect } from 'react-redux';
 import {
   Route,
   Link
 } from 'react-router-dom';
-
 import Home from './Home'
 import Contacts from './Contacts';
 import ToursPage from '../tours/ToursPage';
@@ -17,13 +16,7 @@ import { getLangPref } from '../../services/utils'
 
 const styles = StyleSheet.create({
   wrapper: {
-    minHeight: '100vh',
-    ':after': {
-      display: 'block',
-      content: '""',
-      height: '424px'
-    },
-    marginBottom: '-424px;'
+	  flex: '1 0 auto;'
   },
 });
 
@@ -57,8 +50,7 @@ let App = ({languagePrefix}) => {
       main: () => <Contacts />
     }
   ];
-  return (
-    <div>
+  return ([
       <div className={css(styles.wrapper)}>
         <HeaderContainer/>
         <div className={css(styles.content)}>
@@ -71,9 +63,9 @@ let App = ({languagePrefix}) => {
             />
           ))}
         </div>
-      </div>
+      </div>,
       <Footer/>
-    </div>
+	  ]
   );
 };
 

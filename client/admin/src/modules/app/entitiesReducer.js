@@ -88,7 +88,7 @@ const regionReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
     let regions = {...state.regions};
-    let regionsAllIds = Object.keys(res.entities.regions);
+    let regionsAllIds = Object.keys(res.entities.regions || res.entities);
 
     regions = {
       byId: {...regions.byId, ...res.entities.regions},

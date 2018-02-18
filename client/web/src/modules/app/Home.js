@@ -4,6 +4,7 @@ import PagesContainer from '../pages/PagesContainer';
 import ToursContainer from '../tours/ToursContainer';
 import BigTitle from '../ui-elements/BigTitle';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import PageContent from '../ui-elements/PageContent'
 
 const styles = StyleSheet.create({
   pageContent: {
@@ -14,14 +15,12 @@ const styles = StyleSheet.create({
 
 const Home = ({ match }) => ([
   <PhotoSlider />,
-  <div className="container">
-    <div className={css(styles.pageContent)}>
-      <BigTitle key={1} title='Available pages now 123123' subTitle='latest pages'/>
-      <PagesContainer />
-      <BigTitle key={2} title='Popular sea tours' subTitle='latest tours'/>
-      <ToursContainer />
-    </div>
-  </div>
+	<PageContent>
+    <BigTitle key={1} title='Available pages now 123123' subTitle='latest pages'/>
+    <PagesContainer />
+    <BigTitle key={2} title='Popular sea tours' subTitle='latest tours'/>
+    <ToursContainer />
+	</PageContent>
 ]);
 
 export default Home;
