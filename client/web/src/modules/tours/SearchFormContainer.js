@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 		paddingBottom: '40px'
 	},
 	sideBarWrapper: {
-		flex: '0 1 270px',
+		flex: '0 0 270px',
 		maxWidth: '270px'
 	},
 	searchContent: {

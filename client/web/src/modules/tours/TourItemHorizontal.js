@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 		marginBottom: '30px',
 		':hover': {
 			boxShadow: '0 30px 65px rgba(0,0,0,0.15);'
-		}
+		},
+		overflow: 'hidden'
 	},
 	sideBarWrapper: {
 		flex: '0 1 270px',
