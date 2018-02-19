@@ -8,7 +8,7 @@ router.get(/^(\/admin)[^.]*$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/admin/build/index.html'));
 });
 
-router.get('/tours', ToursCtrl.index);
+//router.get('/tours', ToursCtrl.index);
 router.get(/^[^.]*$/, HomeCtrl.index);
 
 
