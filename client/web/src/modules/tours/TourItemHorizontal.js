@@ -72,7 +72,7 @@ const TourItemHorizontal = ({ tour } ) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.img)} style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}}>
 			{
-				tour.preview[0].path ? null : <img src="/web/build/v.jpg" alt=""/>
+				tour.preview[0] ? null : <img src="/web/build/v.jpg" alt=""/>
 			}
 		</div>
 		<div className={css(styles.content)}>
