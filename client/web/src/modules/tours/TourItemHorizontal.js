@@ -70,10 +70,9 @@ const styles = StyleSheet.create({
 
 const TourItemHorizontal = ({ tour } ) =>
 	<div className={css(styles.wrapper)}>
-		<div className={css(styles.img)} style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}}>
-			{
-				tour.preview[0] ? null : <img src="/web/build/v.jpg" alt=""/>
-			}
+		<div className={css(styles.img)}
+		     style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path ? tour.preview[0].path : '/web/build/v.jpg'}`}}
+		>
 		</div>
 		<div className={css(styles.content)}>
 			<div className={css(styles.contentLeft)}>
