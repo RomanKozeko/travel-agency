@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-const TourItemHorizontal = ({ tour } ) =>
+const TourItemHorizontal = ({ tour: { preview, days, content = {} }} ) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.img)}
-		     style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path ? tour.preview[0].path : '/web/build/v.jpg'}`}}
+		     style={{ backgroundImage: `url(${preview[0] && preview[0].path ? preview[0].path : '/web/build/v.jpg'}`}}
 		>
 		</div>
 		<div className={css(styles.content)}>
@@ -80,11 +80,11 @@ const TourItemHorizontal = ({ tour } ) =>
 					Беларусь / Минск
 				</div>
 				<h4 className={css(styles.title)}>
-					{ tour.content.title }
+					{ content.title }
 				</h4>
 				<div className={css(styles.listItem)}>
 					<PlaceIcon color="#1593d0" width={20} />
-					<span className={css(styles.listItemText)}>{ tour.content.departureInfo }</span>
+					<span className={css(styles.listItemText)}>{ content.departureInfo }</span>
 				</div>
 				<div className={css(styles.listItem)}>
 					<WorkIcon color="#1593d0" width={20} />
@@ -96,11 +96,11 @@ const TourItemHorizontal = ({ tour } ) =>
 				</div>
 				<div className={css(styles.listItem)}>
 					<ClockIcon color="#1593d0" width={20} />
-					<span className={css(styles.listItemText)}>{ tour.content.duration }</span>
+					<span className={css(styles.listItemText)}>{ content.duration }</span>
 				</div>
 				<div className={css(styles.listItem)}>
 					<DateIcon color="#1593d0" width={20} />
-					<span className={css(styles.listItemText)}>Дней: { tour.days }</span>
+					<span className={css(styles.listItemText)}>Дней: { days }</span>
 				</div>
 			</div>
 			<div className={css(styles.contentRight)}>
