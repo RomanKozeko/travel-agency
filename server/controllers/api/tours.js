@@ -8,9 +8,9 @@ module.exports = {
   get(req, res, next) {
     const offset = +req.params.startIndex || 0;
     const count = +req.params.count || config.itemsPerPageLimit;
-    const { regions, categories } = req.query;
+    const { regions, categories, days, title } = req.query;
 
-    ToursQueries.getAllWithFilter(offset, count, {regions, categories})
+    ToursQueries.getAllWithFilter(offset, count, {regions, categories, days, title})
       .then((result) => {
         res.json({
           offset,

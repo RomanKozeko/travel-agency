@@ -22,6 +22,8 @@ function createFilterObj(filter) {
   const filterObj = {};
   const regionsQuery = populateQuery(filter.regions, 'regions', '$or');
   const categoriesQuery = populateQuery(filter.categories, 'categories', '$and');
+  const daysQuery = populateQuery(filter.days, 'days', '$and');
+  const titleQuery = populateQueryNestedField(filter.title, 'content', 'title', '$and');
 
   if (regionsQuery) {
     filterObj.$and = [regionsQuery];
@@ -32,6 +34,16 @@ function createFilterObj(filter) {
     filterObj.$and.push(categoriesQuery);
   }
 
+  if (daysQuery) {
+    filterObj.$and = filterObj.$and || [];
+    filterObj.$and.push(daysQuery);
+  }
+
+  if (titleQuery) {
+    filterObj.$and = filterObj.$and || [];
+    filterObj.$and.push(titleQuery);
+  }
+
   return filterObj;
 }
 
@@ -40,6 +52,22 @@ function populateQuery(filterType, filterTypeName, operator) {
     const filterTypeConditions = filterType.split(',').map(id => ({
       [filterTypeName]: id
     }));
+    return { [operator]: filterTypeConditions }
+  }
+
+  return null
+}
+
+function populateQueryNestedField(filterType, filterTypeName, nestedField, operator) {
+  if (filterType) {
+    const filterTypeConditions = [{
+      [filterTypeName]:   {
+        $elemMatch: {
+          [nestedField]: {'$regex': filterType, $options: 'i'}
+        }
+      }
+    }];
+
     return { [operator]: filterTypeConditions }
   }
 
