@@ -13,11 +13,16 @@ const styles = StyleSheet.create({
 		backgroundSize: 'cover',
 	},
 	headerTitle: {
-		lineHeight: '27px',
-		fontSize: '38px',
+		lineHeight: '35px',
+		fontSize: '28px',
 		fontWeight: 'bold',
 		color: '#fefefe',
-		textTransform: 'uppercase'
+		padding: '0 20px',
+		textTransform: 'uppercase',
+		'@media (min-width: 600px)': {
+			lineHeight: '45px',
+			fontSize: '38px',
+		}
 	},
 	colHeader: {
 		fontSize: '18px',
