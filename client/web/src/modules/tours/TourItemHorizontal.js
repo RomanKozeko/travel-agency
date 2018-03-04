@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
 import Button from '../ui-elements/Button';
+import PrefixLink from '../ui-elements/PrefixLink';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-const TourItemHorizontal = ({ tour: { preview, days, content = {} }} ) =>
+const TourItemHorizontal = ({ tour: { url, preview, days, content = {} }} ) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.img)}
 		     style={{ backgroundImage: `url(${preview[0] && preview[0].path ? preview[0].path : '/web/build/v.jpg'}`}}
@@ -80,7 +81,7 @@ const TourItemHorizontal = ({ tour: { preview, days, content = {} }} ) =>
 					Беларусь / Минск
 				</div>
 				<h4 className={css(styles.title)}>
-					{ content.title }
+					<PrefixLink to={`/tours/${ url }`}>{ content.title }</PrefixLink>
 				</h4>
 				<div className={css(styles.listItem)}>
 					<PlaceIcon color="#1593d0" width={20} />

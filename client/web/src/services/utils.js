@@ -47,9 +47,11 @@ export const withPrefix = (endpoint, langPref) => {
 	return endpoint
 };
 
-
-
 export const getPageCount = (count, limit) => {
   return parseInt(count/limit) + (count % limit)
 };
+
+export const getContentByLanguage = (content, languageId) => content.find(
+	item => item.language === languageId
+)
 

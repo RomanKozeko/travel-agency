@@ -44,13 +44,20 @@ const filteredToursSuccess = (state, { response: {result, entities, query} }) =>
 };
 
 const tourSuccess = (state, action) => {
-  const payload = action.response;
-  return {
-    ...state,
-    allIds: [...state.allIds, payload.result],
-    byIds: { ...state.byIds, ...payload.entities.pages },
-    isFetching: false,
-  };
+	const payload = action.response;
+	const allIds = [...state.allIds];
+
+	if (allIds.indexOf(payload.result) === -1) {
+		allIds.push(payload.result)
+	}
+
+	return {
+		...state,
+		allIds,
+		byIds: { ...state.byIds, ...payload.entities.items },
+		isSaving: false,
+		isFetching: false
+	};
 };
 
 export const defaultState = {

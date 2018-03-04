@@ -32,7 +32,7 @@ const fetchTours = (nextPageUrl, nextPage) => ({
 const fetchTour = (url, urlPrefix) => ({
   [CALL_API]: {
     types: [TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE],
-    endpoint: withPrefix(`/api/tours/getByUrl/${url}`, urlPrefix),
+    endpoint: withPrefix(`/api/tourGetByUrl/${url}`, urlPrefix),
     schema: Schemas.TOUR,
   }
 });

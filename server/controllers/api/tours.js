@@ -35,8 +35,26 @@ module.exports = {
 
   getOneByUrl(req, res, next) {
     Tour.findOne({ url: req.params.url } )
-    .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
-    .catch(next);
+	    .populate('preview')
+	    .populate({
+		    path: 'hotels',
+			  populate: [
+			  	{
+					  path: 'preview',
+					  model: 'Media'
+				  },
+				  {
+					  path: 'regions',
+					  model: 'Region'
+				  }
+			  ]
+	    })
+	    .populate('regions')
+	    .populate('categories')
+	    .populate('showplaces')
+	    .populate('food')
+      .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
+      .catch(next);
   },
 
   post(req, res, next) {
