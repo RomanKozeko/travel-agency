@@ -20,13 +20,15 @@ const styles = StyleSheet.create({
     paddingTop: '40px'
   },
   sliderWrapper: {
-    width: '50%'
+	  '@media (min-width: 800px)': {
+		  width: '50%',
+	  },
   },
   titleMain: {
-    fontSize: '50px',
+    fontSize: '35px',
     textTransform: 'uppercase',
-    lineHeight: '60px;',
-    margin: '25px 0 20px'
+    lineHeight: '45px;',
+    margin: '20px 0 10px'
   },
   titleSpan: {
     color: '#1593d0',
