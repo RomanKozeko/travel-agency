@@ -49,16 +49,23 @@ const styles = StyleSheet.create({
   },
 	programWrapper: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'flex-start',
-		marginTop: '-1px'
+		marginTop: '-1px',
+		'@media (min-width: 500px)': {
+			flexDirection: 'row',
+		},
   },
 	programDay: {
-    width: '200px',
     fontSize: '20px',
+		minWidth: '100%',
     color: '#fff',
     lineHeight: '40px',
     textAlign: 'center',
-    background: '#1593d0'
+    background: '#1593d0',
+		'@media (min-width: 500px)': {
+			minWidth: '100px',
+		},
   }
 });
 
@@ -147,16 +154,14 @@ class Tour extends React.Component {
 
 	              <div className={css(styles.content)}>
                   <FancyHeader title='Программа тура' />
-                  <div className={css(styles.tourContent)}>
-                    {
-	                    tour.content.program.map(({ _id, description}, index) =>
-                       <div key={ _id } className={css(styles.programWrapper)}>
-                         <div className={css(styles.programDay)}>{ index + 1 }</div>
-                         <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
-                       </div>
-                      )
-                    }
-                  </div>
+                  {
+                    tour.content.program.map(({ _id, description}, index) =>
+                     <div key={ _id } className={css(styles.programWrapper)}>
+                       <div className={css(styles.programDay)}>{ index + 1 }</div>
+                       <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
+                     </div>
+                    )
+                  }
                 </div>
 
               </div>
