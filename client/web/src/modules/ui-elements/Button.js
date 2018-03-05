@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     lineHeight: '40px',
     minWidth: '150px',
-    marginBottom: '20px;',
     padding: '5px 20px',
     boxSizing: 'border-box',
     transition: 'all .3s ease',
@@ -16,6 +15,10 @@ const styles = StyleSheet.create({
     borderRadius: '8px',
     backgroundColor: '#1593d0',
     outline: 'none',
+    width: '100%',
+	  '@media (min-width: 500px)': {
+		  width: 'auto',
+	  },
     ':hover': {
       backgroundColor:'#022c54'
     }

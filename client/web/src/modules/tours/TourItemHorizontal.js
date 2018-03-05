@@ -8,9 +8,6 @@ const styles = StyleSheet.create({
 	wrapper: {
 		minHeight: '210px',
 		backgroundColor: '#ffffff',
-		display: 'flex',
-		flexGrow: '1',
-		paddingLeft: '220px',
 		position: 'relative',
 		borderRadius: '5px',
 		transition: 'all .3s ease-in',
@@ -18,31 +15,37 @@ const styles = StyleSheet.create({
 		':hover': {
 			boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
 		},
-		overflow: 'hidden'
-	},
-	sideBarWrapper: {
-		flex: '0 1 270px',
-		maxWidth: '270px'
-	},
-	searchContent: {
-		marginLeft: '30px'
+		overflow: 'hidden',
+		'@media (min-width: 750px)': {
+			display: 'flex',
+			flexGrow: '1',
+			paddingLeft: '220px',
+		},
 	},
 	img: {
 		display: 'flex',
 		justifyContent: 'center',
 		verticalAlign: 'center',
-		width: '210px',
-		height: '100%',
+		width: '100%',
+		paddingTop: '70%',
 		backgroundColor: '#333',
 		backgroundSize: 'cover',
-		position: 'absolute',
-		left: '0',
-		top: '0'
+		'@media (min-width: 750px)': {
+			width: '210px',
+			height: '100%',
+			position: 'absolute',
+			left: '0',
+			top: '0'
+		},
 	},
 	content: {
-		padding: '30px;',
+		padding: '20px;',
 		flex: '1',
-		display: 'flex'
+		flexDirection: 'column',
+		display: 'flex',
+		'@media (min-width: 750px)': {
+			flexDirection: 'row'
+		},
 	},
 	contentRegions: {
 		fontSize: '12px',
@@ -66,6 +69,10 @@ const styles = StyleSheet.create({
 		flexGrow: '1',
 	},
 	contentRight: {
+		paddingTop: '20px',
+		'@media (min-width: 750px)': {
+			paddingTop: '0'
+		},
 	}
 });
 

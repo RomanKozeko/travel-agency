@@ -10,15 +10,24 @@ import { getToursByQuery } from '../../rootReducer';
 const styles = StyleSheet.create({
 	wrapper: {
 		display: 'flex',
-		paddingBottom: '40px'
+		flexDirection: 'column',
+		paddingBottom: '40px',
+		'@media (min-width: 1000px)': {
+			flexDirection: 'row',
+		},
 	},
 	sideBarWrapper: {
-		flex: '0 0 270px',
-		maxWidth: '270px'
+		marginBottom: '40px',
+		'@media (min-width: 1000px)': {
+			flex: '0 0 270px',
+			maxWidth: '270px',
+		},
 	},
 	searchContent: {
-		marginLeft: '30px',
-		flexGrow: '1'
+		flexGrow: '1',
+		'@media (min-width: 1000px)': {
+			marginLeft: '30px',
+		},
 	}
 });
 
