@@ -96,6 +96,7 @@ class Tour extends React.Component {
               <div>
 	              <div className={css(styles.content)}>
                   <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
+                  <div>Маршрут: <b>{ tour.content.mapName }</b></div>
                   <div>Дата проведения: <b>{ tour.content.duration }</b></div>
                   <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
                   <div>Количество дней:  <b>{ tour.days }</b></div>
