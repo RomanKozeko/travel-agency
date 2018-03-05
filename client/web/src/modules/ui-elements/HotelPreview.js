@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 		borderRadius: '5px',
 		overflow: 'hidden',
 		backgroundColor: '#fff',
-		transition: 'all .3s ease-in',
+		transition: 'box-shadow .3s ease-in',
 		':hover': {
 			boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
 		},

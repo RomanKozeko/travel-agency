@@ -94,12 +94,13 @@ class Tour extends React.Component {
               <h1>Loading...</h1>
               :
               <div>
-                <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
-	              <div>Дата проведения: <b>{ tour.content.duration }</b></div>
-	              <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
-	              <div>Количество дней:  <b>{ tour.days }</b></div>
-	              <div>Тип питания:  <b>{ getContentByLanguage(tour.food.content, languageID).title }</b></div>
-
+	              <div className={css(styles.content)}>
+                  <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
+                  <div>Дата проведения: <b>{ tour.content.duration }</b></div>
+                  <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
+                  <div>Количество дней:  <b>{ tour.days }</b></div>
+                  <div>Тип питания:  <b>{ getContentByLanguage(tour.food.content, languageID).title }</b></div>
+                </div>
                 <div className={css(styles.content)}>
 	                <FancyHeader title='Описание тура' />
 	                <div dangerouslySetInnerHTML={{ __html:tour.content.content }} />
