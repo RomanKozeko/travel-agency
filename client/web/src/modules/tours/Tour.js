@@ -7,6 +7,8 @@ import { loadTour } from './toursActions';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
+import HotelPreview from '../ui-elements/HotelPreview';
+import ItemsGallery from '../ui-elements/ItemsGallery';
 import Map from '../ui-elements/Map';
 import { getContentByLanguage } from '../../services/utils';
 
@@ -37,12 +39,27 @@ const styles = StyleSheet.create({
   content: {
     paddingBottom: '30px'
   },
-	img: {
-		width: '210px',
-		height: '210px',
-		backgroundColor: '#333',
-		backgroundSize: 'cover',
-	},
+  hotelsWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+	programContent: {
+		border: '1px solid #1593d0',
+    padding: '10px'
+  },
+	programWrapper: {
+    display: 'flex',
+    alignItems: 'flex-start',
+		marginTop: '-1px'
+  },
+	programDay: {
+    width: '200px',
+    fontSize: '20px',
+    color: '#fff',
+    lineHeight: '40px',
+    textAlign: 'center',
+    background: '#1593d0'
+  }
 });
 
 
@@ -71,10 +88,10 @@ class Tour extends React.Component {
               :
               <div>
                 <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
-	              <div>Дата проведения: { tour.content.duration }</div>
-	              <div>Время и место отправления: { tour.content.departureInfo }</div>
-	              <div>Количество дней: { tour.days }</div>
-	              <div>Тип питания: { getContentByLanguage(tour.food.content, languageID).title }</div>
+	              <div>Дата проведения: <b>{ tour.content.duration }</b></div>
+	              <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
+	              <div>Количество дней:  <b>{ tour.days }</b></div>
+	              <div>Тип питания:  <b>{ getContentByLanguage(tour.food.content, languageID).title }</b></div>
 
                 <div className={css(styles.content)}>
 	                <FancyHeader title='Описание тура' />
@@ -88,20 +105,35 @@ class Tour extends React.Component {
 
 	              <div className={css(styles.content)}>
 		              <FancyHeader title='РАЗМЕЩЕНИЕ ПО ТУРУ' />
-                  {tour.hotels.map(hotel => {
-                      let content =  getContentByLanguage(hotel.content, languageID)
-                      return <div>
-                          <h3>{ content.title }</h3>
-	                      <div className={css(styles.img)} style={{
-	                        backgroundImage: `url(${hotel.preview[0] && hotel.preview[0].path ? hotel.preview[0].path : '/web/build/v.jpg'}`
-	                      }} />
-	                        <div dangerouslySetInnerHTML={{ __html: content.content }} />
-                      </div>
-                    })
-                  }
+                  <ItemsGallery>
+                    {
+                      tour.hotels.map(hotel =>
+                        <HotelPreview
+                          key={ hotel._id }
+                          item={ hotel }
+                          url='hotels'
+                          content={ getContentByLanguage(hotel.content, languageID) }
+                        />
+                      )
+                    }
+                  </ItemsGallery>
                 </div>
 
-                <FancyHeader title='Достопримечательности' />
+	              <div className={css(styles.content)}>
+		              <FancyHeader title='Достопримечательности' />
+		              <ItemsGallery>
+			              {
+				              tour.showplaces.map(item =>
+					              <HotelPreview
+						              key={ item._id }
+						              item={ item }
+                          url='showplaces'
+						              content={ getContentByLanguage(item.content, languageID) }
+					              />
+				              )
+			              }
+		              </ItemsGallery>
+	              </div>
 
 	              <div className={css(styles.content)}>
 		              <FancyHeader title='В стоимость тура входит' />
@@ -113,12 +145,20 @@ class Tour extends React.Component {
 		              <div dangerouslySetInnerHTML={{ __html:tour.content.priceNotInclude }} />
 	              </div>
 
-                <FancyHeader title='Программа тура' />
-                <div className="container">
+	              <div className={css(styles.content)}>
+                  <FancyHeader title='Программа тура' />
                   <div className={css(styles.tourContent)}>
-                    {tour.title}
+                    {
+	                    tour.content.program.map(({ _id, description}, index) =>
+                       <div key={ _id } className={css(styles.programWrapper)}>
+                         <div className={css(styles.programDay)}>{ index + 1 }</div>
+                         <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
+                       </div>
+                      )
+                    }
                   </div>
                 </div>
+
               </div>
             }
           </PageContent>

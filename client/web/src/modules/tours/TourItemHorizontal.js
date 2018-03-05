@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 		transition: 'all .3s ease-in',
 		marginBottom: '30px',
 		':hover': {
-			boxShadow: '0 30px 65px rgba(0,0,0,0.15);'
+			boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
 		},
 		overflow: 'hidden'
 	},

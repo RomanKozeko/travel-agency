@@ -51,7 +51,19 @@ module.exports = {
 	    })
 	    .populate('regions')
 	    .populate('categories')
-	    .populate('showplaces')
+	    .populate({
+		    path: 'showplaces',
+		    populate: [
+			    {
+				    path: 'preview',
+				    model: 'Media'
+			    },
+			    {
+				    path: 'regions',
+				    model: 'Region'
+			    }
+		    ]
+	    })
 	    .populate('food')
       .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
       .catch(next);
