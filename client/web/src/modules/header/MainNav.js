@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'stretch',
-    height: '100%',
+    height: '130px',
   },
   logo: {
     display: 'inline-flex',
