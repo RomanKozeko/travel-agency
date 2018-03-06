@@ -4,11 +4,10 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 const styles = StyleSheet.create({
 	header: {
 		height: '287px',
-		marginTop: '-76px',
-		paddingTop: '76px',
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
+		background: '#333',
 		backgroundImage: 'url(/web/build/forest.jpg)',
 		backgroundSize: 'cover',
 	},

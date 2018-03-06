@@ -6,32 +6,31 @@ import {Link} from 'react-router-dom';
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: '76px;',
-    background: 'rgba(0,0,0,0.4)',
+    background: '#fff',
     position: 'relative',
     zIndex: '1'
   },
   nav: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'stretch',
     height: '100%',
   },
   logo: {
     display: 'inline-flex',
     alignItems: 'center',
-    backgroundImage: 'url(/web/build/logo.png)',
+    backgroundImage: 'url(/web/build/logo.jpg)',
     backgroundSize: 'cover',
-    color: '#1593d0',
-    width: '50px',
-    height: '36px',
+    color: '#222',
+	  width: '133px',
+    height: '120px',
     fontSize: '0',
+    margin: '5px 0'
 
   },
   menu: {
     display: 'flex',
     justifyContent: 'space-between',
-    height: '100%',
     alignItems: 'center',
     listStyle: 'none',
     margin: '0 0 0 180px;',
@@ -51,22 +50,22 @@ const styles = StyleSheet.create({
     position: 'relative',
     textTransform: 'uppercase',
     borderBottom: '3px solid transparent',
-    color: '#fff',
+	  color: '#222',
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
     ':hover': {
-      color: '#fff',
+      color: '#1593d0',
       textDecoration: 'none',
       borderBottom: '3px solid #1593d0',
     },
     ':active': {
-      color: '#fff',
+      color: '#1593d0',
       textDecoration: 'none',
       borderBottom: '3px solid #1593d0',
     },
     ':focus': {
-      color: '#fff',
+      color: '#1593d0',
       textDecoration: 'none',
       borderBottom: '3px solid #1593d0',
     }

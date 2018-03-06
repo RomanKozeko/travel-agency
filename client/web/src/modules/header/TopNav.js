@@ -5,7 +5,7 @@ import LanguagesNav from '../ui-elements/LanguagesNav'
 const styles = StyleSheet.create({
   wrapper: {
     background: '#fff',
-    padding: '20px 0',
+    padding: '10px 0',
     boxSizing: 'border-box'
   },
   item: {

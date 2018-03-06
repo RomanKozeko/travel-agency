@@ -6,9 +6,9 @@ const styles = StyleSheet.create({
   wrapper: {
     height: '500px',
     width: '100%',
+	  background: '#333',
     backgroundImage: 'url(/web/build/forest2.jpg)',
     backgroundSize: 'cover',
-    marginTop: '-76px;',
     display: 'flex',
     alignItems: 'center',
     color: '#fff'
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     lineHeight: '30px',
     fontSize: '22px',
     textTransform: 'uppercase',
-    paddingTop: '40px'
   },
   sliderWrapper: {
 	  '@media (min-width: 800px)': {

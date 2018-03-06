@@ -4,7 +4,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 const styles = StyleSheet.create({
 	wrapper: {
 		textAlign: 'center',
-		margin: '120px 0 70px'
+		margin: '40px 0 40px'
 	},
 	subTitle: {
 		display: 'inline-block',
@@ -31,7 +31,10 @@ const styles = StyleSheet.create({
 
 const BigTitle = ({title, subTitle}) => (
 	<header className={css(styles.wrapper)}>
-		<div className={css(styles.subTitle)}>{subTitle}</div>
+		{
+			subTitle && <div className={css(styles.subTitle)}>{subTitle}</div>
+		}
+
 		<h2 className={css(styles.title)}>
 			{title}
 		</h2>
