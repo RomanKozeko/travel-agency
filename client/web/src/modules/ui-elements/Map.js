@@ -46,39 +46,55 @@ class Map extends React.Component {
     this.state = {
       places: this.props.places || []
     };
+
+    this.createInitialMap = this.createInitialMap.bind(this)
+    this.updateLocation = this.updateLocation.bind(this)
+    this.handlePlaceChanged = this.handlePlaceChanged.bind(this)
+    this.createMarker = this.createMarker.bind(this)
+    this.calculateRoute = this.calculateRoute.bind(this)
   }
 
   componentDidMount() {
     this.createInitialMap();
-    this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
-    this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
+    try {
+	    this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
+	    this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
+    } catch (err) {
+
+    }
+
   }
 
-  createInitialMap = () => {
-    this.directionsService = new window.google.maps.DirectionsService;
-    this.directionsDisplay = new window.google.maps.DirectionsRenderer;
-    this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
-      mapTypeControl: false,
-      zoom: 6,
-      center: { lat: 0, lng: 0 }
-    });
-    this.directionsDisplay.setMap(this.map);
-    this.placesService = new window.google.maps.places.PlacesService(this.map);
+  createInitialMap() {
+	  try {
+		  this.directionsService = new window.google.maps.DirectionsService;
+		  this.directionsDisplay = new window.google.maps.DirectionsRenderer;
+		  this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
+			  mapTypeControl: false,
+			  zoom: 6,
+			  center: { lat: 0, lng: 0 }
+		  });
+		  this.directionsDisplay.setMap(this.map);
+		  this.placesService = new window.google.maps.places.PlacesService(this.map);
 
-    switch (this.state.places.length) {
-      case 0:
-        this.updateLocation();
-        break;
-      case 1:
-        this.createMarker(this.state.places[0]);
-        break;
-      default:
-        this.calculateRoute();
+		  switch (this.state.places.length) {
+			  case 0:
+				  this.updateLocation();
+				  break;
+			  case 1:
+				  this.createMarker(this.state.places[0]);
+				  break;
+			  default:
+				  this.calculateRoute();
+		  }
+	  } catch (err) {
+
     }
+
   };
 
-  updateLocation = () => {
-    if (window.navigator.geolocation) {
+  updateLocation() {
+    if (window && window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(position => {
         this.map.setCenter({
           lat: position.coords.latitude,
@@ -88,7 +104,7 @@ class Map extends React.Component {
     }
   };
 
-  handlePlaceChanged = () => {
+  handlePlaceChanged() {
     let places = [...this.state.places];
     const place = this.autocomplete.getPlace();
 
@@ -119,7 +135,7 @@ class Map extends React.Component {
     this.props.save(places);
   };
 
-  createMarker = (place) => {
+  createMarker(place) {
     const create = (place) => {
       this.marker = new window.google.maps.Marker({
         position: place.geometry.location,
@@ -143,7 +159,7 @@ class Map extends React.Component {
     });
   };
 
-  calculateRoute = (places = this.state.places) => {
+  calculateRoute(places = this.state.places) {
     const waypts = places.slice(1, places.length-1);
     const updatedWaypoints = waypts.map(item => ({ location: item.formatted_address, stopover: true }));
 
