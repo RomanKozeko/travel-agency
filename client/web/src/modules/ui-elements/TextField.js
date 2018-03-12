@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   input: {
     width: '100%',
     display: 'inline-block',
-    height: '60px',
+    height: '50px',
     border: '1px solid #bebebe',
     marginBottom: '20px;',
     borderRadius: '5px',
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
     transition: 'border .3s ease',
     outline: 'none',
     ':focus': {
-      border: '1px solid #022c54',
+      border: `1px solid ${theme.colors.primaryAccent}`,
     }
   },
   pageContent: {

@@ -11,6 +11,8 @@ import HotelPreview from '../ui-elements/HotelPreview';
 import ItemsGallery from '../ui-elements/ItemsGallery';
 import Map from '../ui-elements/Map';
 import { getContentByLanguage } from '../../services/utils';
+import { theme } from '../../services/constans';
+import OrderForm from '../orderForm/OrderForm'
 
 const styles = StyleSheet.create({
   tour: {
@@ -44,8 +46,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
 	programContent: {
-		border: '1px solid #1593d0',
-    padding: '10px'
+		borderTop: `5px solid ${theme.colors.primary}`,
+		background: '#fff',
+		boxShadow: theme.boxShadow,
+    padding: '20px',
+    marginBottom: '20px'
   },
 	programWrapper: {
     display: 'flex',
@@ -59,10 +64,14 @@ const styles = StyleSheet.create({
 	programDay: {
     fontSize: '20px',
 		minWidth: '100%',
-    color: '#fff',
+    marginRight: '20px',
+    color: theme.colors.primary,
+    borderTop: `5px solid ${theme.colors.primary}`,
     lineHeight: '40px',
     textAlign: 'center',
-    background: '#1593d0',
+    background: '#fff',
+    boxShadow: theme.boxShadow,
+    borderRadius: '5px',
 		'@media (min-width: 500px)': {
 			minWidth: '100px',
 		},
@@ -93,77 +102,84 @@ class Tour extends React.Component {
             {isFetching || !tour ?
               <h1>Loading...</h1>
               :
-              <div>
-	              <div className={css(styles.content)}>
-                  <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
-                  <div>Маршрут: <b>{ tour.content.mapName }</b></div>
-                  <div>Дата проведения: <b>{ tour.content.duration }</b></div>
-                  <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
-                  <div>Количество дней:  <b>{ tour.days }</b></div>
-                  <div>Тип питания:  <b>{ getContentByLanguage(tour.food.content, languageID).title }</b></div>
-                </div>
-                <div className={css(styles.content)}>
-	                <FancyHeader title='Описание тура' />
-	                <div dangerouslySetInnerHTML={{ __html:tour.content.content }} />
-                </div>
+              <div className="row">
 
-	              <div className={css(styles.content)}>
-		              <FancyHeader title='МАРШРУТ' />
-	                <Map places={tour.map} />
-                </div>
+                <div className="col-md-9">
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
+                    <div>Маршрут: <b>{ tour.content.mapName }</b></div>
+                    <div>Дата проведения: <b>{ tour.content.duration }</b></div>
+                    <div>Время и место отправления:  <b>{ tour.content.departureInfo }</b></div>
+                    <div>Количество дней:  <b>{ tour.days }</b></div>
+                    <div>Тип питания:  <b>{ getContentByLanguage(tour.food.content, languageID).title }</b></div>
+                  </div>
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='Описание тура' />
+                    <div dangerouslySetInnerHTML={{ __html:tour.content.content }} />
+                  </div>
 
-	              <div className={css(styles.content)}>
-		              <FancyHeader title='РАЗМЕЩЕНИЕ ПО ТУРУ' />
-                  <ItemsGallery>
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='МАРШРУТ' />
+                    <Map places={tour.map} />
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='РАЗМЕЩЕНИЕ ПО ТУРУ' />
+                    <ItemsGallery>
+                      {
+                        tour.hotels.map(hotel =>
+                          <HotelPreview
+                            key={ hotel._id }
+                            item={ hotel }
+                            url='hotels'
+                            content={ getContentByLanguage(hotel.content, languageID) }
+                          />
+                        )
+                      }
+                    </ItemsGallery>
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='Достопримечательности' />
+                    <ItemsGallery>
+                      {
+                        tour.showplaces.map(item =>
+                          <HotelPreview
+                            key={ item._id }
+                            item={ item }
+                            url='showplaces'
+                            content={ getContentByLanguage(item.content, languageID) }
+                          />
+                        )
+                      }
+                    </ItemsGallery>
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='В стоимость тура входит' />
+                    <div dangerouslySetInnerHTML={{ __html:tour.content.priceInclude }} />
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='В стоимость тура не входит' />
+                    <div dangerouslySetInnerHTML={{ __html:tour.content.priceNotInclude }} />
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title='Программа тура' />
                     {
-                      tour.hotels.map(hotel =>
-                        <HotelPreview
-                          key={ hotel._id }
-                          item={ hotel }
-                          url='hotels'
-                          content={ getContentByLanguage(hotel.content, languageID) }
-                        />
+                      tour.content.program.map(({ _id, description}, index) =>
+                       <div key={ _id } className={css(styles.programWrapper)}>
+                         <div className={css(styles.programDay)}>{ index + 1 }</div>
+                         <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
+                       </div>
                       )
                     }
-                  </ItemsGallery>
+                  </div>
                 </div>
 
-	              <div className={css(styles.content)}>
-		              <FancyHeader title='Достопримечательности' />
-		              <ItemsGallery>
-			              {
-				              tour.showplaces.map(item =>
-					              <HotelPreview
-						              key={ item._id }
-						              item={ item }
-                          url='showplaces'
-						              content={ getContentByLanguage(item.content, languageID) }
-					              />
-				              )
-			              }
-		              </ItemsGallery>
-	              </div>
-
-	              <div className={css(styles.content)}>
-		              <FancyHeader title='В стоимость тура входит' />
-		              <div dangerouslySetInnerHTML={{ __html:tour.content.priceInclude }} />
-	              </div>
-
-	              <div className={css(styles.content)}>
-		              <FancyHeader title='В стоимость тура не входит' />
-		              <div dangerouslySetInnerHTML={{ __html:tour.content.priceNotInclude }} />
-	              </div>
-
-	              <div className={css(styles.content)}>
-                  <FancyHeader title='Программа тура' />
-                  {
-                    tour.content.program.map(({ _id, description}, index) =>
-                     <div key={ _id } className={css(styles.programWrapper)}>
-                       <div className={css(styles.programDay)}>{ index + 1 }</div>
-                       <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
-                     </div>
-                    )
-                  }
+	              <div className="col-md-3">
+		              <OrderForm />
                 </div>
 
               </div>

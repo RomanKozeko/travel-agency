@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   input: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     minWidth: '100%',
     ':focus': {
-      border: '1px solid #022c54',
+      border: `1px solid ${theme.colors.primaryAccent}`,
     }
   },
   pageContent: {

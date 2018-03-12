@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
 	header: {
-		color: '#1593d0',
+		color: theme.colors.primary,
 		textTransform: 'uppercase',
 		paddingBottom: '15px',
 		marginBottom: '20px',
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
 			position: 'absolute',
 			left: '50%',
 			bottom: '0',
-			borderTop: '5px solid #1593d0',
+			borderTop: `5px solid ${theme.colors.primary}`,
 			width: '70px',
 			transform: 'translateX(-50%)'
 		},

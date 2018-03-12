@@ -1,17 +1,31 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import FormButton from '../ui-elements/FormButton';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: '500px',
+	  height: '500px',
     width: '100%',
 	  background: '#333',
-    backgroundImage: 'url(/web/build/forest2.jpg)',
+    backgroundImage: 'url(/web/build/DSC_0200.JPG)',
     backgroundSize: 'cover',
     display: 'flex',
     alignItems: 'center',
-    color: '#fff'
+    position: 'relative',
+    color: '#fff',
+    ':before': {
+      content: '""',
+      top: 0,
+      left: 0,
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      background: 'rgba(0,0,0,.32)'
+    },
+	  '@media (min-width: 1300px)': {
+		  height: '700px',
+	  },
   },
   title: {
     lineHeight: '30px',
@@ -19,6 +33,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   sliderWrapper: {
+	  position: 'relative',
 	  '@media (min-width: 800px)': {
 		  width: '50%',
 	  },
@@ -30,7 +45,7 @@ const styles = StyleSheet.create({
     margin: '20px 0 10px'
   },
   titleSpan: {
-    color: '#1593d0',
+    color: theme.colors.primary,
     fontSize: '32px;'
   },
   text: {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import PrefixLink from '../ui-elements/PrefixLink'
+import { theme } from '../../services/constans'
 import {Link} from 'react-router-dom';
 
 
@@ -55,19 +56,19 @@ const styles = StyleSheet.create({
     transitionDuration: 300,
     fontWeight: 'bold',
     ':hover': {
-      color: '#1593d0',
+      color: theme.colors.primary,
       textDecoration: 'none',
-      borderBottom: '3px solid #1593d0',
+	    borderBottom: `3px solid ${theme.colors.primary}`,
     },
     ':active': {
-      color: '#1593d0',
+      color: theme.colors.primary,
       textDecoration: 'none',
-      borderBottom: '3px solid #1593d0',
+	    borderBottom: `3px solid ${theme.colors.primary}`,
     },
     ':focus': {
-      color: '#1593d0',
+      color: theme.colors.primary,
       textDecoration: 'none',
-      borderBottom: '3px solid #1593d0',
+      borderBottom: `3px solid ${theme.colors.primary}`,
     }
   }
 });

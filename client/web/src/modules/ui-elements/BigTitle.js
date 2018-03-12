@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
 	},
 	subTitle: {
 		display: 'inline-block',
-		color: '#1593d0',
+		color: theme.colors.primary,
 		textTransform: 'uppercase',
 		lineHeight: '26px',
 		fontWeight: 'bold',

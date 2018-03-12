@@ -15,13 +15,14 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: '#fff',
+		backgroundColor: '#333',
 		backgroundImage: 'url(/web/build/forest2.jpg)',
 		backgroundSize: 'cover',
 		borderRadius: '5px',
 		width: '100%',
 		transition: 'box-shadow .3s ease-in',
 		boxShadow: '0px 30px 90px rgba(0,0,0,0.14)',
+		overflow: 'hidden',
 		':hover': {
 			textDecoration: 'none'
 		},
@@ -30,7 +31,18 @@ const styles = StyleSheet.create({
 		},
 		'@media (min-width: 970px)': {
 			width: 'calc(100% / 3 - 30px)',
-		}
+		},
+		position: 'relative',
+		color: '#fff',
+		':before': {
+			content: '""',
+			top: 0,
+			left: 0,
+			position: 'absolute',
+			width: '100%',
+			height: '100%',
+			background: 'rgba(0,0,0,.32)'
+		},
 
 	},
 	title: {
@@ -55,28 +67,28 @@ const styles = StyleSheet.create({
 
 const PromoLinks = () => (
 	<div className={css(styles.wrapper)}>
-		<PrefixLink className={css(styles.item)}>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/quests.jpg)'}}>
 				<h3 className={css(styles.title)}>Для гостей Беларуси</h3>
-		</PrefixLink>
+		</div>
 
-		<div className={css(styles.item)}>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/child.jpg)'}}>
 			<h3 className={css(styles.title)}>Для детей и молодежи</h3>
 		</div>
 
-		<div className={css(styles.item)}>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/holiday.jpg)'}}>
 			<h3 className={css(styles.title)}>Праздничный</h3>
 		</div>
 
-		<div className={css(styles.item)}>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/coop.jpg)'}}>
 			<h3 className={css(styles.title)}>Для корпоративных клиентов</h3>
 		</div>
 
-		<div className={css(styles.item)}>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/custom.jpg)'}}>
 			<h3 className={css(styles.title)}>Авторские туры</h3>
 		</div>
 
-		<div className={css(styles.item)}>
-			<h3 className={css(styles.title)}>Для красавиц</h3>
+		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/DSC_0114-Edit.JPG)'}}>
+			<h3 className={css(styles.title)}>патриотические туры</h3>
 		</div>
 
 	</div>

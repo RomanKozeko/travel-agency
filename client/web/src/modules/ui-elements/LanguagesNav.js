@@ -3,6 +3,7 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 import { getLanguages } from '../../rootReducer'
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   link: {
@@ -10,10 +11,11 @@ const styles = StyleSheet.create({
     margin: '0 5px',
     display: 'inline-block',
     padding: '2px;',
-    lineHeight: '14px'
+    lineHeight: '14px',
+    color: theme.colors.primary
   },
   active: {
-    background: '#1593d0',
+    background: theme.colors.primary,
     color: '#fff',
     ':hover': {
       color: '#fff',

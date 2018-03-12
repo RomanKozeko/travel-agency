@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
 import Button from '../ui-elements/Button';
 import PrefixLink from '../ui-elements/PrefixLink';
+import { theme } from '../../services/constans';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -92,23 +93,23 @@ const TourItemHorizontal = ({ tour: { url, preview, days, content = {} }} ) =>
 					<PrefixLink to={`/tours/${ url }`}>{ content.title }</PrefixLink>
 				</h4>
 				<div className={css(styles.listItem)}>
-					<PlaceIcon color="#1593d0" width={20} />
+					<PlaceIcon color={ theme.colors.primary } width={20} />
 					<span className={css(styles.listItemText)}>{ content.departureInfo }</span>
 				</div>
 				<div className={css(styles.listItem)}>
-					<WorkIcon color="#1593d0" width={20} />
+					<WorkIcon color={ theme.colors.primary } width={20} />
 					<span className={css(styles.listItemText)}>Самолетный</span>
 				</div>
 				<div className={css(styles.listItem)}>
-					<DinnerIcon color="#1593d0" width={20} />
+					<DinnerIcon color={ theme.colors.primary } width={20} />
 					<span className={css(styles.listItemText)}>Завтраки</span>
 				</div>
 				<div className={css(styles.listItem)}>
-					<ClockIcon color="#1593d0" width={20} />
+					<ClockIcon color={ theme.colors.primary } width={20} />
 					<span className={css(styles.listItemText)}>{ content.duration }</span>
 				</div>
 				<div className={css(styles.listItem)}>
-					<DateIcon color="#1593d0" width={20} />
+					<DateIcon color={ theme.colors.primary } width={20} />
 					<span className={css(styles.listItemText)}>Дней: { days }</span>
 				</div>
 			</div>

@@ -1,7 +1,5 @@
 import React from 'react'
 import PhotoSlider from '../photoSlider/PhotoSlider';
-import PagesContainer from '../pages/PagesContainer';
-import ToursContainer from '../tours/ToursContainer';
 import BigTitle from '../ui-elements/BigTitle';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import PageContent from '../ui-elements/PageContent'

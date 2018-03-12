@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   btn: {
@@ -14,10 +15,10 @@ const styles = StyleSheet.create({
     transition: 'all .3s ease',
     border: 'none',
     borderRadius: '8px',
-    backgroundColor: '#1593d0',
+    backgroundColor: theme.colors.primary,
     outline: 'none',
     ':hover': {
-      backgroundColor:'#022c54'
+      backgroundColor: theme.colors.primaryAccent
     }
   }
 });

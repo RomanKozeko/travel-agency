@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'rgba(34, 34, 34, 0.6);',
-    marginLeft: '10px'
   },
   inner: {
     display: 'flex',
@@ -44,12 +43,10 @@ const TopNav = () => (
       <div className={css(styles.inner)}>
         <div className="col">
           <div className={css(styles.item)}>
-            <i className="material-icons">local_phone</i>
-            <span className={css(styles.text)}>contact with us: +375 0369 09 010</span>
+            <span className={css(styles.text)}>г. Минск, ул. Якуба Коласа, д. 10, офис 3  (ст. метро "Площадь Я. Коласа")</span>
           </div>
           <div className={css(styles.item)}>
-            <i className="material-icons">mail</i>
-            <span className={css(styles.text)}>e-mail: let’stravel@let’stravel.com</span>
+            <span className={css(styles.text)}>тел: +375 29 3-980-990</span>
           </div>
         </div>
         <div className={css(styles.right)}>
