@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     listStyle: 'none',
-    margin: '0 0 0 180px;',
+    margin: '0 0 0 40px',
     flexGrow: '1',
     '@media (max-width: 600px)': {
       margin: '0',
@@ -70,6 +70,15 @@ const styles = StyleSheet.create({
       textDecoration: 'none',
       borderBottom: `3px solid ${theme.colors.primary}`,
     }
+  },
+	logoBssr: {
+    backgroundImage: 'url(/web/build/bssr.png)',
+    height: '100%',
+    width: '215px',
+    backgroundSize: '100%',
+    backgroundRepeat: 'no-repeat',
+    marginLeft: '10px',
+    marginTop: '5px'
   }
 });
 
@@ -79,6 +88,7 @@ const MainNav = () => (
     <div className="container" style={{height: '100%'}}>
       <nav className={css(styles.nav)}>
         <Link to="/" className={css(styles.logo)}>Logo</Link>
+        <div className={css(styles.logoBssr)} />
         <ul className={css(styles.menu)}>
           <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Главная</PrefixLink></li>
           <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Поиск туров</PrefixLink></li>
