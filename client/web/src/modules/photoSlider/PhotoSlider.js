@@ -58,7 +58,6 @@ const PhotoSlider = () => (
   <div className={css(styles.wrapper)}>
     <div className="container">
       <div className={css(styles.sliderWrapper)}>
-        <div className={css(styles.title)}>от <span className={css(styles.titleSpan)}>$400</span></div>
         <div className={css(styles.titleMain)}>Популярные леса Беларусии</div>
         <p className={css(styles.text)}>
           Curabitur nunc erat, consequat in erat ut, congue bibendum nulla. Suspendisse id pharetra lacus, et  quis leo elementum. Lorem ipsum adipiscing elit.
