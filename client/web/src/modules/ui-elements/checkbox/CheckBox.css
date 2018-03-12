@@ -27,9 +27,9 @@
 }
 
 .ta-checkbox__input:checked + .ta-checkbox__label:after {
-    background: #1593d0 url('./ic_done_black_24px.svg') no-repeat center center;
+    background: #93c21a url('./ic_done_black_24px.svg') no-repeat center center;
     background-size: 92%;
-    border: 1px solid #1593d0;
+    border: 1px solid #93c21a;
 }
 
 
