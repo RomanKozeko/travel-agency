@@ -1,5 +1,6 @@
 import React from 'react';
-import './CheckBox.css'
+//import './CheckBox.css'
+
 
 const CheckBox = ({ label, name, block }) =>
 	<label htmlFor={ name } className={block ? 'ta-checkbox ta-checkbox--block': 'ta-checkbox'}>
