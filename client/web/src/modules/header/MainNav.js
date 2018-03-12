@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     }
   },
 	logoBssr: {
-    backgroundImage: 'url(/web/build/bssr.png)',
+    backgroundImage: 'url(/web/build/bssrLogo.png)',
     height: '100%',
     width: '215px',
     backgroundSize: '100%',

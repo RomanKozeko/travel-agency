@@ -74,8 +74,8 @@ const Footer = () => (
       <div className="row">
         <div className="col-md-5">
           <h4 className={css(styles.header)}>Contact us</h4>
-          <div className={css(styles.columnText)}>Phone: <span className={css(styles.columnInner)}>+37529-624-97-84</span></div>
-          <div className={css(styles.columnText)}>Email: <span className={css(styles.columnInner)}>email@email.com</span></div>
+          <div className={css(styles.columnText)}>Phone: <span className={css(styles.columnInner)}>тел: +375 29 3-980-990</span></div>
+          <div className={css(styles.columnText)}>Email: <span className={css(styles.columnInner)}>kenguru@hottour.by</span></div>
           <div className={css(styles.columnText)}>Address: <span className={css(styles.columnInner)}>Nesovisimosti 6</span></div>
         </div>
         <div className="col-md-3">
