@@ -60,7 +60,7 @@ module.exports = {
         // Somewhere a `<Redirect>` was rendered
         res.redirect(301, context.url)
       } else {
-        const withSsr = htmlData.replace('{{SSR}}', `<style type="text/css" id="server-side-styles">${css.content}</style> ${html}`);
+        const withSsr = htmlData.replace('{{SSR}}', `<style type="text/css" id="server-side-styles">${css.content}</style>`);
         const RenderedApp = withSsr.replace(
           '__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
            StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)}});`
