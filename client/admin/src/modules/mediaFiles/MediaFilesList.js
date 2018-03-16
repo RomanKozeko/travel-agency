@@ -1,31 +1,38 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
+import { getContentByLanguage } from '../../services/utils';
 
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
 		flexWrap: 'wrap',
 		marginLeft: '-10px',
-		paddingTop: '20px'
+		paddingTop: '20px',
+		minWidth: '500px'
+	},
+	itemWrapper: {
+		backgroundColor: '#fff',
+		marginBottom: '10px',
+		marginLeft: '10px',
+		overflow: 'hidden',
+		width: '100%',
+		'@media (min-width: 600px)': {
+			width: 'calc(100% / 2 - 10px)',
+		},
+		'@media (min-width: 1000px)': {
+			width: 'calc(100% / 4 - 10px)',
+		},
+		'@media (min-width: 1200px)': {
+			width: 'calc(100% / 6 - 10px)',
+		},
+		boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
+		borderRadius: '2px'
 	},
   imgWrapper: {
 	  backgroundColor: '#fff',
-	  marginBottom: '10px',
-	  marginLeft: '10px',
-	  overflow: 'hidden',
 	  width: '100%',
-	  '@media (min-width: 600px)': {
-		  width: 'calc(100% / 2 - 10px)',
-	  },
-	  '@media (min-width: 1000px)': {
-		  width: 'calc(100% / 4 - 10px)',
-	  },
-	  '@media (min-width: 1200px)': {
-		  width: 'calc(100% / 6 - 10px)',
-	  },
-	  boxShadow: '0 2px 3px 2px rgba(0,0,0,.03)',
-	  borderRadius: '2px'
   },
   img: {
 		position: 'absolute',
@@ -56,32 +63,78 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		display: 'flex',
 		alignItems: 'center'
+	},
+	footer: {
+		padding: '10px'
+	},
+	input: {
+		width: '100%',
+		border: '1px solid #dadada'
+	},
+	button: {
+		width: '100%',
+		marginTop: '10px'
 	}
 });
 
-const MediaFilesList = ({ items, clickHandler }) => {
+const MediaFilesList = ({
+	                        items,
+	                        clickHandler,
+	                        languages = [],
+	                        saveItem,
+	                        isSaving,
+	                        updateItemContent
+}) => {
   return (
     <div className={css(styles.container)}>
       {items.map(item => (
-        <div
-	        key={item._id}
-	        onClick={() => clickHandler(item)}
-	        className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
-        >
-	        {item.active &&
-		        <div className={css(styles.iconWrapper)}>
-			        <Icon>check</Icon>
+      	<div key={item._id} className={css(styles.itemWrapper)}>
+
+	        <div
+		        onClick={() => clickHandler(item)}
+		        className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
+	        >
+		        {item.active &&
+			        <div className={css(styles.iconWrapper)}>
+				        <Icon>check</Icon>
+			        </div>
+		        }
+		        <div className={css(styles.inner)}>
+			        <img
+				        className={css(styles.img)}
+				        src={item.path}
+				        alt=""
+			        />
 		        </div>
-	        }
-	        <div className={css(styles.inner)}>
-		        <img
-			        className={css(styles.img)}
-			        src={item.path}
-			        alt=""
-		        />
+
 	        </div>
 
-        </div>
+		      <div className={css(styles.footer)}>
+			      {
+				      languages.map(lang => {
+				      	const content = getContentByLanguage(item.content, lang._id)
+					      return <div key={lang._id}>
+						      { lang.title }
+						      <input
+										type="text"
+										className={css(styles.input)}
+										onChange={ ({ target }) => updateItemContent(item._id, lang._id, target.value) }
+										defaultValue={ content && content.title}
+						      />
+					      </div>
+				      })
+			      }
+			      <Button
+				      onClick={ () => saveItem(item) }
+				      type="submit"
+				      color="primary"
+				      className={css(styles.button)}
+			      >
+              <Icon>save</Icon>
+			      </Button>
+		      </div>
+
+	      </div>
         ))
       }
     </div>

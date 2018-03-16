@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     marginTop: '20px',
     marginLeft: '-10px',
-    paddingTop: '20px'
+    paddingTop: '20px',
   },
   gridListItem: {
     backgroundColor: '#fff',

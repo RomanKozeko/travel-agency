@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteItems, saveItem, loadItems, toggleItem, resetItems } from './mediaFilesReducer';
-import { getMediaFiles } from '../../rootReducer';
+import {
+	deleteItems,
+	saveItem,
+	updateItem,
+	loadItems,
+	toggleItem,
+	resetItems,
+	updateItemContent
+} from './mediaFilesReducer';
+import { getMediaFiles, getLanguages } from '../../rootReducer';
 import MediaFilesGallery from './MediaFilesGallery';
 
 const mapStateToProps = (state) => {
   return {
-    items: getMediaFiles(state),
+	  languages: getLanguages(state),
+	  items: getMediaFiles(state),
 	  isFetched: state.mediafiles.isFetched,
-	  selected: state.mediafiles.selected
+	  isSaving: state.mediafiles.isSaving,
+	  selected: state.mediafiles.selected,
+	  languagesIDs: state.languages.byIds,
   };
 };
 
@@ -46,7 +57,7 @@ MediaFilesContainer.propTypes = {
 
 MediaFilesContainer = connect(
   mapStateToProps,
-  { deleteItems, saveItem, loadItems, toggleItem, resetItems }
+  { deleteItems, saveItem, loadItems, toggleItem, resetItems, updateItem, updateItemContent }
 )(MediaFilesContainer);
 
 export default MediaFilesContainer;

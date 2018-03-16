@@ -8,6 +8,10 @@ const MediaSchema = new Schema({
 		default: Date.now
 	},
   filename: String,
+	content: [{
+		title: String,
+		language: String
+	}],
   path: String
 });
 

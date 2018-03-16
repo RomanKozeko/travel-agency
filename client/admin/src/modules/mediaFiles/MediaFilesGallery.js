@@ -4,6 +4,7 @@ import MediaFilesList from './MediaFilesList';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import ImageUploader from '../ui-elements/form/ImageUploader';
+import {updateItem, updateItemContent} from "./mediaFilesReducer";
 
 const styles = StyleSheet.create({
   button: {
@@ -40,8 +41,12 @@ class MediaFilesGallery extends React.Component {
 		      Удалить выбранные
 	      </Button>
         <MediaFilesList
+	        languages={ this.props.languages }
           items={this.props.items}
-          clickHandler={toggleImg}
+          clickHandler={ toggleImg }
+	        saveItem={ this.props.updateItem }
+	        isSaving={ this.props.isSaving }
+	        updateItemContent={ this.props.updateItemContent }
         />
       </div>
     );

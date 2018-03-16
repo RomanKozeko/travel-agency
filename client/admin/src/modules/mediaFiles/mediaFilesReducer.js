@@ -1,11 +1,16 @@
 import { createReducer, basicReducerEvents, createBasicActions, makeActionCreator, updatePages } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
+import {EDIT_TOUR_FAILURE, EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS} from "../tours/toursActions";
 
 // actions
 const actionsObj = createBasicActions('MEDIAFILES', 'MEDIAFILE', 'media', CALL_API, Schemas);
 const MEDIAFILES_SELECT_FILE = 'MEDIAFILES_SELECT_FILE';
 const MEDIA_TOGGLE_ITEM = 'MEDIA_TOGGLE_ITEM';
 const MEDIA_RESET_ITEMS = 'MEDIA_RESET_ITEMS';
+
+const MEDIAFILE_SAVE_REQUEST = 'MEDIAFILE_SAVE_REQUEST'
+const MEDIAFILE_SAVE_SUCCESS = 'MEDIAFILE_SAVE_SUCCESS'
+const MEDIAFILE_SAVE_FAILURE = 'MEDIAFILE_SAVE_FAILURE'
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -19,7 +24,7 @@ export const saveItem = (payload) => (dispatch) => {
 	formData.append('file', payload);
 	return dispatch({
 		[CALL_API]: {
-			types: ['MEDIAFILE_SAVE_REQUEST', 'MEDIAFILE_SAVE_SUCCESS', 'MEDIAFILE_SAVE_FAILURE'],
+			types: [MEDIAFILE_SAVE_REQUEST, MEDIAFILE_SAVE_SUCCESS, MEDIAFILE_SAVE_FAILURE],
 			method: 'POST',
 			endpoint: '/api/media',
 			body: formData,
@@ -28,6 +33,24 @@ export const saveItem = (payload) => (dispatch) => {
 		}
 	});
 };
+
+export const updateItem = payload => dispatch => {
+
+	return dispatch({
+		[CALL_API]: {
+			types: [MEDIAFILE_SAVE_REQUEST, MEDIAFILE_SAVE_SUCCESS, MEDIAFILE_SAVE_FAILURE],
+			endpoint: `/api/media/${payload._id}`,
+			schema: Schemas.MEDIAFILE,
+			method: 'PUT',
+			body: payload,
+			toasterMsg: {
+				success: 'Сохраненно'
+			}
+		}
+	})
+}
+
+export const updateItemContent = makeActionCreator('UPDATE_ITEM_CONTENT', 'itemID', 'langID', 'val')
 
 export const defaultState = {
   allIds: [],
@@ -104,7 +127,28 @@ const mediaFilesReducer = createReducer(defaultState, {
   [actions.MEDIAFILE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.MEDIAFILE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
   [MEDIA_TOGGLE_ITEM]: reducerHelper.toggleItem,
-  [MEDIA_RESET_ITEMS]: reducerHelper.resetItems,
+	[MEDIA_RESET_ITEMS]: reducerHelper.resetItems,
+	['UPDATE_ITEM_CONTENT']: (state, { itemID, langID, val }) => {
+		const newState = { ...state };
+		let hasLang = false;
+
+		newState.byIds[itemID].content = newState.byIds[itemID].content.map(contentItem => {
+			if (contentItem.language === langID) {
+				contentItem.title = val;
+				hasLang = true;
+			}
+			return contentItem
+		});
+
+		if (!hasLang) {
+			newState.byIds[itemID].content.push({
+				title: val,
+				language: langID
+			})
+		}
+
+		return newState
+	}
 });
 
 export default mediaFilesReducer;

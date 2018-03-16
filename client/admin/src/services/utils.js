@@ -203,4 +203,8 @@ export function getFiltersQuery(filters) {
   return query.slice(0, -1);
 }
 
+export const getContentByLanguage = (content, languageId) => content.find(
+	item => item.language === languageId
+)
+
 
