@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		width: '100%',
-		border: '1px solid #dadada'
+		border: '1px solid #dadada',
+		borderRadius: '3px'
 	},
 	button: {
 		width: '100%',
