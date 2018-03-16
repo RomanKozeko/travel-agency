@@ -5,11 +5,11 @@ const fs = require('fs');
 const React = require('react')
 const {Provider} = require('react-redux')
 const {renderToString} = require('react-dom/server')
-const {StaticRouter} = require('react-router')
-const {StyleSheetServer} = require('aphrodite')
-
-const {default: configureStoreSSR} = require('../../dist/client/store/configureStoreSSR');
-const {default: App} = require('../../dist/client/modules/app/App')
+// const {StaticRouter} = require('react-router')
+// const {StyleSheetServer} = require('aphrodite')
+//
+// const {default: configureStoreSSR} = require('../../dist/client/store/configureStoreSSR');
+// const {default: App} = require('../../dist/client/modules/app/App')
 
 /**
  * GET /
@@ -38,35 +38,36 @@ module.exports = {
 
       const context = {};
       // Create a new Redux store instance
-      const store = configureStoreSSR();
-      const {html, css} = StyleSheetServer.renderStatic(() => {
-        return renderToString(<Provider store={store}>
-          <StaticRouter
-            location={req.url}
-            context={context}
-          >
-            <App languagePrefix={prefix.length > 2 ? '' : prefix} />
-          </StaticRouter>
-        </Provider>);
-      });
-
-      const defaultState = store.getState();
-      const app = {
-        languagePrefix: prefix.length > 2 ? '' : prefix
-      };
-      const preloadedState = Object.assign(defaultState, app);
+      // const store = configureStoreSSR();
+      // const {html, css} = StyleSheetServer.renderStatic(() => {
+      //   return renderToString(<Provider store={store}>
+      //     <StaticRouter
+      //       location={req.url}
+      //       context={context}
+      //     >
+      //       <App languagePrefix={prefix.length > 2 ? '' : prefix} />
+      //     </StaticRouter>
+      //   </Provider>);
+      // });
+      //
+      // const defaultState = store.getState();
+      // const app = {
+      //   languagePrefix: prefix.length > 2 ? '' : prefix
+      // };
+      // const preloadedState = Object.assign(defaultState, app);
+      const preloadedState = ''
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
         res.redirect(301, context.url)
       } else {
-        const withSsr = htmlData.replace('{{SSR}}', `<style type="text/css" id="server-side-styles">${css.content}</style>`);
-        const RenderedApp = withSsr.replace(
-          '__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
-           StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)}});`
-        );
+        // const withSsr = htmlData.replace('{{SSR}}', `<style type="text/css" id="server-side-styles"></style>`);
+        // const RenderedApp = withSsr.replace(
+        //   '__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
+        //    StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)}});`
+        // );
 
-        res.send(RenderedApp)
+        res.send(htmlData)
       }
 
     });
