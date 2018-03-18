@@ -74,69 +74,73 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		width: '100%',
-		marginTop: '10px'
+		marginTop: '10px',
+    minWidth: '0px'
 	}
 });
 
 const MediaFilesList = ({
-	                        items,
-	                        clickHandler,
-	                        languages = [],
-	                        saveItem,
-	                        isSaving,
-	                        updateItemContent
+  items,
+  clickHandler,
+  languages = [],
+  saveItem,
+  isSaving,
+  updateItemContent,
+  filesType = '@image'
 }) => {
   return (
     <div className={css(styles.container)}>
-      {items.map(item => (
-      	<div key={item._id} className={css(styles.itemWrapper)}>
+      {items.map(item => {
+        return !filesType || item.type === filesType ?
+          <div key={item._id} className={css(styles.itemWrapper)}>
 
-	        <div
-		        onClick={() => clickHandler(item)}
-		        className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
-	        >
-		        {item.active &&
-			        <div className={css(styles.iconWrapper)}>
-				        <Icon>check</Icon>
-			        </div>
-		        }
-		        <div className={css(styles.inner)}>
-			        <img
-				        className={css(styles.img)}
-				        src={item.path}
-				        alt=""
-			        />
-		        </div>
+            <div
+              onClick={() => clickHandler(item)}
+              className={item.active ? css(styles.imgWrapper, styles.active) : css(styles.imgWrapper)}
+            >
+              {item.active &&
+              <div className={css(styles.iconWrapper)}>
+                <Icon>check</Icon>
+              </div>
+              }
+              <div className={css(styles.inner)}>
+                <img
+                  className={css(styles.img)}
+                  src={filesType === '@docs' ? '/ic_insert_drive_file_black_24px.svg' : item.path }
+                  alt=""
+                />
+              </div>
 
-	        </div>
+            </div>
 
-		      <div className={css(styles.footer)}>
-			      {
-				      languages.map(lang => {
-				      	const content = getContentByLanguage(item.content, lang._id)
-					      return <div key={lang._id}>
-						      { lang.title }
-						      <input
-										type="text"
-										className={css(styles.input)}
-										onChange={ ({ target }) => updateItemContent(item._id, lang._id, target.value) }
-										defaultValue={ content && content.title}
-						      />
-					      </div>
-				      })
-			      }
-			      <Button
-				      onClick={ () => saveItem(item) }
-				      type="submit"
-				      color="primary"
-				      className={css(styles.button)}
-			      >
-              <Icon>save</Icon>
-			      </Button>
-		      </div>
+            <div className={css(styles.footer)}>
+              {
+                languages.map(lang => {
+                  const content = getContentByLanguage(item.content, lang._id)
+                  return <div key={lang._id}>
+                    {lang.title}
+                    <input
+                      type="text"
+                      className={css(styles.input)}
+                      onChange={({target}) => updateItemContent(item._id, lang._id, target.value)}
+                      defaultValue={content && content.title}
+                    />
+                  </div>
+                })
+              }
+              <Button
+                onClick={() => saveItem(item)}
+                type="submit"
+                color="primary"
+                className={css(styles.button)}
+              >
+                <Icon>save</Icon>
+              </Button>
+            </div>
 
-	      </div>
-        ))
+          </div>
+          : null
+      })
       }
     </div>
   )

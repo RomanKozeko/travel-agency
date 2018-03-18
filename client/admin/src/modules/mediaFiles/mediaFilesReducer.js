@@ -19,14 +19,15 @@ export const deleteItems = actionsObj.deleteItems;
 export const toggleItem = makeActionCreator(MEDIA_TOGGLE_ITEM, 'id');
 export const resetItems = makeActionCreator(MEDIA_RESET_ITEMS);
 
-export const saveItem = (payload) => (dispatch) => {
+export const saveItem = ({ payload, fileType }) => (dispatch) => {
 	const formData = new FormData();
 	formData.append('file', payload);
+	const query = fileType ? `?fileType=${fileType}` : ''
 	return dispatch({
 		[CALL_API]: {
 			types: [MEDIAFILE_SAVE_REQUEST, MEDIAFILE_SAVE_SUCCESS, MEDIAFILE_SAVE_FAILURE],
 			method: 'POST',
-			endpoint: '/api/media',
+			endpoint: `/api/media${query}`,
 			body: formData,
 			contentType: 'formData',
 			schema: Schemas['MEDIAFILE']

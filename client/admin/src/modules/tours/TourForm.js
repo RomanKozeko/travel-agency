@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
+import Icon from 'material-ui/Icon';
 import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList'
 import CollapseComponent from '../ui-elements/Collapse'
@@ -19,6 +20,7 @@ import TreeList from '../ui-elements/TreeList';
 import HotelsFilterContainer from './HotelsFilterContainer';
 import ShowplacesFilterContainer from './ShowplacesFilterContainer';
 import NotificationPanel from '../ui-elements/form/NotificationPanel';
+
 
 const styles = StyleSheet.create({
   field: {
@@ -46,6 +48,12 @@ const styles = StyleSheet.create({
   },
   noMB: {
     marginBottom: '0'
+  },
+  fileItem: {
+    marginBottom: '20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   }
 });
 
@@ -118,6 +126,20 @@ class TourForm extends Component {
     this.setState({ tour: {...this.state.tour, preview} });
   };
 
+  addTourProgram = () => {
+    const selectedPreview = [...this.props.selectedPreview];
+    const programFile = [...this.state.tour.programFile];
+
+    selectedPreview.forEach( selectedItem => {
+      const isNotExist = programFile.every(previewItem => previewItem._id !== selectedItem);
+      if (isNotExist) {
+        programFile.push({ ...this.props.mediaFiles.byIds[selectedItem], active: false });
+      }
+    });
+
+    this.setState({ tour: {...this.state.tour, programFile} });
+  }
+
   togglePreviewItem = (img) => {
     const selectedPreview = [ ...this.state.selectedPreviewItems ];
     const index = selectedPreview.findIndex(item => item._id === img._id);
@@ -149,6 +171,13 @@ class TourForm extends Component {
 
     this.setState({ tour: { ...this.state.tour, preview } , selectedPreviewItems: [] })
   };
+
+  deleteProgramFile = (id) => () => {
+    const { tour } = this.state;
+
+    tour.programFile = tour.programFile.filter(item => item._id !== id)
+    this.setState({ tour });
+  }
 
 	handleRequestClose = () => {
 		this.setState({ open: false });
@@ -221,6 +250,20 @@ class TourForm extends Component {
     return isValid
   };
 
+  toggleEnableForLanguage = (id) => (e, checked) => {
+    const tour = { ...this.state.tour };
+
+    if (!tour.disabledForLanguages) {
+      tour.disabledForLanguages = []
+    }
+
+    tour.disabledForLanguages = checked ?
+      [...tour.disabledForLanguages, id] :
+      tour.disabledForLanguages.filter(item => item !== id)
+
+    this.setState({tour});
+  }
+
 	render() {
 		const { languages, selectedTabIndex, isSaving } = this.props;
 		const { contentByLang } = this.state;
@@ -272,12 +315,13 @@ class TourForm extends Component {
               control={
                 <Switch
                   checked={tour.enabled}
-                  onChange={(event, checked) => this.setState({ tour: { ...this.state.tour, enabled: checked } })}
+                  onChange={(event, checked) => this.setState({ tour: { ...this.state.tour, enabled: checked } }) }
                   aria-label="checkedD"
                 />
               }
               label={ tour.enabled ? 'Активный' : 'Неактивный'}
             />
+
             <TextField
               name='url'
               value={tour.url}
@@ -287,10 +331,34 @@ class TourForm extends Component {
               className={css(styles.field)}
               label='url'
             />
+            <TextField
+              name='price'
+              type='number'
+              value={tour.price}
+              onChange={this.handleInputChange(null, 'price')}
+              fullWidth
+              required
+              className={css(styles.field)}
+              label='Цена в б/руб'
+            />
+
             {languages.map((lang, i) => (
               <div key={lang._id}>
                 {selectedTabIndex === i &&
                   <div>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={tour.disabledForLanguages && tour.disabledForLanguages.includes(lang._id)}
+                          onChange={ this.toggleEnableForLanguage(lang._id)}
+                          aria-label="checkedD"
+                        />
+                      }
+                      label={tour.disabledForLanguages && tour.disabledForLanguages.includes(lang._id) ?
+                        'Скрыть для этого языка' :
+                        'Скрыть для этого языка'
+                      }
+                    />
                     <TextField
                       name='title'
                       value={contentByLang[lang._id].title}
@@ -398,6 +466,18 @@ class TourForm extends Component {
                         save={this.saveProgram(lang._id)}
                       />
                     </CollapseComponent>
+                    <AddTourPreviewPopup
+                      filesType={ '@docs' }
+                      label={ 'Загрузить программу тура' }
+                      addPreview={this.addTourProgram}
+                    />
+                    {
+                      tour.programFile.map(item => <div key={ item._id } className={css(styles.fileItem)}>
+                        <a href="" >{ item.filename }</a>
+                        <Icon onClick={ this.deleteProgramFile(item._id) }>delete</Icon>
+                      </div>
+                      )
+                    }
                   </div>
                 }
               </div>
@@ -427,6 +507,7 @@ class TourForm extends Component {
         {!this.state.isValidForm &&
           <NotificationPanel>Пожалуйста, заполните все обязательные поля для всех языков</NotificationPanel>
         }
+        <br/>
         <Button
           raised
           type="submit"

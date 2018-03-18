@@ -12,7 +12,8 @@ const MediaSchema = new Schema({
 		title: String,
 		language: String
 	}],
-  path: String
+  path: String,
+	type: String
 });
 
 module.exports = mongoose.model('Media', MediaSchema);

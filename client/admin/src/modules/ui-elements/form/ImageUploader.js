@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const ImageUploader = ({ uploadImg }) => {
+const ImageUploader = ({ uploadImg, fileType }) => {
   const handleImageChange = (e) => {
-    uploadImg(e.target.files[0]);
+    uploadImg({ payload: e.target.files[0], fileType });
 	  e.target.value = '';
   };
 

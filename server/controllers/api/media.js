@@ -13,6 +13,7 @@ module.exports = {
 
   getOne(req, res, next) {
     Media.findById(req.params.id)
+      .populate('programFile')
       .then(item => res.json(item))
       .catch(next);
   },
@@ -24,7 +25,12 @@ module.exports = {
       });
     }
     const { filename, path } = req.file;
-    const mediaFile = new Media({ filename, path: path.replace('client', '').replace(/\\/g, '/') });
+    const { query: { fileType } = ''} = req
+    const mediaFile = new Media({
+      filename,
+      path: path.replace('client', '').replace(/\\/g, '/'),
+      type: fileType || '@image'
+    });
     mediaFile.save()
       .then((result) => {
         res.json(result);

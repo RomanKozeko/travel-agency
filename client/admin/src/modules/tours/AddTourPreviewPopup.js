@@ -44,11 +44,13 @@ class AddTourPreviewPopup extends Component {
 					component="span"
 					raised
 				>
-					Добавить картинку
+					{
+						this.props.label || 'Добавить картинку'
+					}
 				</Button>
 				<Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
 					<DialogContent>
-						<MediaFilesContainer />
+						<MediaFilesContainer filesType={ this.props.filesType } />
 					</DialogContent>
 					<DialogActions>
 						<Button raised onClick={this.handleClick} color="primary">

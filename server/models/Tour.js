@@ -11,6 +11,7 @@ const TourSchema = new Schema({
     type: Boolean,
     default: true
   },
+  disabledForLanguages: [String],
   food: {
     type: Schema.Types.ObjectId,
     ref: 'Food'
@@ -23,6 +24,10 @@ const TourSchema = new Schema({
   },
   days: Number,
   preview: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
+  programFile: [{
     type: Schema.Types.ObjectId,
     ref: 'Media'
   }],
@@ -50,7 +55,8 @@ const TourSchema = new Schema({
   periodType: [{
     type: String,
     ref: 'Period'
-  }]
+  }],
+  price: Number
 });
 
 module.exports = mongoose.model('Tour', TourSchema);

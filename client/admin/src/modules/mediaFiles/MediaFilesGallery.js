@@ -29,7 +29,7 @@ class MediaFilesGallery extends React.Component {
     return (
       <div>
         <PageHeader text={'Картинки'} />
-        <ImageUploader uploadImg={saveItem} />
+        <ImageUploader uploadImg={saveItem} fileType={ this.props.filesType } />
 	      <Button
 		      onClick={this.deleteMediaFiles}
 					className={css(styles.button)}
@@ -41,12 +41,8 @@ class MediaFilesGallery extends React.Component {
 		      Удалить выбранные
 	      </Button>
         <MediaFilesList
-	        languages={ this.props.languages }
-          items={this.props.items}
+	        { ...this.props }
           clickHandler={ toggleImg }
-	        saveItem={ this.props.updateItem }
-	        isSaving={ this.props.isSaving }
-	        updateItemContent={ this.props.updateItemContent }
         />
       </div>
     );
