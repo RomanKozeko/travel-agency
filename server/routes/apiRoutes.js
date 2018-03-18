@@ -35,6 +35,7 @@ const ApiPhotosCtrl = require('../controllers/api/media');
 const ApiHotelsCtrl = require('../controllers/api/hotels');
 const ApiShowPlacesCtrl = require('../controllers/api/showplaces');
 const ApiFoodCtrl = require('../controllers/api/food');
+const FeaturedCtrl = require('../controllers/api/featured');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -100,5 +101,13 @@ router.get('/food/:id', ApiFoodCtrl.getOne);
 router.put('/food/:id', ApiFoodCtrl.put);
 router.post('/food', ApiFoodCtrl.post);
 router.delete('/food', ApiFoodCtrl.delete);
+
+router.get('/featured', FeaturedCtrl.get);
+router.get('/featured/:id', FeaturedCtrl.getOne);
+router.put('/featured/:id', FeaturedCtrl.put);
+router.post('/featured', FeaturedCtrl.post);
+router.delete('/featured', FeaturedCtrl.delete);
+
+
 
 module.exports = router;

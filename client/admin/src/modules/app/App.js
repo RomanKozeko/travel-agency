@@ -27,6 +27,7 @@ import ShowPlaceContainer from '../showPlaces/ShowplaceContainer';
 import FoodContainer from '../food/FoodContainer';
 import FoodItemContainer from '../food/FoodItemContainer';
 import { loadLang } from '../languages/LanguagesReducer';
+import Home from "../home/Home";
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
@@ -137,6 +138,11 @@ const routes = [
     path: '/admin/food/:id',
     exact: true,
     main: () => <FoodItemContainer />
+  },
+  {
+    path: '/admin/home',
+    exact: true,
+    main: () => <Home />
   },
 ];
 

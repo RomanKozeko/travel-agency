@@ -88,6 +88,9 @@ export const showPlacesSchema = { items: [showPlaceSchema] };
 export const foodItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const foodSchema = { items: [foodItemSchema] };
 
+export const featuredItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const featuredSchema = { items: [featuredItemSchema] };
+
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
@@ -106,7 +109,8 @@ export const Schemas = {
   SHOWPLACE: showPlaceSchema,
   SHOWPLACES: showPlacesSchema,
   FOOD_ITEM: foodItemSchema,
-  FOOD: foodSchema
+  FEATURED: featuredItemSchema,
+  FEATURED_ITEM: featuredSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

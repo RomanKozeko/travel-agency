@@ -14,6 +14,7 @@ import hotelsReducer, * as fromMHotels from './modules/hotels/hotelsReducer';
 import showPlacesReducer, * as fromShowplaces from './modules/showPlaces/showplacesReducer';
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
+import featuredReducer, * as fromFeatured from './modules/featured/FeaturedReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   hotels: hotelsReducer,
   showplaces: showPlacesReducer,
   food: foodReducer,
-  entities: entitiesReducer
+  entities: entitiesReducer,
+  featured: featuredReducer
 });
 
 export default rootReducer;
@@ -61,4 +63,6 @@ export const getShowplacesByFilter = (state, filter) => fromEntities.getShowplac
 
 export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
+
+export const getFeatured = (state) => fromFeatured.getFeatured(state.food);
 

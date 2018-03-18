@@ -142,6 +142,14 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
 export const basicReducerEvents = {
   success: (alias) => (state, action) => {
     const payload = action.response;
+    if (!payload.result) {
+      return {
+        ...state,
+        isFetching: false,
+        isFetched: true
+      };
+    }
+
     const allIdsResult = (payload.result instanceof Array) ? payload.result : payload.result.items
     return {
       ...state,
