@@ -83,7 +83,7 @@ const MediaFilesList = ({
   items,
   clickHandler,
   languages = [],
-  saveItem,
+  updateItem,
   isSaving,
   updateItemContent,
   filesType = '@image'
@@ -129,7 +129,7 @@ const MediaFilesList = ({
                 })
               }
               <Button
-                onClick={() => saveItem(item)}
+                onClick={() => updateItem(item)}
                 type="submit"
                 color="primary"
                 className={css(styles.button)}
