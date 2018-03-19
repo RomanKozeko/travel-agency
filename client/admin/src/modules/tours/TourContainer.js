@@ -52,6 +52,7 @@ const createBlankPage = (languages) => {
     regions: [],
     map: [],
     categories: [],
+    programFile: [],
     content
   };
 };
