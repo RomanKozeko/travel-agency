@@ -28,7 +28,7 @@ const SortableTableToolbar = (props) => {
         <div className={css(styles.wrapper)}>
           <h4 className={css(styles.header)} type="subheading">Выбрано: {numSelected}</h4>
           <IconButton aria-label="Delete">
-            <DeleteIcon onClick={deletePages}
+            <DeleteIcon onClick={() => ({})}
             />
           </IconButton>
         </div>

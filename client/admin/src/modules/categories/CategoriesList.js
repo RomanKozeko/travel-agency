@@ -1,8 +1,5 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { CircularProgress } from 'material-ui/Progress';
 import {
   Link
 } from 'react-router-dom';

@@ -6,7 +6,7 @@ const actionsObj = createBasicActions('FEATURED', 'FEATURED_ITEM', 'featured', C
 
 // Action Creators
 export const actions = actionsObj.actions;
-export const loadItems = actionsObj.load;
+export const loadItems = actionsObj.loadWithPagination;
 export const deleteItems = actionsObj.deleteItems;
 export const saveItem = actionsObj.saveItem;
 

@@ -109,8 +109,8 @@ export const Schemas = {
   SHOWPLACE: showPlaceSchema,
   SHOWPLACES: showPlacesSchema,
   FOOD_ITEM: foodItemSchema,
-  FEATURED: featuredItemSchema,
-  FEATURED_ITEM: featuredSchema
+  FEATURED: featuredSchema,
+  FEATURED_ITEM: featuredItemSchema,
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

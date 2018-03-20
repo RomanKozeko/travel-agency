@@ -64,5 +64,5 @@ export const getShowplacesByFilter = (state, filter) => fromEntities.getShowplac
 export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
 
-export const getFeatured = (state) => fromFeatured.getFeatured(state.food);
+export const getFeatured = (state) => fromFeatured.getFeatured(state.featured);
 
