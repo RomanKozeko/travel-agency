@@ -1,9 +1,10 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Spinner from '../ui-elements/Spinner';
-import { getFeatured, getLanguages } from '../../rootReducer';
+import { getFeatured, getLanguages, getMediaFiles } from '../../rootReducer';
 import { loadItems, saveItem } from '../featured/FeaturedReducer';
 import { loadLang } from '../languages/LanguagesReducer';
+import * as fromMediaFiles from '../mediaFiles/mediaFilesReducer';
 import withEntities from "../ui-elements/HOC/withEntities";
 import FeaturedList from "./FeaturedList";
 import { bindActionCreators } from 'redux'
@@ -16,83 +17,52 @@ class FeaturedContainer extends React.Component {
   }
 
   state = {
-    showTemplate: false,
-    newItem: {
-      content: this.props.languages.map(langItem => ({
-        title: '',
-        language: langItem._id
-      })),
-      order: 0,
-      preview: []
-    }
+    showTemplate: false
   }
 
-  prepareTemplate = () => {
-    this.setState({ showTemplate: !this.state.showTemplate })
+  toggleTemplate = () => {
+    this.setState({
+      showTemplate: true,
+      itemToEdit: null
+    })
   }
 
-  onOrderChange = ({ target: { value }}) => {
-    const newItem = {
-      ...this.state.newItem,
-      order: value
-    }
-    this.setState({ newItem })
+  closeTemplate = () => {
+    this.setState({
+      showTemplate: false,
+      itemToEdit: null
+    })
   }
 
-  onFieldChange = (langID) => ({ target: { value }}) => {
-    const newItem = {
-      ...this.state.newItem,
-      content: this.state.newItem.content.map(contentItem => {
-        if (contentItem.language === langID) {
-          return {
-            ...contentItem,
-            title: value
-          }
-        }
-        return contentItem
-      })
-    }
-
-    this.setState({ newItem })
+  editItem = id => () => {
+    this.setState({
+      itemToEdit: this.props.featured.find(item => item._id === id)._id
+    })
   }
 
-  saveItem = () => {
-    this.boundActionCreators.saveItem(this.state.newItem, true)
-  }
-
-  addBackground = () => {
-    const newItem = {
-      ...this.state.newItem,
-      preview: this.props.state.mediafiles.selected
-    }
-    this.setState({ newItem })
-  }
-
-  removePreview = () => {
-    const newItem = {
-      ...this.state.newItem,
-      preview: []
-    }
-    this.setState({ newItem })
+  saveItem = (newItem, isNew) => () => {
+    this.boundActionCreators.saveItem(newItem, isNew)
+    this.setState({
+      showTemplate: false,
+      itemToEdit: null
+    })
   }
 
   render() {
-    const { state: { featured : { isFetching }}} = this.props;
+    const { state: { featured : { isFetching }}, featured } = this.props;
     return (
       <div>
         {isFetching ?
           <Spinner />
           :
           <FeaturedList
-            prepareTemplate={ this.prepareTemplate }
+            toggleTemplate={ this.toggleTemplate }
+            items={ featured }
             showTemplate={ this.state.showTemplate }
-            onFieldChange={ this.onFieldChange }
-            newItem={ this.state.newItem }
             saveItem={ this.saveItem }
-            preview={ this.props.state.mediafiles.byIds[this.state.newItem.preview.toString()]}
-            addBackground={ this.addBackground }
-            removePreview={ this.removePreview }
-            onOrderChange={ this.onOrderChange }
+            editItem={ this.editItem }
+            closeTemplate={ this.closeTemplate }
+            itemToEdit={ this.state.itemToEdit }
             {...this.props}
           />
         }
@@ -108,6 +78,10 @@ const options = {
   languages: {
     loadLang,
     getItems: (state) => getLanguages(state)
+  },
+  mediafiles: {
+    loadItems: fromMediaFiles.loadItems,
+    getItems: (state) => getMediaFiles(state)
   }
 };
 

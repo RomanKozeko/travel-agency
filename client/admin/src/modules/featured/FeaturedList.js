@@ -6,6 +6,7 @@ import createConfirmation from "../ui-elements/form/createConfirmation";
 import AddTourPreviewPopup from '../tours/AddTourPreviewPopup';
 import TextField from 'material-ui/TextField';
 import Icon from 'material-ui/Icon';
+import ItemTemplate from './ItemTemplate'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -103,6 +104,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: '0',
     top: '0'
+  },
+  toolbar: {
+    position: 'absolute',
+    background: 'rgba(0,0,0,.25)',
+    top: '0',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center'
   }
 });
 
@@ -120,100 +129,43 @@ const confirm = createConfirmation(ConfirmDialog);
 // })
 
 const FeaturedList = ({
-  prepareTemplate,
+  toggleTemplate,
+  closeTemplate,
   showTemplate,
-  languages,
-  newItem,
-  onFieldChange,
-  saveItem,
-  addBackground,
-  preview,
-  removePreview,
-  onOrderChange
-}) =>
+  items,
+  editItem,
+  itemToEdit,
+  ...props,
+},
+
+) =>
   <div className={css(styles.wrapper)}>
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/quests.jpg)'}}>
-      <h3 className={css(styles.title)}>Для гостей Беларуси</h3>
-    </div>
+    {
+      items.map(item =>
+        item._id === itemToEdit ?
+          <ItemTemplate item={ item } closeTemplate={ closeTemplate }  { ...props } /> :
+          <div
+            key={ item._id }
+            className={css(styles.item)}
+            style={{ backgroundImage: `url(${item.preview[0] && item.preview[0].path})`}}
+          >
+            <div className={css(styles.toolbar)}>
+              <Icon>delete</Icon>
+              <Icon onClick={ editItem(item._id) }>edit</Icon>
+              Порядок в очереди: { item.order }
+            </div>
 
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/child.jpg)'}}>
-      <h3 className={css(styles.title)}>Для детей и молодежи</h3>
-    </div>
+            <h3 className={css(styles.title)}>{ item.content[0].title }</h3>
+          </div>
+      )
+    }
 
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/holiday.jpg)'}}>
-      <h3 className={css(styles.title)}>Праздничный</h3>
-    </div>
-
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/coop.jpg)'}}>
-      <h3 className={css(styles.title)}>Для корпоративных клиентов</h3>
-    </div>
-
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/custom.jpg)'}}>
-      <h3 className={css(styles.title)}>Авторские туры</h3>
-    </div>
-
-    <div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/DSC_0114-Edit.JPG)'}}>
-      <h3 className={css(styles.title)}>патриотические туры</h3>
-    </div>
     {
       showTemplate ?
-      <div className={css(styles.item, styles.itemTmp)}>
-        <TextField
-          name='Order'
-          fullWidth
-          type='number'
-          value={ newItem.order }
-          className={css(styles.field)}
-          onChange={ onOrderChange }
-          label="Порядок в очереди"
-          required
-        />
-        {
-          newItem.content.map(item =>
-            <div key={ item.language }>
-              <TextField
-                name='title'
-                fullWidth
-                value={ item.title }
-                className={css(styles.field)}
-                onChange={onFieldChange(item.language)}
-                label={`Заголовок ${languages.find(lang => lang._id === item.language).title }`}
-                required
-              />
-            </div>
-          )
-        }
-
-        <TextField
-          name='title'
-          fullWidth
-          className={css(styles.field)}
-          label='Ссылка'
-          required
-        />
-
-        <AddTourPreviewPopup addPreview={ addBackground } label="Добавить фон"/>
-        {
-          preview && <div className={css(styles.imgWrapper)}>
-            <Icon className={css(styles.icon)} onClick={ removePreview }>delete</Icon>
-            <img src={preview.path} className={css(styles.img)} alt=""/>
-          </div>
-        }
-        <Button className={css(styles.button)} onClick={ saveItem } raised color="primary">
-          Сохранить
-        </Button>
-        <Button
-          className={css(styles.button)}
-          raised
-          color="accent"
-          onClick={ prepareTemplate }
-        >
-          Отмена
-        </Button>
-      </div> :
+      <ItemTemplate closeTemplate={ closeTemplate }  { ...props } /> :
       <div className={css(styles.item, styles.itemAdd)}>
         <Button
-          onClick={ prepareTemplate }
+          onClick={ toggleTemplate }
           className={css(styles.button)}
           raised
           color="primary"
