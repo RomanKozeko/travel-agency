@@ -109,6 +109,7 @@ export const Schemas = {
   SHOWPLACE: showPlaceSchema,
   SHOWPLACES: showPlacesSchema,
   FOOD_ITEM: foodItemSchema,
+  FOOD: foodSchema,
   FEATURED: featuredSchema,
   FEATURED_ITEM: featuredItemSchema,
 };
