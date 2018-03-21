@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     background: '#fff',
     paddingLeft: '15px',
     boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
+  },
+  checkbox: {
+    height: '30px',
+    width: '30px'
   }
 });
 
@@ -31,6 +35,7 @@ const TreeList = ({items, selectItems, selectedItems = []}) => {
             <FormControlLabel
               control={
                 <Checkbox
+                  className={css(styles.checkbox)}
                   checked={selectedItems.indexOf(item._id) > -1}
                   value={item._id}
                   onChange={selectItems}
