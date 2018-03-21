@@ -4,6 +4,8 @@ import Toolbar from 'material-ui/Toolbar';
 import DeleteIcon from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import ConfirmDialog from "../form/ConfirmDialog";
+import createConfirmation from "../form/createConfirmation";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -18,8 +20,17 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 })
+
+const confirm = createConfirmation(ConfirmDialog);
+
 const SortableTableToolbar = (props) => {
   const { numSelected, deletePages } = props;
+
+  const deleteItems = () => {
+    confirm({title: `Вы уверены что хотите удалить?`, body: ''}).then((res) => {
+      deletePages()
+    })
+  };
 
   return (
     <div>
@@ -28,8 +39,8 @@ const SortableTableToolbar = (props) => {
         <div className={css(styles.wrapper)}>
           <h4 className={css(styles.header)} type="subheading">Выбрано: {numSelected}</h4>
           <IconButton aria-label="Delete">
-            <DeleteIcon onClick={() => ({})}
-            />
+            <DeleteIcon onClick={deleteItems}
+          />
           </IconButton>
         </div>
         : null}
