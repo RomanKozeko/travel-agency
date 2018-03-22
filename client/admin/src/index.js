@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'core-js/fn/array/';
+import 'core-js/fn/object/';
 import {
 	BrowserRouter as Router,
 	Route,

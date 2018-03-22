@@ -140,6 +140,11 @@ const routes = [
     main: () => <FoodItemContainer />
   },
   {
+    path: '/admin',
+    exact: true,
+    main: () => <Home />
+  },
+  {
     path: '/admin/home',
     exact: true,
     main: () => <Home />

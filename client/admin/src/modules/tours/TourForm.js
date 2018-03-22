@@ -337,7 +337,6 @@ class TourForm extends Component {
               value={tour.price}
               onChange={this.handleInputChange(null, 'price')}
               fullWidth
-              required
               className={css(styles.field)}
               label='Цена в б/руб'
             />
