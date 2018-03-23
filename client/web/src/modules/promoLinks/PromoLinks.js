@@ -1,6 +1,12 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import Skeleton from 'react-loading-skeleton';
+import { compose, lifecycle } from 'recompose'
+import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
+import LoadingItems from '../ui-elements/LoadingItems';
+import { getPromoLinks } from '../../rootReducer';
+import { fetchPromoLinks } from './promoLinksReducer';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -9,6 +15,14 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		paddingBottom: '40px'
 	},
+  itemBg: {
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    width: '100%',
+    height: '100%',
+    backgroundSize: 'cover',
+  },
 	item: {
 		height: '220px',
 		margin: '15px',
@@ -16,7 +30,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#333',
-		backgroundImage: 'url(/web/build/forest2.jpg)',
 		backgroundSize: 'cover',
 		borderRadius: '5px',
 		width: '100%',
@@ -41,7 +54,8 @@ const styles = StyleSheet.create({
 			position: 'absolute',
 			width: '100%',
 			height: '100%',
-			background: 'rgba(0,0,0,.32)'
+			background: 'rgba(0,0,0,.32)',
+      zIndex: '1'
 		},
 
 	},
@@ -53,6 +67,7 @@ const styles = StyleSheet.create({
 		paddingBottom: '20px',
 		paddingLeft: '10px',
 		paddingRight: '10px',
+    zIndex: '2',
 		':after': {
 			content: '""',
 			width: '100px',
@@ -65,33 +80,40 @@ const styles = StyleSheet.create({
 	}
 });
 
-const PromoLinks = () => (
+const PromoLinks = ({ items, isFetching, isFetched }) => (
 	<div className={css(styles.wrapper)}>
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/quests.jpg)'}}>
-				<h3 className={css(styles.title)}>Для гостей Беларуси</h3>
-		</div>
+    {
+      isFetching ?
+        <LoadingItems count={6} /> :
+        items.sort((a, b) => (a.order - b.order)).map(item =>
+          <PrefixLink
+            to={`/pages/${item.linkUrl}`}
+            className={css(styles.item)}
 
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/child.jpg)'}}>
-			<h3 className={css(styles.title)}>Для детей и молодежи</h3>
-		</div>
-
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/holiday.jpg)'}}>
-			<h3 className={css(styles.title)}>Праздничный</h3>
-		</div>
-
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/coop.jpg)'}}>
-			<h3 className={css(styles.title)}>Для корпоративных клиентов</h3>
-		</div>
-
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/custom.jpg)'}}>
-			<h3 className={css(styles.title)}>Авторские туры</h3>
-		</div>
-
-		<div className={css(styles.item)} style={{ backgroundImage: 'url(/web/build/DSC_0114-Edit.JPG)'}}>
-			<h3 className={css(styles.title)}>патриотические туры</h3>
-		</div>
-
+          >
+            <div className={css(styles.itemBg)}
+                 style={{ backgroundImage: `url(${item.preview && item.preview[0].path})`}}
+            />
+            <h3 className={css(styles.title)}>{ item.content.title }</h3>
+          </PrefixLink >
+        )
+    }
 	</div>
 );
 
-export default PromoLinks
+const mapStateToProps = (state) => ({
+  items: getPromoLinks(state),
+  isFetching: state.promoLinks.isFetching,
+  isFetched: state.promoLinks.isFetched
+})
+
+export default compose(
+  connect(mapStateToProps, { fetchPromoLinks }),
+  lifecycle({
+    componentDidMount() {
+      if (!this.props.isFetched) {
+        this.props.fetchPromoLinks()
+      }
+    }
+  })
+)(PromoLinks)

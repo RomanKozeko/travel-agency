@@ -30,12 +30,17 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
+export const promoLinkSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const promoLinksSchema = { items: [promoLinkSchema] };
+
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
   PAGES: pagesSchema,
   PAGE: pageSchema,
   LANGUAGES: languagesSchema,
+  PROMO_LINK: promoLinkSchema,
+  PROMO_LINKS: promoLinksSchema
 };
 
 

@@ -1,10 +1,6 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
-import ConfirmDialog from "../ui-elements/form/ConfirmDialog";
-import createConfirmation from "../ui-elements/form/createConfirmation";
-import AddTourPreviewPopup from '../tours/AddTourPreviewPopup';
-import TextField from 'material-ui/TextField';
 import Icon from 'material-ui/Icon';
 import ItemTemplate from './ItemTemplate'
 
@@ -129,7 +125,7 @@ const FeaturedList = ({
 ) =>
   <div className={css(styles.wrapper)}>
     {
-      items.map(item =>
+      items.sort((a, b) => (a.order - b.order)).map(item =>
         item._id === itemToEdit ?
           <ItemTemplate item={ item } closeTemplate={ closeTemplate }  { ...props } /> :
           <div
@@ -163,5 +159,7 @@ const FeaturedList = ({
       </div>
     }
   </div>
+
+
 
 export default FeaturedList

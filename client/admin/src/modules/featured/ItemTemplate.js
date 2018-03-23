@@ -4,7 +4,7 @@ import Icon from 'material-ui/Icon';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import AddTourPreviewPopup from '../tours/AddTourPreviewPopup';
 import Button from 'material-ui/Button';
-import FilteredTagSelector from '../ui-elements/FilteredTagSelector'
+import SortableInput from '../ui-elements/SortableInput'
 
 const styles = StyleSheet.create({
   item: {
@@ -204,12 +204,12 @@ class ItemTemplate extends React.Component {
           )
         }
 
-        <FilteredTagSelector
-          selectedItems={this.props.pages.find(page => page.url === item.linkUrl)}
+        <SortableInput
+          selectedItems={this.props.pages.filter(page => page.url === item.linkUrl)}
           onFilterSelect={this.setLinkUrl}
           filterType='categories'
           items={this.props.pages}
-          label='Select categories'
+          label='Ссылка на страницу'
         />
 
         <AddTourPreviewPopup addPreview={ this.addBackground } label="Добавить фон"/>

@@ -3,12 +3,14 @@ import { reducer as formReducer } from 'redux-form';
 import appReducer, * as fromApp from './modules/app/appReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
+import promoLinksReducer, * as fromPromoLinks from './modules/promoLinks/promoLinksReducer';
 
 const rootReducer = combineReducers({
   tours: toursReducer,
   app: appReducer,
   form: formReducer,
-  pages: pagesReducer
+  pages: pagesReducer,
+  promoLinks: promoLinksReducer
 });
 
 export default rootReducer;
@@ -22,3 +24,4 @@ export const getPages = state => fromPages.getPages(state.pages);
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);
 export const getPageWithTours = (state, page) => fromTours.getPageWithTours(state.tours, page);
 export const getLanguages = state => fromApp.getLanguages(state.app.languages);
+export const getPromoLinks = state => fromPromoLinks.getPromoLinks(state.promoLinks);
