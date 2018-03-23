@@ -33,6 +33,9 @@ export const languagesSchema = [languageSchema];
 export const promoLinkSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const promoLinksSchema = { items: [promoLinkSchema] };
 
+export const newsItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const newsSchema = { items: [newsItemSchema] };
+
 export const Schemas = {
   TOUR: tourSchema,
   TOURS: toursSchema,
@@ -40,7 +43,9 @@ export const Schemas = {
   PAGE: pageSchema,
   LANGUAGES: languagesSchema,
   PROMO_LINK: promoLinkSchema,
-  PROMO_LINKS: promoLinksSchema
+  PROMO_LINKS: promoLinksSchema,
+  NEWS_ITEM: newsItemSchema,
+  NEWS: newsSchema
 };
 
 

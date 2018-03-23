@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { compose, lifecycle } from 'recompose'
+import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
+import {getLatestNews, getPromoLinks} from '../../rootReducer';
+import { fetchLatestNews } from './latestNewsReducer';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -46,115 +50,54 @@ const styles = StyleSheet.create({
 	}
 });
 
-const LatestNews = () => (
+const itemsBycolumns = (items) => {
+  return items.reduce((prev, curr, index) => {
+    const columnIndex = index % 3
+    if (!prev[columnIndex]) {
+      prev[columnIndex] = [curr];
+      return prev
+    }
+    prev[columnIndex].push(curr)
+    return prev
+
+  }, [])
+}
+
+const LatestNews = ({ items }) => (
 	<div className={css(styles.wrapper)}>
-
-		<div className={css(styles.column)}>
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/bike.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>Байк -фестиваль апрель 2018</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…</p>
-				</div>
-			</PrefixLink>
-
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/victory.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>9 мая 2018 встречаем в Беларуси!</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-					</p>
-				</div>
-			</PrefixLink>
-
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/opera.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>Фестиваль оперы и балета в Несвижском замке июнь 2018</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-					</p>
-				</div>
-			</PrefixLink>
-
-		</div>
-
-		<div className={css(styles.column)}>
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/slav-market.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>Славянский базар в Витебске! июль 2018 </h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-					</p>
-				</div>
-			</PrefixLink>
-
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/kupala.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>"Купальская ночь"-- славянские гулянья 06-07.07.2018</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…</p>
-				</div>
-			</PrefixLink>
-
-
-
-
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/top-city.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}> Летний музыкально-туристический сезон в Минске в Верхнем городе (май-сентябрь 2018)
-					</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-					</p>
-				</div>
-			</PrefixLink>
-
-		</div>
-
-		<div className={css(styles.column)}>
-
-
-
-
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/fireworks.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>"Навальнiца" Международный фестиваль фейерверков 25.-26.08.2018
-					</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-					</p>
-				</div>
-			</PrefixLink>
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/bearfast.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>Пивной фестиваль "Актоубэрфэст" 22-23.09.2018</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…</p>
-				</div>
-			</PrefixLink>
-			<PrefixLink className={css(styles.item)}>
-				<img className={css(styles.img)} src="/web/build/new-year.jpg" alt=""/>
-				<div className={css(styles.content)}>
-					<h3 className={css(styles.title)}>Новый год в гостях у Деде Мороза в Пуще!</h3>
-					<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place…
-						Separated they live i
-					</p>
-				</div>
-			</PrefixLink>
-
-
-		</div>
-
-
+    {
+      itemsBycolumns(items.sort((a, b) => (a.order - b.order))).map((columns, index) =>
+        <div className={css(styles.column)} key={index}>
+          {
+            columns.map(item =>
+              <PrefixLink to={ `/pages/${item.linkUrl}` } className={css(styles.item)} key={ item._id }>
+                <img className={css(styles.img)} src={ item.preview[0] && item.preview[0].path } alt=""/>
+                <div className={css(styles.content)}>
+                  <h3 className={css(styles.title)}>{ item.content.title }</h3>
+                  <p>{ item.content.description }</p>
+                </div>
+              </PrefixLink>
+            )
+          }
+        </div>
+      )
+    }
 	</div>
 );
 
-export default LatestNews
+const mapStateToProps = (state) => ({
+  items: getLatestNews(state),
+  isFetching: state.latestNews.isFetching,
+  isFetched: state.latestNews.isFetched
+})
+
+export default compose(
+  connect(mapStateToProps, { fetchLatestNews }),
+  lifecycle({
+    componentDidMount() {
+      if (!this.props.isFetched) {
+        this.props.fetchLatestNews()
+      }
+    }
+  })
+)(LatestNews)

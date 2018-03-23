@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import Skeleton from 'react-loading-skeleton';
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
