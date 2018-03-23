@@ -92,7 +92,7 @@ const PromoLinks = ({ items, isFetching, isFetched }) => (
 
           >
             <div className={css(styles.itemBg)}
-                 style={{ backgroundImage: `url(${item.preview && item.preview[0].path})`}}
+                 style={{ backgroundImage: `url(${item.preview[0] && item.preview[0].path})`}}
             />
             <h3 className={css(styles.title)}>{ item.content.title }</h3>
           </PrefixLink >
