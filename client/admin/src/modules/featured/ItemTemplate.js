@@ -4,7 +4,7 @@ import Icon from 'material-ui/Icon';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import AddTourPreviewPopup from '../tours/AddTourPreviewPopup';
 import Button from 'material-ui/Button';
-import createConfirmation from "../ui-elements/form/createConfirmation";
+import FilteredTagSelector from '../ui-elements/FilteredTagSelector'
 
 const styles = StyleSheet.create({
   item: {
@@ -139,6 +139,14 @@ class ItemTemplate extends React.Component {
     this.setState({ item })
   }
 
+  setLinkUrl = (linkUrl, [{ url }]) => {
+    const item = {
+      ...this.state.item,
+      linkUrl: url
+    }
+    this.setState({ item })
+  }
+
   saveItem = () => {
     this.boundActionCreators.saveItem(this.state.item, true)
   }
@@ -196,13 +204,13 @@ class ItemTemplate extends React.Component {
           )
         }
 
-        <select name="" id="">
-          {
-            this.props.pages.map(page =>
-              <option key={ page._id } value={ page._id}>{ page.content[0].title }</option>
-            )
-          }
-        </select>
+        <FilteredTagSelector
+          selectedItems={this.props.pages.find(page => page.url === item.linkUrl)}
+          onFilterSelect={this.setLinkUrl}
+          filterType='categories'
+          items={this.props.pages}
+          label='Select categories'
+        />
 
         <AddTourPreviewPopup addPreview={ this.addBackground } label="Добавить фон"/>
         {
