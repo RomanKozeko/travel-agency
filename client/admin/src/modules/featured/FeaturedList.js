@@ -115,19 +115,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const confirm = createConfirmation(ConfirmDialog);
-
-// confirm({title: `Are you sure to delete ${item.title} language?`, body: ''}).then((res) => {
-//   const items = [...this.state.items];
-//   const index = items.findIndex(row => row._id === id || row.id === id);
-//
-//   items.splice(index, 1);
-//   if (item._id) {
-//     this.props.deleteLang([item._id])
-//   }
-//   this.setState({items});
-// })
-
 const FeaturedList = ({
   toggleTemplate,
   closeTemplate,
@@ -135,6 +122,7 @@ const FeaturedList = ({
   items,
   editItem,
   itemToEdit,
+  deleteItems,
   ...props,
 },
 
@@ -150,7 +138,7 @@ const FeaturedList = ({
             style={{ backgroundImage: `url(${item.preview[0] && item.preview[0].path})`}}
           >
             <div className={css(styles.toolbar)}>
-              <Icon>delete</Icon>
+              <Icon onClick={ deleteItems([item._id])}>delete</Icon>
               <Icon onClick={ editItem(item._id) }>edit</Icon>
               Порядок в очереди: { item.order }
             </div>

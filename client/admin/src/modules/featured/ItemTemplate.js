@@ -196,13 +196,13 @@ class ItemTemplate extends React.Component {
           )
         }
 
-        <TextField
-          name='title'
-          fullWidth
-          className={css(styles.field)}
-          label='Ссылка'
-          required
-        />
+        <select name="" id="">
+          {
+            this.props.pages.map(page =>
+              <option key={ page._id } value={ page._id}>{ page.content[0].title }</option>
+            )
+          }
+        </select>
 
         <AddTourPreviewPopup addPreview={ this.addBackground } label="Добавить фон"/>
         {

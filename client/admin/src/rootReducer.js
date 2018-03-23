@@ -41,6 +41,7 @@ export const getTours = state => fromTours.getTours(state.tours);
 export const getPageWithTours = (state, page) => fromTours.getPageWithTours(state.tours, page);
 
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);
+export const getPages = (state, id) => fromPages.getPages(state.pages, id);
 export const getPageWithItems = (state, page) => fromPages.getPageWithItems(state.pages, page);
 
 export const getLanguages = state => fromLanguages.getLanguages(state.languages);
@@ -65,4 +66,3 @@ export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
 
 export const getFeatured = (state) => fromFeatured.getFeatured(state.featured);
-

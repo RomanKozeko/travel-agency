@@ -1,19 +1,27 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import { bindActionCreators } from 'redux'
 import Spinner from '../ui-elements/Spinner';
-import { getFeatured, getLanguages, getMediaFiles } from '../../rootReducer';
-import { loadItems, saveItem } from '../featured/FeaturedReducer';
+import { getFeatured, getLanguages, getMediaFiles, getPageWithItems } from '../../rootReducer';
+import { loadItems, saveItem, deleteItems } from '../featured/FeaturedReducer';
 import { loadLang } from '../languages/LanguagesReducer';
+import { loadPages } from '../pages/PagesActions';
 import * as fromMediaFiles from '../mediaFiles/mediaFilesReducer';
 import withEntities from "../ui-elements/HOC/withEntities";
 import FeaturedList from "./FeaturedList";
-import { bindActionCreators } from 'redux'
+
+import ConfirmDialog from "../ui-elements/form/ConfirmDialog";
+import createConfirmation from "../ui-elements/form/createConfirmation";
+
+
+
+const confirm = createConfirmation(ConfirmDialog);
 
 class FeaturedContainer extends React.Component {
   constructor(props) {
     super(props);
     const {dispatch} = props;
-    this.boundActionCreators = bindActionCreators({ saveItem }, dispatch)
+    this.boundActionCreators = bindActionCreators({ saveItem, deleteItems }, dispatch)
   }
 
   state = {
@@ -48,6 +56,13 @@ class FeaturedContainer extends React.Component {
     })
   }
 
+  deleteItems = id => () => {
+    confirm({title: `Точно удалить?`, body: ''}).then(res => {
+      this.boundActionCreators.deleteItems(id)
+    })
+  }
+
+
   render() {
     const { state: { featured : { isFetching }}, featured } = this.props;
     return (
@@ -62,6 +77,7 @@ class FeaturedContainer extends React.Component {
             saveItem={ this.saveItem }
             editItem={ this.editItem }
             closeTemplate={ this.closeTemplate }
+            deleteItems={ this.deleteItems }
             itemToEdit={ this.state.itemToEdit }
             {...this.props}
           />
@@ -82,6 +98,10 @@ const options = {
   mediafiles: {
     loadItems: fromMediaFiles.loadItems,
     getItems: (state) => getMediaFiles(state)
+  },
+  pages: {
+    loadItems: loadPages,
+    getItems: (state) => getPageWithItems(state, 0)
   }
 };
 
