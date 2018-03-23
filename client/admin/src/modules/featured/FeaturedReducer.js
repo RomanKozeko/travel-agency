@@ -18,7 +18,7 @@ export const defaultState = {
   isFetched: false,
 };
 
-const languagesReducer = createReducer(defaultState, {
+export default createReducer(defaultState, {
   [actions.FEATURED_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.FEATURED_SUCCESS]: basicReducerEvents.success(),
   [actions.FEATURED_FAILURE]: state => ({ ...state, isFetching: false }),
@@ -32,8 +32,6 @@ const languagesReducer = createReducer(defaultState, {
   [actions.FEATURED_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.FEATURED_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
 });
-
-export default languagesReducer;
 
 //  selectors
 export const getFeatured = state => (state.allIds.map(id => state.byIds[id]));

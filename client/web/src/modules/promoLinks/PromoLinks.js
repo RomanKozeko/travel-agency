@@ -85,16 +85,16 @@ const PromoLinks = ({ items, isFetching, isFetched }) => (
     {
       isFetching ?
         <LoadingItems count={6} /> :
-        items.sort((a, b) => (a.order - b.order)).map(item =>
+        items.sort((a, b) => (a.order - b.order)).map(({ preview, content, linkUrl}) =>
           <PrefixLink
-            to={`/pages/${item.linkUrl}`}
+            to={`/pages/${linkUrl}`}
             className={css(styles.item)}
 
           >
             <div className={css(styles.itemBg)}
-                 style={{ backgroundImage: `url(${item.preview[0] && item.preview[0].path})`}}
+                 style={{ backgroundImage: `url(${preview[0] && preview[0].path})`}}
             />
-            <h3 className={css(styles.title)}>{ item.content.title }</h3>
+            <h3 className={css(styles.title)}>{ content.title }</h3>
           </PrefixLink >
         )
     }

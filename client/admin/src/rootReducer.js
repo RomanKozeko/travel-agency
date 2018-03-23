@@ -15,6 +15,7 @@ import showPlacesReducer, * as fromShowplaces from './modules/showPlaces/showpla
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
 import featuredReducer, * as fromFeatured from './modules/featured/FeaturedReducer';
+import newsReducer, * as fromNews from './modules/news/NewsReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   showplaces: showPlacesReducer,
   food: foodReducer,
   entities: entitiesReducer,
-  featured: featuredReducer
+  featured: featuredReducer,
+  news: newsReducer
 });
 
 export default rootReducer;
@@ -66,3 +68,4 @@ export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
 
 export const getFeatured = (state) => fromFeatured.getFeatured(state.featured);
+export const getNews = (state) => fromFeatured.getFeatured(state.news);

@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
 		}
 	},
 	img: {
-		maxWidth: '100%'
+		maxWidth: '100%',
+    minWidth: '100%'
 	},
 	item: {
 		display: 'block',

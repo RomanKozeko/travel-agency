@@ -36,6 +36,7 @@ const ApiHotelsCtrl = require('../controllers/api/hotels');
 const ApiShowPlacesCtrl = require('../controllers/api/showplaces');
 const ApiFoodCtrl = require('../controllers/api/food');
 const FeaturedCtrl = require('../controllers/api/featured');
+const NewsCtrl = require('../controllers/api/news');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -108,6 +109,11 @@ router.put('/featured/:id', FeaturedCtrl.put);
 router.post('/featured', FeaturedCtrl.post);
 router.delete('/featured', FeaturedCtrl.delete);
 
+router.get('/news', NewsCtrl.get);
+router.get('/news/:id', NewsCtrl.getOne);
+router.put('/news/:id', NewsCtrl.put);
+router.post('/news', NewsCtrl.post);
+router.delete('/news', NewsCtrl.delete);
 
 
 module.exports = router;

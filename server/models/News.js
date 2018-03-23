@@ -7,6 +7,10 @@ const NewsSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  preview: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
   content: [{
     title: String,
     description: String,
