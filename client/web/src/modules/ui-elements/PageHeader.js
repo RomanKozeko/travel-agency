@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
 
 const PageHeader = ({ title }) =>
 	<header className={css(styles.header)}>
-		<h1 className={css(styles.headerTitle)}>{ title }</h1>
+		<div className='container'>
+			<h1 className={css(styles.headerTitle)}>{ title }</h1>
+		</div>
 	</header>
 
 export default PageHeader;
