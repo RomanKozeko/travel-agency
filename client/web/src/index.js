@@ -11,6 +11,7 @@ import configureStore from './store/configureStore';
 import { fetchLanguages } from './services/apiHelper';
 import { getLangPref, getLangUrlPref } from './services/utils';
 import App from './modules/app/App';
+import ScrollToTop from './modules/ui-elements/ScrollToTop';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -42,7 +43,9 @@ fetchLanguages().then(res => {
 	ReactDOM.render(
     <Provider store={store}>
       <Router>
-        <App />
+				<ScrollToTop>
+        	<App />
+				</ScrollToTop>
       </Router>
     </Provider>,
 		document.getElementById('root')
