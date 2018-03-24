@@ -6,6 +6,7 @@ const TourCategorySchema = new Schema({
     type: Date,
     default: Date.now
   },
+  disabledForLanguages: [String],
   enabled: {
     type: Boolean,
     default: true

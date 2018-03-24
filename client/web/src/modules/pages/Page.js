@@ -6,6 +6,8 @@ import { withRouter, Link } from 'react-router-dom';
 import { getPage } from '../../rootReducer';
 import { loadPage } from './PagesActions';
 import FilteredToursContainer from '../tours/FilteredToursContainer';
+import PageContent from '../ui-elements/PageContent';
+import PageHeader from '../ui-elements/PageHeader';
 
 const styles = StyleSheet.create({
   page: {
@@ -67,30 +69,22 @@ class Page extends React.Component {
     const { isFetching, page } = this.props;
     return (
       <div>
-        {isFetching || !page ?
-          <h1>Loading...</h1>
-          :
-          <div className={css(styles.page)}>
-            <header className={css(styles.header)}>
-              <h1 className={css(styles.headerTitle)}>{page.content.title}</h1>
-            </header>
-            <div className="container">
-              <div className={css(styles.pageContent)}>
-                {page.content.rows.map(row => (
-                  <div key={row._id} className="row">
-                    {row.items.map(item => (
-                        <div key={item._id} className={this.getRowItemClass(item.size)}>
-                          <PageColumn item={item} />
-                        </div>
-                      ))
-                    }
-                  </div>
-                ))
-                }
-              </div>
-            </div>
-          </div>
-        }
+          <PageHeader title={page ? page.content.title : ''} />
+          <PageContent>
+            {isFetching || !page ?
+              <h4>Загрузка...</h4> :
+              page.content.rows.map(row => (
+                <div key={row._id} className="row">
+                  {row.items.map(item => (
+                      <div key={item._id} className={this.getRowItemClass(item.size)}>
+                        <PageColumn item={item} />
+                      </div>
+                    ))
+                  }
+                </div>
+              ))
+            }
+          </PageContent>
       </div>
     );
   }

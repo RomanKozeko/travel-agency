@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
 	},
 });
 
-const FancyHeader = ({ title}) => (
-	<h3 className={css(styles.header)}>
-		{ title }
-	</h3>
+const FancyHeader = ({ title }) => (
+	<div className='container'>
+		<h3 className={css(styles.header)}>
+			{ title }
+		</h3>
+	</div>
 )
 
 export default FancyHeader

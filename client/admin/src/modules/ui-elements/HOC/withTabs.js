@@ -148,6 +148,20 @@ export default function withTabs(WrappedComponent, backLink ) {
       return isValid
     }
 
+    toggleEnableForLanguage = (id) => (e, checked) => {
+      const item = { ...this.state.item };
+  
+      if (!item.disabledForLanguages) {
+        item.disabledForLanguages = []
+      }
+  
+      item.disabledForLanguages = checked ?
+        [...item.disabledForLanguages, id] :
+        item.disabledForLanguages.filter(litem => litem !== id)
+  
+      this.setState({item});
+    }
+
     render() {
       return <div>
         <Tabs
@@ -168,6 +182,7 @@ export default function withTabs(WrappedComponent, backLink ) {
           handleEditorChange={this.handleEditorChange}
           handleInputChange={this.handleInputChange}
           parentState={this.state}
+          toggleEnableForLanguage={this.toggleEnableForLanguage}
           {...this.props}
         />
       </div>
