@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 		fontSize: '28px',
 		fontWeight: 'bold',
 		color: '#fefefe',
+		textAlign: 'center',
 		textTransform: 'uppercase',
 		'@media (min-width: 600px)': {
 			lineHeight: '45px',

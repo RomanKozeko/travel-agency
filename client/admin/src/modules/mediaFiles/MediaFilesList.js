@@ -109,7 +109,7 @@ const MediaFilesList = ({
               <div className={css(styles.inner)}>
                 <img
                   className={css(styles.img)}
-                  src={filesType === '@docs' ? '/ic_insert_drive_file_black_24px.svg' : item.path }
+                  src={filesType === '@docs' ? '/admin/build/ic_insert_drive_file_black_24px.svg' : item.path }
                   alt=""
                 />
               </div>
