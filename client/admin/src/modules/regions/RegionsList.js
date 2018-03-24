@@ -46,9 +46,15 @@ const deleteRow = (item, deleteItems) => event => {
   })
 };
 
+function sort(a, b){
+  if(a.content[0].title < b.content[0].title) return -1;
+  if(a.content[0].title > b.content[0].title) return 1;
+  return 0;
+}
+
 const TreeItems = ({items, deleteItems}) => (
   <div>
-    {items.map(item => (
+    {items.sort(sort).map(item => (
       <ul key={item._id} className={css(styles.wrapper)}>
         <li className={css(styles.li)}>
           <Link to={'/admin/regions/' + item._id}>{item.content[0].title}</Link>
@@ -59,7 +65,7 @@ const TreeItems = ({items, deleteItems}) => (
           }
         </li>
         {item.childrens &&
-        <TreeItems items={item.childrens} deleteItems={deleteItems} />
+        <TreeItems items={item.childrens.sort(sort)} deleteItems={deleteItems} />
         }
       </ul>
     ))

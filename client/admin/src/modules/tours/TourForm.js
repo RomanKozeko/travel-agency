@@ -487,7 +487,8 @@ class TourForm extends Component {
               handleToggle={this.handleToggle}
               defaultChecked={tour.categories}
               updateItems={this.updateItems}
-              itemsName='Категории тура'
+              title='Категории тура'
+              itemsName='categories'
             />
             <CollapseComponent title='Отели'>
               <HotelsFilterContainer

@@ -76,7 +76,10 @@ const styles = StyleSheet.create({
 		width: '100%',
 		marginTop: '10px',
     minWidth: '0px'
-	}
+	},
+  title: {
+    whiteSpace: 'nowrap'
+  }
 });
 
 const MediaFilesList = ({
@@ -110,7 +113,7 @@ const MediaFilesList = ({
                   alt=""
                 />
               </div>
-
+							<div className={css(styles.title)} title={ item.filename.slice(13)  }>{ item.filename.slice(13) }</div>
             </div>
 
             <div className={css(styles.footer)}>

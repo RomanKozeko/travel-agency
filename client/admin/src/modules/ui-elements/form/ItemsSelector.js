@@ -90,12 +90,12 @@ class ItemsSelector extends React.Component {
               button
               aria-haspopup="true"
               aria-controls="lock-menu"
-              aria-label={this.props.itemsName}
+              aria-label={this.props.title}
               onClick={this.handleClickListItem}
             >
               <ListItemText
                 className={css(styles.listItem)}
-                primary={this.props.itemsName}
+                primary={this.props.title}
                 secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
               />
             </ListItem>

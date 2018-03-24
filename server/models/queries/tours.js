@@ -12,6 +12,7 @@ module.exports = {
     .populate('regions')
     .populate('hotels')
     .populate('showplaces')
+    .populate('programFile')
     .populate('periodType')
     .populate('food')
 
