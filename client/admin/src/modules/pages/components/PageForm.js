@@ -54,6 +54,8 @@ class PageForm extends React.Component {
       removeRowItem,
       saveRow,
       editRowItem,
+      editRowTitle,
+      editOrder
     } = this.props;
     if (!page.item) {
       return null;
@@ -105,7 +107,7 @@ class PageForm extends React.Component {
                 count={4}
                 lang={lang._id}
               />
-
+              
               <PageCaption text={'Схема страницы'} />
               <Rows
                 rows={page.contentByLang[lang._id].rows}
@@ -116,6 +118,8 @@ class PageForm extends React.Component {
                 editRowItem={editRowItem}
                 openHtmlEditor={openHtmlEditor}
                 openAddToursListPopup={openAddToursListPopup}
+                editRowTitle={editRowTitle}
+                editOrder={editOrder}
               />
             </div>
             }

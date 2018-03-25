@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		borderRadius: '5px',
 		transition: 'all .3s ease-in',
-		marginBottom: '30px',
+		marginBottom: '20px',
 		':hover': {
 			boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
 		},

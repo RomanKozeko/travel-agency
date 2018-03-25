@@ -45,6 +45,7 @@ class AddPageItemMenu extends Component {
           </MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить галерею</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить картнику</MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>Добавить контактную форму</MenuItem>
           <MenuItem onClick={this.addToursList}>Добавить список туров</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem>
         </Menu>

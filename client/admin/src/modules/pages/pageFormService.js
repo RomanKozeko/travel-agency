@@ -16,6 +16,7 @@ class Row {
     this.content = pageLink;
     this.items = rowsItems;
     this.images = [];
+    this.order = 0;
   }
 }
 

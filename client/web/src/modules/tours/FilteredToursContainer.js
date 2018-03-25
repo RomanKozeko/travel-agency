@@ -28,9 +28,9 @@ class FilteredToursContainer extends React.Component {
 
     return (
       <div>
-        {isFetching
-          ? <div>Loading...</div>
-          : <ToursList tours={tours} />
+        {isFetching ?
+          <div>Loading...</div> :
+          <ToursList tours={tours} />
         }
       </div>
     );

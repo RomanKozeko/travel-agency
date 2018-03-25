@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   isOpen: state.page.addToursPopupOpen,
   currRowItem: state.page.currRowItem,
   categories: getCategories(state),
-  regions: getRegions(state)
+  regions: getRegions(state),
+  isFetched: state.regions.isFetched && state.categories.isFetched
 });
 
 
@@ -26,7 +27,7 @@ class AddToursListPopupContainer extends React.Component {
   }
 
   render() {
-    return (<AddToursListPopup {...this.props} />);
+    return this.props.isFetched ? <AddToursListPopup {...this.props} /> : null;
   }
 }
 

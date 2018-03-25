@@ -8,6 +8,7 @@ import { loadPage } from './PagesActions';
 import FilteredToursContainer from '../tours/FilteredToursContainer';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
+import FancyHeader from '../ui-elements/FancyHeader';
 
 const styles = StyleSheet.create({
   page: {
@@ -73,8 +74,9 @@ class Page extends React.Component {
           <PageContent>
             {isFetching || !page ?
               <h4>Загрузка...</h4> :
-              page.content.rows.map(row => (
+              page.content.rows.sort((a, b) => a.order - b.order).map(row => (
                 <div key={row._id} className="row">
+                  { row.title && <FancyHeader title={ row.title } /> }
                   {row.items.map(item => (
                       <div key={item._id} className={this.getRowItemClass(item.size)}>
                         <PageColumn item={item} />

@@ -472,7 +472,7 @@ class TourForm extends Component {
                     />
                     {
                       tour.programFile.map(item => <div key={ item._id } className={css(styles.fileItem)}>
-                        <a href="" >{ item.filename }</a>
+                        <a href="" >{ item.filename.slice(13) }</a>
                         <Icon onClick={ this.deleteProgramFile(item._id) }>delete</Icon>
                       </div>
                       )

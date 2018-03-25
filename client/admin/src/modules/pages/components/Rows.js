@@ -2,6 +2,7 @@ import React from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
+import TextField from 'material-ui/TextField';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import ItemContentType from './ItemContentType';
@@ -69,7 +70,9 @@ const Rows = ({
     openHtmlEditor,
     removeRowItem,
     editRowItem,
-    openAddToursListPopup
+    openAddToursListPopup,
+    editOrder,
+    editRowTitle
   }) => {
   return (
     <div>
@@ -77,7 +80,7 @@ const Rows = ({
         transitionName="row"
         transitionEnterTimeout={500}
         transitionLeaveTimeout={300}>
-        {rows.map(row => (
+        {rows.sort((a, b) => a.order - b.order).map(row => (
           <div key={row._id || row.id} className={css(styles.row)}>
             <IconButton className={css(styles.dragButton)}>
               <Icon>drag_handle</Icon>
@@ -88,10 +91,36 @@ const Rows = ({
             >
               <Icon>close</Icon>
             </IconButton>
+            <div style={{ margin: '0 5px'}}>
+              <div className="col-md-3" >
+                <TextField
+                  id="order"
+                  type="number"
+                  label="Парядок в очереди"
+                  fullWidth
+                  value={row.order}
+                  onChange={(e) => editOrder({ value:e.target.value, id: row._id || row.id, langId })}
+                  margin="normal"
+                />
+              </div>
+              <div className="col-md-9" >
+                <TextField
+                  id="title"
+                  label="Заголовок"
+                  value={row.title}
+                  fullWidth
+                  onChange={(e) => editRowTitle({ value:e.target.value, id: row._id || row.id, langId })}
+                  margin="normal"
+                />
+              </div>
+            </div>
+
             <div className="clearfix">
+
               {
                 getRowItems(row.items, rowsItems).map(item => (
                   <div key={item._id || item.id} className={item.size}>
+
                     <div className={getItemClassName(item)}>
                       <ItemContentType
                         item={item}

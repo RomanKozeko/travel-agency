@@ -1,7 +1,9 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
 import Button from '../ui-elements/Button';
 import PrefixLink from '../ui-elements/PrefixLink'
+import { theme } from '../../services/constans';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -10,18 +12,24 @@ const styles = StyleSheet.create({
 		marginLeft: '-30px'
 	},
 	tourWrapper: {
-		backgroundColor: '#f8f8f8',
+		backgroundColor: '#fff',
+		borderRadius: '5px',
+		overflow: 'hidden',
 		marginBottom: '20px',
 		width: '100%',
 		paddingBottom: '70px',
 		position: 'relative',
 		marginLeft: '30px',
+    transition: 'all .3s ease-in',
 		'@media (min-width: 600px)': {
 			width: 'calc(100% / 2 - 30px)',
 		},
 		'@media (min-width: 1000px)': {
 			width: 'calc(100% / 3 - 30px)',
-		}
+		},
+    ':hover': {
+      boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
+    },
 	},
 	preview: {
 		display: 'block',
@@ -59,16 +67,24 @@ const styles = StyleSheet.create({
 		alignItems: 'baseLine',
 		position: 'absolute',
 		bottom: '0',
-		padding: '0 20px',
+		padding: '20px',
 		left: '0',
 		width:'100%'
 	},
 	price: {
 		fontWeight: 'bold',
-		fontSize: '22px',
+		fontSize: '16px',
 		letterSpacing: '2px',
 		color: '#222222',
-	}
+	},
+  listItem: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingBottom: '5px'
+  },
+  listItemText: {
+    marginLeft: '10px'
+  },
 });
 
 const ToursList = ({tours}) => {
@@ -76,21 +92,37 @@ const ToursList = ({tours}) => {
 		<div className={css(styles.wrapper)}>
 			{tours.map((tour, i) => (
 					<div key={tour._id} className={css(styles.tourWrapper)}>
-						<div className={css(styles.preview)}	style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}}/>
+						<div className={css(styles.preview)} style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}} />
 						<div className={css(styles.info)}>
 							<div className={css(styles.body)}>
-								<span className={css(styles.period)}>
-									July <b>{Math.floor(Math.random() * 31) + 1}th</b> to August
-									<b> {Math.floor(Math.random() * 31) + 1}th</b>
-								</span>
 								<h2 className={css(styles.title)}>{tour.content.title}</h2>
-								<div className={css(styles.description)}>{tour.content.description}</div>
+                <div className={css(styles.listItem)}>
+                  <PlaceIcon color={ theme.colors.primary } width={20} />
+                  <span className={css(styles.listItemText)}>{ tour.content.departureInfo }</span>
+                </div>
+                <div className={css(styles.listItem)}>
+                  <WorkIcon color={ theme.colors.primary } width={20} />
+                  <span className={css(styles.listItemText)}>Самолетный</span>
+                </div>
+                <div className={css(styles.listItem)}>
+                  <DinnerIcon color={ theme.colors.primary } width={20} />
+                  <span className={css(styles.listItemText)}>Завтраки</span>
+                </div>
+                <div className={css(styles.listItem)}>
+                  <ClockIcon color={ theme.colors.primary } width={20} />
+                  <span className={css(styles.listItemText)}>{ tour.content.duration }</span>
+                </div>
+                <div className={css(styles.listItem)}>
+                  <DateIcon color={ theme.colors.primary } width={20} />
+                  <span className={css(styles.listItemText)}>Дней: { tour.days }</span>
+                </div>
 							</div>
+							<div className={css(styles.price)}>От { tour.price }</div>
 							<div className={css(styles.footer)}>
-								<PrefixLink to={`/tours/${tour.url}`}>SHOW DETAILS</PrefixLink>
-								<Button>Book now</Button>
-								<span className={css(styles.price)}>{Math.floor(Math.random() * 500) + 500}$</span>
+								<PrefixLink to={`/tours/${tour.url}`}>Подробнее</PrefixLink>
+								<Button>Заказть</Button>
 							</div>
+
 						</div>
 					</div>
 			))

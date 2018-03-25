@@ -102,6 +102,8 @@ PageContainer = withRouter(connect(
     saveRow: actions.saveRow,
     removeRowItem: actions.pageRemoveRowItem,
     editRowItem: actions.pageEditRowItem,
+    editRowTitle: actions.editRowTitle,
+    editOrder: actions.editOrder,
   }
 )(PageContainer));
 

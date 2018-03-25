@@ -182,7 +182,7 @@ class FilteredTagSelector extends React.Component {
               key={item._id + 1}
               className={css(styles.tagsItem)}
               label={item.content[0].title}
-              onRequestDelete={this.removeItem(item._id)}
+              onDelete={this.removeItem(item._id)}
             />
           ))
           }

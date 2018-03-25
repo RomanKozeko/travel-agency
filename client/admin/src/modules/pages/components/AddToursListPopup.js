@@ -23,8 +23,17 @@ const styles = StyleSheet.create({
 class AddToursListPopup extends React.Component {
   constructor(props) {
     super(props);
+    const filtersObj = { ...this.props.currRowItem.filtersObj }
+    if (filtersObj.categories && filtersObj.categories[0] && !filtersObj.categories[0]._id) {
+      filtersObj.categories = this.props.categories.filter(category => filtersObj.categories.includes(category._id))
+    }
+
+    if (filtersObj.regions && filtersObj.regions[0] && !filtersObj.regions[0]._id) {
+      filtersObj.regions = this.props.regions.filter(category => filtersObj.regions.includes(category._id))
+    }
+
     this.state = {
-      filtersObj: this.props.currRowItem.filtersObj || {}
+      filtersObj: filtersObj || {}
     }
   }
 
@@ -43,7 +52,7 @@ class AddToursListPopup extends React.Component {
     const {isOpen, handleRequestClose, categories, regions, saveRow} = this.props;
     return (
       <Dialog open={isOpen} onRequestClose={handleRequestClose}>
-        <DialogTitle>Filter tours to display</DialogTitle>
+        <DialogTitle>Выбрать фильтры</DialogTitle>
         <DialogContent className={css(styles.popup)}>
           {categories.length && regions.length &&
           <div>
@@ -52,14 +61,14 @@ class AddToursListPopup extends React.Component {
               onFilterSelect={this.onFilterSelect}
               filterType='categories'
               items={categories}
-              label='Select categories'
+              label='Выбрать категории'
             />
             <FilteredTagSelector
               selectedItems={this.state.filtersObj.regions}
               onFilterSelect={this.onFilterSelect}
               filterType='regions'
               items={regions}
-              label='Select regions'
+              label='Выбрать регионы'
             />
           </div>
           }
@@ -67,10 +76,10 @@ class AddToursListPopup extends React.Component {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleRequestClose} color="accent">
-            Cancel
+            Отмена
           </Button>
           <Button onClick={() => saveRow('', 'tours', this.state)} color="primary">
-            Save
+            Сохранить
           </Button>
         </DialogActions>
       </Dialog>

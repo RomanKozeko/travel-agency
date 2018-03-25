@@ -15,6 +15,8 @@ const PAGE_EDIT_ROW_ITEM = 'PAGE_EDIT_ROW_ITEM';
 
 const PAGE_OPEN_TOURS_LIST_POPUP_EDITOR = 'PAGE_OPEN_TOURS_LIST_POPUP_EDITOR';
 const PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR = 'PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR';
+const PAGE_EDIT_ROW_TITLE = 'PAGE_EDIT_ROW_TITLE';
+const PAGE_EDIT_ROW_ORDER = 'PAGE_EDIT_ROW_ORDER';
 
 // Action Creators
 export const pageDidMount = makeActionCreator(PAGE_DID_MOUNT, 'payload');
@@ -29,6 +31,8 @@ export const closeHtmlEditor = makeActionCreator(PAGE_CLOSE_HTML_EDITOR);
 export const saveRow = makeActionCreator(PAGE_SAVE_ROW_ITEM, 'content', 'filterType', 'itemsContent');
 export const openAddToursListPopup = makeActionCreator(PAGE_OPEN_TOURS_LIST_POPUP_EDITOR, 'rowItem');
 export const closeAddToursListPopup = makeActionCreator(PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR);
+export const editRowTitle = makeActionCreator(PAGE_EDIT_ROW_TITLE, 'payload');
+export const editOrder = makeActionCreator(PAGE_EDIT_ROW_ORDER, 'payload');
 
 const addRowSuccess = (state, action) => {
   const addedRow = addRow({ ...state.contentByLang }, action.columns, action.langId);
@@ -137,6 +141,84 @@ const pageReducer = createReducer(defaultState, {
   [PAGE_CLOSE_HTML_EDITOR]: state => ({ ...state, htmlEditorOpen: false, currRowItem: null }),
   [PAGE_OPEN_TOURS_LIST_POPUP_EDITOR]: reducerHelper.openAddToursListPopup,
   [PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR]: state => ({ ...state, addToursPopupOpen: false, currRowItem: null }),
+  [PAGE_EDIT_ROW_TITLE]: (state, { payload: { value, id, langId }}) => {
+    const item = {...state.item};
+    item.content = item.content.map(itemContent => {
+      if (itemContent.language === langId) {
+        return {
+          ...itemContent,
+          rows: itemContent.rows.map(row => {
+            if ((row._id || row.id) === id) {
+              return {
+                ...row,
+                title: value
+              }
+            }
+            return row
+          })
+        }
+      }
+      return itemContent
+    })
+    return {
+      ...state,
+      item,
+      contentByLang: {
+        ...state.contentByLang,
+        [langId]: {
+          ...state.contentByLang[langId],
+          rows: state.contentByLang[langId].rows.map(row => {
+            if ((row._id || row.id) === id) {
+              return {
+                ...row,
+                title: value
+              }
+            }
+            return row
+          })
+        }
+      }
+    };
+  },
+  [PAGE_EDIT_ROW_ORDER]: (state, { payload: { value, id, langId }}) => {
+    const item = {...state.item};
+    item.content = item.content.map(itemContent => {
+      if (itemContent.language === langId) {
+        return {
+          ...itemContent,
+          rows: itemContent.rows.map(row => {
+            if ((row._id || row.id) === id) {
+              return {
+                ...row,
+                order: value
+              }
+            }
+            return row
+          })
+        }
+      }
+      return itemContent
+    })
+    return {
+      ...state,
+      item,
+      contentByLang: {
+        ...state.contentByLang,
+        [langId]: {
+          ...state.contentByLang[langId],
+          rows: state.contentByLang[langId].rows.map(row => {
+            if ((row._id || row.id) === id) {
+              return {
+                ...row,
+                order: value
+              }
+            }
+            return row
+          })
+        }
+      }
+    };
+  }
 
 });
 

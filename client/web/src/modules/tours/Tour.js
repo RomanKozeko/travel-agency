@@ -135,7 +135,7 @@ class Tour extends React.Component {
 	                    </tr>
 	                    <tr>
 		                    <td className={css(styles.cell)}>Тип питания:</td>
-		                    <td><b>{ getContentByLanguage(tour.food.content, languageID).title }</b></td>
+		                    <td><b>{ tour.food && getContentByLanguage(tour.food.content, languageID).title }</b></td>
 	                    </tr>
                     </table>
                   </div>

@@ -6,6 +6,7 @@ const PageContentCellSchema = require('./PageContentCell');
 const PageContentSchemaRow = new Schema({
   title: String,
   subTitle: String,
+  order: Number,
   items: [PageContentCellSchema]
 });
 
