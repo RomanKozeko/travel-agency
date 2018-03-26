@@ -71,19 +71,19 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
       return dispatch(fetch());
   };
 
-  const loadWithPagination = (nextPage = 0) => (dispatch, getState) => {
+  const loadWithPagination = entity => (nextPage = 0) => (dispatch, getState) => {
     const {
       nextPageUrl = `/api/${endpoint}/?page=${nextPage}&limit=100`,
       pages,
       pageCount,
       isFetched
-    } = getState().pages;
+    } = getState()[endpoint];
 
     if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
       return null;
     }
     // TODO: support pagination
-    if (pages[nextPage] && isFetched) {
+    if (pages && pages[nextPage] && isFetched) {
       return dispatch({
         type: `${alias}_GET_PAGE_FROM_CACHE`,
         payload: nextPage
