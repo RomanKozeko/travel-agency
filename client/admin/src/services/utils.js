@@ -71,7 +71,7 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
       return dispatch(fetch());
   };
 
-  const loadWithPagination = entity => (nextPage = 0) => (dispatch, getState) => {
+  const loadWithPagination = (nextPage = 0) => (dispatch, getState) => {
     const {
       nextPageUrl = `/api/${endpoint}/?page=${nextPage}&limit=100`,
       pages,
