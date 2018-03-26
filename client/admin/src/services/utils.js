@@ -77,7 +77,7 @@ export function createBasicActions(alias, aliasPlural, endpoint, middleware, sch
       pages,
       pageCount,
       isFetched
-    } = getState()[endpoint];
+    } = getState()[endpoint.toLowerCase()];
 
     if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
       return null;

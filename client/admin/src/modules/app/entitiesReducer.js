@@ -8,7 +8,7 @@ const defaultState = {
   languages: defaultEntity(),
   regions: defaultEntity(),
   hotels: defaultEntity({ filter: {}}),
-  showPlaces: defaultEntity({ filter: {}})
+  showplaces: defaultEntity({ filter: {}})
 };
 
 const mergeIds = (allIds, newIds) => {
@@ -123,7 +123,7 @@ const regionReducer = {
 const showPlaceReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
-    let showPlaces = {...state.showPlaces};
+    let showplaces = {...state.showplaces};
     let regions = {...state.regions};
 
     let regionsAllIds = res.entities.regions ? Object.keys(res.entities.regions) : [];
@@ -134,23 +134,23 @@ const showPlaceReducer = {
       byId: {...regions.byId, ...res.entities.regions},
       allIds: mergeIds(regions.allIds, regionsAllIds)
     };
-    showPlaces = {
-      ...showPlaces,
-      byId: {...showPlaces.byId, ...action.response.entities.items},
-      allIds: mergeIds(showPlaces.allIds, showplaceIDs),
+    showplaces = {
+      ...showplaces,
+      byId: {...showplaces.byId, ...action.response.entities.items},
+      allIds: mergeIds(showplaces.allIds, showplaceIDs),
       filter: {}
     };
     return {
       ...state,
-      showPlaces,
+      showplaces,
       regions
     };
   },
   deleteSuccess: function(state, action) {
-    const showPlaces = { ...state.showPlaces };
+    const showplaces = { ...state.showplaces };
     const idsToRemove = action.response.result;
-    const byId = { ...showPlaces.byId };
-    const allIds = [...showPlaces.allIds];
+    const byId = { ...showplaces.byId };
+    const allIds = [...showplaces.allIds];
 
     Object.keys(idsToRemove).forEach((id) => {
       delete byId[idsToRemove[id]];
@@ -161,22 +161,22 @@ const showPlaceReducer = {
     });
     return {
       ...state,
-      showPlaces: { ...showPlaces, byId, allIds, filter: {} }
+      showplaces: { ...showplaces, byId, allIds, filter: {} }
     };
   },
   filteredItemsSuccess: (state, action) => {
     const items = action.response.result.items;
-    let showPlaces = { ...state.showPlaces };
+    let showplaces = { ...state.showplaces };
     const key = action.endpoint.split('?')[1];
 
-    showPlaces.filter = {
-      ...showPlaces.filter,
+    showplaces.filter = {
+      ...showplaces.filter,
       [key]: items
     };
 
     return {
       ...state,
-      showPlaces
+      showplaces
     }
   }
 };
