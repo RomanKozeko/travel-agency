@@ -1,0 +1,50 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/var/lib/jenkins/workspace/travel-bitbucket/client/admin/src/modules/header/ActionsMenu.js';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _Button = require('material-ui/Button');var _Button2 = _interopRequireDefault(_Button);
+var _Menu = require('material-ui/Menu');var _Menu2 = _interopRequireDefault(_Menu);
+var _noImportant = require('aphrodite/no-important');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const styles = _noImportant.StyleSheet.create({
+  button: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: 'white',
+    height: '30px' } });
+
+
+
+
+class ActionsMenu extends _react.Component {constructor(...args) {var _temp;return _temp = super(...args), this.
+    state = {
+      anchorEl: undefined,
+      open: false }, this.
+
+
+    handleClick = event => {
+      this.setState({ open: true, anchorEl: event.currentTarget });
+    }, this.
+
+    handleRequestClose = () => {
+      this.setState({ open: false });
+    }, _temp;}
+
+  render() {
+    return (
+      _react2.default.createElement('div', { __source: { fileName: _jsxFileName, lineNumber: 31 }, __self: this },
+        _react2.default.createElement(_Button2.default, { 'aria-owns': 'simple-menu', 'aria-haspopup': 'true', className: (0, _noImportant.css)(styles.button), onClick: this.handleClick, __source: { fileName: _jsxFileName, lineNumber: 32 }, __self: this }, '\u041D\u043E\u0432\u043E\u0435 \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435'),
+
+
+        _react2.default.createElement(_Menu2.default, {
+            id: 'simple-menu',
+            anchorEl: this.state.anchorEl,
+            open: this.state.open,
+            onRequestClose: this.handleRequestClose, __source: { fileName: _jsxFileName, lineNumber: 35 }, __self: this },
+
+          _react2.default.createElement(_Menu.MenuItem, { onClick: this.handleRequestClose, __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: this }, '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443'),
+          _react2.default.createElement(_Menu.MenuItem, { onClick: this.handleRequestClose, __source: { fileName: _jsxFileName, lineNumber: 42 }, __self: this }, '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0442\u0443\u0440'),
+          _react2.default.createElement(_Menu.MenuItem, { onClick: this.handleRequestClose, __source: { fileName: _jsxFileName, lineNumber: 43 }, __self: this }, '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043E\u0442\u0435\u043B\u044C'))));
+
+
+
+  }}exports.default =
+
+
+ActionsMenu;

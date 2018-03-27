@@ -1,0 +1,39 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.logoutUser = exports.loginUser = exports.logoutSuccess = exports.loginFailure = exports.loginSuccess = exports.requestLogin = undefined;var _reactReduxToastr = require('react-redux-toastr');
+var _createToaster = require('../../modules/ui-elements/createToaster');var _createToaster2 = _interopRequireDefault(_createToaster);
+var _apiHelper = require('../../services/apiHelper');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const requestLogin = exports.requestLogin = () => ({
+  type: 'REQUEST_LOGIN' });
+
+
+const loginSuccess = exports.loginSuccess = tours => ({
+  type: 'LOGIN_SUCCESS',
+  tours });
+
+
+const loginFailure = exports.loginFailure = () => ({
+  type: 'LOGIN_FAILURE' });
+
+
+const logoutSuccess = exports.logoutSuccess = () => ({
+  type: 'LOGOUT_SUCCESS' });
+
+
+const loginUser = exports.loginUser = creds => dispatch => {
+  (0, _apiHelper.loginUserRequest)(creds).
+  then(dispatch(requestLogin())).
+  then(res => {
+    if (res.error) {
+      _reactReduxToastr.toastr.error('', '', (0, _createToaster2.default)(res.error.message || 'Wrong credentials'));
+      dispatch(loginFailure());
+    } else if (res.token) {
+      localStorage.setItem('token', res.token);
+      dispatch(loginSuccess());
+    }
+  });
+};
+
+const logoutUser = exports.logoutUser = () => dispatch => {
+  localStorage.removeItem('token');
+  dispatch(logoutSuccess());
+};

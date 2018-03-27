@@ -1,0 +1,87 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.AppHeader = undefined;var _jsxFileName = '/var/lib/jenkins/workspace/travel-bitbucket/client/admin/src/modules/header/AppHeader.js';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactRedux = require('react-redux');
+var _noImportant = require('aphrodite/no-important');
+var _Menu = require('material-ui/Menu');var _Menu2 = _interopRequireDefault(_Menu);
+var _Icon = require('material-ui/Icon');var _Icon2 = _interopRequireDefault(_Icon);
+var _IconButton = require('material-ui/IconButton');var _IconButton2 = _interopRequireDefault(_IconButton);
+var _ActionsMenu = require('./ActionsMenu');var _ActionsMenu2 = _interopRequireDefault(_ActionsMenu);
+var _authActions = require('../auth/authActions');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+const styles = _noImportant.StyleSheet.create({
+  wrapper: {
+    height: '75px',
+    width: '100%',
+    position: 'fixed',
+    left: '0',
+    top: '0',
+    background: '#3B3F51',
+    color: '#8c95a5',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0 20px;',
+    zIndex: '10' },
+
+  logo: {
+    width: '235px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center' },
+
+  logoLink: {
+    color: '#5b9bd1',
+    fontSize: '20px;',
+    ':hover': {
+      color: '#5b9bd1',
+      textDecoration: 'none' } },
+
+
+  toggleButton: {
+    color: '#8c95a5' },
+
+  headerLeft: {
+    flexGrow: '1',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: '20px' } });
+
+
+
+const options = [
+'None',
+'Atria',
+'Callisto',
+'Dione',
+'Ganymede',
+'Hangouts Call',
+'Luna',
+'Oberon',
+'Phobos',
+'Pyxis',
+'Sedna',
+'Titania',
+'Triton',
+'Umbriel'];
+
+
+let AppHeader = exports.AppHeader = ({ dispatch }) =>
+_react2.default.createElement('div', { className: (0, _noImportant.css)(styles.wrapper), __source: { fileName: _jsxFileName, lineNumber: 69 }, __self: undefined },
+  _react2.default.createElement('div', { className: (0, _noImportant.css)(styles.logo), __source: { fileName: _jsxFileName, lineNumber: 70 }, __self: undefined },
+    _react2.default.createElement('a', { href: '/', className: (0, _noImportant.css)(styles.logoLink), __source: { fileName: _jsxFileName, lineNumber: 71 }, __self: undefined }, '\u041D\u0430\u0437\u0430\u0434 \u043D\u0430 \u0441\u0430\u0439\u0442'),
+
+
+    _react2.default.createElement(_IconButton2.default, { className: (0, _noImportant.css)(styles.toggleButton), __source: { fileName: _jsxFileName, lineNumber: 74 }, __self: undefined },
+      _react2.default.createElement(_Icon2.default, { __source: { fileName: _jsxFileName, lineNumber: 75 }, __self: undefined }, 'menu'))),
+
+
+  _react2.default.createElement('div', { className: (0, _noImportant.css)(styles.headerLeft), __source: { fileName: _jsxFileName, lineNumber: 78 }, __self: undefined },
+    _react2.default.createElement(_ActionsMenu2.default, { __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: undefined }),
+    _react2.default.createElement(_IconButton2.default, { className: (0, _noImportant.css)(styles.toggleButton), onClick: () => {dispatch((0, _authActions.logoutUser)());}, __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: undefined },
+      _react2.default.createElement(_Icon2.default, { __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: undefined }, 'power_settings_new'))));exports.default =
+
+
+
+
+
+(0, _reactRedux.connect)()(AppHeader);

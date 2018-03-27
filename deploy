@@ -1,0 +1,4 @@
+<<EOF        
+ pm2 restart all
+ exit       
+EOF

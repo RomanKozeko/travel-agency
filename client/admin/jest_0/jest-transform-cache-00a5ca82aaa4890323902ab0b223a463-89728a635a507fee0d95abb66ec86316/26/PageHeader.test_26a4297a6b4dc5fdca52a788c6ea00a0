@@ -1,0 +1,30 @@
+'use strict';var _jsxFileName = '/var/lib/jenkins/workspace/travel-bitbucket/client/admin/src/modules/ui-elements/PageHeader.test.js';var _aphrodite = require('aphrodite');
+var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactDom = require('react-dom');var _reactDom2 = _interopRequireDefault(_reactDom);
+var _enzyme = require('enzyme');var _enzyme2 = _interopRequireDefault(_enzyme);
+var _enzymeAdapterReact = require('enzyme-adapter-react-16');var _enzymeAdapterReact2 = _interopRequireDefault(_enzymeAdapterReact);
+var _PageHeader = require('./PageHeader');var _PageHeader2 = _interopRequireDefault(_PageHeader);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+_enzyme2.default.configure({ adapter: new _enzymeAdapterReact2.default() });
+
+
+it('renders without crashing', () => {
+	const div = document.createElement('div');
+	_reactDom2.default.render(_react2.default.createElement(_PageHeader2.default, { __source: { fileName: _jsxFileName, lineNumber: 13 }, __self: undefined }), div);
+});
+
+test('renders text from props', () => {
+	// Render a checkbox with label in the document
+	const pageHeader = (0, _enzyme.shallow)(
+	_react2.default.createElement(_PageHeader2.default, { text: 'Welcom', __source: { fileName: _jsxFileName, lineNumber: 19 }, __self: undefined }));
+
+	expect(pageHeader.text()).toEqual('Welcom');
+
+});
+
+beforeEach(() => {
+	_aphrodite.StyleSheetTestUtils.suppressStyleInjection();
+});
+afterEach(() => {
+	_aphrodite.StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
