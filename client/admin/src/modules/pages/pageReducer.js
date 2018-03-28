@@ -84,12 +84,10 @@ const updateImages = (allImages,rowItemsByID,  contentByLang, langId, rowId) => 
       return prev.images
     }, [])
   }
-  const res =  allImages.filter(image => {
+  return allImages.filter(image => {
     const imageID = image || image._id;
     return !images.includes(imageID)
   })
-
-  return res
 }
 
 const removeRowSuccess = (state, { langId, rowId }) => {
