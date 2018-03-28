@@ -50,6 +50,15 @@ const PageColumn = ({ item }) => {
     case 'tours': {
       return <FilteredToursContainer query={item.filters} />
     }
+    case '@hotelSearch': {
+      return <div>hotelSearch</div>
+    }
+    case '@toursSearch': {
+      return <div>toursSearch</div>
+    }
+    case '@showPlacesSearch': {
+      return <div>showPlacesSearch</div>
+    }
     default:
       return <div dangerouslySetInnerHTML={{ __html: item.content }} />
   }

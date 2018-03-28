@@ -63,17 +63,20 @@ const getItemClassName = (item) => (
 );
 
 const Rows = ({
-    rows = [],
-    rowsItems,
-    langId,
-    removeRow,
-    openHtmlEditor,
-    removeRowItem,
-    editRowItem,
-    openAddToursListPopup,
-    editOrder,
-    editRowTitle
-  }) => {
+  rows = [],
+  rowsItems,
+  langId,
+  removeRow,
+  openHtmlEditor,
+  removeRowItem,
+  editRowItem,
+  openAddToursListPopup,
+  editOrder,
+  editRowTitle,
+  openMediaPopup,
+  mediafilesByIds,
+  deleteMediaItem
+}) => {
   return (
     <div>
       <ReactCSSTransitionGroup
@@ -123,11 +126,15 @@ const Rows = ({
 
                     <div className={getItemClassName(item)}>
                       <ItemContentType
+                        rowId={ item._id || item.id }
                         item={item}
                         removeRowItem={removeRowItem}
                         editRowItem={editRowItem}
                         openHtmlEditor={openHtmlEditor}
                         openAddToursListPopup={openAddToursListPopup}
+                        openMediaPopup={openMediaPopup}
+                        mediafilesByIds={mediafilesByIds}
+                        deleteMediaItem={deleteMediaItem}
                       />
                     </div>
                   </div>

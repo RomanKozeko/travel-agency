@@ -46,12 +46,11 @@ class HtmlEditorPopup extends React.Component {
     const content = currentRowItem ? currentRowItem.content : '<p>Page content</p>';
     return (
       <Dialog
-        fullScreen
         open={isOpen}
         onClose={handleRequestClose}
       >
         <div className={css(styles.appBar)}>
-          <IconButton color="contrast" onClick={handleRequestClose} aria-label="Close">
+          <IconButton color="contrast" onClick={() => handleRequestClose(false) } aria-label="Close">
             <CloseIcon/>
           </IconButton>
           <h3 type="title" color="inherit" className={css(styles.title)}>

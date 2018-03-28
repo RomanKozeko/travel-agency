@@ -24,6 +24,11 @@ class AddPageItemMenu extends Component {
     this.handleRequestClose();
   }
 
+  addGallery = () => {
+    this.props.openMediaPopup(this.props.rowId)
+    this.handleRequestClose();
+  }
+
   render() {
     return (
       <div>
@@ -36,18 +41,19 @@ class AddPageItemMenu extends Component {
           open={this.state.open}
           onRequestClose={() => this.handleRequestClose()}
         >
-          <MenuItem onClick={() => {
-            this.handleRequestClose();
-            return this.props.openHtmlEditor(this.props.item);
-          }}
-          >
-            Добавить контент
-          </MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить галерею</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить картнику</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить контактную форму</MenuItem>
-          <MenuItem onClick={this.addToursList}>Добавить список туров</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem>
+          { !this.props.showGallaryOnly &&
+            <MenuItem onClick={() => {
+              this.handleRequestClose();
+              return this.props.openHtmlEditor(this.props.item);
+            }}
+            >
+              Добавить контент
+            </MenuItem>
+          }
+          <MenuItem onClick={this.addGallery}>Добавить галерею</MenuItem>
+          { !this.props.showGallaryOnly && <MenuItem onClick={this.handleRequestClose}>Добавить контактную форму</MenuItem> }
+          { !this.props.showGallaryOnly && <MenuItem onClick={this.addToursList}>Добавить список туров</MenuItem> }
+          { !this.props.showGallaryOnly && <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem> }
         </Menu>
       </div>
     );

@@ -19,7 +19,11 @@ const PageContentSchema = new Schema({
       type: String,
       ref: 'Period'
     }]
-  }
+  },
+  images: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
 });
 
 module.exports = PageContentSchema;

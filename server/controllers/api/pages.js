@@ -37,14 +37,15 @@ module.exports = {
 
   getOne(req, res, next) {
     const pageId = req.params.id;
-
     Page.findById(pageId)
+      .populate('allImages')
       .then(page => res.json(page))
       .catch(next);
   },
 
   getOneByUrl(req, res, next) {
     Page.findOne({ url: req.params.url } )
+      .populate('allImages')
       .then(page => res.json(slicer.sliceModelContentSingle(page, req.query.lang)))
       .catch(next);
   },

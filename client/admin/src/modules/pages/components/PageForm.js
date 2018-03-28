@@ -11,6 +11,7 @@ import withTabs from '../../ui-elements/HOC/withTabs';
 import TextField from 'material-ui/TextField';
 import AddToursListPopupContainer from '../containers/AddToursListPopupContainer'
 import { denormalizeRowsItems } from '../pageFormService';
+import MediaFilesPopup from '../../mediaFiles/MediaFilesPopup'
 
 class PageForm extends React.Component {
   componentDidMount() {
@@ -55,7 +56,13 @@ class PageForm extends React.Component {
       saveRow,
       editRowItem,
       editRowTitle,
-      editOrder
+      editOrder,
+      pageAddCustomRow,
+      openMediaPopup,
+      addImages,
+      closeMediaPopup,
+      mediafilesByIds,
+      deleteMediaItem
     } = this.props;
     if (!page.item) {
       return null;
@@ -103,7 +110,8 @@ class PageForm extends React.Component {
 
               <PageCaption text={'Добавить ряд'} />
               <GridSelector
-                clickHandler={pageAddRow}
+                pageAddRow={pageAddRow}
+                pageAddCustomRow={pageAddCustomRow}
                 count={4}
                 lang={lang._id}
               />
@@ -119,7 +127,10 @@ class PageForm extends React.Component {
                 openHtmlEditor={openHtmlEditor}
                 openAddToursListPopup={openAddToursListPopup}
                 editRowTitle={editRowTitle}
+                openMediaPopup={openMediaPopup}
                 editOrder={editOrder}
+                mediafilesByIds={mediafilesByIds}
+                deleteMediaItem={deleteMediaItem}
               />
             </div>
             }
@@ -132,6 +143,13 @@ class PageForm extends React.Component {
           saveRow={saveRow}
           handleRequestClose={closeHtmlEditor}
         />
+
+        <MediaFilesPopup
+          isOpen={ page.mediaPopupIsOpen }
+          handleRequestClose={closeMediaPopup}
+          addPreview={ addImages }
+        />
+        
         {page.addToursPopupOpen && <AddToursListPopupContainer />}
 
         <Button

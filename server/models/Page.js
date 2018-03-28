@@ -13,6 +13,10 @@ const PageSchema = new Schema({
     type: Boolean,
     default: true
   },
+  allImages: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Media'
+  }],
   url: { type: String, index: true, unique: true, required: true },
   content: [PageContentSchema],
 });

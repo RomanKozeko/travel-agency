@@ -5,6 +5,7 @@ class RowItem {
     this.id = uniqueId();
     this.size = size;
     this.type = type;
+    this.images = []
   }
 }
 
@@ -13,7 +14,7 @@ class Row {
     this.id = uniqueId();
     this.title = title;
     this.content = content;
-    this.content = pageLink;
+    this.type = pageLink;
     this.items = rowsItems;
     this.images = [];
     this.order = 0;
@@ -66,6 +67,17 @@ export function addRow(contentByLang, columns, langId) {
     contentByLang[langId].rows = [];
   }
   const row = new Row('', columns, rowItems);
+  const rowItemsByID = normolizeRowItems([{ rows: [row] }]);
+  contentByLang[langId].rows.push(row);
+
+  return { rowItemsByID, contentByLang };
+}
+
+export function addCustomRow(contentByLang, langId, type) {
+  if (!contentByLang[langId].rows) {
+    contentByLang[langId].rows = [];
+  }
+  const row = new Row('', '', [new RowItem(`col-md-12`, type)]);
   const rowItemsByID = normolizeRowItems([{ rows: [row] }]);
   contentByLang[langId].rows.push(row);
 
