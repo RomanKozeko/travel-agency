@@ -1732,12 +1732,20 @@ body {
 }
 
 .row-enter {
-  opacity: 0.01;
+  /*opacity: 0.01;*/
+}
+.row-enter img {
+  transform: translateX(-100%);
+}
+
+.row-enter.row-enter-active img {
+  transition: all 200ms ease-in;
+  transform: translateX(0%);
 }
 
 .row-enter.row-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transition: all 500ms ease-in;
 }
 
 .row-leave {
@@ -1746,8 +1754,5 @@ body {
 
 .row-leave.row-leave-active {
   opacity: 0.01;
-  top: 0;
-  left: 0;
-  position: absolute;
   transition: opacity 300ms ease-in;
 }
