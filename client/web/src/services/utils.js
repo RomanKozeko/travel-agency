@@ -55,3 +55,7 @@ export const getContentByLanguage = (content, languageId) => content.find(
 	item => item.language === languageId
 )
 
+export const getImageById = (allImages, id) => allImages.find(
+  item => item._id === id
+)
+

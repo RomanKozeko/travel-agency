@@ -9,6 +9,8 @@ import FilteredToursContainer from '../tours/FilteredToursContainer';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
+import ImageSlider from '../ui-elements/ImageSlider';
+
 
 const styles = StyleSheet.create({
   page: {
@@ -42,7 +44,7 @@ const mapStateToProps = (state, router) => ({
   isFetching: state.pages.isFetching
 });
 
-const PageColumn = ({ item }) => {
+const PageColumn = ({ item, page }) => {
   switch(item.type) {
     case 'content': {
       return <div dangerouslySetInnerHTML={{ __html: item.content }} />
@@ -58,6 +60,9 @@ const PageColumn = ({ item }) => {
     }
     case '@showPlacesSearch': {
       return <div>showPlacesSearch</div>
+    }
+    case '@gallery': {
+      return <ImageSlider images={ item.images.map(image => page.allImages.find(img => img._id === image)) } />
     }
     default:
       return <div dangerouslySetInnerHTML={{ __html: item.content }} />
@@ -88,7 +93,7 @@ class Page extends React.Component {
                   { row.title && <FancyHeader title={ row.title } /> }
                   {row.items.map(item => (
                       <div key={item._id} className={this.getRowItemClass(item.size)}>
-                        <PageColumn item={item} />
+                        <PageColumn item={item} page={page} />
                       </div>
                     ))
                   }

@@ -1730,3 +1730,24 @@ body {
   flex-direction: column;
   height: 100%;
 }
+
+.row-enter {
+  opacity: 0.01;
+}
+
+.row-enter.row-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.row-leave {
+  border-color: #E53935 !important;
+}
+
+.row-leave.row-leave-active {
+  opacity: 0.01;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transition: opacity 300ms ease-in;
+}

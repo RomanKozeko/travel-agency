@@ -10,6 +10,7 @@
     "jss-vendor-prefixer": "^7.0.0",
     "normalizr": "^3.2.4",
     "react": "^16.0.0",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-jss": "^6.1.1",
     "react-loading-skeleton": "^0.4.0",
