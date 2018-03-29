@@ -12,14 +12,15 @@ const mapStateToProps = (state) => {
   return {
     items: getRegions(state),
     content: state.regions.content,
-    isFetching: state.regions.isFetching,
+    isFetching: state.entities.regions.isFetching,
+    isFetched: state.entities.regions.isFetched,
     languages: state.languages
   };
 };
 
 class RegionsContainer extends React.Component {
   componentDidMount() {
-    if (!this.props.items.length) {
+    if (!this.props.isFetched) {
       this.props.loadRegions();
     }
   }

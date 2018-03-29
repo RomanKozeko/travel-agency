@@ -92,11 +92,13 @@ const regionReducer = {
 
     regions = {
       byId: {...regions.byId, ...res.entities.regions},
-      allIds: mergeIds(regions.allIds, regionsAllIds)
+      allIds: mergeIds(regions.allIds, regionsAllIds),
+      isFetched: true
     };
 
     return {
       ...state,
+      
       regions
     };
   },
