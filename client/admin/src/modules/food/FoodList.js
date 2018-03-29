@@ -36,6 +36,7 @@ const FoodList = ({ items, languages, isFetching, deleteItems }) => {
       <Button
         variant="raised"
         color="primary"
+        style={{ marginBottom: '20px' }}
         className="addBottomMargin"
         component={Link}
         to="/admin/food/item?state=newItem"

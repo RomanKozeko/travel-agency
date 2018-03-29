@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     minWidth: '0px'
 	},
   title: {
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+		padding: '0 10px'
   }
 });
 

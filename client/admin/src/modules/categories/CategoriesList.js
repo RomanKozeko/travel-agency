@@ -37,7 +37,7 @@ const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
       <Button
         variant="raised"
         color="primary"
-        className="addBottomMargin"
+        style={{ marginBottom: '20px' }}
         component={Link}
         to="/admin/categories/category?state=new"
       >

@@ -105,7 +105,7 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
       <Button
         variant="raised"
         color="primary"
-        className="addBottomMargin"
+        style={{ marginBottom: '20px' }}
         component={Link}
         to="/admin/regions/region?state=new"
       >

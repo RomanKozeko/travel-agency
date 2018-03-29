@@ -35,7 +35,7 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
       <Button
         variant="raised"
         color="primary"
-        className="addBottomMargin"
+        style={{ marginBottom: '20px' }}
         component={Link}
         to="/admin/showplaces/item?state=newItem"
       >

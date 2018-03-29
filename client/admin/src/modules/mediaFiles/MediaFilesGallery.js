@@ -29,17 +29,19 @@ class MediaFilesGallery extends React.Component {
     return (
       <div>
         <PageHeader text={'Картинки'} />
-        <ImageUploader uploadImg={saveItem} fileType={ this.props.filesType } />
-	      <Button
-		      onClick={this.deleteMediaFiles}
-					className={css(styles.button)}
-          color="secondary"
-					variant="raised"
-					margin="normal"
-		      disabled={!this.props.selected.length}
-	      >
-		      Удалить выбранные
-	      </Button>
+        <div style={{ marginTop: '-15px' }}>
+          <ImageUploader uploadImg={saveItem} fileType={ this.props.filesType } />
+          <Button
+            onClick={this.deleteMediaFiles}
+            className={css(styles.button)}
+            color="secondary"
+            variant="raised"
+            margin="normal"
+            disabled={!this.props.selected.length}
+          >
+            Удалить выбранные
+          </Button>
+        </div>
         <MediaFilesList
 	        { ...this.props }
           clickHandler={ toggleImg }

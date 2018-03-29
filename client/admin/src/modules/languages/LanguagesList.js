@@ -125,7 +125,7 @@ class LanguagesList extends React.Component {
         <Button
           variant="raised"
           color="primary"
-          className="addBottomMargin"
+          style={{ marginBottom: '20px' }}
           onClick={this.addRow}
         >
           Добавить язык

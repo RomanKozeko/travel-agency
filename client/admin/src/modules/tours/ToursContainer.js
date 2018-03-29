@@ -59,7 +59,7 @@ class ToursContainer extends React.Component {
         <Button
           variant="raised"
           color="primary"
-          className="addBottomMargin"
+          style={{ marginBottom: '20px' }}
           component={Link}
           to="/admin/tours/tour?state=new"
         >

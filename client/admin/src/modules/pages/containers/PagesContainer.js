@@ -68,7 +68,7 @@ class PagesContainer extends React.Component {
         <Button
           variant="raised"
           color="primary"
-          className="addBottomMargin"
+          style={{ marginBottom: '20px' }}
           component={Link}
           to="/admin/pages/page?state=newPage"
         >
