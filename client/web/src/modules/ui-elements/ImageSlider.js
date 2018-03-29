@@ -100,29 +100,24 @@ const ImageSlider = ({ images, languageID, currIndex, nextSlide, prevSlide, hove
       })
     }
 
-    <ReactCSSTransitionGroup
-      transitionName="row"
-      transitionEnterTimeout={300}
-      transitionLeaveTimeout={300}>
-      {
-        images.map((img, index) => {
-          if (!img || index !== currIndex) {
-            return null
-          }
-          const content = getContentByLanguage(img.content, languageID);
-          return (
-            <div key={ img._id }>
-              <img className={css(styles.img)} src={ img.path } alt=""/>
-              <div className={css(styles.description)}>
-                {
-                  content && content.title
-                }
-              </div>
+    {
+      images.map((img, index) => {
+        if (!img || index !== currIndex) {
+          return null
+        }
+        const content = getContentByLanguage(img.content, languageID);
+        return (
+          <div key={ img._id }>
+            <img className={css(styles.img)} src={ img.path } alt=""/>
+            <div className={css(styles.description)}>
+              {
+                content && content.title
+              }
             </div>
-          )
-        })
-      }
-    </ReactCSSTransitionGroup>
+          </div>
+        )
+      })
+    }
 
   </div>
 
