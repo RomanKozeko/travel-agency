@@ -151,7 +151,7 @@ const FeaturedList = ({
         <Button
           onClick={ toggleTemplate }
           className={css(styles.button)}
-          raised
+          variant="raised"
           color="primary"
         >
           Добавить

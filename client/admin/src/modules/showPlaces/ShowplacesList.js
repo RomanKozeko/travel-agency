@@ -33,7 +33,7 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
     <div>
       <PageHeader text={'Все достопримечательности'} />
       <Button
-        raised
+        variant="raised"
         color="primary"
         className="addBottomMargin"
         component={Link}

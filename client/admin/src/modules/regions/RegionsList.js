@@ -103,7 +103,7 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
     <div>
       <PageHeader text={'Все регионы'} />
       <Button
-        raised
+        variant="raised"
         color="primary"
         className="addBottomMargin"
         component={Link}

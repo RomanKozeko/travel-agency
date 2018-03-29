@@ -278,7 +278,7 @@ class TourForm extends Component {
               onClick={this.deletePreviewItems}
               className={css(styles.button)}
               color="accent"
-              raised
+              variant="raised"
               disabled={!this.state.selectedPreviewItems.length}
             >
               Удалить выбранные
@@ -509,7 +509,7 @@ class TourForm extends Component {
         }
         <br/>
         <Button
-          raised
+          variant="raised"
           type="submit"
           color="primary"
           disabled={isSaving}

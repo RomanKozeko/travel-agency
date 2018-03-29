@@ -35,7 +35,7 @@ class ConfirmDialog extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleRequestClose} color="accent">
+            <Button onClick={this.handleRequestClose} color="secondary">
               Отмена
             </Button>
             <Button onClick={this.handleConfirm} color="primary">

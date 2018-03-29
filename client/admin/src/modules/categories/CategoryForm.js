@@ -67,7 +67,7 @@ const CategoryForm = ({ isSaving, parentState, languages, handleChange, handleSa
     <NotificationPanel>Please fill title for each language</NotificationPanel>
     }
     <Button
-      raised
+      variant="raised"
       type="submit"
       color="primary"
       disabled={isSaving}

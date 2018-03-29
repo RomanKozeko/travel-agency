@@ -66,7 +66,7 @@ class PagesContainer extends React.Component {
         <PageHeader text={'Все страницы'} />
 
         <Button
-          raised
+          variant="raised"
           color="primary"
           className="addBottomMargin"
           component={Link}

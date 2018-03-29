@@ -62,7 +62,7 @@ let AuthForm = props => {
 	    </div>
       <div className={css(styles.btnWrap)}>
 	      <Button
-		      raised
+		      variant="raised"
 		      color="primary"
 		      type="submit"
 		      disabled={ pristine || submitting }>

@@ -107,7 +107,7 @@ const RegionForm = ({
       <NotificationPanel>Пожалуйста заполните заголовки для всех языков</NotificationPanel>
       }
       <Button
-        raised
+        variant="raised"
         type="submit"
         color="primary"
         disabled={isSaving}

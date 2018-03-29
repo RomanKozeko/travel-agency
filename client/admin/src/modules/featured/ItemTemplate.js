@@ -223,13 +223,13 @@ class ItemTemplate extends React.Component {
             />
           </div>
         }
-        <Button className={css(styles.button)} onClick={ this.props.saveItem(item, isNew) } raised color="primary">
+        <Button className={css(styles.button)} onClick={ this.props.saveItem(item, isNew) } variant="raised" color="primary">
           Сохранить
         </Button>
         <Button
           className={css(styles.button)}
-          raised
-          color="accent"
+          variant="raised"
+          color="secondary"
           onClick={ this.props.closeTemplate }
         >
           Отмена

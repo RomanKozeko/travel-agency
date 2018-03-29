@@ -34,7 +34,7 @@ const FoodList = ({ items, languages, isFetching, deleteItems }) => {
     <div>
       <PageHeader text={'Все виды питания'} />
       <Button
-        raised
+        variant="raised"
         color="primary"
         className="addBottomMargin"
         component={Link}

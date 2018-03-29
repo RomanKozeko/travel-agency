@@ -37,7 +37,7 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
     <div>
       <PageHeader text={'Все отели'} />
       <Button
-        raised
+        variant="raised"
         color="primary"
         className="addBottomMargin"
         component={Link}

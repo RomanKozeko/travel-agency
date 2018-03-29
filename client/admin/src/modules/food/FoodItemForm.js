@@ -54,7 +54,7 @@ const FoodItemForm = ({ isSaving, parentState, languages, handleChange, handleSa
     <NotificationPanel>Пожалуйста, заполните названия типа питания для всех языков</NotificationPanel>
     }
     <Button
-      raised
+      variant="raised"
       type="submit"
       color="primary"
       disabled={isSaving}

@@ -59,7 +59,7 @@ class AddPreviewPopup extends Component {
           className={css(styles.button)}
           onClick={this.handleClickOpen}
           component="span"
-          raised
+          variant="raised"
         >
           Добавить картинок
         </Button>
@@ -68,7 +68,7 @@ class AddPreviewPopup extends Component {
             <MediaFilesContainer handleToggledItem={this.handleToggledItem} />
           </DialogContent>
           <DialogActions>
-            <Button raised onClick={this.handleClick} color="primary">
+            <Button variant="raised" onClick={this.handleClick} color="primary">
               Добавить
             </Button>
             <Button onClick={this.handleRequestClose} color="primary" autoFocus>

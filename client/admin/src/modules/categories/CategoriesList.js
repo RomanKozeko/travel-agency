@@ -35,7 +35,7 @@ const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
     <div>
       <PageHeader text={'Все категории'} />
       <Button
-        raised
+        variant="raised"
         color="primary"
         className="addBottomMargin"
         component={Link}

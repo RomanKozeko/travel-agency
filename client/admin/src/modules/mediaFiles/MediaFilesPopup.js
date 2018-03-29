@@ -20,7 +20,7 @@ const MediaFilesPopup = ({ isOpen, handleRequestClose, filesType, addPreview }) 
         <MediaFilesContainer filesType={ filesType } />
       </DialogContent>
       <DialogActions>
-        <Button raised onClick={() => {
+        <Button variant="raised" onClick={() => {
                   addPreview();
                   handleRequestClose();
                 }}

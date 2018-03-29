@@ -75,7 +75,7 @@ class AddToursListPopup extends React.Component {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleRequestClose} color="accent">
+          <Button onClick={handleRequestClose} color="secondary">
             Отмена
           </Button>
           <Button onClick={() => saveRow('', 'tours', this.state)} color="primary">

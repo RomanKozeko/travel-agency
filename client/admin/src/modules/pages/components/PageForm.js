@@ -153,7 +153,7 @@ class PageForm extends React.Component {
         {page.addToursPopupOpen && <AddToursListPopupContainer />}
 
         <Button
-          raised
+          variant="raised"
           type="submit"
           color="primary"
           disabled={isSaving}

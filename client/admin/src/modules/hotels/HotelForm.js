@@ -84,8 +84,8 @@ class HotelForm extends React.Component {
                 onClick={deletePreviewItems}
                 className={css(styles.button)}
                 component="span"
-                color="accent"
-                raised
+                color="secondary"
+                variant="raised"
                 disabled={!parentState.previewItemsToDelete.length}
               >
                 Удалить выбранные
@@ -188,7 +188,7 @@ class HotelForm extends React.Component {
         }
 
         <Button
-          raised
+          variant="raised"
           type="submit"
           color="primary"
           disabled={isSaving}

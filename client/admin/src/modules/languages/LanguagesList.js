@@ -123,7 +123,7 @@ class LanguagesList extends React.Component {
       <div>
         <PageHeader text={'Языки'} />
         <Button
-          raised
+          variant="raised"
           color="primary"
           className="addBottomMargin"
           onClick={this.addRow}

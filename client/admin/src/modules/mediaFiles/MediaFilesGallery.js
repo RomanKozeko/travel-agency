@@ -33,8 +33,8 @@ class MediaFilesGallery extends React.Component {
 	      <Button
 		      onClick={this.deleteMediaFiles}
 					className={css(styles.button)}
-		      color="accent"
-					raised
+          color="secondary"
+					variant="raised"
 					margin="normal"
 		      disabled={!this.props.selected.length}
 	      >

@@ -57,7 +57,7 @@ class ToursContainer extends React.Component {
       <div className="ToursContainer">
         <PageHeader text={'Все туры'} />
         <Button
-          raised
+          variant="raised"
           color="primary"
           className="addBottomMargin"
           component={Link}
