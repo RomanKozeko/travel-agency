@@ -21,6 +21,7 @@ const upload = multer({
     return cb(null, false);
   }
 });
+
 /**
  * Controllers (route handlers).
  */
@@ -37,6 +38,7 @@ const ApiShowPlacesCtrl = require('../controllers/api/showplaces');
 const ApiFoodCtrl = require('../controllers/api/food');
 const FeaturedCtrl = require('../controllers/api/featured');
 const NewsCtrl = require('../controllers/api/news');
+const MenuCtrl = require('../controllers/api/menu');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -115,5 +117,9 @@ router.put('/news/:id', NewsCtrl.put);
 router.post('/news', NewsCtrl.post);
 router.delete('/news', NewsCtrl.delete);
 
+router.get('/menu', MenuCtrl.get);
+router.put('/menu', MenuCtrl.put);
+router.post('/menu', MenuCtrl.post);
+router.delete('/menu', MenuCtrl.delete);
 
 module.exports = router;

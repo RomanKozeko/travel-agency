@@ -12,6 +12,7 @@ const actionsObj = createBasicActions('PAGES', 'PAGE', 'pages', CALL_API, Schema
 // Action Creators
 export const actions = actionsObj.actions;
 export const load = actionsObj.loadWithPagination;
+export const loadAll = actionsObj.load;
 export const deleteItems = actionsObj.deleteItems;
 export const loadItem = actionsObj.loadItem;
 export const saveItem = actionsObj.saveItem;

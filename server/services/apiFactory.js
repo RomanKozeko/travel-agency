@@ -4,14 +4,16 @@ const slicer = require('../services/index');
 const convert = require('cyrillic-to-latin');
 
 function populateEmpty(body) {
-  body.content.forEach((contentItem, i) => {
-    if (!body.content[i].title) {
-      body.content[i].title = 'Untitled';
-    }
-  });
+  if (body.content) {
+    body.content.forEach((contentItem, i) => {
+      if (!body.content[i].title) {
+        body.content[i].title = 'Untitled';
+      }
+    });
 
-  if (!body.url) {
-    body.url = slugify(convert(body.content[0].title)).toLowerCase();
+    if (!body.url) {
+      body.url = slugify(convert(body.content[0].title)).toLowerCase();
+    }
   }
 
   return body;
@@ -50,6 +52,7 @@ const getAll = model => (req, res, next) => {
 
 const post = model => (req, res, next) => {
   req.body = populateEmpty(req.body);
+  delete req.body._id;
   const item = new model(req.body);
 
   saveAndPopulate()

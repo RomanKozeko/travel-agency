@@ -25,25 +25,16 @@ class SortableTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selected: {}, isSelectedAll: false };
+    this.state = { selected: {} };
     this.countSelected = this.countSelected.bind(this);
     this.isSelected = this.isSelected.bind(this);
     this.deleteItemss = this.deleteItemss.bind(this);
   }
 
-  handleSelectAllClick(event, checked) {
-    const selected = { ...this.state.selected };
-
-    this.props.data.items.forEach((item) => {
-      selected[item._id] = checked;
-    });
-    this.setState({ selected, isSelectedAll: checked });
-  }
-
   handleSelect(event, checked, id) {
     const selected = { ...this.state.selected };
     selected[id] = checked;
-    this.setState({ selected, isSelectedAll: false });
+    this.setState({ selected });
   }
 
   isSelected(id) {
@@ -60,10 +51,7 @@ class SortableTable extends React.Component {
     );
 
     this.props.deleteItems(pagesToDelete);
-    this.setState({
-      selected: {},
-      isSelectedAll: false
-    });
+    this.setState({ selected: {} });
   }
 
   countSelected() {
@@ -129,10 +117,6 @@ class SortableTable extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell className={css(styles.actions)}>
-                <Checkbox
-                  checked={this.state.isSelectedAll}
-                  onChange={(e, checked) => this.handleSelectAllClick(e, checked)}
-                />
               </TableCell>
               {data.headers.map((item, i) => (
                 <TableCell key={i + 1}>{item}</TableCell>

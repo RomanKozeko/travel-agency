@@ -59,6 +59,10 @@ class FilterByRegions extends React.Component {
     }
   }
 
+  // componentWillUnmount() {
+  //   this.props.filterUnmount();
+  // }
+
   selectRegions = (e) => {
     const updatedItems = this.toggleItem(this.state.selectedRegions, e.target.value);
     this.setState({ selectedRegions : updatedItems });
@@ -129,5 +133,5 @@ const options = {
     getItems: (state) => populateTree(getRegions(state))
   }
 };
-
+// pageUnmount: actions.filterUnmount,
 export default withEntities(FilterByRegions, options);

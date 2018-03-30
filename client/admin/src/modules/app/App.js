@@ -3,6 +3,8 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -27,6 +29,7 @@ import ShowPlaceContainer from '../showPlaces/ShowplaceContainer';
 import FoodContainer from '../food/FoodContainer';
 import FoodItemContainer from '../food/FoodItemContainer';
 import { loadLang } from '../languages/LanguagesReducer';
+import MenuContainer from '../menuBuilder/MenuContainer';
 import Home from "../home/Home";
 const styles = StyleSheet.create({
   pageContainer: {
@@ -140,6 +143,11 @@ const routes = [
     main: () => <FoodItemContainer />
   },
   {
+    path: '/admin/menu',
+    exact: true,
+    main: () => <MenuContainer />
+  },
+  {
     path: '/admin',
     exact: true,
     main: () => <Home />
@@ -210,4 +218,4 @@ App.propTypes = {
 export default connect(
   mapStateToProps,
   { loadLang }
-)(App);
+)(DragDropContext(HTML5Backend)(App));

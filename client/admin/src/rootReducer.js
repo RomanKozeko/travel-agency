@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import {reducer as toastrReducer} from 'react-redux-toastr';
 import authReducer from './modules/auth/authReducer';
-// import regionsReducer, * as fromRegions from './modules/regions/RegionsReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import pageReducer from './modules/pages/pageReducer';
@@ -15,6 +14,7 @@ import showPlacesReducer, * as fromShowplaces from './modules/showPlaces/showpla
 import foodReducer, * as fromFoodReducer from './modules/food/foodReducer';
 import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
 import featuredReducer, * as fromFeatured from './modules/featured/FeaturedReducer';
+import menuReducer from './modules/menuBuilder/menuReducer';
 import newsReducer, * as fromNews from './modules/news/NewsReducer';
 
 const rootReducer = combineReducers({
@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
   food: foodReducer,
   entities: entitiesReducer,
   featured: featuredReducer,
+  menu: menuReducer,
   news: newsReducer
 });
 
@@ -66,6 +67,8 @@ export const getShowplacesByFilter = (state, filter) => fromEntities.getShowplac
 
 export const getFood = (state) => fromFoodReducer.getFood(state.food);
 export const getFoodItem = (state, id) => fromFoodReducer.getFoodItem(state.food, id);
+
+export const getMenu = (state) => fromEntities.getMenu(state.entities.menu);
 
 export const getFeatured = (state) => fromFeatured.getFeatured(state.featured);
 export const getNews = (state) => fromFeatured.getFeatured(state.news);

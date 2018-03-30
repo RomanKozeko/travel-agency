@@ -7,7 +7,6 @@ import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import DeleteIcon from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
-import SortableTable from '../ui-elements/sortableTable/SortableTable';
 import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
 import createConfirmation  from '../ui-elements/form/createConfirmation'
 import { populateTree }  from './RegionService'
@@ -74,29 +73,6 @@ const TreeItems = ({items, deleteItems}) => (
 );
 
 const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
-  const data = {
-    headers: ['Заголовок', 'Описание', 'Дата создания'],
-    items,
-    languages,
-    fields: [
-      {
-        name: 'title',
-        isLink: true,
-        linkPrefix: '/admin/regions/'
-      },
-      {
-        name: 'description',
-        isLink: false
-      },
-      {
-        name: 'date',
-        isLink: 'date'
-      }
-    ]
-  };
-
-
-
   const tree = populateTree(items);
 
   return (

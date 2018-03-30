@@ -1,4 +1,5 @@
 import { createReducer } from '../../services/utils';
+import { updateEntities as updateMenuEntities } from '../menuBuilder/menuService'
 
 function defaultEntity(options) {
   return { ...{ byId : {}, allIds : [] }, ...options }
@@ -7,8 +8,9 @@ function defaultEntity(options) {
 const defaultState = {
   languages: defaultEntity(),
   regions: defaultEntity(),
-  hotels: defaultEntity({ filter: {}}),
-  showplaces: defaultEntity({ filter: {}})
+  hotels: defaultEntity({ filter: {} }),
+  showplaces: defaultEntity({ filter: {} }),
+  menu: defaultEntity(),
 };
 
 const mergeIds = (allIds, newIds) => {
@@ -183,6 +185,55 @@ const showPlaceReducer = {
   }
 };
 
+const menuReducer = {
+  itemsSuccess: function(state, action) {
+    const res = action.response;
+    let menu = {...state.menu};
+    let menuItemsIDs = res.result.items ? res.result.items : [res.result];
+
+    menu = {
+      ...menu,
+      byId: {...menu.byId, ...action.response.entities.items},
+      allIds: mergeIds(menu.allIds, menuItemsIDs),
+      isFetched: true
+    };
+    return {
+      ...state,
+      menu,
+    };
+  },
+  updateItems: function (state, action) {
+    const updatedEntities = updateMenuEntities(
+      state.menu.byId,
+      action.node,
+      action.nodeToInsert,
+      action.updateMethod
+    );
+
+    return {
+      ...state,
+      menu: {
+        ...state.menu,
+        byId: updatedEntities,
+        allIds: Object.keys(updatedEntities)
+      }
+    }
+  },
+  deleteSuccess: function(state, action) {
+    const newItems = action.response.entities.items;
+    const newIds = action.response.result.items;
+
+    const menu = {
+      byId: newItems,
+      allIds: newIds,
+    };
+    return {
+      ...state,
+      menu,
+    };
+  },
+};
+
 const regionsActions = {
   'REGIONS_SUCCESS': regionReducer.itemsSuccess,
   'REGION_SUCCESS': regionReducer.itemsSuccess,
@@ -206,10 +257,18 @@ const showplacesActions = {
   'FILTERED_SHOWPLACES_SUCCESS': showPlaceReducer.filteredItemsSuccess,
 };
 
+const menuActions = {
+  'MENU_SUCCESS': menuReducer.itemsSuccess,
+  'MENU_ITEM_SAVE_SUCCESS': menuReducer.itemsSuccess,
+  'UPDATE_MENU_ITEMS': menuReducer.updateItems,
+  'MENU_DELETE_SUCCESS': menuReducer.deleteSuccess,
+};
+
 const entitiesReducer = createReducer(defaultState, {
   ...hotelsActions,
   ...regionsActions,
   ...showplacesActions,
+  ...menuActions,
 });
 
 export default entitiesReducer;
@@ -237,3 +296,5 @@ export const getShowplacesByFilter = (state, filter) => {
   }
   return [];
 };
+
+export const getMenu = state => (state.allIds.map(id => state.byId[id]));

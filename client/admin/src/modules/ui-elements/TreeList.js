@@ -23,9 +23,7 @@ const styles = StyleSheet.create({
 });
 
 const TreeList = ({items, selectItems, selectedItems = []}) => {
-  selectedItems = selectedItems.map(item => {
-    return item._id ? item._id : item
-  });
+  selectedItems = selectedItems.map(item => item._id ? item._id : item);
 
   return(
     <div className={css(styles.listWrapper)}>

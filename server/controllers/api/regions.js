@@ -77,10 +77,9 @@ const rebuildRegionsTree = (items) => {
 
 module.exports = {
   get(req, res, next) {
-    Region.find().then((result) => {
-      res.json(result);
-    })
-    .catch(next);
+    Region.find()
+      .then(result => res.json(result))
+      .catch(next);
   },
 
   getOne(req, res, next) {

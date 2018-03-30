@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: '15px'
   },
+  submitButton: {
+    marginTop: '20px'
+  },
   selectWrapper: {
     marginBottom: '15px',
     marginTop: '15px'
@@ -512,6 +515,7 @@ class TourForm extends Component {
           variant="raised"
           type="submit"
           color="primary"
+          className={css(styles.submitButton)}
           disabled={isSaving}
         >
           {isSaving ? 'Сохраняю...' : 'Сохранить'}

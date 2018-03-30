@@ -82,6 +82,7 @@ const SideBar = () => (
     <li className={css(styles.item)}><CustomLink to="/admin/pages" label="Страницы" icon="web"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/lang" label="Языки" icon="language"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/mediaFiles" label="Картинки" icon="image"/></li>
+    <li className={css(styles.item)}><CustomLink to="/admin/menu" label="Меню" icon="assignment"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/home" label="Главная страница" icon="home"/></li>
     <li className={css(styles.item)}><CustomLink to="/admin/settings" label="Settings" icon="settings"/></li>
   </ul>

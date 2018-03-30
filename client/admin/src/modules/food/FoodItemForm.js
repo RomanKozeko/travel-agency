@@ -1,22 +1,12 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
+import { TabContainer } from 'material-ui/Tabs';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import NotificationPanel from '../ui-elements/form/NotificationPanel';
 import withTabs from '../ui-elements/HOC/withTabs';
 import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
-
-const styles = StyleSheet.create({
-  tabs: {
-    top: '-20px',
-    zIndex: '1',
-    position: 'relative',
-    borderRadius: '4px 4px 0 0',
-    borderBottom: '1px solid #dae2ea'
-  }
-});
 
 const FoodItemForm = ({ isSaving, parentState, languages, handleChange, handleSave, handleToggle }) => (
   <form action="" onSubmit={handleSave}>
