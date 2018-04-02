@@ -1,14 +1,14 @@
 const Menu = require('../../models/Menu');
 const createCRUD = require('../../services/apiFactory');
 
-const updateMenu = (menuItems) => {
-  const savedMenuItems = [];
-  menuItems.forEach(item => {
-    savedMenuItems.push(Menu.findByIdAndUpdate(item._id, item));
-  });
+const updateItems = menuItems => (
+  waitForEach(menuItem => Menu.findByIdAndUpdate(menuItem._id, menuItem), menuItems)
+);
 
-  return Promise.all(savedMenuItems)
-};
+const waitForEach = (processFunc, [ head, ...tail]) =>
+  !head ?
+    Promise.resolve()
+    : processFunc(head).then(waitForEach(processFunc, tail));
 
 const updateParent = (parent, id) => {
   parent = parent.toObject();
@@ -17,11 +17,11 @@ const updateParent = (parent, id) => {
   return parent;
 };
 
-const updateItemsOrder = items => {
-  let updatedItems = items.map(item => item.toObject());
-  const sorted = updatedItems.sort((a,b) => a.order - b.order);
+const recalculateItemsOrder = items => {
+  const sorted = items.map(item => item.toObject())
+    .sort((a,b) => a.order - b.order);
   sorted.forEach((item, index) => item.order = index);
-  return updateMenu(updatedItems);
+  return sorted;
 };
 
 module.exports = createCRUD(
@@ -30,7 +30,7 @@ module.exports = createCRUD(
     put(req, res, next) {
       const menuItems = req.body;
 
-      updateMenu(menuItems)
+      updateItems(menuItems)
         .then(() => Menu.find({}))
         .then(result => res.json(result))
         .catch(next);
@@ -51,10 +51,10 @@ module.exports = createCRUD(
 
         const parameterObj = parent ? { parent: parent._id } : { parent: null };
 
-        const updateItemsOrderPromise = Menu.find(parameterObj)
-          .then((res) => updateItemsOrder(res));
+        const updateItemsPromise = Menu.find(parameterObj)
+          .then(menuItems => updateItems(recalculateItemsOrder(menuItems)));
 
-        return Promise.all([ updateParentPromise, updateItemsOrderPromise])
+        return Promise.all([ updateParentPromise, updateItemsPromise])
       }
 
     }

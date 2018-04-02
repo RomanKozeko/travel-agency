@@ -12,7 +12,7 @@ const MenuList = (props) => {
       {tree.length ?
         <TreeItems {...props} tree={tree} />
         :
-        <p> Добавьте первую страницу</p>
+        <p>Добавьте первую страницу</p>
       }
 
     </Portlet>
