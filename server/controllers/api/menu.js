@@ -5,24 +5,23 @@ const updateItems = menuItems => (
   waitForEach(menuItem => Menu.findByIdAndUpdate(menuItem._id, menuItem), menuItems)
 );
 
-const waitForEach = (processFunc, [ head, ...tail]) =>
+const waitForEach = (processFunc, [ head, ...tail ]) =>
   !head ?
     Promise.resolve()
     : processFunc(head).then(waitForEach(processFunc, tail));
 
 const updateParent = (parent, id) => {
-  parent = parent.toObject();
   const index = parent.children.findIndex(childId => childId === id);
   parent.children.splice(index, 1);
   return parent;
 };
 
-const recalculateItemsOrder = items => {
-  const sorted = items.map(item => item.toObject())
-    .sort((a,b) => a.order - b.order);
-  sorted.forEach((item, index) => item.order = index);
-  return sorted;
-};
+const recalculateItemsOrder = items => (
+  items
+    .map(item => item.toObject())
+    .sort((a,b) => a.order - b.order)
+    .map((item, index) => ({ ...item, order: index }))
+);
 
 module.exports = createCRUD(
   Menu,
@@ -42,19 +41,23 @@ module.exports = createCRUD(
       Menu.find({ children: id })
         .then(items => deleteItem(items[0]))
         .then(() => Menu.find({}))
-        .then(result => res.json({ items: result }))
+        .then(items => res.json({ items }))
         .catch(next);
 
       function deleteItem(parent) {
-        const updateParentPromise = Menu.deleteMany({ _id: req.body })
-          .then(() =>  parent ? Menu.findByIdAndUpdate(parent._id, updateParent(parent, id)) : null);
+        const updateParentPromise = Menu.findByIdAndRemove(id)
+          .then(() => parent ?
+            Menu.findByIdAndUpdate(parent._id, updateParent(parent, id))
+            :
+            null
+          );
 
         const parameterObj = parent ? { parent: parent._id } : { parent: null };
 
         const updateItemsPromise = Menu.find(parameterObj)
           .then(menuItems => updateItems(recalculateItemsOrder(menuItems)));
 
-        return Promise.all([ updateParentPromise, updateItemsPromise])
+        return Promise.all([ updateParentPromise, updateItemsPromise ])
       }
 
     }
