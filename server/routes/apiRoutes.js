@@ -39,6 +39,7 @@ const ApiFoodCtrl = require('../controllers/api/food');
 const FeaturedCtrl = require('../controllers/api/featured');
 const NewsCtrl = require('../controllers/api/news');
 const MenuCtrl = require('../controllers/api/menu');
+const ContactsCtrl = require('../controllers/api/contacts');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -85,6 +86,7 @@ router.get('/media', ApiPhotosCtrl.get);
 router.get('/media/:id', ApiPhotosCtrl.getOne);
 router.put('/media/:id', ApiPhotosCtrl.put);
 router.post('/media',  upload.single('file'), ApiPhotosCtrl.post);
+router.post('/media-upload',  upload.single('file'), ApiPhotosCtrl.upload);
 router.delete('/media', ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
@@ -121,5 +123,10 @@ router.get('/menu', MenuCtrl.get);
 router.put('/menu', MenuCtrl.put);
 router.post('/menu', MenuCtrl.post);
 router.delete('/menu', MenuCtrl.delete);
+
+router.get('/contacts', ContactsCtrl.get);
+router.put('/contacts/:id', ContactsCtrl.put);
+router.post('/contacts', ContactsCtrl.post);
+router.delete('/contacts', ContactsCtrl.delete);
 
 module.exports = router;

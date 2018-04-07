@@ -38,6 +38,17 @@ module.exports = {
       .catch(next);
   },
 
+  upload(req, res, next) {
+    if (!req.file) {
+      return res.status(400).send({
+        message: 'Bad request'
+      });
+    }
+    res.send({
+      path: req.file.path.replace('client', '').replace(/\\/g, '/')
+    })
+  },
+
 	delete(req, res, next) {
     const ids = req.body;
 

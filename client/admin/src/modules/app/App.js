@@ -31,6 +31,7 @@ import FoodItemContainer from '../food/FoodItemContainer';
 import { loadLang } from '../languages/LanguagesReducer';
 import MenuContainer from '../menuBuilder/MenuContainer';
 import Home from "../home/Home";
+import ContactsContainer from "../contacts/ContactsContainer";
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
@@ -115,8 +116,8 @@ const routes = [
     main: () => <CategoryContainer />
   },
   {
-    path: '/admin/settings',
-    main: () => <h2>Settings</h2>
+    path: '/admin/contacts',
+    main: () => <ContactsContainer />
   },
   {
     path: '/admin/mediaFiles',
