@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
   },
   img: {
     maxHeight: '50px',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    minWidth: '50px'
   },
   imgWrapper: {
     position: 'relative',

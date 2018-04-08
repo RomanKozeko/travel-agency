@@ -30,11 +30,8 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
-export const promoLinkSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
-export const promoLinksSchema = { items: [promoLinkSchema] };
-
-export const newsItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
-export const newsSchema = { items: [newsItemSchema] };
+export const itemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const itemsSchema = { items: [itemSchema] };
 
 export const Schemas = {
   TOUR: tourSchema,
@@ -42,10 +39,12 @@ export const Schemas = {
   PAGES: pagesSchema,
   PAGE: pageSchema,
   LANGUAGES: languagesSchema,
-  PROMO_LINK: promoLinkSchema,
-  PROMO_LINKS: promoLinksSchema,
-  NEWS_ITEM: newsItemSchema,
-  NEWS: newsSchema
+  PROMO_LINK: itemSchema,
+  PROMO_LINKS: itemsSchema,
+  NEWS_ITEM: itemSchema,
+  NEWS: itemsSchema,
+  CONTACTS_ITEM: itemSchema,
+  CONTACTS: itemsSchema
 };
 
 

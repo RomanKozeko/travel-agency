@@ -5,6 +5,7 @@ import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import promoLinksReducer, * as fromPromoLinks from './modules/promoLinks/promoLinksReducer';
 import latestNewsReducer, * as fromLatestNews from './modules/latestNews/latestNewsReducer';
+import contactsReducer, * as fromContacts from './modules/header/headerReducer';
 
 const rootReducer = combineReducers({
   tours: toursReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   form: formReducer,
   pages: pagesReducer,
   promoLinks: promoLinksReducer,
-  latestNews: latestNewsReducer
+  latestNews: latestNewsReducer,
+  contacts: contactsReducer
 });
 
 export default rootReducer;
@@ -28,3 +30,4 @@ export const getPageWithTours = (state, page) => fromTours.getPageWithTours(stat
 export const getLanguages = state => fromApp.getLanguages(state.app.languages);
 export const getPromoLinks = state => fromPromoLinks.getPromoLinks(state.promoLinks);
 export const getLatestNews = state => fromLatestNews.getLatestNews(state.latestNews);
+export const getContacts = state => fromContacts.getContacts(state.contacts);

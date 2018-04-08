@@ -8,11 +8,12 @@ import { theme } from '../../services/constans'
 const styles = StyleSheet.create({
   link: {
     textTransform: 'uppercase',
-    margin: '0 5px',
+    margin: '0 3px',
     display: 'inline-block',
     padding: '2px;',
     lineHeight: '14px',
-    color: theme.colors.primary
+    color: theme.colors.primary,
+    fontSize: '12px'
   },
   active: {
     background: theme.colors.primary,
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     }
   },
   wrapper: {
-    width: '100%;'
+    width: '100%;',
+    whiteSpace: 'nowrap'
   }
 });
 
