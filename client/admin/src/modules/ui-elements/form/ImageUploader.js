@@ -39,7 +39,7 @@ const ImageUploader = ({ uploadImg, fileType }) => {
       />
       <label htmlFor="file">
         <Button className={css(styles.button)} component="span" variant="raised" color="primary">
-          Добавить файл
+          Добавить новый файл
         </Button>
       </label>
     </div>
