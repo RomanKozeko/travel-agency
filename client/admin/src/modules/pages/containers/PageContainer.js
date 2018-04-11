@@ -24,12 +24,13 @@ const createBlankPage = (languages) => {
       title: '',
       description: '',
       rows: [],
-      language: language._id,
+      language: language._id
     });
   });
   return {
     id: uniqueId(),
     preview: '',
+    allImages: [],
     content
   };
 };
