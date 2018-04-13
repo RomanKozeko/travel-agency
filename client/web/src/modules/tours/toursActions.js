@@ -1,5 +1,5 @@
 import { CALL_API, Schemas } from '../../middleware/callApi';
-import { withPrefix } from '../../services/utils';
+import { withPrefix, getFiltersQuery } from '../../services/utils';
 
 export const TOUR_REQUEST = 'TOUR_REQUEST';
 export const TOUR_SUCCESS = 'TOUR_SUCCESS';
@@ -10,7 +10,9 @@ export const TOURS_FAILURE = 'TOURS_FAILURE';
 export const TOURS_FILTERED_REQUEST = 'TOURS_FILTERED_REQUEST';
 export const TOURS_FILTERED_SUCCESS = 'TOURS_FILTERED_SUCCESS';
 export const TOURS_FILTERED_FAILURE = 'TOURS_FILTERED_FAILURE';
-export const TOURS_GET_PAGE_FROM_CACHE = 'TOURS/GET_PAGE_FROM_CACHE';
+export const TOURS_GET_PAGE_FROM_CACHE = 'TOURS_GET_PAGE_FROM_CACHE';
+export const TOURS_SET_ACTIVE_FILTER = 'TOURS_SET_ACTIVE_FILTER';
+export const TOURS_RESET_ACTIVE_FILTER = 'TOURS_RESET_ACTIVE_FILTER';
 
 const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
@@ -20,14 +22,6 @@ const fetchTours = (nextPageUrl, nextPage) => ({
     nextPage
   }
 });
-
-// const fetchTours = (urlPrefix) => ({
-//   [CALL_API]: {
-//     types: [TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE],
-//     endpoint: withPrefix('/api/tours', urlPrefix),
-//     schema: Schemas.PAGES
-//   }
-// });
 
 const fetchTour = (url, urlPrefix) => ({
   [CALL_API]: {
@@ -58,16 +52,33 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
 
   return dispatch(fetchTours(nextPageUrl, nextPage))
 };
+const fetchFilteredTours = (filterQuery, lang) => ({
+  [CALL_API]: {
+    types: [ TOURS_FILTERED_REQUEST, TOURS_FILTERED_SUCCESS, TOURS_FILTERED_FAILURE ],
+    endpoint: withPrefix(`/api/tours?${filterQuery}`, lang),
+    schema: Schemas.TOURS,
+    query: filterQuery
+  }
+});
 
-export const fetchFilteredTours = (filterQuery) => (dispatch, getState) => {
+export const resetActiveFilter = () => (dispatch) => {
   dispatch({
-    [CALL_API]: {
-      types: [ TOURS_FILTERED_REQUEST, TOURS_FILTERED_SUCCESS, TOURS_FILTERED_FAILURE ],
-      endpoint: withPrefix(`/api/tours?${filterQuery}`, getState().app.languages.urlPrefix),
-      schema: Schemas.TOURS,
-      query: filterQuery
-    }
+    type: TOURS_RESET_ACTIVE_FILTER,
   })
+};
+
+export const loadFilteredTours = (filterQuery) => (dispatch, getState) => {
+  filterQuery = typeof filterQuery === 'string' ? filterQuery : getFiltersQuery(filterQuery);
+  const filter = getState().tours.byQueries;
+
+  if (filter.hasOwnProperty(filterQuery)) {
+    return dispatch({
+      type: TOURS_SET_ACTIVE_FILTER,
+      payload: filterQuery
+    })
+  }
+
+  dispatch(fetchFilteredTours(filterQuery, getState().app.languages.urlPrefix))
 };
 
 export const loadTour = url => (dispatch, getState) => {

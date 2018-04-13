@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ToursList from './ToursList';
 import Pagination from '../ui-elements/Pagination';
-import { fetchFilteredTours } from './toursActions';
+import { loadFilteredTours } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
 
 const mapStateToProps = (state) => {
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 class ToursContainer extends React.Component {
 	componentDidMount() {
 		if (!this.props.isFetched) {
-			this.props.fetchFilteredTours();
+			this.props.loadFilteredTours();
 		}
 	}
 
@@ -49,7 +49,7 @@ class ToursContainer extends React.Component {
 
 ToursContainer = connect(
 	mapStateToProps,
-	{ fetchFilteredTours }
+	{ loadFilteredTours }
 )(ToursContainer);
 
 export default ToursContainer

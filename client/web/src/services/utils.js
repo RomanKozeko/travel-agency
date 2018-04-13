@@ -8,6 +8,31 @@ export const createReducer = (initialState, handlers) => {
   }
 };
 
+export function createBasicActions(aliasPlural, endpoint, middleware, schemas) {
+  const actions = {
+    [`${aliasPlural}_REQUEST`]: `${aliasPlural}_REQUEST`,
+    [`${aliasPlural}_SUCCESS`]: `${aliasPlural}_SUCCESS`,
+    [`${aliasPlural}_FAILURE`]: `${aliasPlural}_FAILURE`,
+  };
+
+  const fetch = (lang) => ({
+    [middleware]: {
+      types: [`${aliasPlural}_REQUEST`, `${aliasPlural}_SUCCESS`, `${aliasPlural}_FAILURE`],
+      endpoint: withPrefix(`/api/${endpoint}`, lang),
+      schema: schemas[aliasPlural],
+    }
+  });
+
+  const load = () => (dispatch, getState) => {
+    return dispatch(fetch(getState().app.languages.urlPrefix));
+  };
+
+  return {
+    actions,
+    load
+  };
+}
+
 export const getLangPref = () => {
   try {
     const pref = window.location.href.split('/')[3];
@@ -53,9 +78,23 @@ export const getPageCount = (count, limit) => {
 
 export const getContentByLanguage = (content, languageId) => content.find(
 	item => item.language === languageId
-)
+);
 
 export const getImageById = (allImages, id) => allImages.find(
   item => item._id === id
-)
+);
 
+export const getFiltersQuery = filters => {
+  let query = '';
+
+  for (const filter in filters) {
+    if (filters[filter].length) {
+      query += `${filter}=`;
+      query += typeof filters[filter] === 'object' ?
+        filters[filter].map(item => item._id || item).join(','):
+        filters[filter];
+      query += '&'
+    }
+  }
+  return query.slice(0, -1);
+};

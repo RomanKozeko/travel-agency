@@ -21,35 +21,56 @@ const styles = StyleSheet.create({
 	}
 });
 
-const SearchSideBar = () =>
+const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.block)}>
 			<h3 className={css(styles.blockTitle)}>По названию</h3>
-			<TextFieldSmall placeholder='Название тура' />
+			<TextFieldSmall
+				onChange={(e) => onInputChange('title', e.target.value)}
+				placeholder='Название тура'
+			/>
 		</div>
 		<div className={css(styles.block)}>
 			<h3 className={css(styles.blockTitle)}>Регионы</h3>
-			<CheckBox label="Беларусь" name="belarus" block={ true } />
-			<CheckBox label="Минск" name="Минск" block={ true } />
-			<CheckBox label="Брест" name="Брест" block={ true } />
-			<CheckBox label="Витебск" name="Витебск" block={ true } />
+			{
+        regions.map(region => (
+					<CheckBox
+						key={region._id}
+						onChange={(e) => onFieldChange('regions', region._id)}
+						label={region.content.title}
+						name={region.content.title}
+						block={ true }
+					/>
+				))
+			}
 		</div>
 		<div className={css(styles.block)}>
 			<h3 className={css(styles.blockTitle)}>Количество дней</h3>
-			<CheckBox label="1" name="1" />
-			<CheckBox label="2" name="2" />
-			<CheckBox label="3" name="3" />
-			<CheckBox label="4" name="4" />
-			<CheckBox label="5" name="5" />
-			<CheckBox label="6" name="6" />
+			{
+        Array.from({length: 10}, (x,i) => i + 1).map(day => (
+					<CheckBox
+						key={day}
+						onChange={(e) => onFieldChange('days', day)}
+						label={day}
+						name={day}
+					/>
+        ))
+			}
 		</div>
 		<div className={css(styles.block)}>
 			<h3 className={css(styles.blockTitle)}>Тип тура</h3>
-			<CheckBox label="Новогодний" name="Новогодний" block={ true } />
-			<CheckBox label="Пляжный" name="Пляжный" block={ true } />
-			<CheckBox label="Автобусный" name="Автобусный" block={ true } />
-			<CheckBox label="Самолетный" name="Самолетный" block={ true } />
+      {
+        categories.map(category => (
+					<CheckBox
+						key={category._id}
+						onChange={(e) => onFieldChange('categories', category._id)}
+						label={category.content.title}
+						name={category.content.title}
+						block={ true }
+					/>
+        ))
+      }
 		</div>
-	</div>
+	</div>;
 
 export default SearchSideBar;

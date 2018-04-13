@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ToursList from './ToursList';
-import { fetchFilteredTours } from './toursActions';
+import { loadFilteredTours } from './toursActions';
 import { getToursByQuery } from '../../rootReducer';
 
 const mapStateToProps = (state, ownProps) => {
@@ -14,9 +14,9 @@ const mapStateToProps = (state, ownProps) => {
 
 class FilteredToursContainer extends React.Component {
   componentDidMount() {
-    const {tours, query, fetchFilteredTours} = this.props;
+    const {tours, query, loadFilteredTours} = this.props;
     if (!tours.length) {
-      fetchFilteredTours(query);
+      loadFilteredTours(query);
     }
   }
 
@@ -39,7 +39,7 @@ class FilteredToursContainer extends React.Component {
 
 FilteredToursContainer = connect(
   mapStateToProps,
-  { fetchFilteredTours }
+  { loadFilteredTours }
 )(FilteredToursContainer);
 
 export default FilteredToursContainer

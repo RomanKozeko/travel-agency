@@ -27,12 +27,22 @@ module.exports = {
 async function createFilterObj(filter) {
   const filterObj = {};
   const regionsQuery = await populateQueryNestedDocument(filter.regions, 'regions', '$or', Region);
+  const hotelsQuery = populateQuery(filter.hotels, 'hotels', '$and');
   const titleQuery = populateQueryNestedField(filter.title, 'content', 'title', '$and');
   const categoriesQuery = populateQuery(filter.categories, 'categories', '$and');
-  const daysQuery = populateQuery(filter.days, 'days', '$and');
+  const showplacesQuery = populateQuery(filter.showplaces, 'showplaces', '$and');
+  const daysQuery = populateQuery(filter.days, 'days', '$or');
 
   if (regionsQuery) {
     filterObj.$and = [regionsQuery];
+  }
+
+  if (hotelsQuery) {
+    filterObj.$and = [hotelsQuery];
+  }
+
+  if (showplacesQuery) {
+    filterObj.$and = [showplacesQuery];
   }
 
   if (categoriesQuery) {

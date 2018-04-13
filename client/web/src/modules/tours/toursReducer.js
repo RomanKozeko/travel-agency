@@ -36,10 +36,12 @@ const filteredToursSuccess = (state, { response: {result, entities, query} }) =>
 	  allIds,
     byIds: {...state.byIds, ...entities.items},
     isFetching: false,
+    isFetched: true,
     byQueries: {
       ...state.byQueries,
-      [query]: result.items
-    }
+      [query]: result.items,
+    },
+    activeQuery: [query]
   }
 };
 
@@ -67,6 +69,7 @@ export const defaultState = {
   pageCount: 0,
   currPage: 0,
   byQueries: {},
+  activeQuery: '',
   pages: {}
 };
 
@@ -78,7 +81,9 @@ const toursReducer = createReducer(defaultState, {
   [actions.TOURS_FILTERED_REQUEST]: (state) => ({...state, isFetching: true}),
   [actions.TOURS_FILTERED_SUCCESS]: filteredToursSuccess,
   [actions.TOURS_FILTERED_FAILURE]: (state) => ({...state, isFetching: false}),
-  [actions.TOUR_SUCCESS]: tourSuccess
+  [actions.TOUR_SUCCESS]: tourSuccess,
+  [actions.TOURS_SET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: action.payload}),
+  [actions.TOURS_RESET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: ''}),
 });
 
 export default toursReducer;

@@ -1,3 +1,4 @@
+const slicer = require('../../services/index');
 const Region = require('../../models/Region');
 
 const findLastChildren = (allRegions) => {
@@ -78,7 +79,7 @@ const rebuildRegionsTree = (items) => {
 module.exports = {
   get(req, res, next) {
     Region.find()
-      .then(result => res.json(result))
+      .then(result => res.json(slicer.sliceModelContent(result.concat(), req.query.lang)))
       .catch(next);
   },
 

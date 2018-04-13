@@ -1,14 +1,12 @@
-const express = require('express');
-const path = require('path');
-const passport = require('passport');
-
+const slicer = require('../../services/index');
 const TourCategory = require('../../models/TourCategory');
 
 module.exports = {
   get(req, res, next) {
-    TourCategory.find({}).then((result) => {
-      res.json(result);
-    })
+    TourCategory.find({})
+    .then(result => (
+      res.json(slicer.sliceModelContent(result.concat(), req.query.lang)))
+    )
     .catch(next);
   },
 

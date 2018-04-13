@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
 	}
 });
 
-const TextField = ({placeholder}) => (
-	<input type="text" placeholder={placeholder} className={css(styles.input)} />
-)
+const TextField = ({placeholder, onChange}) => (
+	<input type="text" onChange={onChange} placeholder={placeholder} className={css(styles.input)} />
+);
 
 export default TextField

@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import appReducer, * as fromApp from './modules/app/appReducer';
+import entitiesReducer, * as fromEntities from './modules/app/entitiesReducer';
 import pagesReducer, * as fromPages from './modules/pages/PagesReducer';
 import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import promoLinksReducer, * as fromPromoLinks from './modules/promoLinks/promoLinksReducer';
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   pages: pagesReducer,
   promoLinks: promoLinksReducer,
   latestNews: latestNewsReducer,
-  contacts: contactsReducer
+  contacts: contactsReducer,
+  entities: entitiesReducer
 });
 
 export default rootReducer;
@@ -31,3 +33,7 @@ export const getLanguages = state => fromApp.getLanguages(state.app.languages);
 export const getPromoLinks = state => fromPromoLinks.getPromoLinks(state.promoLinks);
 export const getLatestNews = state => fromLatestNews.getLatestNews(state.latestNews);
 export const getContacts = state => fromContacts.getContacts(state.contacts);
+export const getRegions = state => {
+  return fromEntities.getRegions(state.entities.regions)
+};
+export const getCategories = state => fromEntities.getCategories(state.entities.categories);
