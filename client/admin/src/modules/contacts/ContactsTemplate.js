@@ -144,8 +144,6 @@ class ContactsTemplate extends React.Component {
   }
 
   updloadImg = ({ payload }, index) => {
-    console.log(payload, index)
-
     const formData = new FormData();
     formData.append('file', payload);
 

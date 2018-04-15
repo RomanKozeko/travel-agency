@@ -40,6 +40,7 @@ const FeaturedCtrl = require('../controllers/api/featured');
 const NewsCtrl = require('../controllers/api/news');
 const MenuCtrl = require('../controllers/api/menu');
 const ContactsCtrl = require('../controllers/api/contacts');
+const SettingsCtrl = require('../controllers/api/settings');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -128,5 +129,10 @@ router.get('/contacts', ContactsCtrl.get);
 router.put('/contacts/:id', ContactsCtrl.put);
 router.post('/contacts', ContactsCtrl.post);
 router.delete('/contacts', ContactsCtrl.delete);
+
+router.get('/settings', SettingsCtrl.get);
+router.put('/settings/:id', SettingsCtrl.put);
+router.post('/settings', SettingsCtrl.post);
+router.delete('/settings', SettingsCtrl.delete);
 
 module.exports = router;

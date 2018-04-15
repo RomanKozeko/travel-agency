@@ -17,6 +17,7 @@ import featuredReducer, * as fromFeatured from './modules/featured/FeaturedReduc
 import menuReducer from './modules/menuBuilder/menuReducer';
 import newsReducer, * as fromNews from './modules/news/NewsReducer';
 import contactsReducer, * as fromContacts from './modules/contacts/ContactsReducer';
+import settingsReducer, * as fromSettings from './modules/settings/SettingsReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
   featured: featuredReducer,
   menu: menuReducer,
   news: newsReducer,
-  contacts: contactsReducer
+  contacts: contactsReducer,
+  settings: settingsReducer
 });
 
 export default rootReducer;
@@ -75,3 +77,4 @@ export const getMenu = (state) => fromEntities.getMenu(state.entities.menu);
 export const getFeatured = (state) => fromFeatured.getFeatured(state.featured);
 export const getNews = (state) => fromFeatured.getFeatured(state.news);
 export const getContacts = (state) => fromContacts.getContacts(state.contacts);
+export const getSettings = (state) => fromSettings.getSettings(state.settings);
