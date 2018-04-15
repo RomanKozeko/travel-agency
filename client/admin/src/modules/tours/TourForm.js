@@ -334,15 +334,6 @@ class TourForm extends Component {
               className={css(styles.field)}
               label='url'
             />
-            <TextField
-              name='price'
-              type='number'
-              value={tour.price}
-              onChange={this.handleInputChange(null, 'price')}
-              fullWidth
-              className={css(styles.field)}
-              label='Цена в б/руб'
-            />
 
             {languages.map((lang, i) => (
               <div key={lang._id}>
@@ -403,12 +394,23 @@ class TourForm extends Component {
                       className={css(styles.field)}
                       fullWidth
                     />
+                    <TextField
+                      name='price'
+                      type='number'
+                      value={contentByLang[lang._id].price}
+                      onChange={this.handleInputChange(lang._id, 'price')}
+                      fullWidth
+                      className={css(styles.field)}
+                      label='Цена в б/руб для текущего языка'
+                    />
                     <div className={css(styles.selectWrapper)}>
                       <FormControl>
                         <InputLabel htmlFor="parentRegion" className={css(styles.select)}>Тип питания</InputLabel>
                         <Select
                           className={css(styles.select)}
-                          value={tour.food || '1'}
+                          value={
+                            typeof tour.food === "object" ? tour.food._id : tour.food || '1'
+                          }
                           onChange={this.handleInputChange(null, 'food')}
                           input={<Input id="food" className={css(styles.select)} fullWidth/>}
                           fullWidth

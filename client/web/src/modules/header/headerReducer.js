@@ -25,9 +25,10 @@ export const fetchContacts = () => (dispatch, getState) => {
 export default createReducer(defaultState, {
   [CONTACTS_REQUEST] : (state) => ({...state, isFetching: true}),
   [CONTACTS_SUCCESS] : (state, { response }) => {
+
     return {
       ...state,
-      allIds: [...state.allIds, ...response.result.items],
+      allIds: response.result.items,
       byIds: {...state.byIds, ...response.entities.items},
       isFetching: false,
       isFetched: true

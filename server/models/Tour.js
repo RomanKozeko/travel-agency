@@ -55,8 +55,7 @@ const TourSchema = new Schema({
   periodType: [{
     type: String,
     ref: 'Period'
-  }],
-  price: Number
+  }]
 });
 
 module.exports = mongoose.model('Tour', TourSchema);

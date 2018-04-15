@@ -26,22 +26,6 @@ const styles = StyleSheet.create({
     fontSize: '13px',
     marginBottom: '5px'
   },
-  textTel: {
-    width: 'calc(100% / 2 - 10px)',
-    fontSize: '12px',
-    marginLeft: '10px',
-    marginBottom: '5px',
-    display: 'flex',
-    alignItems: 'center',
-    '@media (min-width: 600px)': {
-      width: 'calc(100% / 3 - 10px)',
-    }
-  },
-  textTelWrap: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    marginLeft: '-10px'
-  },
   inner: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -55,6 +39,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     '@media (max-width: 600px)': {
       textAlign: 'center'
+    }
+  },
+  
+  textTelWrap: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginLeft: '-10px'
+  },
+  textTel: {
+    width: 'calc(100% / 2 - 10px)',
+    fontSize: '12px',
+    marginLeft: '10px',
+    marginBottom: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    '@media (min-width: 600px)': {
+      width: 'calc(100% / 3 - 10px)',
     }
   },
   textTelImg: {

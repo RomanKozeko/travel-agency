@@ -1,5 +1,10 @@
 import React from 'react'
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
+import { StyleSheet, css } from 'aphrodite/no-important';
+import { getContacts } from '../../rootReducer'
+import { fetchContacts } from '../header/headerReducer'
+
 
 const styles = StyleSheet.create({
   footer: {
@@ -30,11 +35,11 @@ const styles = StyleSheet.create({
     marginBottom: '20px'
   },
   columnText: {
-    paddingTop: '30px;',
     color: '#fff'
   },
   columnInner: {
-    color: '#777777'
+    color: '#d4d4d4',
+    display: 'flex'
   },
   button: {
     display: 'inline-block',
@@ -66,17 +71,56 @@ const styles = StyleSheet.create({
   },
   google: {
     background: '#d0422a'
-  }
+  },
+  textTelWrap: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginLeft: '-10px'
+  },
+  textTel: {
+    width: 'calc(100% / 2 - 10px)',
+    fontSize: '12px',
+    marginLeft: '10px',
+    marginBottom: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    '@media (min-width: 600px)': {
+      width: 'calc(100% / 3 - 10px)',
+    }
+  },
+  textTelImg: {
+    maxHeight: '15px'
+  },
+  textTelContent: {
+    marginLeft: '10px',
+    whiteSpace: 'nowrap'
+  },
 });
-const Footer = () => (
+const Footer = ({ items }) => (
   <footer className={css(styles.footer)}>
     <div className="container">
       <div className="row">
-        <div className="col-md-5">
-          <h4 className={css(styles.header)}>Contact us</h4>
-          <div className={css(styles.columnText)}>Phone: <span className={css(styles.columnInner)}>тел: +375 29 3-980-990</span></div>
-          <div className={css(styles.columnText)}>Email: <span className={css(styles.columnInner)}>kenguru@hottour.by</span></div>
-          <div className={css(styles.columnText)}>Address: <span className={css(styles.columnInner)}>Nesovisimosti 6</span></div>
+        <div className="col-md-9">
+          <h4 className={css(styles.header)}>Наши контакты</h4>
+          {
+            items.map(({ content, _id, tels }) => (
+              <div className={css(styles.columnText)} key={ _id }>
+                <div className={css(styles.item)}>
+                  <span className={css(styles.columnInner)}>{ content.title }</span>
+                </div>
+                <div className={css(styles.textTelWrap)}>
+                  {
+                    tels.map(({ title, img }) =>
+                      <div className={css(styles.textTel)}>
+                        <img src={ img }  className={css(styles.textTelImg)} alt=""/>
+                        <div className={css(styles.textTelContent)}>{ title }</div>
+                      </div>
+                    )
+                  }
+                </div>
+              </div>
+            ))
+          }
         </div>
         <div className="col-md-3">
           <h4 className={css(styles.header)}>Follow us</h4>
@@ -84,7 +128,6 @@ const Footer = () => (
           <a href="" className={css(styles.button, styles.vk)}>Vkontakte</a>
           <a href="" className={css(styles.button, styles.google)}>Google +</a>
         </div>
-        <div className="col-xs-4"></div>
       </div>
 
     </div>
@@ -102,5 +145,21 @@ const Footer = () => (
   </footer>
 );
 
+const mapStateToProps = (state) => ({
+  items: getContacts(state),
+  isFetching: state.contacts.isFetching,
+  isFetched: state.contacts.isFetched
+})
 
-export default Footer
+export default compose(
+  connect(mapStateToProps, { fetchContacts }),
+  lifecycle({
+    componentDidMount() {
+      if (!this.props.isFetched) {
+        this.props.fetchContacts()
+      }
+    }
+  })
+)(Footer)
+
+

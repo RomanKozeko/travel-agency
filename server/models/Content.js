@@ -17,7 +17,8 @@ const ContentSchema = new Schema({
   }],
   duration: String,
   mapName: String,
-  language: String
+  language: String,
+  price: Number
 });
 
 module.exports = ContentSchema;

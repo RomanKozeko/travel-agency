@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
-import Button from '../ui-elements/Button';
 import PrefixLink from '../ui-elements/PrefixLink'
 import { theme } from '../../services/constans';
+import TourBody from './TourBody';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
 		overflow: 'hidden',
 		marginBottom: '20px',
 		width: '100%',
-		paddingBottom: '70px',
 		position: 'relative',
 		marginLeft: '30px',
     transition: 'all .3s ease-in',
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
 		backgroundSize: 'cover'
 	},
 	info: {
-		padding: '15px 26px 20px',
+		padding: '0 0 20px',
 		color: '#bebebe'
 	},
 	body: {},
@@ -93,37 +92,7 @@ const ToursList = ({tours}) => {
 			{tours.map((tour, i) => (
 					<div key={tour._id} className={css(styles.tourWrapper)}>
 						<div className={css(styles.preview)} style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}} />
-						<div className={css(styles.info)}>
-							<div className={css(styles.body)}>
-								<h2 className={css(styles.title)}>{tour.content.title}</h2>
-                <div className={css(styles.listItem)}>
-                  <PlaceIcon color={ theme.colors.primary } width={20} />
-                  <span className={css(styles.listItemText)}>{ tour.content.departureInfo }</span>
-                </div>
-                <div className={css(styles.listItem)}>
-                  <WorkIcon color={ theme.colors.primary } width={20} />
-                  <span className={css(styles.listItemText)}>Самолетный</span>
-                </div>
-                <div className={css(styles.listItem)}>
-                  <DinnerIcon color={ theme.colors.primary } width={20} />
-                  <span className={css(styles.listItemText)}>Завтраки</span>
-                </div>
-                <div className={css(styles.listItem)}>
-                  <ClockIcon color={ theme.colors.primary } width={20} />
-                  <span className={css(styles.listItemText)}>{ tour.content.duration }</span>
-                </div>
-                <div className={css(styles.listItem)}>
-                  <DateIcon color={ theme.colors.primary } width={20} />
-                  <span className={css(styles.listItemText)}>Дней: { tour.days }</span>
-                </div>
-							</div>
-							<div className={css(styles.price)}>От { tour.price }</div>
-							<div className={css(styles.footer)}>
-								<PrefixLink to={`/tours/${tour.url}`}>Подробнее</PrefixLink>
-								<Button>Заказть</Button>
-							</div>
-
-						</div>
+						<TourBody tour={ tour } />
 					</div>
 			))
 			}
