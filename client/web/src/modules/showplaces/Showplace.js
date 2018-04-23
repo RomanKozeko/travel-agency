@@ -31,9 +31,12 @@ const ShowPlace = ({ item, isFetching }) => (
         isFetching || !item ?
           <h5>Загрузка...</h5> :
           <div className={css(styles.wrapper)}>
-            <div className={css(styles.slider)}>
-              <ImageSlider images={ item.preview } />
-            </div>
+            {
+              item.preview.length &&
+              <div className={css(styles.slider)}>
+                <ImageSlider images={ item.preview } />
+              </div>
+            }
             <div className={css(styles.addressWrap)}>
               <PlaceIcon color={ theme.colors.primary } width={20}/> <b>{ item.content.address }</b>
             </div>
