@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
 const Home = ({ match }) => ([
   <PhotoSlider />,
 	<PageContent>
-    <BigTitle key={1} title='Самое интересное' subTitle=''/>
+    <BigTitle key={1} title={ window.TA.content.mostInteresting } subTitle=''/>
 		<PromoLinks />
 
-    <BigTitle key={2} title='Новости/события' subTitle=''/>
+    <BigTitle key={2} title={ window.TA.content.news } subTitle=''/>
     <LatestNews />
 	</PageContent>
 ]);

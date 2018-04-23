@@ -84,6 +84,29 @@ const styles = StyleSheet.create({
   },
   cell: {
     paddingRight: '20px'
+  },
+  btn: {
+    display: 'inline-block',
+    color: '#fff',
+    textTransform: 'uppercase',
+    lineHeight: '40px',
+    minWidth: '150px',
+    padding: '5px 20px',
+    boxSizing: 'border-box',
+    transition: 'all .3s ease',
+    border: 'none',
+    borderRadius: '8px',
+    backgroundColor: theme.colors.primary,
+    outline: 'none',
+    width: '100%',
+    '@media (min-width: 500px)': {
+      width: 'auto',
+    },
+    ':hover': {
+      color: '#fff',
+      textDecoration: 'none',
+      backgroundColor: theme.colors.primaryAccent,
+    }
   }
 });
 
@@ -115,42 +138,42 @@ class Tour extends React.Component {
 
                 <div className="col-md-9">
                   <div className={css(styles.content)}>
-                    <FancyHeader title='ИНФОРМАЦИЯ О ТУРЕ' />
+                    <FancyHeader title={ window.TA.content.tourInfo } />
                     <table>
                       <tr>
-                        <td className={css(styles.cell)}>Маршрут:</td>
+                        <td className={css(styles.cell)}>{ window.TA.content.route }:</td>
                         <td><b>{ tour.content.mapName }</b></td>
                       </tr>
 	                    <tr>
-		                    <td className={css(styles.cell)}>Дата проведения:</td>
+		                    <td className={css(styles.cell)}>{ window.TA.content.date }:</td>
 		                    <td><b>{ tour.content.duration }</b></td>
 	                    </tr>
 	                    <tr>
-		                    <td className={css(styles.cell)}>Время и место отправления:</td>
+		                    <td className={css(styles.cell)}>{ window.TA.content.departureInfo }:</td>
 		                    <td><b>{ tour.content.departureInfo }</b></td>
 	                    </tr>
 	                    <tr>
-		                    <td className={css(styles.cell)}>Количество дней:</td>
+		                    <td className={css(styles.cell)}>{ window.TA.content.daysAmount }:</td>
 		                    <td><b>{ tour.days }</b></td>
 	                    </tr>
 	                    <tr>
-		                    <td className={css(styles.cell)}>Тип питания:</td>
+		                    <td className={css(styles.cell)}>{ window.TA.content.foodType }:</td>
 		                    <td><b>{ tour.food && getContentByLanguage(tour.food.content, languageID).title }</b></td>
 	                    </tr>
                     </table>
                   </div>
                   <div className={css(styles.content)}>
-                    <FancyHeader title='Описание тура' />
+                    <FancyHeader title={ window.TA.content.tourDescription } />
                     <div dangerouslySetInnerHTML={{ __html:tour.content.content }} />
                   </div>
 
                   <div className={css(styles.content)}>
-                    <FancyHeader title='МАРШРУТ' />
+                    <FancyHeader title={ window.TA.content.route } />
                     <Map places={tour.map} />
                   </div>
 
 	                <div className={css(styles.content)}>
-		                <FancyHeader title='Достопримечательности' />
+		                <FancyHeader title={ window.TA.content.showPlaces } />
 		                <ItemsGallery>
 			                {
 				                tour.showplaces.map(item =>
@@ -166,7 +189,7 @@ class Tour extends React.Component {
 	                </div>
 
                   <div className={css(styles.content)}>
-                    <FancyHeader title='РАЗМЕЩЕНИЕ ПО ТУРУ' />
+                    <FancyHeader title={ window.TA.content.accommodation } />
                     <ItemsGallery>
                       {
                         tour.hotels.map(hotel =>
@@ -182,7 +205,7 @@ class Tour extends React.Component {
                   </div>
 
 	                <div className={css(styles.content)}>
-		                <FancyHeader title='Программа тура' />
+		                <FancyHeader title={ window.TA.content.tourProgram } />
 		                {
 			                tour.content.program.map(({ _id, description}, index) =>
 				                <div key={ _id } className={css(styles.programWrapper)}>
@@ -191,18 +214,26 @@ class Tour extends React.Component {
 				                </div>
 			                )
 		                }
-		                <div className={css(styles.downloadLink)}>
-			                <Button>Скачать программму тура</Button>
-                    </div>
+                    {
+                      tour.programFile[0] &&
+                      <div className={css(styles.downloadLink)}>
+                        <a href={ tour.programFile[0].path }
+                           target="_blank"
+                           className={css(styles.btn)}>
+                          { window.TA.content.downloadTourProgram }
+                        </a>
+                      </div>
+                    }
+
 	                </div>
 
                   <div className={css(styles.content)}>
-                    <FancyHeader title='В стоимость тура входит' />
+                    <FancyHeader title={ window.TA.content.includedInPrice } />
                     <div dangerouslySetInnerHTML={{ __html:tour.content.priceInclude }} />
                   </div>
 
                   <div className={css(styles.content)}>
-                    <FancyHeader title='В стоимость тура не входит' />
+                    <FancyHeader title={ window.TA.content.notIncludedInPrice } />
                     <div dangerouslySetInnerHTML={{ __html:tour.content.priceNotInclude }} />
                   </div>
 

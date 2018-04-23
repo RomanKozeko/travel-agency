@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
 
 const OrderForm = () =>
 	<div className={css(styles.wrapper)}>
-		<h4 className={css(styles.title)}>Заказать тур</h4>
+		<h4 className={css(styles.title)}>{ window.TA.content.orderTour }</h4>
 		<form action="">
-			<TextField placeholder='ФИО' />
-			<TextField placeholder='Email' />
-			<TextField placeholder='Телефон' />
-			<TextArea placeholder='Сообщение' />
-			<Button>Заказать</Button>
+			<TextField placeholder={ window.TA.content.name } />
+			<TextField placeholder={ window.TA.content.phone } />
+			<TextField placeholder={ window.TA.content.email } />
+			<TextArea placeholder={ window.TA.content.message } />
+			<Button>{ window.TA.content.order }</Button>
 		</form>
 	</div>
 

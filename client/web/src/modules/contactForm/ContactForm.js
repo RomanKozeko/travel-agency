@@ -5,7 +5,6 @@ import TextArea from '../ui-elements/TextArea';
 import Button from '../ui-elements/FormButton';
 import PageContent from '../ui-elements/PageContent'
 import PageHeader from '../ui-elements/PageHeader'
-import ContactForm from '../contactForm/ContactForm'
 
 const styles = StyleSheet.create({
   header: {
@@ -33,24 +32,16 @@ const styles = StyleSheet.create({
   }
 });
 
-const Contacts = () => (
+const ContactForm = () => (
   <div>
-	  <PageHeader title="Наши контакты" />
-	  <PageContent>
-      <div className="row">
-        <div className="col-sm-8">
-          <ContactForm />
-        </div>
-        <div className="col-sm-4">
-          <h4 className={css(styles.colHeader)}>CONTACT INFO</h4>
-          <p>
-            Donec gravida euismod felis, quis dictum justo scelerisque in. Aenean nec lacus ipsum. Suspendisse vel lobortis libero, eu imperdiet purus.  Aenean nec lacus ipsum.
-          </p>
-        </div>
-      </div>
-    </PageContent>
+    <div className="row">
+      <div className="col-md-6"><TextField placeholder={ window.TA.content.name } /></div>
+      <div className="col-md-6"><TextField placeholder={ window.TA.content.email } /></div>
+    </div>
+    <TextArea placeholder={ window.TA.content.message } />
+    <Button>{ window.TA.content.submit }</Button>
   </div>
 
 );
 
-export default Contacts;
+export default ContactForm;

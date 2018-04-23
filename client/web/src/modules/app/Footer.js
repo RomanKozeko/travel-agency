@@ -101,7 +101,7 @@ const Footer = ({ items }) => (
     <div className="container">
       <div className="row">
         <div className="col-md-9">
-          <h4 className={css(styles.header)}>Наши контакты</h4>
+          <h4 className={css(styles.header)}>{ window.TA.content.ourContacts }</h4>
           {
             items.map(({ content, _id, tels }) => (
               <div className={css(styles.columnText)} key={ _id }>
@@ -123,7 +123,7 @@ const Footer = ({ items }) => (
           }
         </div>
         <div className="col-md-3">
-          <h4 className={css(styles.header)}>Follow us</h4>
+          <h4 className={css(styles.header)}>{ window.TA.content.followUs }</h4>
           <a href="" className={css(styles.button, styles.fb)}>Facebook</a>
           <a href="" className={css(styles.button, styles.vk)}>Vkontakte</a>
           <a href="" className={css(styles.button, styles.google)}>Google +</a>
@@ -134,10 +134,7 @@ const Footer = ({ items }) => (
     <div className={css(styles.bottom)}>
       <div className='container'>
         <div className={css(styles.left)}>
-          Logo
-        </div>
-        <div className={css(styles.right)}>
-          © 2015 All rights reserved.
+          { window.TA.content.copyRight }
         </div>
       </div>
     </div>

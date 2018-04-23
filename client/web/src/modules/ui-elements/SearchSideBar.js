@@ -24,14 +24,14 @@ const styles = StyleSheet.create({
 const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>По названию</h3>
+			<h3 className={css(styles.blockTitle)}>{ window.TA.content.byName }</h3>
 			<TextFieldSmall
 				onChange={(e) => onInputChange('title', e.target.value)}
 				placeholder='Название тура'
 			/>
 		</div>
 		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>Регионы</h3>
+			<h3 className={css(styles.blockTitle)}>{ window.TA.content.regions }</h3>
 			{
         regions.map(region => (
 					<CheckBox
@@ -45,7 +45,7 @@ const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
 			}
 		</div>
 		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>Количество дней</h3>
+			<h3 className={css(styles.blockTitle)}>{ window.TA.content.daysAmount }</h3>
 			{
         Array.from({length: 10}, (x,i) => i + 1).map(day => (
 					<CheckBox
@@ -58,7 +58,7 @@ const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
 			}
 		</div>
 		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>Тип тура</h3>
+			<h3 className={css(styles.blockTitle)}>{ window.TA.content.tourType }</h3>
       {
         categories.map(category => (
 					<CheckBox

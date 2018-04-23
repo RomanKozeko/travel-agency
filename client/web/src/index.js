@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { fetchLanguages } from './services/apiHelper';
+import { fetchLanguages, fetchSettings } from './services/apiHelper';
 import { getLangPref, getLangUrlPref } from './services/utils';
 import App from './modules/app/App';
 import ScrollToTop from './modules/ui-elements/ScrollToTop';
@@ -22,13 +22,16 @@ const preloadedState = window.__PRELOADED_STATE__ || {};
 // Allow the passed state to be garbage-collected
 delete window.__PRELOADED_STATE_;
 
+var store;
+
 fetchLanguages().then(res => {
 	const prefix = getLangPref();
+  const urlPrefix = getLangUrlPref(res, prefix)
 	const preloadedState = {
 		app: {
 			languages: {
 				prefix,
-				urlPrefix: getLangUrlPref(res, prefix),
+				urlPrefix,
 				defaultLang: 'ru',
 				allIds: [],
 				byIds: {},
@@ -38,20 +41,25 @@ fetchLanguages().then(res => {
 		}
 	};
 
-	const store = configureStore(preloadedState);
+  store = configureStore(preloadedState);
 
-	ReactDOM.render(
+  return fetchSettings(urlPrefix)
+
+}).then(({ items }) => {
+
+  window.TA = items[0];
+
+  ReactDOM.render(
     <Provider store={store}>
       <Router>
-				<ScrollToTop>
-        	<App />
-				</ScrollToTop>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
       </Router>
     </Provider>,
-		document.getElementById('root')
-	);
-
-});
+    document.getElementById('root')
+  );
+})
 
 
 

@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		background: '#333',
-		backgroundImage: 'url(/web/build/forest.jpg)',
 		backgroundSize: 'cover',
 	},
 	headerTitle: {
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
 });
 
 const PageHeader = ({ title }) =>
-	<header className={css(styles.header)}>
+	<header className={css(styles.header)} style={{ backgroundImage: `url(${window.TA && window.TA.pagesImg})` }}>
 		<div className='container'>
 			<h1 className={css(styles.headerTitle)}>{ title }</h1>
 		</div>

@@ -17,3 +17,4 @@ function callApi(endpoint) {
 
 export const fetchTours = () => callApi('/api/tours')
 export const fetchLanguages = () => callApi('/api/languages')
+export const fetchSettings = langPref => callApi(`/api/settings?lang=${langPref}`)

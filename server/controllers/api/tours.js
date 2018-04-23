@@ -36,6 +36,7 @@ module.exports = {
   getOneByUrl(req, res, next) {
     Tour.findOne({ url: req.params.url } )
 	    .populate('preview')
+      .populate('programFile')
 	    .populate({
 		    path: 'hotels',
 			  populate: [
