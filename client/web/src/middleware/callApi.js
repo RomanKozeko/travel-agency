@@ -33,6 +33,9 @@ export const languagesSchema = [languageSchema];
 export const itemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const itemsSchema = { items: [itemSchema] };
 
+export const itemByUrlSchema = new schema.Entity('items', {}, { idAttribute: 'url' });
+export const itemsByUrlSchema = { items: [itemSchema] };
+
 export const regionSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const regionsSchema = [regionSchema];
 
@@ -55,6 +58,10 @@ export const Schemas = {
   REGIONS: regionsSchema,
   CATEGORY: categorySchema,
   CATEGORIES: categoriesSchema,
+  HOTEL: itemByUrlSchema,
+  HOTELS: itemsByUrlSchema, 
+  SHOWPLACE: itemByUrlSchema,
+  SHOWPLACES: itemsByUrlSchema,
 };
 
 

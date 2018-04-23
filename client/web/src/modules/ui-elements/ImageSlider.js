@@ -10,7 +10,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    minHeight: '300px'
   },
   img: {
     maxWidth: '100%',

@@ -11,6 +11,8 @@ import ToursPage from '../tours/ToursPage';
 import Tour from '../tours/Tour';
 import Page from '../pages/Page';
 import HeaderContainer from '../header/HeaderContainer';
+import Hotel from '../hotels/Hotel';
+import Showplace from '../showplaces/Showplace';
 import Footer from './Footer';
 import { getLangPref } from '../../services/utils'
 
@@ -48,7 +50,18 @@ let App = ({languagePrefix}) => {
       path: `${urlPrefix}/contacts`,
       exact: true,
       main: () => <Contacts />
+    },
+    {
+      path: `${urlPrefix}/hotels/:url`,
+      exact: true,
+      main: () => <Hotel />
+    },
+    {
+      path: `${urlPrefix}/showplaces/:url`,
+      exact: true,
+      main: () => <Showplace />
     }
+
   ];
   return ([
       <div className={css(styles.wrapper)}>

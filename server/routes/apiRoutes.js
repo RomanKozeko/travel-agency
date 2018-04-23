@@ -92,12 +92,14 @@ router.delete('/media', ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
 router.get('/hotels/:id', ApiHotelsCtrl.getOne);
+router.get('/hotelGetByUrl/:url', ApiHotelsCtrl.getOneByUrl);
 router.put('/hotels/:id', ApiHotelsCtrl.put);
 router.post('/hotels', ApiHotelsCtrl.post);
 router.delete('/hotels', ApiHotelsCtrl.delete);
 
 router.get('/showPlaces', ApiShowPlacesCtrl.get);
 router.get('/showPlaces/:id', ApiShowPlacesCtrl.getOne);
+router.get('/showPlacesGetByUrl/:url', ApiShowPlacesCtrl.getOneByUrl);
 router.put('/showPlaces/:id', ApiShowPlacesCtrl.put);
 router.post('/showPlaces', ApiShowPlacesCtrl.post);
 router.delete('/showPlaces', ApiShowPlacesCtrl.delete);

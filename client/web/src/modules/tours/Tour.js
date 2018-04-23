@@ -132,7 +132,7 @@ class Tour extends React.Component {
           <PageHeader title={tour ? tour.content.title : ''} />
           <PageContent>
             {isFetching || !tour ?
-              <h1>Loading...</h1>
+              <h1>Загрузка...</h1>
               :
               <div className="row">
 

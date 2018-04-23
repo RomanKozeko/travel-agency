@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
 	}
 });
 
-const PageContent = ({ children }) =>
+const PageContent = ({ children, small }) =>
 	<div className={css(styles.pageContent)}>
-		<div className="container">
+		<div className="container" style={{ maxWidth: small && '980px'}}>
 			{children}
 		</div>
 	</div>

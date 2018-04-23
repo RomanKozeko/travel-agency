@@ -7,6 +7,8 @@ import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import promoLinksReducer, * as fromPromoLinks from './modules/promoLinks/promoLinksReducer';
 import latestNewsReducer, * as fromLatestNews from './modules/latestNews/latestNewsReducer';
 import contactsReducer, * as fromContacts from './modules/header/headerReducer';
+import hotelsReducer, * as fromHotels from './modules/hotels/hotelsReducer';
+import showplacesReducer, * as fromShowPlaces from './modules/showplaces/showplacesReducer';
 
 const rootReducer = combineReducers({
   tours: toursReducer,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
   promoLinks: promoLinksReducer,
   latestNews: latestNewsReducer,
   contacts: contactsReducer,
-  entities: entitiesReducer
+  entities: entitiesReducer,
+  hotels: hotelsReducer,
+  showplaces: showplacesReducer
 });
 
 export default rootReducer;
@@ -37,3 +41,5 @@ export const getRegions = state => {
   return fromEntities.getRegions(state.entities.regions)
 };
 export const getCategories = state => fromEntities.getCategories(state.entities.categories);
+export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
+export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);

@@ -20,6 +20,12 @@ module.exports = createCRUD(
         });
       })
       .catch(next);
+    },
+    getOneByUrl: (req, res, next) => {
+      Hotel.findOne({ url: req.params.url })
+        .populate('preview')
+        .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
+        .catch(next);
     }
   }
 );
