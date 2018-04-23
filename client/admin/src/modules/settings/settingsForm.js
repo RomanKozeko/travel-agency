@@ -424,11 +424,15 @@ export default compose(
   connect(mapStateToProps, { loadItems, uploadImage: change, saveItem }),
   withHandlers({
     onSubmit: ({ item, saveItem, languages }) => (values) => {
-      saveItem({
+      const newItem = {
         ...values,
-        _id: item._id,
         content: contentToArrayByLang(values.content, languages)
-      }, !item)
+      }
+
+      if (item) {
+        newItem._id = item._id
+      }
+      saveItem(newItem, !item)
     },
     updloadImg: (props) => ({ payload }) => {
       const formData = new FormData();
