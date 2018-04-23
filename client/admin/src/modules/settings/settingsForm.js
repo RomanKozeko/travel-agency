@@ -424,14 +424,6 @@ export default compose(
   connect(mapStateToProps, { loadItems, uploadImage: change, saveItem }),
   withHandlers({
     onSubmit: ({ item, saveItem, languages }) => (values) => {
-      const newItem = {
-        ...values,
-        content: contentToArrayByLang(values.content, languages)
-      }
-
-      if (item) {
-        newItem._id = item._id
-      }
       saveItem({
         ...values,
         _id: item._id,
