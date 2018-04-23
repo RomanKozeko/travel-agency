@@ -32,7 +32,7 @@ const ShowPlace = ({ item, isFetching }) => (
           <h5>Загрузка...</h5> :
           <div className={css(styles.wrapper)}>
             {
-              item.preview.length &&
+              item.preview.length > 0 &&
               <div className={css(styles.slider)}>
                 <ImageSlider images={ item.preview } />
               </div>
