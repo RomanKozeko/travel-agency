@@ -19,6 +19,32 @@ module.exports = {
         .populate('programFile')
         .populate('periodType')
         .populate('food')
+        .populate({
+          path: 'hotels',
+          populate: [
+            {
+              path: 'preview',
+              model: 'Media'
+            },
+            {
+              path: 'regions',
+              model: 'Region'
+            }
+          ]
+        })
+        .populate({
+          path: 'showplaces',
+          populate: [
+            {
+              path: 'preview',
+              model: 'Media'
+            },
+            {
+              path: 'regions',
+              model: 'Region'
+            }
+          ]
+        })
       ))
       .then(tours => Promise.all([tours, Tour.count()]))
   }
