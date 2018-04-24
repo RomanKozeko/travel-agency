@@ -32,8 +32,8 @@ class ListItemsModal extends React.Component {
       <div className={css(styles.dropDownWrapper)} style={
         {
           width: this.props.coordinates.width,
-          top: this.props.coordinates.y + this.props.coordinates.height + window.pageYOffset,
-          left: this.props.coordinates.x + window.pageXOffset
+          top: this.props.coordinates.top + this.props.coordinates.height + window.pageYOffset,
+          left: this.props.coordinates.left + window.pageXOffset
         }
       }>{this.props.children}</div>,
       // A DOM element

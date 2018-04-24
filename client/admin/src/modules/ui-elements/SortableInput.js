@@ -101,6 +101,7 @@ class SortableInput extends React.Component {
   };
 
   showDropDown = (show) => (e) => {
+    console.log(e.target.getBoundingClientRect())
     if ((e.target.id === this.state.inputId || e.target.id === this.state.dropDownId) && this.state.showItemsList) {
       return
     }
