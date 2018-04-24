@@ -95,7 +95,7 @@ export const newsItemSchema = new schema.Entity('items', {}, { idAttribute: '_id
 export const newsSchema = { items: [newsItemSchema] };
 
 export const menuItemSchema = new schema.Entity('items', {
-  page: pageSchema
+  page: new schema.Entity('page', {}, { idAttribute: '_id' })
 }, { idAttribute: '_id' });
 export const menuSchema = { items: [menuItemSchema] };
 

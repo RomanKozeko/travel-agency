@@ -3,10 +3,24 @@ import { normalize, schema } from 'normalizr'
 
 const API_ROOT = '/';
 
-const callApi = (endpoint, schema, nextPage, query) => {
+function createRequestOptions(method, body) {
+  if (!method || method === 'GET') {
+    return {
+      method: 'GET'
+    };
+  }
+
+  return {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  };
+}
+
+const callApi = (endpoint, options, schema, nextPage, query) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint;
 
-  return fetch(fullUrl)
+  return fetch(fullUrl, options)
     .then(response =>
       response.json().then(json => {
         if (!response.ok) {
@@ -80,7 +94,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, nextPage, query } = callAPI;
+  let { endpoint, nextPage, query, method, body } = callAPI;
   const { schema, types } = callAPI;
 
   if (typeof endpoint === 'function') {
@@ -90,9 +104,9 @@ export default store => next => action => {
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
   }
-  if (!schema) {
-    throw new Error('Specify one of the exported Schemas.')
-  }
+  // if (!schema) {
+  //   throw new Error('Specify one of the exported Schemas.')
+  // }
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.')
   }
@@ -109,7 +123,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types;
   next(actionWith({ type: requestType }));
 
-  return callApi(endpoint, schema, nextPage, query).then(
+  return callApi(endpoint, createRequestOptions(method, body), schema, nextPage, query).then(
     response => next(actionWith({
       response,
       type: successType

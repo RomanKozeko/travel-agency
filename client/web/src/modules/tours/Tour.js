@@ -240,7 +240,7 @@ class Tour extends React.Component {
                 </div>
 
 	              <div className="col-md-3">
-		              <OrderForm />
+		              <OrderForm tour={tour} />
                 </div>
 
               </div>

@@ -197,7 +197,7 @@ class SettingsForm extends Component {
                     }
                   </tr>
                   <tr>
-                    <td>Зазакать тур</td>
+                    <td>Заказать тур</td>
                     {
                       languages.map(lang =>
                         <td className={css(styles.td)} key={ `${lang._id}orderTour` }>

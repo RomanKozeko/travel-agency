@@ -10,6 +10,7 @@ import contactsReducer, * as fromContacts from './modules/header/headerReducer';
 import menuReducer, * as fromMenu from './modules/menu/menuReducer';
 import hotelsReducer, * as fromHotels from './modules/hotels/hotelsReducer';
 import showplacesReducer, * as fromShowPlaces from './modules/showplaces/showplacesReducer';
+import orderReducer from './modules/orderForm/orderReducer';
 
 const rootReducer = combineReducers({
   tours: toursReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   menu: menuReducer,
   entities: entitiesReducer,
   hotels: hotelsReducer,
-  showplaces: showplacesReducer
+  showplaces: showplacesReducer,
+  order: orderReducer,
 });
 
 export default rootReducer;

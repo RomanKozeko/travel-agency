@@ -5,5 +5,9 @@ module.exports = {
     login: 'Admin',
     password: 'Admin'
   },
-  itemsPerPageLimit: 40
+  itemsPerPageLimit: 40,
+  email: {
+    user: 'user@gmail.com',
+    password: 'password'
+  }
 };
