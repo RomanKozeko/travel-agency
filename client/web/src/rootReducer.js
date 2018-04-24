@@ -7,6 +7,7 @@ import toursReducer, * as fromTours from './modules/tours/toursReducer';
 import promoLinksReducer, * as fromPromoLinks from './modules/promoLinks/promoLinksReducer';
 import latestNewsReducer, * as fromLatestNews from './modules/latestNews/latestNewsReducer';
 import contactsReducer, * as fromContacts from './modules/header/headerReducer';
+import menuReducer, * as fromMenu from './modules/menu/menuReducer';
 import hotelsReducer, * as fromHotels from './modules/hotels/hotelsReducer';
 import showplacesReducer, * as fromShowPlaces from './modules/showplaces/showplacesReducer';
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   promoLinks: promoLinksReducer,
   latestNews: latestNewsReducer,
   contacts: contactsReducer,
+  menu: menuReducer,
   entities: entitiesReducer,
   hotels: hotelsReducer,
   showplaces: showplacesReducer
@@ -37,9 +39,8 @@ export const getLanguages = state => fromApp.getLanguages(state.app.languages);
 export const getPromoLinks = state => fromPromoLinks.getPromoLinks(state.promoLinks);
 export const getLatestNews = state => fromLatestNews.getLatestNews(state.latestNews);
 export const getContacts = state => fromContacts.getContacts(state.contacts);
-export const getRegions = state => {
-  return fromEntities.getRegions(state.entities.regions)
-};
+export const getRegions = state => fromEntities.getRegions(state.entities.regions);
 export const getCategories = state => fromEntities.getCategories(state.entities.categories);
+export const getMenu = state => fromMenu.getMenu(state.menu);
 export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);

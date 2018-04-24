@@ -10,7 +10,7 @@ import Contacts from './Contacts';
 import ToursPage from '../tours/ToursPage';
 import Tour from '../tours/Tour';
 import Page from '../pages/Page';
-import HeaderContainer from '../header/HeaderContainer';
+import Header from '../header/Header';
 import Hotel from '../hotels/Hotel';
 import Showplace from '../showplaces/Showplace';
 import Footer from './Footer';
@@ -65,7 +65,7 @@ let App = ({languagePrefix}) => {
   ];
   return ([
       <div className={css(styles.wrapper)}>
-        <HeaderContainer/>
+        <Header />
         <div className={css(styles.content)}>
           {routes.map((route, index) => (
             <Route

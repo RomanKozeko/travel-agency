@@ -94,7 +94,9 @@ export const featuredSchema = { items: [featuredItemSchema] };
 export const newsItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const newsSchema = { items: [newsItemSchema] };
 
-export const menuItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const menuItemSchema = new schema.Entity('items', {
+  page: pageSchema
+}, { idAttribute: '_id' });
 export const menuSchema = { items: [menuItemSchema] };
 
 export const contactsItemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
@@ -192,4 +194,3 @@ export default store => next => (action) => {
     }
   )
 };
-

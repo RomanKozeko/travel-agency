@@ -47,7 +47,7 @@ fetchLanguages().then(res => {
 
 }).then(({ items }) => {
 
-  window.TA = items[0];
+  window.TA = items[0] || { content: {} };
 
   ReactDOM.render(
     <Provider store={store}>
@@ -59,7 +59,7 @@ fetchLanguages().then(res => {
     </Provider>,
     document.getElementById('root')
   );
-})
+});
 
 
 

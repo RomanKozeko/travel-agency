@@ -30,6 +30,9 @@ export const pagesSchema = { items: [pageSchema] };
 export const languageSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const languagesSchema = [languageSchema];
 
+export const menuSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
+export const menuItemsSchema = { items: [menuSchema] };
+
 export const itemSchema = new schema.Entity('items', {}, { idAttribute: '_id' });
 export const itemsSchema = { items: [itemSchema] };
 
@@ -58,8 +61,9 @@ export const Schemas = {
   REGIONS: regionsSchema,
   CATEGORY: categorySchema,
   CATEGORIES: categoriesSchema,
+  MENU: menuItemsSchema,
   HOTEL: itemByUrlSchema,
-  HOTELS: itemsByUrlSchema, 
+  HOTELS: itemsByUrlSchema,
   SHOWPLACE: itemByUrlSchema,
   SHOWPLACES: itemsByUrlSchema,
 };

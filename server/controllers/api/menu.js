@@ -1,5 +1,6 @@
 const Menu = require('../../models/Menu');
 const createCRUD = require('../../services/apiFactory');
+const slicer = require('../../services/index');
 
 const updateItems = menuItems => (
   waitForEach(menuItem => Menu.findByIdAndUpdate(menuItem._id, menuItem), menuItems)
@@ -26,6 +27,24 @@ const recalculateItemsOrder = items => (
 module.exports = createCRUD(
   Menu,
   {
+    get: (req, res, next) => {
+      Menu.find({})
+      .populate('page')
+      .then(result => {
+        const slicedItems = slicer
+          .sliceModelContent(result.concat(), req.query.lang)
+          .map(item => ({
+            ...item,
+            page: slicer.sliceModelContentSingle(item.page, req.query.lang)
+          }
+        ));
+
+        res.json({
+          items: slicedItems
+        });
+      })
+      .catch(next);
+    },
     put(req, res, next) {
       const menuItems = req.body;
 
