@@ -28,6 +28,11 @@ class AddPageItemMenu extends Component {
     this.props.openMediaPopup(this.props.rowId)
     this.handleRequestClose();
   }
+  
+  addContactForm = () => {
+    this.props.saveRow(this.props.rowId, '@contactForm')
+    this.handleRequestClose();
+  }
 
   render() {
     return (
@@ -41,17 +46,18 @@ class AddPageItemMenu extends Component {
           open={this.state.open}
           onRequestClose={() => this.handleRequestClose()}
         >
-          { !this.props.showGallaryOnly &&
+          {
+            !this.props.showGallaryOnly &&
             <MenuItem onClick={() => {
               this.handleRequestClose();
               return this.props.openHtmlEditor(this.props.item);
             }}
             >
-              Добавить контент
+              Добавить html контент
             </MenuItem>
           }
           <MenuItem onClick={this.addGallery}>Добавить галерею</MenuItem>
-          { !this.props.showGallaryOnly && <MenuItem onClick={this.handleRequestClose}>Добавить контактную форму</MenuItem> }
+          { !this.props.showGallaryOnly && <MenuItem onClick={this.addContactForm}>Добавить контактную форму</MenuItem> }
           { !this.props.showGallaryOnly && <MenuItem onClick={this.addToursList}>Добавить список туров</MenuItem> }
           { !this.props.showGallaryOnly && <MenuItem onClick={this.handleRequestClose}>Добавить список отелей</MenuItem> }
         </Menu>

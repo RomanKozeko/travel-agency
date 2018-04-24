@@ -10,7 +10,8 @@ import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
 import ImageSlider from '../ui-elements/ImageSlider';
-
+import SearchFormContainer from '../tours/SearchFormContainer';
+import ContactForm from '../contactForm/ContactForm'
 
 const styles = StyleSheet.create({
   page: {
@@ -56,13 +57,16 @@ const PageColumn = ({ item, page }) => {
       return <div>hotelSearch</div>
     }
     case '@toursSearch': {
-      return <div>toursSearch</div>
+      return <SearchFormContainer />
     }
     case '@showPlacesSearch': {
       return <div>showPlacesSearch</div>
     }
     case '@gallery': {
       return <ImageSlider images={ item.images.map(image => page.allImages.find(img => img._id === image)) } />
+    }
+    case '@contactForm': {
+      return <ContactForm />
     }
     default:
       return <div dangerouslySetInnerHTML={{ __html: item.content }} />

@@ -131,6 +131,7 @@ class PageForm extends React.Component {
                 editOrder={editOrder}
                 mediafilesByIds={mediafilesByIds}
                 deleteMediaItem={deleteMediaItem}
+                saveRow={saveRow}
               />
             </div>
             }

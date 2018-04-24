@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withStateHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { theme } from '../../services/constans';
@@ -11,19 +11,29 @@ import MenuItem from './MenuItem';
 
 const styles = StyleSheet.create({
   menu: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: 'none',
+    position: 'absolute',
+    left: '0',
+    top: '100%',
+    width: '100%',
+    background: '#fff',
     listStyle: 'none',
-    margin: '0 0 0 40px',
-    flexGrow: '1',
-    '@media (max-width: 600px)': {
-      margin: '0',
-      display: 'none'
+    margin: '0',
+    padding: '0',
+    borderTop: '1px solid #e9e9e9',
+    '@media (min-width: 1000px)': {
+      borderTop: 'none',
+      position: 'static',
+      height: '100%',
+      display: 'flex !important',
+      flexGrow: '1',
+      margin: '0 0 0 20px',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     }
   },
   menuItem: {
-    height: '100%'
+    height: '100%',
   },
   link: {
     display: 'flex',
@@ -36,6 +46,7 @@ const styles = StyleSheet.create({
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
+    padding: '15px 20px',
     ':hover': {
       color: theme.colors.primary,
       textDecoration: 'none',
@@ -52,6 +63,15 @@ const styles = StyleSheet.create({
       borderBottom: `3px solid ${theme.colors.primary}`,
     }
   },
+  menuTrigger: {
+    position: 'absolute',
+    right: '0',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    '@media (min-width: 1000px)': {
+      display: 'none'
+    }
+  }
 });
 
 const findRootNodesAndPopulate = items => (
@@ -66,15 +86,28 @@ const findRootNodesAndPopulate = items => (
     })
 );
 
-let MenuContainer = ({ menuItems }) => (
-    <ul className={css(styles.menu)}>
+let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
+  <div>
+    {
+      isOpen ?
+        <svg fill="#333" height="60" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg" className={css(styles.menuTrigger)} onClick={ onMenuTriggerClick }>
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+        :
+        <svg fill="#333" height="60" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg" className={css(styles.menuTrigger)} onClick={ onMenuTriggerClick }>
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>
+        </svg>
+    }
+
+    <ul className={css(styles.menu)} style={{ display: isOpen ? 'block' : 'none' }}>
       <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Главная</PrefixLink></li>
-      <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/tours">Поиск туров</PrefixLink></li>
       {findRootNodesAndPopulate(menuItems).map(item => (
         <MenuItem item={item} />
       ))}
-      <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/contacts">Контакты</PrefixLink></li>
     </ul>
+  </div>
 );
 
 const mapStateToProps = (state) => ({
@@ -95,6 +128,14 @@ MenuContainer = compose(
       }
     },
   }),
+  withStateHandlers(
+    ({}) => ({ isOpen: false }),
+    {
+      onMenuTriggerClick: ({ isOpen }) => () => ({
+        isOpen: !isOpen
+      })
+    }
+  ),
 )(MenuContainer);
 
 export default MenuContainer

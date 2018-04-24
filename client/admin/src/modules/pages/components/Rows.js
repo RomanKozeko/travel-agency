@@ -75,7 +75,8 @@ const Rows = ({
   editRowTitle,
   openMediaPopup,
   mediafilesByIds,
-  deleteMediaItem
+  deleteMediaItem,
+  saveRow
 }) => {
   return (
     <div>
@@ -135,6 +136,7 @@ const Rows = ({
                         openMediaPopup={openMediaPopup}
                         mediafilesByIds={mediafilesByIds}
                         deleteMediaItem={deleteMediaItem}
+                        saveRow={saveRow}
                       />
                     </div>
                   </div>

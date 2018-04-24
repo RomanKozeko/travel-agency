@@ -8,13 +8,15 @@ const styles = StyleSheet.create({
   wrapper: {
     background: '#fff',
     position: 'relative',
-    zIndex: '1'
+    zIndex: '1',
+    boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
   },
   nav: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: '130px',
+    position: 'relative'
   },
   logo: {
     display: 'inline-flex',
@@ -35,7 +37,14 @@ const styles = StyleSheet.create({
     backgroundSize: '100%',
     backgroundRepeat: 'no-repeat',
     marginLeft: '10px',
-    marginTop: '5px'
+    marginTop: '5px',
+    display: 'none',
+    '@media (min-width: 600px)': {
+      display: 'block'
+    }
+  },
+  logoWrap: {
+    display: 'flex'
   }
 });
 
@@ -43,8 +52,10 @@ const MainNav = ({ menuItems }) => (
   <div className={css(styles.wrapper)}>
     <div className="container" style={{height: '100%'}}>
       <nav className={css(styles.nav)}>
-        <Link to="/" className={css(styles.logo)}>Logo</Link>
-        <div className={css(styles.logoBssr)} />
+        <div className={css(styles.logoWrap)}>
+          <Link to="/" className={css(styles.logo)}>Logo</Link>
+          <div className={css(styles.logoBssr)} />
+        </div>
         <MenuContainer />
       </nav>
     </div>

@@ -59,7 +59,8 @@ const ItemContentType = ({
   openMediaPopup,
   rowId,
   mediafilesByIds,
-  deleteMediaItem
+  deleteMediaItem,
+  saveRow
 }) => {
   switch (item.type) {
     case 'content': {
@@ -122,6 +123,13 @@ const ItemContentType = ({
       </div>
     }
 
+    case '@contactForm': {
+      return <div>
+        <ItemContentToolBar {...{ item, removeRowItem, editRowItem, rowId }} />
+        <h3>Контактная форма</h3>
+      </div>
+    }
+
     default: {
       return <AddPageItemMenu
         item={item}
@@ -129,6 +137,7 @@ const ItemContentType = ({
         openHtmlEditor={openHtmlEditor}
         openAddToursListPopup={openAddToursListPopup}
         openMediaPopup={openMediaPopup}
+        saveRow={saveRow}
       />
     }
   }

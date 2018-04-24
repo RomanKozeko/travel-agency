@@ -182,6 +182,10 @@ const reducerHelper = {
       rowItemsByID[id].images = [...rowItemsByID[id].images, ...action.itemsContent]
       allImages = [...allImages, ...action.itemsContent]
     }
+    if (action.filterType === '@contactForm') {
+      rowItemsByID[action.content].type = action.filterType;
+    }
+
     return {
       ...state,
       rowItemsByID,

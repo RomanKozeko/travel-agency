@@ -9,7 +9,7 @@ import { theme } from '../../services/constans';
 const styles = StyleSheet.create({
   menuItem: {
     position: 'relative',
-    height: '100%'
+    height: '100%',
   },
   link: {
     display: 'flex',
@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
+    padding: '15px 20px',
     ':hover': {
       color: theme.colors.primary,
       textDecoration: 'none',
@@ -38,14 +39,54 @@ const styles = StyleSheet.create({
       borderBottom: `3px solid ${theme.colors.primary}`,
     }
   },
+  linkInner: {
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
+    position: 'relative',
+    textTransform: 'uppercase',
+    color: '#222',
+    transition: ['color'],
+    transitionDuration: 300,
+    fontWeight: 'bold',
+    ':hover': {
+      color: theme.colors.primary,
+      textDecoration: 'none',
+    },
+    ':active': {
+      color: theme.colors.primary,
+      textDecoration: 'none',
+    },
+    ':focus': {
+      color: theme.colors.primary,
+      textDecoration: 'none',
+    }
+  },
   childrenContainer: {
     backgroundColor: 'white',
     listStyleType: 'none',
     padding: '0',
-    position: 'absolute',
+    background: 'rgba(0,0,0,0.15)',
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
+
+    '@media (min-width: 1000px)': {
+      position: 'absolute',
+      top: '100%',
+      left: '0',
+      width: '100%',
+      boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
+      background: '#fff',
+      borderBottom: 'none',
+    }
   },
   childItem: {
-    padding: '15px 20px'
+    padding: '15px 20px 15px 40px',
+    '@media (min-width: 1000px)': {
+      padding: '15px 20px',
+    }
+  },
+  rotate: {
+    transform: 'rotateZ(90deg)'
   }
 });
 
@@ -54,7 +95,7 @@ let MenuItem = ({ item, hover, mouseLeave, isHovered }) => (
     <PrefixLink className={css(styles.link)} to={`/pages/${item.page.url}`}>
       {item.page.content.title}
       {item.children && item.children.length ?
-        <RightArrow color={ theme.colors.primary } width={20}/>
+        <div className={css(styles.rotate)} ><RightArrow color="#222" width={20}/></div>
         :
         null
       }
@@ -63,7 +104,7 @@ let MenuItem = ({ item, hover, mouseLeave, isHovered }) => (
     <ul className={css(styles.childrenContainer)}>
       {item.children.map(child => (
           <li key={child._id} className={css(styles.childItem)}>
-            <PrefixLink className={css(styles.link)} to={`/pages/${child.page.url}`}>
+            <PrefixLink className={css(styles.linkInner)} to={`/pages/${child.page.url}`}>
               {child.page.content.title}
             </PrefixLink>
           </li>
@@ -74,7 +115,7 @@ let MenuItem = ({ item, hover, mouseLeave, isHovered }) => (
   </li>
 );
 
-MenuItem = compose(
+export default compose(
   withStateHandlers(
     ({}) => ({ isHovered: false }),
     {
@@ -87,5 +128,3 @@ MenuItem = compose(
     }
   ),
 )(MenuItem);
-
-export default MenuItem

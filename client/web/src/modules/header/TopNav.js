@@ -96,9 +96,7 @@ const TopNav = ({ items }) => (
                 </div>
               ))
             }
-
           </div>
-
         </div>
       </div>
     </div>
