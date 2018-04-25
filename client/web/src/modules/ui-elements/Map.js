@@ -68,7 +68,9 @@ class Map extends React.Component {
   createInitialMap() {
 	  try {
 		  this.directionsService = new window.google.maps.DirectionsService;
-		  this.directionsDisplay = new window.google.maps.DirectionsRenderer;
+      this.directionsDisplay = new window.google.maps.DirectionsRenderer({
+        markerOptions: { icon: '' },
+      });
 		  this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
 			  mapTypeControl: false,
 			  zoom: 6,
@@ -113,10 +115,6 @@ class Map extends React.Component {
     }
 
     this.search.value = '';
-
-    // if(~places.findIndex(item => item.place_id === place.place_id)) {
-    //   return;
-    // }
 
     if (places.length && places[places.length - 1].place_id === place.place_id) {
       return;
@@ -167,7 +165,6 @@ class Map extends React.Component {
       origin: places[0].formatted_address,
       destination: places[places.length-1].formatted_address,
       waypoints: updatedWaypoints,
-      optimizeWaypoints: true,
       travelMode: 'DRIVING'
     }, (response) => {
       if(response.status === 'OK') {
