@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     boxShadow: '0 2px 3px 2px rgba(0,0,0,.09)',
     listStyle: 'none',
     maxHeight: '300px',
-    overflow: 'hidden'
+    overflowY: 'auto'
   },
   dropDownItem: {
     cursor: 'pointer',
