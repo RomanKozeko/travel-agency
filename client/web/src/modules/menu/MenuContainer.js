@@ -84,6 +84,7 @@ const findRootNodesAndPopulate = items => (
       }
       return item;
     })
+    .sort((a, b) => a.order - b.order)
 );
 
 let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
