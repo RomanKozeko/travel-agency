@@ -7,7 +7,8 @@ module.exports = {
   },
   itemsPerPageLimit: 40,
   email: {
-    user: 'user@gmail.com',
-    password: 'password'
+    from: 'travel.agency.emailer@gmail.com',
+    password: 'emailer@123',
+    to: 'zurupi@emailsy.info',
   }
 };

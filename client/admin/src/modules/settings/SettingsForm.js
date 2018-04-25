@@ -366,6 +366,16 @@ class SettingsForm extends Component {
                       )
                     }
                   </tr>
+                  <tr>
+                    <td>Cообщение после заказа тура</td>
+                    {
+                      languages.map(lang =>
+                        <td className={css(styles.td)} key={ `${lang._id}emailSentMessage` }>
+                          <Field name={`content.${lang._id}.emailSentMessage`} className={ css(styles.fieldInput)} component="input" type="text" />
+                        </td>
+                      )
+                    }
+                  </tr>
                   
                 </tbody>
               </table>

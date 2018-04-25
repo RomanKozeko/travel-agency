@@ -5,7 +5,6 @@ import { compose, withStateHandlers, lifecycle } from 'recompose'
 import { getContentByLanguage } from '../../services/utils'
 import { LeftArrow, RightArrow } from './icons/Icons'
 import { theme } from '../../services/constans'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -175,6 +174,3 @@ export default compose(
   }),
 
 )(ImageSlider)
-
-
-

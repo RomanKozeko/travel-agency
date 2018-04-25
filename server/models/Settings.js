@@ -35,6 +35,7 @@ const SettingsSchema = new Schema({
     foodType: String,
     downloadTourProgram: String,
     moreInfo: String,
+    emailSentMessage: String,
   }]
 });
 
