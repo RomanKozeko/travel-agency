@@ -46,7 +46,10 @@ const styles = StyleSheet.create({
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
-    padding: '15px 20px',
+    fontSize: '12px',
+    '@media (min-width: 1000px)': {
+      padding: '5px',
+    },
     ':hover': {
       color: theme.colors.primary,
       textDecoration: 'none',

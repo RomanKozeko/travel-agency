@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     transitionDuration: 300,
     fontWeight: 'bold',
     padding: '15px 20px',
+    fontSize: '12px',
+    '@media (min-width: 1000px)': {
+      padding: '5px',
+    },
     ':hover': {
       color: theme.colors.primary,
       textDecoration: 'none',
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       top: '100%',
       left: '0',
-      width: '100%',
+      minWidth: '100%',
       boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
       background: '#fff',
       borderBottom: 'none',
@@ -81,6 +85,7 @@ const styles = StyleSheet.create({
   },
   childItem: {
     padding: '15px 20px 15px 40px',
+    fontSize: '12px',
     '@media (min-width: 1000px)': {
       padding: '15px 20px',
     }
