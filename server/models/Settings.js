@@ -36,6 +36,7 @@ const SettingsSchema = new Schema({
     downloadTourProgram: String,
     moreInfo: String,
     emailSentMessage: String,
+    emailSentContactsMessage: String,
   }]
 });
 

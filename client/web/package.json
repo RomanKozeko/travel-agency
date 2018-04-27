@@ -6,6 +6,7 @@
     "animated": "^0.2.0",
     "aphrodite": "^1.2.4",
     "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.5",
     "humps": "^2.0.1",
     "jss-vendor-prefixer": "^7.0.0",
     "normalizr": "^3.2.4",

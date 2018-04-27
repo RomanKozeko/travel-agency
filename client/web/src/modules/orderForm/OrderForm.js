@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, withStateHandlers } from 'recompose';
-import { connect } from 'react-redux';
-import { Field, reduxForm, reset } from 'redux-form';
+import { compose } from 'recompose';
+import { Field, reduxForm } from 'redux-form';
 import Button from '../ui-elements/FormButton';
+import withEmailSending from '../ui-elements/HOC/withEmailSending';
 import { theme } from '../../services/constans';
-import { sendEmail } from './orderReducer';
 
 
 const styles = StyleSheet.create({
@@ -35,62 +34,39 @@ const styles = StyleSheet.create({
   },
 	fieldTextArea: {
 		height: '145px'
+	},
+	message: {
+		fontSize: '20px',
+		textAlign: 'center',
+		padding: '20px',
+		color: theme.colors.primaryAccent,
+		border: `1px solid ${theme.colors.primaryAccent}`,
+		borderRadius: '5px'
 	}
 });
 
-class OrderForm extends Component {
-  render() {
-    const {handleSubmit, isEmailSent} = this.props;
-    return (
-			<div className={css(styles.wrapper)}>
-        {!isEmailSent ?
-          <div>
-            <h4 className={css(styles.title)}>{window.TA.content.orderTour}</h4>
-            <form onSubmit={handleSubmit}>
-              <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
-              <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
-              <Field name='email' placeholder={window.TA.content.email} className={ css(styles.fieldInput)}  component='input' type='email' required />
-              <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' />
-              <Button type='submit'>{window.TA.content.order}</Button>
-            </form>
-          </div>
-          :
-          <div>{window.TA.content.emailSentMessage}</div>
-        }
-			</div>
-    )
-  }
-}
-
-const mapStateToProps = (state) => ({
-});
+let OrderForm = ({ handleSubmit, isEmailSent }) =>
+	<div className={css(styles.wrapper)}>
+    {!isEmailSent ?
+      <div>
+        <h4 className={css(styles.title)}>{window.TA.content.orderTour}</h4>
+        <form onSubmit={handleSubmit}>
+          <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
+          <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
+          <Field name='email' placeholder={window.TA.content.email} className={ css(styles.fieldInput)}  component='input' type='email' required />
+          <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' />
+          <Button type='submit'>{window.TA.content.order}</Button>
+        </form>
+      </div>
+      :
+      <div className={ css(styles.message)}>{window.TA.content.emailSentMessage}</div>
+    }
+	</div>;
 
 OrderForm = compose(
-  connect(
-    mapStateToProps,
-    { sendEmail, reset }
-  ),
-  withStateHandlers(
-    ({ isEmailSent }) => ({ isEmailSent : false }),
-    {
-      onSubmit: ({}, {reset, sendEmail, tour}) => (options) => {
-        sendEmail({
-          ...options,
-          tour: {
-            title: tour.content.title,
-            url: `${window.location.origin}/tours/${tour.url}`
-          }
-        });
-        reset('Order');
-        return {
-          isEmailSent: true
-        };
-      },
-    }
-  ),
-  reduxForm({
-    form: 'Order'
-  })
+	reduxForm({
+		form: 'Order'
+	})
 )(OrderForm);
 
-export default OrderForm
+export default withEmailSending(OrderForm, 'Заказ тура')

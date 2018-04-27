@@ -376,6 +376,16 @@ class SettingsForm extends Component {
                       )
                     }
                   </tr>
+                  <tr>
+                    <td>Cообщение после отправки емейла(Контакты)</td>
+	                  {
+		                  languages.map(lang =>
+                        <td className={css(styles.td)} key={ `${lang._id}emailSentContactsMessage` }>
+                          <Field name={`content.${lang._id}.emailSentContactsMessage`} className={ css(styles.fieldInput)} component="input" type="text" />
+                        </td>
+		                  )
+	                  }
+                  </tr>
                   
                 </tbody>
               </table>

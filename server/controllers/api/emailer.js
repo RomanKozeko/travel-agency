@@ -2,11 +2,11 @@ import nodeMailer from 'nodemailer';
 import config from '../../config/index';
 
 const htmlTemplate = ({ message, name, phone, email, tour }) => (`
-    <p>${message ? message : ''}</p>
+    ${message ? `<p>${message}</p>` : ''}
     <p><b>Имя:</b> ${name}</p>
-    <p><b>Телефон:</b> ${phone ? phone : 'не указан'}</p>
+    ${phone ? `<p><b>Телефон:</b> ${phone}</p>` : ''}
     <p><b>Email:</b> ${email}</p>
-    <b>Тур: <a href=${tour.url}>${tour.title}</a></b>
+    ${tour ? `<b>Тур: <a href=${tour.url}>${tour.title}</a></b>` : ''}
 `);
 
 module.exports = {
@@ -22,18 +22,14 @@ module.exports = {
       }
     });
     const mailOptions = {
-      from: `tour agency 👻 <${config.email.from}>`,
+      from: `tour agency <${config.email.from}>`,
       to: config.email.to,
-      subject: 'Заказ тура',
+      subject: props.emailSubject,
       html:  htmlTemplate(props)
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        next();
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
+    transporter.sendMail(mailOptions, (error) => {
+      if (error) next();
       res.sendStatus(200);
     });
   }
