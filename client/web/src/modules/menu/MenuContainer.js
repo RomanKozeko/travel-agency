@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     transitionDuration: 300,
     fontWeight: 'bold',
     fontSize: '12px',
+    padding: '15px 20px',
     '@media (min-width: 1000px)': {
       padding: '5px',
     },
