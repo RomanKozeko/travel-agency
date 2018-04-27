@@ -9,7 +9,6 @@ module.exports = {
   email: {
     from: 'travel.agency.emailer@gmail.com',
     password: 'emailer@123',
-    // to: 'info@bssr.by',
-    to: 'variaturovets@gmail.com',
+    to: 'info@bssr.by',
   }
 };
