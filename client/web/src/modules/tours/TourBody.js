@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { compose, lifecycle } from 'recompose';
 import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon, Monney } from '../ui-elements/icons/Icons';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { getContentByLanguage } from '../../services/utils';
@@ -76,10 +77,30 @@ const styles = StyleSheet.create({
     '@media (min-width: 750px)': {
       paddingTop: '0'
     },
+  },
+  price: {
+    fontSize: '20px',
+    fontWeight: 'bold'
   }
 });
 
-const TourBody = ({ tour: { url, preview, days, content = {}, food, categories }, languageID} ) => {
+const RenderPrice = ({ price, currency, currencies }) => {
+  const Cur_ID = currency.split(',')[2];
+  if (Cur_ID === 'BUN') {
+    return `${price} BUN`;
+  }
+  const currencyWithRate = currencies.find(item => item.Cur_ID === Number(Cur_ID))
+
+  return `${(price / currencyWithRate.Cur_OfficialRate * currencyWithRate.Cur_Scale).toFixed(0)} ${currencyWithRate.Cur_Abbreviation}`;
+
+}
+
+const TourBody = ({
+  tour: { url, preview, days, content = {}, food, categories },
+  currency,
+  languageID,
+  currencies
+}) => {
   const categoriesList = categories.map(category => getContentByLanguage(category.content, languageID).title)
   return (
     <div className={css(styles.content)}>
@@ -134,8 +155,11 @@ const TourBody = ({ tour: { url, preview, days, content = {}, food, categories }
         {
           content.price &&
           <div className={css(styles.listItem)}>
-            <Monney color={ theme.colors.primary } width={20}/>
-            <span className={css(styles.listItemText)}>{ content.price }</span>
+            <span className={css(styles.price)}>
+              {
+                RenderPrice({ price: content.price, currency, currencies })
+              }
+            </span>
           </div>
         }
       </div>
@@ -143,9 +167,15 @@ const TourBody = ({ tour: { url, preview, days, content = {}, food, categories }
   )
 }
 
-const mapStateToProps = (state) => ({
-  languageID: state.app.languages.urlPrefix
-})
+const mapStateToProps = (state) => {
+  return {
+    languageID: state.app.languages.urlPrefix,
+    currency: state.app.languages.currency,
+    currencies: state.app.languages.currencies
+  }
+}
 
-export default connect(mapStateToProps)(TourBody)
+export default compose(
+  connect(mapStateToProps)
+)(TourBody)
 

@@ -1,4 +1,4 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import { createReducer, basicReducerEvents, createBasicActions, makeActionCreator } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
@@ -10,12 +10,31 @@ export const loadItems = actionsObj.loadWithPagination;
 export const deleteItems = actionsObj.deleteItems;
 export const saveItem = actionsObj.saveItem;
 
+
+
+export const fetchCurrencies = () => (dispatch) => {
+  fetch('http://www.nbrb.by/API/ExRates/Rates?Periodicity=0', {
+    method: 'GET'
+  })
+  .then(response => response.json()
+    .then(res => {
+      dispatch({
+        type: 'CURRENCIES_SUCCESS',
+        payload: res
+      })
+    })
+  );
+}
+
+
 // reducers
 export const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
   isFetched: false,
+  currencies: [],
+  currenciesIsFetched: false,
 };
 
 export default createReducer(defaultState, {
@@ -31,6 +50,13 @@ export default createReducer(defaultState, {
   [actions.SETTINGS_ITEM_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.SETTINGS_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.SETTINGS_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
+  ['CURRENCIES_SUCCESS']: (state, { payload }) => {
+    return {
+      ...state,
+      currencies: payload,
+      currenciesIsFetched: true
+    }    
+  }
 });
 
 //  selectors

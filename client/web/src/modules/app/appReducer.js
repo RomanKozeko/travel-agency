@@ -1,4 +1,4 @@
-import { createReducer, getLangPref, getLangUrlPref } from '../../services/utils';
+import { createReducer, getLangPref, getLangUrlPref, makeActionCreator } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 import { combineReducers } from 'redux';
 
@@ -20,7 +20,8 @@ const defaultState = {
 	allIds: [],
 	byIds: {},
 	isFetching: false,
-  items: []
+  items: [],
+  currency: null
 };
 
 const itemsSuccess = (state, action) => {
@@ -35,10 +36,26 @@ const itemsSuccess = (state, action) => {
 	};
 };
 
+
+export const setCurrency = makeActionCreator('SET_CURRENCY', 'payload');
+export const setCurrencies = makeActionCreator('SET_CURRENCIES', 'payload');
+
 const languagesReducer = createReducer(defaultState, {
 	[LANGUAGES_REQUEST]: state => ({ ...state, isFetching: true }),
 	[LANGUAGES_SUCCESS]: itemsSuccess,
 	[LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
+	['SET_CURRENCY']: (state, { payload }) => {
+    return {
+      ...state,
+      currency: payload
+    }
+  },
+	['SET_CURRENCIES']: (state, { payload }) => {
+		return {
+			...state,
+			currencies: payload
+		}
+	}
 });
 
 export default combineReducers({

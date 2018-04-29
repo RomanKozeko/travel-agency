@@ -3,12 +3,16 @@ const Schema = mongoose.Schema;
 
 const SettingsSchema = new Schema({
   pagesImg: String,
+  currencies: [{
+    item: String
+  }],
   content: [{
     tourInfo: String,
     tourDescription: String,
     route: String,
     showPlaces: String,
     accommodation: String,
+    currForLang: String,
     tourProgram: String,
     includedInPrice: String,
     notIncludedInPrice: String,

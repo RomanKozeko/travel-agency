@@ -24,9 +24,7 @@ const styles = StyleSheet.create({
     }
   },
   wrapper: {
-    width: '100%;',
-    whiteSpace: 'nowrap',
-    textAlign: 'right'
+    whiteSpace: 'nowrap'
   }
 });
 

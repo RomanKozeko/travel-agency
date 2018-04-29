@@ -5,6 +5,8 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import LanguagesNav from '../ui-elements/LanguagesNav'
 import { getContacts } from '../../rootReducer'
 import { fetchContacts } from './headerReducer'
+import { setCurrency, setCurrencies } from '../app/appReducer'
+import { theme } from '../../services/constans'
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -67,13 +69,33 @@ const styles = StyleSheet.create({
   },
   col: {
     width: '100%'
+  },
+  wrapperTop: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  select: {
+    marginRight: '20px',
+    borderRadius: '5px',
+    border: `1px solid ${theme.colors.primary}`
   }
 });
 
-const TopNav = ({ items }) => (
+const TopNav = ({ items, setCurrency, currency }) => (
   <div className={css(styles.wrapper)}>
     <div className="container">
-      <LanguagesNav/>
+      <div className={css(styles.wrapperTop)}>
+        <select className={css(styles.select)} value={currency} onChange={ (e) => { setCurrency( e.target.value )}}>
+          {
+            window.TA.currencies.map(({ item }) => {
+              const splited = item.split(',')
+              return <option value={ item }>{ splited[1] }</option>
+            })
+          }
+        </select>
+        <LanguagesNav/>
+
+      </div>
       <div className={css(styles.inner)}>
         <div className={css(styles.col)}>
           <div className="row">
@@ -106,16 +128,34 @@ const TopNav = ({ items }) => (
 const mapStateToProps = (state) => ({
   items: getContacts(state),
   isFetching: state.contacts.isFetching,
-  isFetched: state.contacts.isFetched
+  isFetched: state.contacts.isFetched,
+  currency: state.app.languages.currency
 })
 
 export default compose(
-  connect(mapStateToProps, { fetchContacts }),
+  connect(mapStateToProps, { fetchContacts, setCurrency, setCurrencies }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
         this.props.fetchContacts()
       }
+
+      window.TA.currencies.unshift({_id: 'BUN', item: 'Бун,BUN,BUN'});
+
+      const currCurrency = window.TA.currencies.find(curr => {
+        return curr.item.split(',')[1] === window.TA.content.currForLang
+      });
+      
+      fetch('http://www.nbrb.by/API/ExRates/Rates?Periodicity=0', {
+        method: 'GET'
+      })
+      .then(response => response.json()
+        .then(res => {
+          this.props.setCurrencies(res)
+          this.props.setCurrency(currCurrency.item)
+        })
+      );
+
     }
   })
 )(TopNav)
