@@ -85,7 +85,13 @@ const styles = StyleSheet.create({
 });
 
 const RenderPrice = ({ price, currency, currencies }) => {
+  
+  if (!currency) {
+    return `${price} BUN`;
+  }
+
   const Cur_ID = currency.split(',')[2];
+
   if (Cur_ID === 'BUN') {
     return `${price} BUN`;
   }
