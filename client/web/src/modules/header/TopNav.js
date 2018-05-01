@@ -152,7 +152,10 @@ export default compose(
       .then(response => response.json()
         .then(res => {
           this.props.setCurrencies(res)
-          this.props.setCurrency(currCurrency.item)
+          if (currCurrency) {
+            this.props.setCurrency(currCurrency.item)
+          }
+
         })
       );
 
