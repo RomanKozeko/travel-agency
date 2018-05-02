@@ -4,12 +4,12 @@ import TourBody from './TourBody';
 
 const styles = StyleSheet.create({
 	wrapper: {
-		minHeight: '210px',
 		backgroundColor: '#ffffff',
 		position: 'relative',
 		borderRadius: '5px',
 		transition: 'all .3s ease-in',
 		marginBottom: '20px',
+		minHeight: '260px',
 		':hover': {
 			boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
 		},
