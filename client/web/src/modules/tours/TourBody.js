@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
 const RenderPrice = ({ price, currency, currencies }) => {
   
   if (!currency) {
-    return `${price} BUN`;
+    return `${price} BYN`;
   }
 
   const Cur_ID = currency.split(',')[2];
 
-  if (Cur_ID === 'BUN') {
-    return `${price} BUN`;
+  if (Cur_ID === 'BYN') {
+    return `${price} BYN`;
   }
   const currencyWithRate = currencies.find(item => item.Cur_ID === Number(Cur_ID))
 

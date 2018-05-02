@@ -140,7 +140,7 @@ export default compose(
         this.props.fetchContacts()
       }
 
-      window.TA.currencies.unshift({_id: 'BUN', item: 'Бун,BUN,BUN'});
+      window.TA.currencies.unshift({_id: 'BYN', item: 'Бун,BYN,BYN'});
 
       const currCurrency = window.TA.currencies.find(curr => {
         return curr.item.split(',')[1] === window.TA.content.currForLang
