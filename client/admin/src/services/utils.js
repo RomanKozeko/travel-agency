@@ -215,4 +215,23 @@ export const getContentByLanguage = (content, languageId) => content.find(
 	item => item.language === languageId
 )
 
+export const contentByLang = (content = [], languages) => {
+  return languages.reduce((acc, curr) => {
+    return {
+      ...acc,
+      [curr._id]: content.find(({ language }) => language === curr._id)
+    }
+  }, {})
+}
 
+export const contentToArrayByLang = (content, languages) => {
+  return languages.reduce((acc, curr) => {
+    return [
+      ...acc,
+      {
+        language: curr._id,
+        ...content[curr._id]
+      }
+    ]
+  }, [])
+}

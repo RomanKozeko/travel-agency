@@ -42,6 +42,7 @@ const MenuCtrl = require('../controllers/api/menu');
 const ContactsCtrl = require('../controllers/api/contacts');
 const SettingsCtrl = require('../controllers/api/settings');
 const EmailerCtrl = require('../controllers/api/emailer');
+const SliderCtrl = require('../controllers/api/slider');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -139,5 +140,10 @@ router.post('/settings', SettingsCtrl.post);
 router.delete('/settings', SettingsCtrl.delete);
 
 router.post('/send-email', EmailerCtrl.post);
+
+router.get('/slider', SliderCtrl.get);
+router.put('/slider/:id', SliderCtrl.put);
+router.post('/slider', SliderCtrl.post);
+router.delete('/slider', SliderCtrl.delete);
 
 module.exports = router;
