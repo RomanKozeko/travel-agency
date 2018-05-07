@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { getPage } from '../../rootReducer';
 import { loadPage } from './PagesActions';
 import FilteredToursContainer from '../tours/FilteredToursContainer';
@@ -10,34 +10,9 @@ import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
 import ImageSlider from '../ui-elements/ImageSlider';
-import SearchFormContainer from '../tours/SearchFormContainer';
+import ToursSearchFormContainer from '../tours/SearchFormContainer';
+import ShowplacesSearchFormContainer from '../showplaces/SearchFormContainer';
 import ContactForm from '../contactForm/ContactForm'
-
-const styles = StyleSheet.create({
-  page: {
-
-  },
-  pageContent: {
-    padding: '40px 0'
-  },
-  header: {
-    height: '287px',
-    marginTop: '-76px',
-    paddingTop: '76px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundImage: 'url(/web/build/v.jpg)',
-    backgroundSize: 'cover',
-  },
-  headerTitle: {
-    lineHeight: '27px',
-    fontSize: '38px',
-    fontWeight: 'bold',
-    color: '#fefefe',
-    textTransform: 'uppercase'
-  }
-});
 
 
 const mapStateToProps = (state, router) => ({
@@ -57,10 +32,10 @@ const PageColumn = ({ item, page }) => {
       return <div>hotelSearch</div>
     }
     case '@toursSearch': {
-      return <SearchFormContainer />
+      return <ToursSearchFormContainer />
     }
     case '@showPlacesSearch': {
-      return <div>showPlacesSearch</div>
+      return <ShowplacesSearchFormContainer />
     }
     case '@gallery': {
       return <ImageSlider images={ item.images.map(image => page.allImages.find(img => img._id === image)) } />

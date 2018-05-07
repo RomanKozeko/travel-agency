@@ -7,13 +7,13 @@ const categoriesActionsObj = createBasicActions('CATEGORIES', 'categories', CALL
 
 // Action Creators
 export const regionsActions = regionsActionsObj.actions;
-export const loadCategories = regionsActionsObj.load;
+export const loadRegions = regionsActionsObj.load;
 
 export const categoriesActions = categoriesActionsObj.actions;
-export const loadRegions = categoriesActionsObj.load;
+export const loadCategories = categoriesActionsObj.load;
 
 function defaultEntity(options) {
-  return { ...{ byId : {}, allIds : [] }, ...options }
+  return { ...{ byId : {}, allIds : [], isFetched: false, isFetching: false }, ...options }
 }
 
 const defaultState = {

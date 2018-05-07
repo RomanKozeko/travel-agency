@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import { getShowPlace } from '../../rootReducer';
-import { loadShowPlace } from './showplacesReducer';
+import { loadShowPlace } from './showplacesActions';
 import ImageSlider from '../ui-elements/ImageSlider';
 import { PlaceIcon } from '../ui-elements/icons/Icons';
 import { theme } from '../../services/constans';
@@ -37,9 +37,12 @@ const ShowPlace = ({ item, isFetching }) => (
                 <ImageSlider images={ item.preview } />
               </div>
             }
-            <div className={css(styles.addressWrap)}>
-              <PlaceIcon color={ theme.colors.primary } width={20}/> <b>{ item.content.address }</b>
-            </div>
+	          {
+	            item.content.address &&
+              <div className={css(styles.addressWrap)}>
+                <PlaceIcon color={theme.colors.primary} width={20}/> <b>{item.content.address}</b>
+              </div>
+	          }
 
             <div dangerouslySetInnerHTML={{ __html: item.content.content }}/>
           </div>
@@ -53,7 +56,7 @@ const mapStateToProps = (state, router) => {
     item: getShowPlace(state, router.match.params.url),
     isFetching: state.hotels.isFetching,
   }
-}
+};
 
 export default compose(
   withRouter,

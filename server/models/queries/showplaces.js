@@ -8,7 +8,19 @@ module.exports = {
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
 
     if (!filter.regions) {
-      const query = ShowPlace.find({})
+      const queryObj = {};
+	    if (filter.title) {
+		    queryObj.$and = [
+			    { $and: [{
+				    'content':   {
+					    $elemMatch: {
+						    'title': {'$regex': filter.title, $options: 'i'}
+					    }
+				    }
+			    }] }
+		    ]
+	    }
+      const query = ShowPlace.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
@@ -35,14 +47,29 @@ module.exports = {
 
     return regions.then(res => {
       const regionsIDs = res.map(region => ({ regions: region._id }));
+      const queryObj = {
+	      $or: regionsIDs
+      };
 
-      const query = ShowPlace.find({ $or: regionsIDs})
+      if (filter.title) {
+	      queryObj.$and = [
+		      { $and: [{
+			      'content':   {
+				      $elemMatch: {
+					      'title': {'$regex': filter.title, $options: 'i'}
+				      }
+			      }
+		      }] }
+	      ]
+      }
+
+      const query = ShowPlace.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
         .populate('preview')
         .populate('categories')
-        .populate('regions')
+        .populate('regions');
 
       return Promise.all([query, ShowPlace.count()]);
 

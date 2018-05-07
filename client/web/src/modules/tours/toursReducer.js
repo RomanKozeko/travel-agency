@@ -1,5 +1,4 @@
 import * as actions from './toursActions';
-
 import { createReducer, getPageCount } from '../../services/utils';
 
 

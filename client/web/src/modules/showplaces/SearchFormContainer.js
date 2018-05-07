@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle, withStateHandlers } from 'recompose'
 import SearchSideBar from '../ui-elements/SearchSideBar'
-import TourItemHorizontal from './TourItemHorizontal'
-import { loadFilteredTours, resetActiveFilter } from './toursActions';
-import { loadRegions, loadCategories } from '../app/entitiesReducer';
+import ShowplaceItemHorizontal from './ShowplaceItemHorizontal'
+import { loadFilteredShowplaces, resetActiveFilter } from './showplacesActions';
+import { loadRegions } from '../app/entitiesReducer';
 import { connect } from 'react-redux';
-import { getToursByQuery, getRegions, getCategories } from '../../rootReducer';
+import { getShowplacesByQuery, getRegions } from '../../rootReducer';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -32,32 +32,30 @@ const styles = StyleSheet.create({
 	}
 });
 
-let SearchFormContainer = ({ tours, isToursFetched, regions, categories, onFieldChange, onInputChange }) => {
+let SearchFormContainer = ({ showplaces, isShowplacesFetched, regions, onFieldChange, onInputChange }) => {
 
 	return(
 		<div className={css(styles.wrapper)}>
 			<aside className={css(styles.sideBarWrapper)}>
 				<SearchSideBar
 					regions={regions}
-					categories={categories}
-					days={10}
 					onInputChange={onInputChange}
 					onFieldChange={onFieldChange}
 				/>
 			</aside>
 			<div className={css(styles.searchContent)}>
-				{tours.isFetching
+				{showplaces.isFetching
 					?
 					<div>Загрузка...</div>
 					:
 					<div>
 						{
-              isToursFetched && !tours.length
+              isShowplacesFetched && !showplaces.length
 								?
-								<div>Туры не найдены</div>
+								<div>Достопримечательности не найдены</div>
 								:
-								tours.map(tour =>
-									<TourItemHorizontal tour={tour} key={tour._id}/>
+	              showplaces.map(showplace =>
+									<ShowplaceItemHorizontal showplace={showplace} key={showplace._id}/>
 								)
 						}
 					</div>
@@ -69,28 +67,23 @@ let SearchFormContainer = ({ tours, isToursFetched, regions, categories, onField
 
 const mapStateToProps = (state) => {
 	return {
-		tours: getToursByQuery(state, state.tours.activeQuery),
+		showplaces: getShowplacesByQuery(state, state.showplaces.activeQuery),
 		regions: getRegions(state),
-		categories: getCategories(state),
-		currPage: state.tours.currPage,
-		pageCount: state.tours.pageCount,
-		count: state.tours.count,
-		isFetching: state.tours.isFetching,
-		isToursFetched: state.tours.isFetched,
+		isFetching: state.showplaces.isFetching,
+		isShowplacesFetched: state.showplaces.isFetched,
     isRegionsFetched: state.entities.regions.isFetched,
-		isCategoriesFetched: state.entities.categories.isFetched,
 	}
 };
 
 SearchFormContainer = compose(
 	connect(
 		mapStateToProps,
-		{ loadFilteredTours,resetActiveFilter, loadRegions, loadCategories }
+		{ loadFilteredShowplaces, resetActiveFilter, loadRegions }
 	),
   withStateHandlers(
     ({count}) => ({ filter: {} }),
     {
-      onFieldChange: ({ filter }, { loadFilteredTours }) => (field, value) => {
+      onFieldChange: ({ filter }, { loadFilteredShowplaces }) => (field, value) => {
       	const newFilter = {...filter};
       	if (!newFilter.hasOwnProperty(field)) {
           newFilter[field] = [value]
@@ -106,15 +99,15 @@ SearchFormContainer = compose(
           newFilter[field] = fieldValue;
 				}
 
-				loadFilteredTours(newFilter);
+				loadFilteredShowplaces(newFilter);
 				return {
 					filter: newFilter
 				}
       },
-			onInputChange: ({ filter }, { loadFilteredTours }) => (field, value) => {
+			onInputChange: ({ filter }, { loadFilteredShowplaces }) => (field, value) => {
         const newFilter = {...filter};
         newFilter[field] = value;
-        loadFilteredTours(newFilter);
+				loadFilteredShowplaces(newFilter);
         return {
         	filter: newFilter
 				}
@@ -123,14 +116,11 @@ SearchFormContainer = compose(
   ),
 	lifecycle({
 		componentDidMount() {
-			if (!this.props.isToursFetched) {
-				this.props.loadFilteredTours();
+			if (!this.props.isShowplacesFetched) {
+				this.props.loadFilteredShowplaces();
 			}
       if (!this.props.isRegionsFetched) {
         this.props.loadRegions();
-      }
-      if (!this.props.isCategoriesFetched) {
-        this.props.loadCategories();
       }
 		},
 		componentWillUnmount() {

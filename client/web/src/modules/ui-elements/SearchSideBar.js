@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
 	}
 });
 
-const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
+const SearchSideBar = ({regions, categories, days, onInputChange, onFieldChange}) =>
 	<div className={css(styles.wrapper)}>
 		<div className={css(styles.block)}>
 			<h3 className={css(styles.blockTitle)}>{ window.TA.content.byName }</h3>
 			<TextFieldSmall
 				onChange={(e) => onInputChange('title', e.target.value)}
-				placeholder='Название тура'
+				placeholder='Название'
 			/>
 		</div>
 		<div className={css(styles.block)}>
@@ -44,33 +44,36 @@ const SearchSideBar = ({regions, categories, onInputChange, onFieldChange}) =>
 				))
 			}
 		</div>
-		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>{ window.TA.content.daysAmount }</h3>
-			{
-        Array.from({length: 10}, (x,i) => i + 1).map(day => (
-					<CheckBox
-						key={day}
-						onChange={(e) => onFieldChange('days', day)}
-						label={day}
-						name={day}
-					/>
-        ))
-			}
-		</div>
-		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>{ window.TA.content.tourType }</h3>
-      {
-        categories.map(category => (
-					<CheckBox
-						key={category._id}
-						onChange={(e) => onFieldChange('categories', category._id)}
-						label={category.content.title}
-						name={category.content.title}
-						block={ true }
-					/>
-        ))
-      }
-		</div>
+		{days &&
+			<div className={css(styles.block)}>
+				<h3 className={css(styles.blockTitle)}>{ window.TA.content.daysAmount }</h3>
+				{
+	        Array.from({length: days }, (x,i) => i + 1).map(day => (
+						<CheckBox
+							key={day}
+							onChange={(e) => onFieldChange('days', day)}
+							label={day}
+							name={day}
+						/>
+	        ))
+				}
+			</div>
+		}
+		{categories &&
+			<div className={css(styles.block)}>
+				<h3 className={css(styles.blockTitle)}>{ window.TA.content.tourType }</h3>
+
+				{categories.map(category => (
+						<CheckBox
+							key={category._id}
+							onChange={(e) => onFieldChange('categories', category._id)}
+							label={category.content.title}
+							name={category.content.title}
+							block={ true }
+						/>
+	        ))}
+			</div>
+		}
 	</div>;
 
 export default SearchSideBar;

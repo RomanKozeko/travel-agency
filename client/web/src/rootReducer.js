@@ -31,7 +31,6 @@ export default rootReducer;
 
 
 //selectors
-export const getTours = state => fromTours.getTours(state.tours);
 export const getTour = (state, id) => fromTours.getTour(state.tours, id);
 export const getToursByQuery = (state, query) => fromTours.getToursByQuery(state.tours, query);
 export const getPages = state => fromPages.getPages(state.pages);
@@ -46,3 +45,4 @@ export const getCategories = state => fromEntities.getCategories(state.entities.
 export const getMenu = state => fromMenu.getMenu(state.menu);
 export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);
+export const getShowplacesByQuery = (state, query) => fromShowPlaces.getShowplacesByQuery(state.showplaces, query);

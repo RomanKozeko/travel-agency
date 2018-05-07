@@ -14,7 +14,7 @@ const withEmailSending = (WrappedComponent, emailSubject) => {
 
 	return compose(
 		connect(
-			(state) => ({}),
+			null,
 			{ sendEmail }
 		),
 		withStateHandlers(

@@ -54,7 +54,7 @@ let OrderForm = ({ handleSubmit, isEmailSent }) =>
           <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
           <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
           <Field name='email' placeholder={window.TA.content.email} className={ css(styles.fieldInput)}  component='input' type='email' required />
-          <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' />
+          <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' required />
           <Button type='submit'>{window.TA.content.order}</Button>
         </form>
       </div>

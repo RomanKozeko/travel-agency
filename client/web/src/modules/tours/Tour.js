@@ -9,7 +9,6 @@ import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
 import HotelPreview from '../ui-elements/HotelPreview';
 import ItemsGallery from '../ui-elements/ItemsGallery';
-import Button from '../ui-elements/Button';
 import Map from '../ui-elements/Map';
 import { getContentByLanguage } from '../../services/utils';
 import { theme } from '../../services/constans';

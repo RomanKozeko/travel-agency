@@ -1,62 +1,82 @@
-import {createReducer, withPrefix} from '../../services/utils';
-import {CALL_API, Schemas} from "../../middleware/callApi";
+import {createReducer} from '../../services/utils';
+import * as actions from './showplacesActions';
 
-const SHOWPLACE_REQUEST = 'SHOWPLACE_REQUEST'
-const SHOWPLACE_SUCCESS = 'SHOWPLACE_SUCCESS'
-const SHOWPLACE_FAILURE = 'SHOWPLACE_FAILURE'
+export const itemSuccess = (state, action) => {
+	const payload = action.response;
+	const allIds = [...state.allIds];
+
+	if (allIds.indexOf(payload.result) === -1) {
+		allIds.push(payload.result)
+	}
+
+	return {
+		...state,
+		allIds,
+		byIds: { ...state.byIds, ...payload.entities.items },
+		isSaving: false,
+		isFetching: false,
+	};
+};
+
+const filteredShowplacesSuccess = (state, { response: {result, entities, query} }) => {
+	const allIds = [...state.allIds];
+
+	result.items.forEach(item => {
+		if (state.allIds.indexOf(item) === -1) {
+			allIds.push(item)
+		}
+	});
+
+	return {
+		...state,
+		allIds,
+		byIds: {...state.byIds, ...entities.items},
+		isFetching: false,
+		isFetched: true,
+		byQueries: {
+			...state.byQueries,
+			[query]: result.items,
+		},
+		activeQuery: [query]
+	}
+};
 
 export const defaultState = {
-  allIds: [],
-  byIds: {},
-  isFetching: false,
-  isFetched: false
+	allIds: [],
+	byIds: {},
+	isFetching: false,
+	isFetched: false,
+	byQueries: {},
+	activeQuery: '',
 };
-
-const itemSuccess = (state, action) => {
-  const payload = action.response;
-  const allIds = [...state.allIds];
-
-  if (allIds.indexOf(payload.result) === -1) {
-    allIds.push(payload.result)
-  }
-
-  return {
-    ...state,
-    allIds,
-    byIds: { ...state.byIds, ...payload.entities.items },
-    isSaving: false,
-    isFetching: false
-  };
-};
-
-const fetchShowPlace = (url, urlPrefix) => ({
-  [CALL_API]: {
-    types: [SHOWPLACE_REQUEST, SHOWPLACE_SUCCESS, SHOWPLACE_FAILURE],
-    endpoint: withPrefix(`/api/showPlacesGetByUrl/${url}`, urlPrefix),
-    schema: Schemas.HOTEL
-  }
-});
-
-
-export const loadShowPlace = url => (dispatch, getState) => {
-  const state = getState();
-  if (!state.showplaces.byIds[url]) {
-    return dispatch(fetchShowPlace(url, state.app.languages.urlPrefix));
-  }
-  return null;
-};
-
 
 export default createReducer(defaultState, {
-  [SHOWPLACE_REQUEST] : (state) => ({...state, isFetching: true}),
-  [SHOWPLACE_SUCCESS] : itemSuccess,
-  [SHOWPLACE_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.SHOWPLACE_REQUEST] : (state) => ({...state, isFetching: true}),
+	[actions.SHOWPLACE_SUCCESS] : itemSuccess,
+	[actions.SHOWPLACE_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.SHOWPLACES_FILTERED_REQUEST]: (state) => ({...state, isFetching: true}),
+	[actions.SHOWPLACES_FILTERED_SUCCESS]: filteredShowplacesSuccess,
+	[actions.SHOWPLACES_FILTERED_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.SHOWPLACES_SET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: action.payload}),
+	[actions.SHOWPLACES_RESET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: ''}),
 });
 
+// selectors
 export const getShowPlace = (state, id) => {
-  if (state.byIds[id]) {
-    return state.byIds[id];
-  }
+	if (state.byIds[id]) {
+		return state.byIds[id];
+	}
 
-  return null;
+	return null;
+};
+
+export const getShowplacesByQuery = (state, query) => {
+	if (!query) {
+		return state.allIds.map(id => state.byIds[id])
+	}
+	if (state.byQueries[query]) {
+		return state.byQueries[query].map(id => state.byIds[id])
+	} else {
+		return []
+	}
 };

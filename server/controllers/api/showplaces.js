@@ -8,9 +8,9 @@ module.exports = createCRUD(
   Showplace,
   {
     get: (req, res, next) => {
-      const { regions, offset = 0, limit = config.itemsPerPageLimit } = req.query;
+      const { regions, title, offset = 0, limit = config.itemsPerPageLimit } = req.query;
 
-      ShowplacesQueries.getAllWithFilter(offset, limit, {regions})
+      ShowplacesQueries.getAllWithFilter(offset, limit, {regions, title})
       .then((result) => {
         res.json({
           offset: parseInt(offset),
