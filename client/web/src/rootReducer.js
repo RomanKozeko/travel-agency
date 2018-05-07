@@ -44,5 +44,6 @@ export const getRegions = state => fromEntities.getRegions(state.entities.region
 export const getCategories = state => fromEntities.getCategories(state.entities.categories);
 export const getMenu = state => fromMenu.getMenu(state.menu);
 export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
+export const getHotelsByQuery = (state, query) => fromHotels.getHotelsByQuery(state.hotels, query);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);
 export const getShowplacesByQuery = (state, query) => fromShowPlaces.getShowplacesByQuery(state.showplaces, query);

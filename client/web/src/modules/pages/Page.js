@@ -12,6 +12,7 @@ import FancyHeader from '../ui-elements/FancyHeader';
 import ImageSlider from '../ui-elements/ImageSlider';
 import ToursSearchFormContainer from '../tours/SearchFormContainer';
 import ShowplacesSearchFormContainer from '../showplaces/SearchFormContainer';
+import HotelsSearchFormContainer from '../hotels/SearchFormContainer';
 import ContactForm from '../contactForm/ContactForm'
 
 
@@ -29,7 +30,7 @@ const PageColumn = ({ item, page }) => {
       return <FilteredToursContainer query={item.filters} />
     }
     case '@hotelSearch': {
-      return <div>hotelSearch</div>
+      return <HotelsSearchFormContainer />
     }
     case '@toursSearch': {
       return <ToursSearchFormContainer />

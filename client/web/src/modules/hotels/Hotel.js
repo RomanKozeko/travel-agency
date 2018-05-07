@@ -3,11 +3,10 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import PrefixLink from '../ui-elements/PrefixLink';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import { getHotel } from '../../rootReducer';
-import { loadHotel } from './hotelsReducer';
+import { loadHotel } from './hotelsActions';
 import StarsList from '../ui-elements/StarsList';
 import ImageSlider from '../ui-elements/ImageSlider';
 import { PlaceIcon } from '../ui-elements/icons/Icons';

@@ -1,62 +1,82 @@
-import {createReducer, withPrefix} from '../../services/utils';
-import {CALL_API, Schemas} from "../../middleware/callApi";
+import {createReducer} from '../../services/utils';
+import * as actions from './hotelsActions';
 
-const HOTEL_REQUEST = 'HOTEL_REQUEST'
-const HOTEL_SUCCESS = 'HOTEL_SUCCESS'
-const HOTEL_FAILURE = 'HOTEL_FAILURE'
+export const itemSuccess = (state, action) => {
+	const payload = action.response;
+	const allIds = [...state.allIds];
+
+	if (allIds.indexOf(payload.result) === -1) {
+		allIds.push(payload.result)
+	}
+
+	return {
+		...state,
+		allIds,
+		byIds: { ...state.byIds, ...payload.entities.items },
+		isSaving: false,
+		isFetching: false,
+	};
+};
+
+const filteredHotelsSuccess = (state, { response: {result, entities, query} }) => {
+	const allIds = [...state.allIds];
+
+	result.items.forEach(item => {
+		if (state.allIds.indexOf(item) === -1) {
+			allIds.push(item)
+		}
+	});
+
+	return {
+		...state,
+		allIds,
+		byIds: {...state.byIds, ...entities.items},
+		isFetching: false,
+		isFetched: true,
+		byQueries: {
+			...state.byQueries,
+			[query]: result.items,
+		},
+		activeQuery: [query]
+	}
+};
 
 export const defaultState = {
-  allIds: [],
-  byIds: {},
-  isFetching: false,
-  isFetched: false
+	allIds: [],
+	byIds: {},
+	isFetching: false,
+	isFetched: false,
+	byQueries: {},
+	activeQuery: '',
 };
-
-const hotelSuccess = (state, action) => {
-  const payload = action.response;
-  const allIds = [...state.allIds];
-
-  if (allIds.indexOf(payload.result) === -1) {
-    allIds.push(payload.result)
-  }
-
-  return {
-    ...state,
-    allIds,
-    byIds: { ...state.byIds, ...payload.entities.items },
-    isSaving: false,
-    isFetching: false
-  };
-};
-
-const fetchHotel = (url, urlPrefix) => ({
-  [CALL_API]: {
-    types: [HOTEL_REQUEST, HOTEL_SUCCESS, HOTEL_FAILURE],
-    endpoint: withPrefix(`/api/hotelGetByUrl/${url}`, urlPrefix),
-    schema: Schemas.HOTEL
-  }
-});
-
-
-export const loadHotel = url => (dispatch, getState) => {
-  const state = getState();
-  if (!state.hotels.byIds[url]) {
-    return dispatch(fetchHotel(url, state.app.languages.urlPrefix));
-  }
-  return null;
-};
-
 
 export default createReducer(defaultState, {
-  [HOTEL_REQUEST] : (state) => ({...state, isFetching: true}),
-  [HOTEL_SUCCESS] : hotelSuccess,
-  [HOTEL_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.HOTEL_REQUEST] : (state) => ({...state, isFetching: true}),
+	[actions.HOTEL_SUCCESS] : itemSuccess,
+	[actions.HOTEL_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.HOTELS_FILTERED_REQUEST]: (state) => ({...state, isFetching: true}),
+	[actions.HOTELS_FILTERED_SUCCESS]: filteredHotelsSuccess,
+	[actions.HOTELS_FILTERED_FAILURE]: (state) => ({...state, isFetching: false}),
+	[actions.HOTELS_SET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: action.payload}),
+	[actions.HOTELS_RESET_ACTIVE_FILTER]: (state, action) => ({...state, activeQuery: ''}),
 });
 
+// selectors
 export const getHotel = (state, id) => {
-  if (state.byIds[id]) {
-    return state.byIds[id];
-  }
+	if (state.byIds[id]) {
+		return state.byIds[id];
+	}
 
-  return null;
+	return null;
+};
+
+export const getHotelsByQuery = (state, query) => {
+	if (!query) {
+		return state.allIds.map(id => state.byIds[id])
+	}
+	if (state.byQueries[query]) {
+		return state.byQueries[query].map(id => state.byIds[id])
+	} else {
+		return []
+	}
 };

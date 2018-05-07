@@ -8,7 +8,19 @@ module.exports = {
   getAllWithFilter(offset, itemsPerPageLimit, filter) {
 
     if (!filter.regions) {
-      const query = Hotel.find({})
+	    const queryObj = {};
+	    if (filter.title) {
+		    queryObj.$and = [
+			    { $and: [{
+				    'content':   {
+					    $elemMatch: {
+						    'title': {'$regex': filter.title, $options: 'i'}
+					    }
+				    }
+			    }] }
+		    ]
+	    }
+      const query = Hotel.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
@@ -35,8 +47,23 @@ module.exports = {
 
     return regions.then(res => {
       const regionsIDs = res.map(region => ({ regions: region._id }));
+	    const queryObj = {
+		    $or: regionsIDs
+	    };
 
-      const query = Hotel.find({ $or: regionsIDs})
+	    if (filter.title) {
+		    queryObj.$and = [
+			    { $and: [{
+				    'content':   {
+					    $elemMatch: {
+						    'title': {'$regex': filter.title, $options: 'i'}
+					    }
+				    }
+			    }] }
+		    ]
+	    }
+
+      const query = Hotel.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
         .limit(parseInt(itemsPerPageLimit))
