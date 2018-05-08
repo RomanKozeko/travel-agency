@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
 import { getContentByLanguage } from '../../services/utils';
+import withSearch from '../ui-elements/HOC/withSearch';
 
 const styles = StyleSheet.create({
 	container: {
@@ -88,7 +89,6 @@ const MediaFilesList = ({
   clickHandler,
   languages = [],
   updateItem,
-  isSaving,
   updateItemContent,
   filesType = '@image'
 }) => {
@@ -150,4 +150,4 @@ const MediaFilesList = ({
   )
 };
 
-export default MediaFilesList;
+export default withSearch(MediaFilesList);

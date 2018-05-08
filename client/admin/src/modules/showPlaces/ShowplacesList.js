@@ -6,6 +6,8 @@ import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
+import withSearch from '../ui-elements/HOC/withSearch';
+
 
 const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
   const data = {
@@ -53,4 +55,4 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
   );
 };
 
-export default ShowPlacesList;
+export default withSearch(ShowPlacesList);

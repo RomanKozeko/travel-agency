@@ -87,7 +87,7 @@ export const defaultState = {
   byIds: {},
   isFetching: false,
   pageCount: 0,
-  itemsPerPage: 5,
+  itemsPerPage: 100,
   currPage: 0,
   pages: {}
 };

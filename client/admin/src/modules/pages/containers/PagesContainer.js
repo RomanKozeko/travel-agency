@@ -1,21 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
-import { CircularProgress } from 'material-ui/Progress';
+import { Link } from 'react-router-dom';
 import { load, deleteItems } from './../PagesReducer';
 import { getPageWithItems } from '../../../rootReducer';
 import PageHeader from '../../ui-elements/PageHeader';
 import Portlet from '../../ui-elements/Portlet';
 import Spinner from '../../ui-elements/Spinner';
 import SortableTable from '../../ui-elements/sortableTable/SortableTable';
+import PagesList from '../components/PagesList'
 
 const mapStateToProps = (state) => {
   return {
@@ -38,50 +33,17 @@ class PagesContainer extends React.Component {
   }
 
   render() {
-    const { items, languages, isFetching } = this.props;
-
-    const data = {
-      headers: ['Заголовок', 'Активен/Неактивен', 'Дата создания'],
-      items,
-      languages,
-      fields: [
-        {
-          name: 'title',
-          isLink: true,
-          linkPrefix: '/admin/pages/'
-        },
-        {
-          name: 'enabled',
-          isLink: 'toggle'
-        },
-        {
-          name: 'date',
-          isLink: 'date'
-        }
-      ]
-    };
+    const { isFetching } = this.props;
 
     return (
       <div>
-        <PageHeader text={'Все страницы'} />
-
-        <Button
-          variant="raised"
-          color="primary"
-          style={{ marginBottom: '20px' }}
-          component={Link}
-          to="/admin/pages/page?state=newPage"
-        >
-          Добавить страницу
-        </Button>
-        {isFetching
-          ?
-            <Spinner />
-          :
-            <Portlet isBordered={false}>
-              <SortableTable data={data} deleteItems={this.props.deleteItems} />
-            </Portlet>
-        }
+	      {isFetching ?
+          <Spinner/>
+		      :
+          <PagesList
+			      {...this.props}
+          />
+	      }
       </div>
     );
   }

@@ -6,6 +6,7 @@ import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
+import withSearch from '../ui-elements/HOC/withSearch';
 
 const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
   const data = {
@@ -58,4 +59,4 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
   );
 };
 
-export default HotelsList;
+export default withSearch(HotelsList);
