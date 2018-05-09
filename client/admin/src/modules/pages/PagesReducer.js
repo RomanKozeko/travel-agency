@@ -21,7 +21,7 @@ const pagesSuccess = (state, action) => {
   const payload = action.response;
   return {
     ...state,
-    allIds: [...state.allIds, ...payload.result.items],
+    allIds: payload.result.items,
     byIds: { ...state.byIds, ...payload.entities.items },
     isFetching: false,
     isFetched: true,

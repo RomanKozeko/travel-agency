@@ -1,19 +1,69 @@
 import React, {Component} from 'react';
-import { compose, lifecycle, withStateHandlers } from 'recompose'
+import { compose, lifecycle, withStateHandlers, withHandlers } from 'recompose'
 import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
+import Icon from 'material-ui/Icon';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from "../ui-elements/Portlet";
 import { getLanguages, getSliderItems } from "../../rootReducer";
-import { loadItems, saveItem } from "./SliderReducer";
+import { loadItems, saveItem, deleteItems } from "./SliderReducer";
 import Spinner from '../ui-elements/Spinner';
 import Button from 'material-ui/Button';
 import ImageUploader from '../ui-elements/form/ImageUploader';
 import SliderForm from './SliderForm';
+import ConfirmDialog from "../ui-elements/form/ConfirmDialog";
+import createConfirmation from "../ui-elements/form/createConfirmation";
+
+const styles = StyleSheet.create({
+  img: {
+    maxWidth: '100%',
+    display: 'block',
+    marginBottom: '10px'
+  },
+  fieldsWrapper: {
+    margin: '20px 0'
+  },
+  fieldInput: {
+    border: '1px solid #999',
+    flexGrow: '1'
+  },
+  linkInput: {
+    marginTop: '20px',
+    border: '1px solid #999',
+    width: '100%'
+  },
+  tableWrapper: {
+    margin: '20px 0'
+  },
+  langWrap: {
+    display: 'flex',
+    marginTop: '20px'
+  },
+  label: {
+    marginRight: '20px',
+    marginBottom: '10px',
+    minWidth: '20px'
+  },
+  sliderItem: {
+    marginBottom: '10px',
+    marginTop: '10px',
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
+    padding: '10px'
+  },
+  button: {
+    marginTop: '20px'
+  },
+  toolbar: {
+    display: 'flex'
+  }
+})
+
+
+const confirm = createConfirmation(ConfirmDialog);
 
 class SliderContainer extends Component {
   render() {
-    const { pagesImgPath, items, isEditMode, addNew, cancel } = this.props;
+    const { items, itemToEditId, showAddNewForm, edit, cancel, addNew, deleteItem } = this.props;
     return (
       <Portlet isBordered >
         {
@@ -22,18 +72,34 @@ class SliderContainer extends Component {
             <div>
               <div className="row">
                 {
-                  items.map(item =>
-                    <div className="col-md-4">
-                      Слайдер
-                    </div>
+                  items.map((item) =>
+
+                    itemToEditId !== item._id ?
+                      <div className="col-md-4">
+                        <div className={ css(styles.sliderItem) }>
+                          <div className={ css(styles.toolbar) }>
+                            <Icon onClick={ () => edit(item._id) }>edit</Icon>
+                            <Icon onClick={ () => deleteItem([item._id]) }>delete</Icon>
+                          </div>
+
+                          {
+                            item.image && <img src={ item.image } className={ css(styles.img) } alt=""/>
+                          }
+                          {
+                            item.content[0].title
+                          }
+                        </div>
+                      </div>:
+                      <SliderForm cancel={ cancel } item={ item } />
+
                   )
                 }
                 {
-                  isEditMode && <SliderForm cancel={ cancel } />
+                  showAddNewForm && <SliderForm cancel={ cancel } />
                 }
               </div>
               {
-                !isEditMode &&
+                !showAddNewForm &&
                 <div>
                   <Button
                     onClick={ () => addNew() }
@@ -66,7 +132,7 @@ const mapStateToProps = state => {
 };
 
 export default compose(
-  connect(mapStateToProps, { loadItems, saveItem }),
+  connect(mapStateToProps, { loadItems, saveItem, deleteItems }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
@@ -74,16 +140,28 @@ export default compose(
       }
     }
   }),
+  withHandlers({
+    deleteItem: ({ deleteItems }) => id => {
+      confirm({title: `Точно удалить?`, body: ''}).then(res => {
+        deleteItems(id)
+      })
+    }
+  }),
   withStateHandlers(
     {
-      isEditMode: false,
+      showAddNewForm: false,
     },
     {
-      addNew: ({ counter }) => (value) => ({
-        isEditMode: true
+      addNew: () => () => ({
+        showAddNewForm: true,
+        itemToEditId: null
+      }),
+      edit: () => (id) => ({
+        itemToEditId: id
       }),
       cancel: () => value => ({
-        isEditMode: false
+        showAddNewForm: false,
+        itemToEditId: null
       }),
     }
   ),

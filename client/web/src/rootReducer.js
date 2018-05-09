@@ -11,6 +11,7 @@ import menuReducer, * as fromMenu from './modules/menu/menuReducer';
 import hotelsReducer, * as fromHotels from './modules/hotels/hotelsReducer';
 import showplacesReducer, * as fromShowPlaces from './modules/showplaces/showplacesReducer';
 import orderReducer from './modules/orderForm/orderReducer';
+import PhotoSliderReducer, * as fromPhotoSlider from './modules/photoSlider/PhotoSliderReducer';
 
 const rootReducer = combineReducers({
   tours: toursReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   hotels: hotelsReducer,
   showplaces: showplacesReducer,
   order: orderReducer,
+  photoSlider: PhotoSliderReducer
 });
 
 export default rootReducer;
@@ -47,3 +49,4 @@ export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
 export const getHotelsByQuery = (state, query) => fromHotels.getHotelsByQuery(state.hotels, query);
 export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);
 export const getShowplacesByQuery = (state, query) => fromShowPlaces.getShowplacesByQuery(state.showplaces, query);
+export const getPhotoSliders = state => fromPhotoSlider.getPhotoSliders(state.photoSlider);

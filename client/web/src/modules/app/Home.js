@@ -1,5 +1,5 @@
 import React from 'react'
-import PhotoSlider from '../photoSlider/PhotoSlider';
+import PhotoSliderContainer from '../photoSlider/PhotoSliderContainer';
 import BigTitle from '../ui-elements/BigTitle';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import PageContent from '../ui-elements/PageContent'
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 
 const Home = ({ match }) => ([
-  <PhotoSlider />,
+  <PhotoSliderContainer />,
 	<PageContent>
     <BigTitle key={1} title={ window.TA.content.mostInteresting } subTitle=''/>
 		<PromoLinks />

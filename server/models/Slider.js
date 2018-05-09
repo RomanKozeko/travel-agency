@@ -8,6 +8,7 @@ const SliderSchema = new Schema({
   content: [{
     title: String,
     description: String,
+    language: String
   }]
 });
 

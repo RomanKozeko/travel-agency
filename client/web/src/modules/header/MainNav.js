@@ -5,11 +5,13 @@ import MenuContainer from '../menu/MenuContainer';
 
 
 const styles = StyleSheet.create({
+
   wrapper: {
     background: '#fff',
     position: 'relative',
     zIndex: '1',
-    boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
+    borderTop: '1px solid rgba(0,0,0,0.05)',
+    boxShadow: '0 5px 10px rgba(0,0,0,0.1)',
   },
   nav: {
     display: 'flex',
