@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import CheckBox from '../ui-elements/checkbox/CheckBox'
-import TextFieldSmall from '../ui-elements/TextFieldSmall'
+import CheckBox from '../ui-elements/checkbox/CheckBox';
+import TextFieldSmall from '../ui-elements/TextFieldSmall';
+import TreeList from './TreeList';
 
 const styles = StyleSheet.create({
 	wrapper: {
@@ -30,20 +31,12 @@ const SearchSideBar = ({regions, categories, days, onInputChange, onFieldChange}
 				placeholder='Название'
 			/>
 		</div>
-		<div className={css(styles.block)}>
-			<h3 className={css(styles.blockTitle)}>{ window.TA.content.regions }</h3>
-			{
-        regions.map(region => (
-					<CheckBox
-						key={region._id}
-						onChange={(e) => onFieldChange('regions', region._id)}
-						label={region.content.title}
-						name={region.content.title}
-						block={ true }
-					/>
-				))
-			}
-		</div>
+		{regions &&
+			<div className={css(styles.block)}>
+				<h3 className={css(styles.blockTitle)}>{window.TA.content.regions}</h3>
+				<TreeList items={regions} onChange={onFieldChange} />
+			</div>
+		}
 		{days &&
 			<div className={css(styles.block)}>
 				<h3 className={css(styles.blockTitle)}>{ window.TA.content.daysAmount }</h3>
