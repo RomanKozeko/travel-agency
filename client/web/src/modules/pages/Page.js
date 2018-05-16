@@ -10,11 +10,11 @@ import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
 import ImageSlider from '../ui-elements/ImageSlider';
+import Head from '../ui-elements/Head';
 import ToursSearchFormContainer from '../tours/SearchFormContainer';
 import ShowplacesSearchFormContainer from '../showplaces/SearchFormContainer';
 import HotelsSearchFormContainer from '../hotels/SearchFormContainer';
-import ContactForm from '../contactForm/ContactForm'
-
+import ContactForm from '../contactForm/ContactForm';
 
 const mapStateToProps = (state, router) => ({
   page: getPage(state, router.match.params.id),
@@ -64,23 +64,24 @@ class Page extends React.Component {
     const { isFetching, page } = this.props;
     return (
       <div>
-          <PageHeader title={page ? page.content.title : ''} />
-          <PageContent>
-            {isFetching || !page ?
-              <h4>Загрузка...</h4> :
-              page.content.rows.sort((a, b) => a.order - b.order).map(row => (
-                <div key={row._id} className="row">
-                  { row.title && <FancyHeader title={ row.title } /> }
-                  {row.items.map(item => (
-                      <div key={item._id} className={this.getRowItemClass(item.size)}>
-                        <PageColumn item={item} page={page} />
-                      </div>
-                    ))
-                  }
-                </div>
-              ))
-            }
-          </PageContent>
+        <Head title={page ? page.content.title : ''} metaDescription={page ? page.content.description : ''} />
+        <PageHeader title={page ? page.content.title : ''} />
+        <PageContent>
+          {isFetching || !page ?
+            <h4>Загрузка...</h4> :
+            page.content.rows.sort((a, b) => a.order - b.order).map(row => (
+              <div key={row._id} className="row">
+                { row.title && <FancyHeader title={ row.title } /> }
+                {row.items.map(item => (
+                  <div key={item._id} className={this.getRowItemClass(item.size)}>
+                    <PageColumn item={item} page={page} />
+                  </div>
+                ))
+                }
+              </div>
+            ))
+          }
+        </PageContent>
       </div>
     );
   }

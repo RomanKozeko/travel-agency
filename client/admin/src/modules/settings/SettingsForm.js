@@ -99,6 +99,38 @@ class SettingsForm extends Component {
               </div>
 
               <div className={ css(styles.tableWrapper) }>
+	              <h3>Название и мета-описание главной страницы</h3>
+	              <table className={ css(styles.table)}>
+		              <tbody>
+		              <tr>
+			              <th className={css(styles.th)} />
+			              {
+				              languages.map(lang => <th className={css(styles.th)} key={ lang._id }> { lang.prefix } </th>)
+			              }
+		              </tr>
+		              <tr>
+			              <td>Название сайта</td>
+			              {
+				              languages.map(lang =>
+					              <td className={css(styles.td)} key={ `${lang._id}_appTitle` }>
+						              <Field name={`content.${lang._id}.appTitle`} className={ css(styles.fieldInput)} component="input" type="text" />
+					              </td>
+				              )
+			              }
+		              </tr>
+		              <tr>
+			              <td>Мета описание сайта</td>
+			              {
+				              languages.map(lang =>
+					              <td className={css(styles.td)} key={ `${lang._id}_appDescription` }>
+						              <Field name={`content.${lang._id}.appDescription`} className={ css(styles.fieldInput)} component="input" type="text" />
+					              </td>
+				              )
+			              }
+		              </tr>
+		              </tbody>
+	              </table>
+
                 <h3>Перевод фраз</h3>
 
                 <table className={ css(styles.table)}>

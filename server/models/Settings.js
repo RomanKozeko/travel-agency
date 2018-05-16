@@ -7,6 +7,8 @@ const SettingsSchema = new Schema({
     item: String
   }],
   content: [{
+    appTitle: String,
+    appDescription: String,
     tourInfo: String,
     tourDescription: String,
     route: String,

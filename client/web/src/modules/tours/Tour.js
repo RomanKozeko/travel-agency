@@ -9,6 +9,7 @@ import PageHeader from '../ui-elements/PageHeader';
 import FancyHeader from '../ui-elements/FancyHeader';
 import HotelPreview from '../ui-elements/HotelPreview';
 import ItemsGallery from '../ui-elements/ItemsGallery';
+import Head from '../ui-elements/Head';
 import Map from '../ui-elements/Map';
 import { getContentByLanguage } from '../../services/utils';
 import { theme } from '../../services/constans';
@@ -127,6 +128,7 @@ class Tour extends React.Component {
     const { isFetching, tour, languageID } = this.props;
     return (
       <div>
+        <Head title={tour ? tour.content.title : ''} metaDescription={tour ? tour.content.description : ''} />
         <div className={css(styles.tour)}>
           <PageHeader title={tour ? tour.content.title : ''} />
           <PageContent>

@@ -15,6 +15,7 @@ import Hotel from '../hotels/Hotel';
 import Showplace from '../showplaces/Showplace';
 import Footer from './Footer';
 import { getLangPref } from '../../services/utils'
+import Head from '../ui-elements/Head';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -37,19 +38,9 @@ let App = ({languagePrefix}) => {
       main: () => <Page />
     },
     {
-      path: `${urlPrefix}/tours`,
-      exact: true,
-      main: () => <ToursPage />
-    },
-    {
       path: `${urlPrefix}/tours/:id`,
       exact: true,
       main: () => <Tour />
-    },
-    {
-      path: `${urlPrefix}/contacts`,
-      exact: true,
-      main: () => <Contacts />
     },
     {
       path: `${urlPrefix}/hotels/:url`,
@@ -65,6 +56,7 @@ let App = ({languagePrefix}) => {
   ];
   return ([
       <div className={css(styles.wrapper)}>
+        <Head title={window.TA.content.appTitle} metaDescription={window.TA.content.appDescription} />
         <Header />
         <div className={css(styles.content)}>
           {routes.map((route, index) => (

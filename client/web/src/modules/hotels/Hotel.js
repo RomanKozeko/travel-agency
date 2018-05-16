@@ -3,6 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Head from '../ui-elements/Head';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import { getHotel } from '../../rootReducer';
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
 
 const Hotel = ({ item, isFetching }) => (
   <div>
+    <Head title={item ? item.content.title : ''} metaDescription={item ? item.content.description : ''} />
     <PageHeader title={item ? item.content.title : ''} />
     <PageContent small>
       {
