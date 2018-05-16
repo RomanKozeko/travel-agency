@@ -109,7 +109,7 @@ class SettingsForm extends Component {
 			              }
 		              </tr>
 		              <tr>
-			              <td>Название сайта</td>
+			              <td>Название главной страницы</td>
 			              {
 				              languages.map(lang =>
 					              <td className={css(styles.td)} key={ `${lang._id}_appTitle` }>
@@ -119,7 +119,7 @@ class SettingsForm extends Component {
 			              }
 		              </tr>
 		              <tr>
-			              <td>Мета описание сайта</td>
+			              <td>Мета описание главной страницы</td>
 			              {
 				              languages.map(lang =>
 					              <td className={css(styles.td)} key={ `${lang._id}_appDescription` }>
