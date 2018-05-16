@@ -99,7 +99,7 @@ class SettingsForm extends Component {
               </div>
 
               <div className={ css(styles.tableWrapper) }>
-	              <h3>Название и мета-описание главной страницы</h3>
+	              <h3>Главная страница</h3>
 	              <table className={ css(styles.table)}>
 		              <tbody>
 		              <tr>
@@ -119,7 +119,7 @@ class SettingsForm extends Component {
 			              }
 		              </tr>
 		              <tr>
-			              <td>Мета описание главной страницы</td>
+			              <td>Мета-описание главной страницы</td>
 			              {
 				              languages.map(lang =>
 					              <td className={css(styles.td)} key={ `${lang._id}_appDescription` }>
