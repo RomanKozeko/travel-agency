@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
   pageContent: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '70px 0'
+    padding: '70px 0',
+    backgroundSize: 'cover'
   },
   wrapper: {
     width: '800px',
