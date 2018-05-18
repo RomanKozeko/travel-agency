@@ -461,7 +461,17 @@ class SettingsForm extends Component {
                         )
                       }
                     </tr>
-                    
+                    <tr>
+                      <td>Страница не найдена</td>
+                      {
+                        languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}notFound` }>
+                            <Field name={`content.${lang._id}.notFound`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+                        )
+                      }
+                    </tr>
+
                   </tbody>
                 </table>
               </div>

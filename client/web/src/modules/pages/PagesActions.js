@@ -1,5 +1,5 @@
 import { CALL_API, Schemas } from '../../middleware/callApi';
-import { withPrefix } from '../../services/utils';
+import { withPrefix, makeActionCreator } from '../../services/utils';
 
 export const PAGES_REQUEST = 'PAGES_REQUEST';
 export const PAGES_SUCCESS = 'PAGES_SUCCESS';
@@ -35,3 +35,5 @@ export const loadPage = url => (dispatch, getState) => {
 export const loadPages = () => (dispatch, getState) => (
   dispatch(fetchPages(getState().app.languages.urlPrefix))
 );
+
+export const clearError = makeActionCreator('PAGE/CLEAR_ERROR')

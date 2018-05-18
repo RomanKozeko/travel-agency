@@ -8,7 +8,8 @@ const pagesSuccess = (state, action) => {
     allIds: [...state.allIds, ...payload.result.items],
     byIds: { ...state.byIds, ...payload.entities.pages },
     isFetching: false,
-    isFetched: true
+    isFetched: true,
+    error: false
   };
 };
 
@@ -19,6 +20,7 @@ const pageSuccess = (state, action) => {
     allIds: [...state.allIds, payload.result],
     byIds: { ...state.byIds, ...payload.entities.pages },
     isFetching: false,
+    error: false
   };
 };
 
@@ -26,14 +28,17 @@ export const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
-  isFetched: false
+  isFetched: false,
+  error: false
 };
 
 const pagesReducer = createReducer(defaultState, {
-  [actions.PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
+  [actions.PAGES_REQUEST]: state => ({ ...state, isFetching: true, error: false }),
   [actions.PAGES_SUCCESS]: pagesSuccess,
-  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false }),
-  [actions.PAGE_SUCCESS]: pageSuccess
+  [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false, error: true }),
+  [actions.PAGE_SUCCESS]: pageSuccess,
+  [actions.PAGE_FAILURE]: state => ({ ...state, isFetching: false, error: true }),
+  ['PAGE/CLEAR_ERROR']: state => ({ ...state, error: false }),
 });
 
 export default pagesReducer;

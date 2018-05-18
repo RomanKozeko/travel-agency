@@ -43,6 +43,7 @@ const SettingsSchema = new Schema({
     moreInfo: String,
     emailSentMessage: String,
     emailSentContactsMessage: String,
+    notFound: String,
   }]
 });
 
