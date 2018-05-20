@@ -19,6 +19,7 @@ import newsReducer, * as fromNews from './modules/news/NewsReducer';
 import contactsReducer, * as fromContacts from './modules/contacts/ContactsReducer';
 import settingsReducer, * as fromSettings from './modules/settings/SettingsReducer';
 import sliderReducer, * as fromSlider from './modules/slider/SliderReducer';
+import socialReducer, * as fromSocial from './modules/social/SocialReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
   news: newsReducer,
   contacts: contactsReducer,
   settings: settingsReducer,
-  slider: sliderReducer
+  slider: sliderReducer,
+  social: socialReducer
 });
 
 export default rootReducer;
@@ -82,3 +84,4 @@ export const getContacts = (state) => fromContacts.getContacts(state.contacts);
 export const getSettings = (state) => fromSettings.getSettings(state.settings);
 
 export const getSliderItems = (state) => fromSlider.getSliderItems(state.slider);
+export const getSocialItems = (state) => fromSocial.getSocialItems(state.social);

@@ -33,6 +33,7 @@ import MenuContainer from '../menuBuilder/MenuContainer';
 import Home from "../home/Home";
 import ContactsContainer from "../contacts/ContactsContainer";
 import SettingsContainer from "../settings/SettingsContainer";
+import SocialContainer from "../social/SocialContainer";
 const styles = StyleSheet.create({
   pageContainer: {
     minHeight: 'calc(100vh - 75px)',
@@ -164,7 +165,11 @@ const routes = [
     exact: true,
     main: () => <SettingsContainer />
   },
-
+  {
+    path: '/admin/social',
+    exact: true,
+    main: () => <SocialContainer />
+  }
 ];
 
 

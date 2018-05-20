@@ -135,7 +135,9 @@ export const Schemas = {
   SETTINGS_ITEM: itemSchema,
   SETTINGS: itemsSchema,
   SLIDER_ITEM: itemSchema,
-  SLIDER: itemsSchema
+  SLIDER: itemsSchema,
+  SOCIAL_ITEM: itemSchema,
+  SOCIAL: itemsSchema
 };
 
 // Action key that carries API call info interpreted by this Redux middleware.

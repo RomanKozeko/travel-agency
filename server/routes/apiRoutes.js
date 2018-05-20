@@ -43,6 +43,7 @@ const ContactsCtrl = require('../controllers/api/contacts');
 const SettingsCtrl = require('../controllers/api/settings');
 const EmailerCtrl = require('../controllers/api/emailer');
 const SliderCtrl = require('../controllers/api/slider');
+const SocialCtrl = require('../controllers/api/social');
 
 const requireSignIn = passport.authenticate('local', { session: false });
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -88,8 +89,8 @@ router.post('/pages', requireAuth, ApiPagesCtrl.post);
 router.get('/media', ApiPhotosCtrl.get);
 router.get('/media/:id', ApiPhotosCtrl.getOne);
 router.put('/media/:id', requireAuth, ApiPhotosCtrl.put);
-router.post('/media', requireAuth, upload.single('file'), ApiPhotosCtrl.post);
-router.post('/media-upload', requireAuth, upload.single('file'), ApiPhotosCtrl.upload);
+router.post('/media', upload.single('file'), ApiPhotosCtrl.post);
+router.post('/media-upload', upload.single('file'), ApiPhotosCtrl.upload);
 router.delete('/media', requireAuth, ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
@@ -145,5 +146,10 @@ router.get('/slider', SliderCtrl.get);
 router.put('/slider/:id', requireAuth, SliderCtrl.put);
 router.post('/slider', requireAuth, SliderCtrl.post);
 router.delete('/slider', requireAuth, SliderCtrl.delete);
+
+router.get('/social', SocialCtrl.get);
+router.put('/social/:id', requireAuth, SocialCtrl.put);
+router.post('/social', requireAuth, SocialCtrl.post);
+router.delete('/social', requireAuth, SocialCtrl.delete);
 
 module.exports = router;
