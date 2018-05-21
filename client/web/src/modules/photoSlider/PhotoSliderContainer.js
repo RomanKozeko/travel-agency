@@ -1,13 +1,9 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle, withStateHandlers } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
-import { theme } from '../../services/constans'
 import { fetchPhotoSlider } from './PhotoSliderReducer'
 import { getPhotoSliders } from '../../rootReducer'
-import PrefixLink from '../ui-elements/PrefixLink';
-import { LeftArrow, RightArrow } from '../ui-elements/icons/Icons'
 import PhotoSlider from './PhotoSlider'
 
 const PhotoSliderContainer = ({ items }) => {

@@ -69,6 +69,7 @@ const SocialForm = props => {
       <FieldArray name="socials" component={renderMembers} />
       <div>
         <Button
+          className={ css(styles.btn)}
           type="submit"
           color="primary"
           variant="raised"
@@ -92,19 +93,6 @@ export default compose(
   withHandlers({
     onSubmit: ({ item, saveItem }) => (values) => {
       saveItem(values, !item)
-    },
-    updloadImg: (props) => ({ payload }) => {
-      const formData = new FormData();
-      formData.append('file', payload);
-      fetch('/api/media-upload', {
-        method: 'POST',
-        body: formData
-      })
-        .then(response =>
-          response.json().then(({ path }) => {
-            props.uploadImage('Settings', 'pagesImg', path)
-          })
-        );
     }
   }),
   reduxForm({

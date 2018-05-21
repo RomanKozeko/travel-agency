@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		background: '#333',
+		background: '#d0d0d0',
 		backgroundSize: 'cover',
 	},
 	headerTitle: {

@@ -4,6 +4,7 @@ import { compose, lifecycle } from 'recompose'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { getContacts } from '../../rootReducer'
 import { fetchContacts } from '../header/headerReducer'
+import SocialLinks from '../social/SocialLinks'
 
 
 const styles = StyleSheet.create({
@@ -124,9 +125,7 @@ const Footer = ({ items }) => (
         </div>
         <div className="col-md-3">
           <h4 className={css(styles.header)}>{ window.TA.content.followUs }</h4>
-          <a href="" className={css(styles.button, styles.fb)}>Facebook</a>
-          <a href="" className={css(styles.button, styles.vk)}>Vkontakte</a>
-          <a href="" className={css(styles.button, styles.google)}>Google +</a>
+          <SocialLinks />
         </div>
       </div>
 

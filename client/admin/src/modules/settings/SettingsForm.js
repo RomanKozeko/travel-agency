@@ -509,7 +509,7 @@ const mapStateToProps = (state, { item }) => {
     currencies: formValueSelector('Settings')(state, 'currencies'),
     initialValues: {
       pagesImg: item && item.pagesImg,
-      currencies: item.currencies,
+      currencies: item && item.currencies,
       content: contentByLang(item && item.content, languages)
     }
   }
