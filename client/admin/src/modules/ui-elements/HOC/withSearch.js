@@ -7,19 +7,22 @@ export default function withSearch(WrappedComponent) {
       super(props);
 
       this.state = {
+        filterQuery: '',
 	      activeItems: this.props.items || []
       }
     }
 
 	  handleInputChange = (e) => {
-      const newItems = this.props.items
-        .filter(item => (
-          item.content.some(contentItem => (
-            contentItem.title.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1))
-          )
-        );
-      this.setState({ activeItems: newItems })
+      this.setState({ filterQuery: e.target.value.toLowerCase() })
     };
+    
+    filterItems = (items) => {
+      return items.filter(item => (
+          item.content.some(contentItem => (
+            contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1))
+        )
+      );
+    }
 
     render() {
       return (
@@ -30,7 +33,7 @@ export default function withSearch(WrappedComponent) {
             fullWidth
             style={{marginBottom: '25px'}}
           />
-            <WrappedComponent {...this.props} items={this.state.activeItems} />
+            <WrappedComponent {...this.props} items={this.filterItems(this.props.items)} />
         </div>
       );
     }
