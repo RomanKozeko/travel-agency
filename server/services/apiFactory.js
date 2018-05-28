@@ -31,7 +31,6 @@ const getAllWithPagination = (offset, itemsPerPageLimit, model) => {
   const query = model.find({})
     .sort('-date')
     .skip(offset)
-    .limit(itemsPerPageLimit)
     .populate('preview');
   return Promise.all([query, model.count()]);
 };
@@ -44,7 +43,6 @@ const getAll = model => (req, res, next) => {
         offset,
         items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
         count: result[1],
-        limit: config.itemsPerPageLimit
       });
     })
     .catch(next);

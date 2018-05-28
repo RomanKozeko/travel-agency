@@ -29,7 +29,6 @@ module.exports = {
           offset,
           items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1],
-          limit: config.itemsPerPageLimit
         });
       })
       .catch(next);

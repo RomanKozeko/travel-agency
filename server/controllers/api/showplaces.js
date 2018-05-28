@@ -14,7 +14,6 @@ module.exports = createCRUD(
       .then((result) => {
         res.json({
           offset: parseInt(offset),
-          limit: parseInt(limit),
           items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
           count: result[1]
         });
