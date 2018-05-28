@@ -15,11 +15,11 @@ export default function withSearch(WrappedComponent) {
 	  handleInputChange = (e) => {
       this.setState({ filterQuery: e.target.value.toLowerCase() })
     };
-    
+
     filterItems = (items) => {
       return items.filter(item => (
-          item.content.some(contentItem => (
-            contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1))
+          item.content.some(contentItem => (contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1)) ||
+          item.filename && (item.filename.toLowerCase().indexOf(this.state.filterQuery) !== -1)
         )
       );
     }
@@ -33,7 +33,10 @@ export default function withSearch(WrappedComponent) {
             fullWidth
             style={{marginBottom: '25px'}}
           />
-            <WrappedComponent {...this.props} items={this.filterItems(this.props.items)} />
+            <WrappedComponent
+              {...this.props}
+              items={this.state.filterQuery ? this.filterItems(this.props.items) : this.props.items}
+            />
         </div>
       );
     }
