@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-let SearchFormContainer = ({ tours, isToursFetched, regions, categories, onFieldChange, onInputChange }) => {
+let SearchFormContainer = ({ tours, isToursFetched, regions, categories, onFieldChange, onInputChange, currLanguageId }) => {
 
 	return(
 		<div className={css(styles.wrapper)}>
@@ -57,7 +57,7 @@ let SearchFormContainer = ({ tours, isToursFetched, regions, categories, onField
 								<div>Туры не найдены</div>
 								:
 								tours.map(tour =>
-									<TourItemHorizontal tour={tour} key={tour._id}/>
+                  !tour.disabledForLanguages.includes(currLanguageId) && tour.enabled && <TourItemHorizontal tour={tour} key={tour._id}/>
 								)
 						}
 					</div>
@@ -79,6 +79,7 @@ const mapStateToProps = (state) => {
 		isToursFetched: state.tours.isFetched,
     isRegionsFetched: state.entities.regions.isFetched,
 		isCategoriesFetched: state.entities.categories.isFetched,
+		currLanguageId: state.app.languages.urlPrefix
 	}
 };
 

@@ -30,12 +30,13 @@ class ToursContainer extends React.Component {
 			currPage,
 			count,
 			loadTours,
-			pageCount
+			pageCount,
+			currLanguageId
 		} = this.props;
 
 		return (
 			<div>
-				<ToursList tours={tours}/>
+				<ToursList tours={tours} currLanguageId={currLanguageId} />
 				<Pagination
 					pageNumber={currPage}
 					pageCount={pageCount}

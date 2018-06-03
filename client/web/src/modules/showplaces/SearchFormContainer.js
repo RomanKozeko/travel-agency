@@ -55,6 +55,7 @@ let SearchFormContainer = ({ showplaces, isShowplacesFetched, regions, onFieldCh
 								<div>Достопримечательности не найдены</div>
 								:
 	              showplaces.map(showplace =>
+									showplace.enabled &&
 									<ShowplaceItemHorizontal showplace={showplace} key={showplace._id}/>
 								)
 						}

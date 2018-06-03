@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { Field, reduxForm } from 'redux-form';
 import Button from '../ui-elements/FormButton';
 import withEmailSending from '../ui-elements/HOC/withEmailSending';
+import Modal from '../ui-elements/Modal';
 import { theme } from '../../services/constans';
 
 
@@ -41,13 +42,18 @@ const styles = StyleSheet.create({
 		padding: '20px',
 		color: theme.colors.primaryAccent,
 		border: `1px solid ${theme.colors.primaryAccent}`,
-		borderRadius: '5px'
-	}
+		borderRadius: '5px',
+    marginBottom: '20px'
+	},
+  messageWrap: {
+    textAlign: 'center',
+    marginBottom: '-20px'
+  }
 });
 
-let OrderForm = ({ handleSubmit, isEmailSent }) =>
+let OrderForm = ({ handleSubmit, isEmailSent, onModalClose, reset }) =>
 	<div className={css(styles.wrapper)}>
-    {!isEmailSent ?
+
       <div>
         <h4 className={css(styles.title)}>{window.TA.content.orderTour}</h4>
         <form onSubmit={handleSubmit}>
@@ -58,9 +64,16 @@ let OrderForm = ({ handleSubmit, isEmailSent }) =>
           <Button type='submit'>{window.TA.content.order}</Button>
         </form>
       </div>
-      :
-      <div className={ css(styles.message)}>{window.TA.content.emailSentMessage}</div>
+    {
+      isEmailSent &&
+      <Modal>
+        <div className={ css(styles.messageWrap)}>
+          <div className={ css(styles.message)}>{window.TA.content.emailSentMessage}</div>
+          <Button handleClick={ () => { reset(); onModalClose() } }>{ window.TA.content.close }</Button>
+        </div>
+      </Modal>
     }
+
 	</div>;
 
 OrderForm = compose(

@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     tours: getToursByQuery(state, ownProps.query),
     isFetching: state.tours.isFetching,
-    query: ownProps.query
+    query: ownProps.query,
+    currLanguageId: state.app.languages.urlPrefix
   }
 };
 
@@ -24,13 +25,14 @@ class FilteredToursContainer extends React.Component {
     const {
       tours,
       isFetching,
+      currLanguageId,
     } = this.props;
 
     return (
       <div>
         {isFetching ?
           <div>Loading...</div> :
-          <ToursList tours={tours} />
+          <ToursList tours={tours} currLanguageId={ currLanguageId } />
         }
       </div>
     );

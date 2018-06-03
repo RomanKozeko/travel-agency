@@ -18,7 +18,7 @@ const withEmailSending = (WrappedComponent, emailSubject) => {
 			{ sendEmail }
 		),
 		withStateHandlers(
-			({ isEmailSent }) => ({ isEmailSent : false }),
+			({ isEmailSent, reset }) => ({ isEmailSent : false, reset }),
 			{
 				onSubmit: ({}, {reset, sendEmail, tour}) => (options) => {
 					options = tour ?
@@ -34,6 +34,9 @@ const withEmailSending = (WrappedComponent, emailSubject) => {
 						sendEmail({ ...options, emailSubject });
 						return { isEmailSent: true };
 				},
+				onModalClose: (props, props2) => () => {
+					return { isEmailSent: false };
+				}
 			}
 		)
 	)(BaseContainer);

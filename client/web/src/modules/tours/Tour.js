@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
 		boxShadow: theme.boxShadow,
     padding: '20px',
     marginBottom: '20px',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    width: '100%'
   },
 	programWrapper: {
     display: 'flex',
@@ -107,6 +108,11 @@ const styles = StyleSheet.create({
       textDecoration: 'none',
       backgroundColor: theme.colors.primaryAccent,
     }
+  },
+  price: {
+    fontSize: '23px',
+    color: theme.colors.primary,
+    fontWeight: 'bold'
   }
 });
 
@@ -114,8 +120,27 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, router) => ({
   tour: getTour(state, router.match.params.id),
   isFetching: state.pages.isFetching,
-  languageID: state.app.languages.urlPrefix
+  languageID: state.app.languages.urlPrefix,
+  currency: state.app.languages.currency,
+  currencies: state.app.languages.currencies
 });
+
+const RenderPrice = ({ price, currency, currencies }) => {
+
+  if (!currency) {
+    return `${price} BYN`;
+  }
+
+  const Cur_ID = currency.split(',')[2];
+
+  if (Cur_ID === 'BYN') {
+    return `${price} BYN`;
+  }
+  const currencyWithRate = currencies.find(item => item.Cur_ID === Number(Cur_ID))
+
+  return `${(price / currencyWithRate.Cur_OfficialRate * currencyWithRate.Cur_Scale).toFixed(0)} ${currencyWithRate.Cur_Abbreviation}`;
+
+}
 
 class Tour extends React.Component {
   componentDidMount() {
@@ -125,7 +150,7 @@ class Tour extends React.Component {
   }
 
   render() {
-    const { isFetching, tour, languageID } = this.props;
+    const { isFetching, tour, languageID, currency, currencies } = this.props;
     return (
       <div>
         <Head title={tour ? tour.content.title : ''} metaDescription={tour ? tour.content.description : ''} />
@@ -161,6 +186,14 @@ class Tour extends React.Component {
 		                    <td className={css(styles.cell)}>{ window.TA.content.foodType }:</td>
 		                    <td><b>{ tour.food && getContentByLanguage(tour.food.content, languageID).title }</b></td>
 	                    </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>{ window.TA.content.price }:</td>
+                        <td><div className={css(styles.price)}>
+                          {
+                            RenderPrice({ price: tour.price, currency, currencies })
+                          }
+                        </div></td>
+                      </tr>
                     </table>
                   </div>
                   <div className={css(styles.content)}>
@@ -210,7 +243,7 @@ class Tour extends React.Component {
 		                {
 			                tour.content.program.map(({ _id, description}, index) =>
 				                <div key={ _id } className={css(styles.programWrapper)}>
-					                <div className={css(styles.programDay)}>{ index + 1 }</div>
+					                <div className={css(styles.programDay)}>{ window.TA.content.day } { index + 1 }</div>
 					                <div className={css(styles.programContent)} dangerouslySetInnerHTML={{ __html:description }} />
 				                </div>
 			                )

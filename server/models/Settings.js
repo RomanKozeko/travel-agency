@@ -44,6 +44,10 @@ const SettingsSchema = new Schema({
     emailSentMessage: String,
     emailSentContactsMessage: String,
     notFound: String,
+    price: String,
+    main: String,
+    day: String,
+    close: String,
   }]
 });
 

@@ -86,11 +86,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const ToursList = ({tours}) => {
+const ToursList = ({tours, currLanguageId}) => {
 	return (
 		<div className={css(styles.wrapper)}>
 			{tours.map((tour, i) => (
-					<div key={tour._id} className={css(styles.tourWrapper)}>
+				!tour.disabledForLanguages.includes(currLanguageId) && tour.enabled &&
+				<div key={tour._id} className={css(styles.tourWrapper)}>
 						<div className={css(styles.preview)} style={{ backgroundImage: `url(${tour.preview[0] && tour.preview[0].path}`}} />
 						<TourBody tour={ tour } />
 					</div>

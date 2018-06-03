@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const FormButton = ({children}) => (
-  <button className={css(styles.btn)}>
+const FormButton = ({children, handleClick}) => (
+  <button onClick={ handleClick } className={css(styles.btn)}>
     {children}
   </button>
 )

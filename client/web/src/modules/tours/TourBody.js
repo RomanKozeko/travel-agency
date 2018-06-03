@@ -78,8 +78,13 @@ const styles = StyleSheet.create({
       paddingTop: '0'
     },
   },
+  listItemPrice: {
+    textAlign: 'right',
+    paddingBottom: '5px'
+  },
   price: {
-    fontSize: '20px',
+    fontSize: '23px',
+    color: theme.colors.primary,
     fontWeight: 'bold'
   }
 });
@@ -160,7 +165,7 @@ const TourBody = ({
 
         {
           content.price &&
-          <div className={css(styles.listItem)}>
+          <div className={css(styles.listItemPrice)}>
             <span className={css(styles.price)}>
               {
                 RenderPrice({ price: content.price, currency, currencies })

@@ -74,6 +74,9 @@ const styles = StyleSheet.create({
     '@media (min-width: 1000px)': {
       display: 'none'
     }
+  },
+  wrap: {
+    width: '100%'
   }
 });
 
@@ -91,7 +94,7 @@ const findRootNodesAndPopulate = items => (
 );
 
 let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
-  <div>
+  <div className={css(styles.wrap)}>
     {
       isOpen ?
         <svg fill="#333" height="60" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg" className={css(styles.menuTrigger)} onClick={ onMenuTriggerClick }>
@@ -106,7 +109,7 @@ let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
     }
 
     <ul className={css(styles.menu)} style={{ display: isOpen ? 'block' : 'none' }}>
-      <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">Главная</PrefixLink></li>
+      <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">{ window.TA.content.main }</PrefixLink></li>
       {findRootNodesAndPopulate(menuItems).map(item => (
         <MenuItem item={item} />
       ))}

@@ -471,6 +471,46 @@ class SettingsForm extends Component {
                         )
                       }
                     </tr>
+                    <tr>
+                      <td>Цена</td>
+                      {
+                        languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}price` }>
+                            <Field name={`content.${lang._id}.price`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+                        )
+                      }
+                    </tr>
+                    <tr>
+                      <td>Главная</td>
+                      {
+                        languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}main` }>
+                            <Field name={`content.${lang._id}.main`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+                        )
+                      }
+                    </tr>
+                    <tr>
+                      <td>День</td>
+                      {
+                        languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}day` }>
+                            <Field name={`content.${lang._id}.day`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+                        )
+                      }
+                    </tr>
+                    <tr>
+                      <td>Закрыть</td>
+                      {
+                        languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}close` }>
+                            <Field name={`content.${lang._id}.close`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+                        )
+                      }
+                    </tr>
 
                   </tbody>
                 </table>

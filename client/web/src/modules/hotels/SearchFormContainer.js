@@ -55,6 +55,7 @@ let SearchFormContainer = ({ hotels, isHotelsFetched, regions, onFieldChange, on
 								<div>Отели не найдены</div>
 								:
 	              hotels.map(hotel =>
+									hotel.enabled &&
 									<HotelItemHorizontal hotel={hotel} key={hotel._id}/>
 								)
 						}

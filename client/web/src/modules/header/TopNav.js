@@ -7,6 +7,7 @@ import { getContacts } from '../../rootReducer'
 import { fetchContacts } from './headerReducer'
 import { setCurrency, setCurrencies } from '../app/appReducer'
 import { theme } from '../../services/constans'
+import { Link } from 'react-router-dom';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -29,10 +30,11 @@ const styles = StyleSheet.create({
     marginBottom: '5px'
   },
   inner: {
-    display: 'flex',
+    display: 'block',
+    paddingTop: '20px',
     justifyContent: 'space-between',
-    '@media (max-width: 600px)': {
-      flexDirection: 'column-reverse;'
+    '@media (min-width: 1000px)': {
+      display: 'flex',
     }
   },
   right: {
@@ -50,12 +52,15 @@ const styles = StyleSheet.create({
     marginLeft: '-10px'
   },
   textTel: {
-    width: 'calc(100% / 2 - 10px)',
+    width: '100%',
     fontSize: '12px',
     marginLeft: '10px',
     marginBottom: '5px',
     display: 'flex',
     alignItems: 'center',
+    '@media (min-width: 400px)': {
+      width: 'calc(100% / 2 - 10px)',
+    },
     '@media (min-width: 600px)': {
       width: 'calc(100% / 3 - 10px)',
     }
@@ -78,6 +83,35 @@ const styles = StyleSheet.create({
     marginRight: '20px',
     borderRadius: '5px',
     border: `1px solid ${theme.colors.primary}`
+  },
+  logoBssr: {
+    backgroundImage: 'url(/web/build/bssrLogo.png)',
+    width: '215px',
+    backgroundSize: '100%',
+    backgroundRepeat: 'no-repeat',
+    marginLeft: '10px',
+    marginTop: '5px',
+    height: '120px',
+    display: 'none',
+    '@media (min-width: 600px)': {
+      display: 'block'
+    }
+  },
+  logo: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    backgroundImage: 'url(/web/build/logo.jpg)',
+    backgroundSize: 'cover',
+    color: '#222',
+    width: '133px',
+    height: '120px',
+    fontSize: '0',
+    margin: '5px 0'
+
+  },
+  logoWrap: {
+    display: 'flex',
+    paddingRight: '20px'
   }
 });
 
@@ -94,31 +128,32 @@ const TopNav = ({ items, setCurrency, currency }) => (
           }
         </select>
         <LanguagesNav/>
-
       </div>
       <div className={css(styles.inner)}>
+        <div className={css(styles.logoWrap)}>
+          <Link to="/" className={css(styles.logo)}>Logo</Link>
+          <div className={css(styles.logoBssr)} />
+        </div>
         <div className={css(styles.col)}>
-          <div className="row">
-            {
-              items.map(({ content, _id, tels }) => (
-                <div className="col-md-6" key={ _id }>
-                  <div className={css(styles.item)}>
-                    <span className={css(styles.text)}>{ content.title }</span>
-                  </div>
-                  <div className={css(styles.textTelWrap)}>
-                    {
-                      tels.map(({ title, img }) =>
-                        <div className={css(styles.textTel)}>
-                          <img src={ img }  className={css(styles.textTelImg)} alt=""/>
-                          <div className={css(styles.textTelContent)}>{ title }</div>
-                        </div>
-                      )
-                    }
-                  </div>
+          {
+            items.map(({ content, _id, tels }) => (
+              <div className="6" key={ _id }>
+                <div className={css(styles.item)}>
+                  <span className={css(styles.text)}>{ content.title }</span>
                 </div>
-              ))
-            }
-          </div>
+                <div className={css(styles.textTelWrap)}>
+                  {
+                    tels.map(({ title, img }) =>
+                      <div className={css(styles.textTel)}>
+                        <img src={ img }  className={css(styles.textTelImg)} alt=""/>
+                        <div className={css(styles.textTelContent)}>{ title }</div>
+                      </div>
+                    )
+                  }
+                </div>
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
