@@ -159,7 +159,7 @@ const TourBody = ({
           days &&
           <div className={css(styles.listItem)}>
             <DateIcon color={ theme.colors.primary } width={20}/>
-            <span className={css(styles.listItemText)}>Дней: { days }</span>
+            <span className={css(styles.listItemText)}>{  window.TA.content.daysAmount }: { days }</span>
           </div>
         }
 

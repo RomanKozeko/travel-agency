@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import Button from '../ui-elements/FormButton';
 import withEmailSending from '../ui-elements/HOC/withEmailSending';
 import Modal from '../ui-elements/Modal';
+import withSticky from '../ui-elements/HOC/withSticky';
 import { theme } from '../../services/constans';
 
 
@@ -53,17 +54,16 @@ const styles = StyleSheet.create({
 
 let OrderForm = ({ handleSubmit, isEmailSent, onModalClose, reset, itemName }) =>
 	<div className={css(styles.wrapper)}>
-
-      <div>
-        <h4 className={css(styles.title)}>{window.TA.content[`order${itemName.charAt(0).toUpperCase() + itemName.slice(1)}`]}</h4>
-        <form onSubmit={handleSubmit}>
-          <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
-          <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
-          <Field name='email' placeholder={window.TA.content.email} className={ css(styles.fieldInput)}  component='input' type='email' required />
-          <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' required />
-          <Button type='submit'>{window.TA.content.order}</Button>
-        </form>
-      </div>
+    <div>
+      <h4 className={css(styles.title)}>{window.TA.content[`order${itemName.charAt(0).toUpperCase() + itemName.slice(1)}`]}</h4>
+      <form onSubmit={handleSubmit}>
+        <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
+        <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
+        <Field name='email' placeholder={window.TA.content.email} className={ css(styles.fieldInput)}  component='input' type='email' required />
+        <Field name='message' placeholder={window.TA.content.message} className={ css(styles.fieldInput, styles.fieldTextArea)}  component='textarea' type='text' required />
+        <Button type='submit'>{window.TA.content.order}</Button>
+      </form>
+    </div>
     {
       isEmailSent &&
       <Modal>
@@ -79,7 +79,8 @@ let OrderForm = ({ handleSubmit, isEmailSent, onModalClose, reset, itemName }) =
 OrderForm = compose(
 	reduxForm({
 		form: 'Order'
-	})
+	}),
+  withSticky
 )(OrderForm);
 
 export default withEmailSending(OrderForm)
