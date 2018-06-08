@@ -19,6 +19,7 @@ const SettingsSchema = new Schema({
     includedInPrice: String,
     notIncludedInPrice: String,
     orderTour: String,
+    orderHotel: String,
     order: String,
     language: String,
     name: String,

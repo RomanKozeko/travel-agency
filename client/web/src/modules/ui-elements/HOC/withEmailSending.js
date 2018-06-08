@@ -20,13 +20,13 @@ const withEmailSending = (WrappedComponent, emailSubject) => {
 		withStateHandlers(
 			({ isEmailSent, reset }) => ({ isEmailSent : false, reset }),
 			{
-				onSubmit: ({}, {reset, sendEmail, tour}) => (options) => {
-					options = tour ?
+				onSubmit: ({}, {reset, sendEmail, item, itemName}) => (options) => {
+					options = item ?
 						{
 							...options,
-							tour: {
-								title: tour.content.title,
-								url: `${window.location.origin}/tours/${tour.url}`
+							item: {
+								title: item.content.title,
+								url: `${window.location.origin}/${itemName}s/${item.url}`
 							}
 						}
 						:

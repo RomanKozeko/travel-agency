@@ -12,6 +12,7 @@ import StarsList from '../ui-elements/StarsList';
 import ImageSlider from '../ui-elements/ImageSlider';
 import { PlaceIcon } from '../ui-elements/icons/Icons';
 import { theme } from '../../services/constans';
+import OrderForm from '../orderForm/OrderForm'
 
 const styles = StyleSheet.create({
   slider: {
@@ -33,20 +34,26 @@ const Hotel = ({ item, isFetching }) => (
       {
         isFetching || !item ?
         <h5>Загрузка...</h5> :
-        <div className={css(styles.wrapper)}>
-          {
-            item.preview.length > 0 &&
-            <div className={css(styles.slider)}>
-              <ImageSlider images={ item.preview } />
+          <div className="row">
+            <div className="col-md-9">
+              <div className={css(styles.wrapper)}>
+                {
+                  item.preview.length > 0 &&
+                  <div className={css(styles.slider)}>
+                    <ImageSlider images={ item.preview } />
+                  </div>
+                }
+                <StarsList starsCount={ item.stars } />
+                <div className={css(styles.addressWrap)}>
+                  <PlaceIcon color={ theme.colors.primary } width={20}/> <b>{ item.content.address }</b>
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: item.content.content }}/>
+              </div>
             </div>
-          }
-          <StarsList starsCount={ item.stars } />
-          <div className={css(styles.addressWrap)}>
-            <PlaceIcon color={ theme.colors.primary } width={20}/> <b>{ item.content.address }</b>
+            <div className="col-md-3">
+              <OrderForm item={item} itemName={'hotel'} />
+            </div>
           </div>
-
-          <div dangerouslySetInnerHTML={{ __html: item.content.content }}/>
-        </div>
       }
     </PageContent>
   </div>

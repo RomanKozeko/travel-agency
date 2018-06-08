@@ -282,6 +282,16 @@ class SettingsForm extends Component {
                       }
                     </tr>
                     <tr>
+                      <td>Заказать отель</td>
+	                    {
+		                    languages.map(lang =>
+                          <td className={css(styles.td)} key={ `${lang._id}orderHotel` }>
+                            <Field name={`content.${lang._id}.orderHotel`} className={ css(styles.fieldInput)} component="input" type="text" />
+                          </td>
+		                    )
+	                    }
+                    </tr>
+                    <tr>
                       <td>Отправить</td>
                       {
                         languages.map(lang =>

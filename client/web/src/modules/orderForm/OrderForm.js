@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   }
 });
 
-let OrderForm = ({ handleSubmit, isEmailSent, onModalClose, reset }) =>
+let OrderForm = ({ handleSubmit, isEmailSent, onModalClose, reset, itemName }) =>
 	<div className={css(styles.wrapper)}>
 
       <div>
-        <h4 className={css(styles.title)}>{window.TA.content.orderTour}</h4>
+        <h4 className={css(styles.title)}>{window.TA.content[`order${itemName.charAt(0).toUpperCase() + itemName.slice(1)}`]}</h4>
         <form onSubmit={handleSubmit}>
           <Field name='name' placeholder={window.TA.content.name} className={ css(styles.fieldInput)}  component='input' type='text' required />
           <Field name='phone' placeholder={window.TA.content.phone} className={ css(styles.fieldInput)}  component='input' type='tel' />
@@ -82,4 +82,4 @@ OrderForm = compose(
 	})
 )(OrderForm);
 
-export default withEmailSending(OrderForm, 'Заказ тура')
+export default withEmailSending(OrderForm)

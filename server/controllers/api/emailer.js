@@ -1,12 +1,12 @@
 import nodeMailer from 'nodemailer';
 import config from '../../config/index';
 
-const htmlTemplate = ({ message, name, phone, email, tour }) => (`
+const htmlTemplate = ({ message, name, phone, email, item }) => (`
     ${message ? `<p>${message}</p>` : ''}
     <p><b>Имя:</b> ${name}</p>
     ${phone ? `<p><b>Телефон:</b> ${phone}</p>` : ''}
     <p><b>Email:</b> ${email}</p>
-    ${tour ? `<b>Тур: <a href=${tour.url}>${tour.title}</a></b>` : ''}
+    ${item ? `<b>Заказ: <a href=${item.url}>${item.title}</a></b>` : ''}
 `);
 
 module.exports = {
@@ -22,9 +22,9 @@ module.exports = {
       }
     });
     const mailOptions = {
-      from: `tour agency <${config.email.from}>`,
+      from: `Bssr.by`,
       to: config.email.to,
-      subject: props.emailSubject,
+      subject: props.emailSubject || 'Заказ Вssr.by',
       html:  htmlTemplate(props)
     };
 
