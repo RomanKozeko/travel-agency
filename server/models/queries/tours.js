@@ -10,7 +10,6 @@ module.exports = {
         Tour.find(filterObj)
         .sort('-date')
         .skip(offset)
-        .limit(itemsPerPageLimit)
         .populate('preview')
         .populate('categories')
         .populate('regions')
