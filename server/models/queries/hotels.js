@@ -23,7 +23,6 @@ module.exports = {
       const query = Hotel.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
-        .limit(parseInt(itemsPerPageLimit))
         .populate('preview')
         .populate('categories')
         .populate('regions');
@@ -66,7 +65,6 @@ module.exports = {
       const query = Hotel.find(queryObj)
         .sort('-date')
         .skip(parseInt(offset))
-        .limit(parseInt(itemsPerPageLimit))
         .populate('preview')
         .populate('categories')
         .populate('regions')

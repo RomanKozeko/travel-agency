@@ -5,7 +5,7 @@ module.exports = {
     login: 'Admin',
     password: 'Admin'
   },
-  itemsPerPageLimit: 40,
+  itemsPerPageLimit: 400,
   email: {
     from: 'travel.agency.emailer@gmail.com',
     password: 'emailer@123',
