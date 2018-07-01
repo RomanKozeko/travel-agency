@@ -15,9 +15,9 @@ module.exports = {
         .populate('regions')
         .populate('hotels')
         .populate('showplaces')
-        .populate('programFile')
         .populate('periodType')
         .populate('food')
+	      .populate('content.programFile')
         .populate({
           path: 'hotels',
           populate: [
@@ -44,6 +44,7 @@ module.exports = {
             }
           ]
         })
+
       ))
       .then(tours => Promise.all([tours, Tour.count()]))
   }

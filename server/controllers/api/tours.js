@@ -25,9 +25,9 @@ module.exports = {
 
     Tour.findById(tourId)
       .populate('preview')
-      .populate('programFile')
       .populate('hotels')
       .populate('showplaces')
+	    .populate('content.programFile')
       .then(tour => res.json(tour))
       .catch(next);
   },
@@ -35,7 +35,7 @@ module.exports = {
   getOneByUrl(req, res, next) {
     Tour.findOne({ url: req.params.url } )
 	    .populate('preview')
-      .populate('programFile')
+	    .populate('content.programFile')
 	    .populate({
 		    path: 'hotels',
 			  populate: [

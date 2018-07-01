@@ -18,7 +18,11 @@ const ContentSchema = new Schema({
   duration: String,
   mapName: String,
   language: String,
-  price: Number
+  price: Number,
+	programFile: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Media'
+	}],
 });
 
 module.exports = ContentSchema;

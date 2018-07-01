@@ -27,10 +27,6 @@ const TourSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Media'
   }],
-  programFile: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Media'
-  }],
   map: [{
     formatted_address: String,
     place_id: String

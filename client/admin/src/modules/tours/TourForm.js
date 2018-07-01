@@ -75,7 +75,7 @@ class TourForm extends Component {
     });
 
     this.props.tour.content.forEach(content => {
-      contentByLang[content.language] = content
+      contentByLang[content.language] = content;
     });
 
     const tour = {
@@ -129,9 +129,11 @@ class TourForm extends Component {
     this.setState({ tour: {...this.state.tour, preview} });
   };
 
-  addTourProgram = () => {
+  addTourProgram = langID => () => {
     const selectedPreview = [...this.props.selectedPreview];
-    const programFile = [...this.state.tour.programFile];
+	  const contentByLang = {...this.state.contentByLang};
+	  const programFile = contentByLang[langID].programFile ?
+      [...contentByLang[langID].programFile] : [];
 
     selectedPreview.forEach( selectedItem => {
       const isNotExist = programFile.every(previewItem => previewItem._id !== selectedItem);
@@ -140,8 +142,15 @@ class TourForm extends Component {
       }
     });
 
-    this.setState({ tour: {...this.state.tour, programFile} });
-  }
+    const currentContent = {...this.state.contentByLang[langID], programFile}
+
+    this.setState({
+      contentByLang: {
+        ...this.state.contentByLang,
+	      [langID]: currentContent
+      }
+    });
+  };
 
   togglePreviewItem = (img) => {
     const selectedPreview = [ ...this.state.selectedPreviewItems ];
@@ -175,12 +184,19 @@ class TourForm extends Component {
     this.setState({ tour: { ...this.state.tour, preview } , selectedPreviewItems: [] })
   };
 
-  deleteProgramFile = (id) => () => {
-    const { tour } = this.state;
+  deleteProgramFile = (langID, id) => () => {
+	  const contentByLang = {...this.state.contentByLang};
+    const programFile = contentByLang[langID].programFile.filter(item => item._id !== id);
 
-    tour.programFile = tour.programFile.filter(item => item._id !== id)
-    this.setState({ tour });
-  }
+	  const currentContent = {...this.state.contentByLang[langID], programFile}
+
+	  this.setState({
+		  contentByLang: {
+			  ...this.state.contentByLang,
+			  [langID]: currentContent
+		  }
+	  });
+  };
 
 	handleRequestClose = () => {
 		this.setState({ open: false });
@@ -473,14 +489,17 @@ class TourForm extends Component {
                     <AddTourPreviewPopup
                       filesType={ '@docs' }
                       label={ 'Загрузить программу тура' }
-                      addPreview={this.addTourProgram}
+                      addPreview={this.addTourProgram(lang._id)}
                     />
                     {
-                      tour.programFile.map(item => <div key={ item._id } className={css(styles.fileItem)}>
+	                    contentByLang[lang._id].programFile ?
+                      contentByLang[lang._id].programFile.map(item => <div key={ item._id } className={css(styles.fileItem)}>
                         <a href="" >{ item.filename.slice(13) }</a>
-                        <Icon onClick={ this.deleteProgramFile(item._id) }>delete</Icon>
+                        <Icon onClick={ this.deleteProgramFile(lang._id, item._id) }>delete</Icon>
                       </div>
                       )
+                      :
+                      null
                     }
                   </div>
                 }

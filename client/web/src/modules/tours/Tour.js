@@ -249,9 +249,9 @@ class Tour extends React.Component {
 			                )
 		                }
                     {
-                      tour.programFile[0] &&
+                      tour.content.programFile[0] &&
                       <div className={css(styles.downloadLink)}>
-                        <a href={ tour.programFile[0].path }
+                        <a href={ tour.content.programFile[0].path }
                            target="_blank"
                            className={css(styles.btn)}>
                           { window.TA.content.downloadTourProgram }

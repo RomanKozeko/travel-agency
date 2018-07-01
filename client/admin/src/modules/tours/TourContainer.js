@@ -40,6 +40,7 @@ const createBlankPage = (languages) => {
       mapName: '',
       duration: '',
       program: [],
+      programFile: [],
       language: language._id
     });
   });
