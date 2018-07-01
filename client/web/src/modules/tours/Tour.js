@@ -190,7 +190,7 @@ class Tour extends React.Component {
                         <td className={css(styles.cell)}>{ window.TA.content.price }:</td>
                         <td><div className={css(styles.price)}>
                           {
-                            RenderPrice({ price: tour.price, currency, currencies })
+                            RenderPrice({ price: tour.content.price, currency, currencies })
                           }
                         </div></td>
                       </tr>
