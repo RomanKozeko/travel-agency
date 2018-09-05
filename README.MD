@@ -16,7 +16,7 @@ This react redux application with server side rendering. Consist of three indepe
 ## CI server
 ### http://travelagencydemo.info:8080/
 ### login: admin
-### passowrd: er4m8k
+
 
 ## Installation
 
