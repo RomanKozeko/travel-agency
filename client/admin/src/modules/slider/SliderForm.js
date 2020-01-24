@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { contentByLang, contentToArrayByLang } from '../../services/utils';
-import { compose, withHandlers, lifecycle, withStateHandlers } from 'recompose'
+import { compose, withHandlers, lifecycle } from 'recompose'
 import {connect} from 'react-redux';
-import { Field, FieldArray, reduxForm, change, formValueSelector } from 'redux-form'
+import { Field, reduxForm, change, formValueSelector } from 'redux-form'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { getLanguages, getPages } from "../../rootReducer";
 import { load } from "../pages/PagesReducer";
 import { loadItems, saveItem } from "./SliderReducer";
-import Spinner from '../ui-elements/Spinner';
 import Button from 'material-ui/Button';
 import ImageUploader from '../ui-elements/form/ImageUploader';
 import SortableInput from '../ui-elements/SortableInput';

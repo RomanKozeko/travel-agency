@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Toolbar from 'material-ui/Toolbar';
 import DeleteIcon from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
 import {StyleSheet, css} from 'aphrodite/no-important';

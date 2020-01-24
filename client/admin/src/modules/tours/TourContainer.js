@@ -6,16 +6,15 @@ import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
-import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
+import Tabs, { Tab } from 'material-ui/Tabs';
 import TourForm from './TourForm';
 import { loadTour, addTour, editTour } from './toursActions';
 import { loadRegions } from '../regions/regionsReducer';
 import { loadCategories } from '../categories/categoriesReducer';
 import * as fromFoodReducer from '../food/foodReducer';
-import * as fromHotelsReducer from '../hotels/hotelsReducer';
 import { getTour } from './toursReducer';
 import { loadItems } from '../mediaFiles/mediaFilesReducer';
-import { getLanguages, getHotels, getCategories, getFood, getRegions } from '../../rootReducer';
+import { getLanguages, getCategories, getFood, getRegions } from '../../rootReducer';
 import { populateTree } from '../regions/RegionService';
 
 const styles = StyleSheet.create({

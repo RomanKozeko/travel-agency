@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { compose, lifecycle } from 'recompose'
 import {connect} from 'react-redux';
 import Button from 'material-ui/Button';
@@ -25,7 +25,7 @@ const renderField = ({ currencies = [], input, label, type, meta: { touched, err
     <select {...input} type={type} className={css(styles.input)}>
       {
         currencies.map(item =>
-          <option value={ `${item.Cur_Name},${item.Cur_Abbreviation},${item.Cur_ID}` }>
+          <option key={item.Cur_ID} value={ `${item.Cur_Name},${item.Cur_Abbreviation},${item.Cur_ID}` }>
             { item.Cur_Name }
           </option>
         )

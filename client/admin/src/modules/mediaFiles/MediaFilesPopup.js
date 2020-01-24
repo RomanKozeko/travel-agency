@@ -1,17 +1,7 @@
-import React, { Component } from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import React from 'react';
 import Button from 'material-ui/Button';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
 import Dialog, { DialogActions,	DialogContent } from 'material-ui/Dialog';
-
-const styles = StyleSheet.create({
-  button: {
-    display: 'block',
-    textAlign: 'center',
-    width: '100%',
-    marginBottom: '15px'
-  }
-});
 
 const MediaFilesPopup = ({ isOpen, handleRequestClose, filesType, addPreview }) =>(
   <div>

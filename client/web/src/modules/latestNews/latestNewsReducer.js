@@ -25,10 +25,17 @@ export const fetchLatestNews = () => (dispatch, getState) => {
 export default createReducer(defaultState, {
   [LATEST_NEWS_REQUEST] : (state) => ({...state, isFetching: true}),
   [LATEST_NEWS_SUCCESS] : (state, { response }) => {
+    let items = response.entities.items;
+    Object.keys(items).map((key) => {
+      if (items[key].content === undefined) {
+        items[key] = Object.assign({content: {}}, items[key])
+      }
+    });
+    
     return {
       ...state,
       allIds: [...state.allIds, ...response.result.items],
-      byIds: {...state.byIds, ...response.entities.items},
+      byIds: {...state.byIds, ...items},
       isFetching: false,
       isFetched: true
     }

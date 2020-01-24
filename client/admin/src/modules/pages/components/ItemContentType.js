@@ -4,7 +4,6 @@ import ItemContentToolBar from './ItemContentToolBar';
 import AddPageItemMenu from './AddPageItemMenu';
 import FiltersTags from './FiltersTags';
 import Icon from 'material-ui/Icon';
-import Chip from 'material-ui/Chip';
 
 const styles = StyleSheet.create({
   itemContentButton: {

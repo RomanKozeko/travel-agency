@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {css, StyleSheet} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import ImagePreview from '../../ui-elements/ImagePreview';
 import PageCaption from '../../ui-elements/PageCaption';
@@ -19,7 +18,18 @@ class PageForm extends React.Component {
       htmlEditorOpen: false,
       addToursPopupOpen: false,
       contentByLang: { ...this.props.parentState.contentByLang },
-      item: { ...this.props.item },
+      item: { 
+        ...this.props.item,
+        content: this.props.languages.map(lang => {
+          const itemContent = this.props.item.content.find(ic => ic.language === lang._id);
+          const rows = itemContent ? itemContent.rows : []
+          return {
+            ...itemContent,
+            rows,
+            language: lang._id,
+          }
+        })
+      },
       currRowItem: null
     });
   }
@@ -30,13 +40,25 @@ class PageForm extends React.Component {
 
   handleSave = (e) => {
     e.preventDefault();
-    const { page } = this.props;
+    const { page, item } = this.props;
+
+    //hotfix
+    page.item.content.forEach(pic => {
+      item.content.forEach(ic => {
+        if(pic._id === ic._id) {
+          pic.title = ic.title
+          pic.description = ic.description
+          pic.url = ic.url
+        }
+      })
+    })
 
     page.item.content = denormalizeRowsItems(page.item.content, page.rowItemsByID);
     page.item.url = page.item.url.replace(/\s+/g, '-').toLowerCase();
+
     this.props.save(page.item, this.props.isNew);
     if (this.props.isNew) {
-      this.props.history.push('/admin/pages', {});
+      this.props.history.push('/admin/pages');
     }
   };
 
@@ -62,13 +84,14 @@ class PageForm extends React.Component {
       addImages,
       closeMediaPopup,
       mediafilesByIds,
-      deleteMediaItem
+      deleteMediaItem,
+      handleChange,
     } = this.props;
     if (!page.item) {
       return null;
     }
     return (
-      <form action="" onSubmit={this.handleSave}>
+      <form onSubmit={this.handleSave}>
         {languages.map((lang, i) => (
           <div key={lang._id}>
             {parentState.selectedTabIndex === i &&
@@ -84,7 +107,7 @@ class PageForm extends React.Component {
                     label="title"
                     fullWidth
                     value={page.contentByLang[lang._id].title}
-                    onChange={(e) => pageInputChange(lang._id, 'title', e.target.value)}
+                    onChange={e => pageInputChange(lang._id, 'title', e.target.value)}
                     margin="normal"
                     required
                   />
@@ -93,7 +116,7 @@ class PageForm extends React.Component {
                     label="url"
                     fullWidth
                     value={page.item.url}
-                    onChange={(e) => pageInputChange(null, 'url', e.target.value)}
+                    onChange={e => pageInputChange(null, 'url', e.target.value)}
                     margin="normal"
                     required
                   />
@@ -102,7 +125,7 @@ class PageForm extends React.Component {
                     label="Meta description"
                     fullWidth
                     value={page.contentByLang[lang._id].description}
-                    onChange={(e) => pageInputChange(lang._id, 'description', e.target.value)}
+                    onChange={e => pageInputChange(lang._id, 'description', e.target.value)}
                     margin="normal"
                   />
                 </div>

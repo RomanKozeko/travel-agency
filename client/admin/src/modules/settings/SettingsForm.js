@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { compose, withHandlers, withState } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 import {connect} from 'react-redux';
 import { Field, FieldArray, reduxForm, change, formValueSelector } from 'redux-form'
 import { StyleSheet, css } from 'aphrodite/no-important';
@@ -48,13 +48,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const renderField = ({ currencies = [], input, meta: { touched, error } }) => (
-  <div>
+const renderField = ({ currencies = [], input, name, meta: { touched, error } }) => (
+  <div key={name}>
     <select {...input} className={css(styles.input)}>
       <option value="BUN">BUN</option>
       {
-        currencies.map((curr) =>
-          <option value={ curr.item && curr.item.split(',')[1] }>
+        currencies.map((curr, index) =>
+          <option key={index} value={ curr.item && curr.item.split(',')[1] }>
             { curr.item && curr.item.split(',')[0] }
           </option>
         )

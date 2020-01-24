@@ -25,11 +25,17 @@ export const fetchMenu = () => (dispatch, getState) => {
 export default createReducer(defaultState, {
   [MENU_REQUEST] : (state) => ({...state, isFetching: true}),
   [MENU_SUCCESS] : (state, { response }) => {
+    let items = response.entities.items;
+    Object.keys(items).map((key) => {
+      if (items[key].page.content === undefined) {
+        items[key].page = Object.assign({content: {}}, items[key].page)
+      }
+    });
 
     return {
       ...state,
       allIds: response.result.items,
-      byIds: {...state.byIds, ...response.entities.items},
+      byIds: {...state.byIds, ...items},
       isFetching: false,
       isFetched: true
     }

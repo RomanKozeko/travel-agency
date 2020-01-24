@@ -71,7 +71,7 @@ class Page extends React.Component {
     return (
       <div>
         {
-          error ?
+          error || !page || !page.content ?
             <NotFound /> :
             <div>
               <Head title={page ? page.content.title : ''} metaDescription={page ? page.content.description : ''} />

@@ -64,8 +64,8 @@ const showPlacesReducer = createReducer(defaultState, {
   [actions.SHOWPLACE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.SHOWPLACE_SAVE_SUCCESS]: state => ({...state, isFetching: false, isSaving: false}),
   [actions.SHOWPLACE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
-  ['FILTERED_SHOWPLACES_SUCCESS']: setActiveFilter,
-  ['GET_FILTERED_SHOWPLACES_FROM_CACHE']: getFilteredItemsFromCash,
+  'FILTERED_SHOWPLACES_SUCCESS': setActiveFilter,
+  'GET_FILTERED_SHOWPLACES_FROM_CACHE': getFilteredItemsFromCash,
 });
 
 export default showPlacesReducer;

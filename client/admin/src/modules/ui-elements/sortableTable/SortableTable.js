@@ -71,12 +71,12 @@ class SortableTable extends React.Component {
     return item.content ?
       item.content.find((itemContent) => {
         if (!data.languages.byIds[itemContent.language]) {
-          return false;
+          // Return some content if no language match was detected
+          return itemContent;
         }
         return data.languages.byIds[itemContent.language].prefix === data.languages.currLanguage;
       })
-    :
-    item;
+    : item;
   }
 
   renderFields(item, fields) {

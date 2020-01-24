@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class MediaFilesContainer extends React.Component {
+class MediaFilesContainer extends Component {
   componentDidMount() {
     if (!this.props.items.length) {
       this.props.loadItems();

@@ -18,8 +18,8 @@ export default function withSearch(WrappedComponent) {
 
     filterItems = (items) => {
       return items.filter(item => (
-          item.content.some(contentItem => (contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1)) ||
-          item.filename && (item.filename.toLowerCase().indexOf(this.state.filterQuery) !== -1)
+          (item.content.some(contentItem => (contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1))) ||
+          (item.filename && (item.filename.toLowerCase().indexOf(this.state.filterQuery) !== -1))
         )
       );
     }
