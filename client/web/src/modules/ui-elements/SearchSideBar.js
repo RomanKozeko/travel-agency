@@ -60,8 +60,8 @@ const SearchSideBar = ({regions, categories, days, onInputChange, onFieldChange}
 						<CheckBox
 							key={category._id}
 							onChange={(e) => onFieldChange('categories', category._id)}
-							label={category.content.title}
-							name={category.content.title}
+							label={category.content ? category.content.title : ''}
+							name={category.content ? category.content.title : ''}
 							block={ true }
 						/>
 	        ))}

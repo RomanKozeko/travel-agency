@@ -124,7 +124,11 @@ const TourBody = ({
   languageID,
   currencies
 }) => {
-  const categoriesList = categories.map(category => getContentByLanguage(category.content, languageID).title)
+  const categoriesList = categories.map(category => {
+    const content = getContentByLanguage(category.content, languageID)
+    return content ? content.title : ''
+  })
+
   const { price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD } = content;
   return (
     <div className={css(styles.content)}>
@@ -154,7 +158,7 @@ const TourBody = ({
             <DinnerIcon color={ theme.colors.primary } width={20}/>
 						<span className={css(styles.listItemText)}>
 							{
-                getContentByLanguage(food.content, languageID).title
+                getContentByLanguage(food.content, languageID) ? getContentByLanguage(food.content, languageID).title : ''
               }
 						</span>
           </div>
