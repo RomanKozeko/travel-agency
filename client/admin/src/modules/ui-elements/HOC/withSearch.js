@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 
 export default function withSearch(WrappedComponent) {
-	return class extends React.Component {
+	return class extends Component {
     constructor(props) {
       super(props);
 

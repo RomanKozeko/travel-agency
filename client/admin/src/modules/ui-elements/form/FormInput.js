@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
@@ -13,7 +13,7 @@ const isValid = (val, regExpVal) => {
   return !!val.match(regExp)
 };
 
-class FormInput extends React.Component {
+class FormInput extends Component {
   constructor(props) {
     super(props);
     this.state = {

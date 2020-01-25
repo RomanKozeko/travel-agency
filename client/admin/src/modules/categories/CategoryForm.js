@@ -6,7 +6,6 @@ import NotificationPanel from '../ui-elements/form/NotificationPanel';
 import withTabs from '../ui-elements/HOC/withTabs';
 import Switch from 'material-ui/Switch';
 
-
 const CategoryForm = ({ isSaving, parentState, languages, handleChange, handleSave, handleToggle, toggleEnableForLanguage }) => (
   <form action="" onSubmit={handleSave}>
     {languages.map((lang, i) => (

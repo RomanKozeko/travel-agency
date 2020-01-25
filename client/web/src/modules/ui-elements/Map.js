@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Map extends React.Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,7 +67,7 @@ class Map extends React.Component {
 
   createInitialMap() {
 	  try {
-		  this.directionsService = new window.google.maps.DirectionsService;
+		  this.directionsService = new window.google.maps.DirectionsService();
       this.directionsDisplay = new window.google.maps.DirectionsRenderer({
         markerOptions: { icon: '' },
       });

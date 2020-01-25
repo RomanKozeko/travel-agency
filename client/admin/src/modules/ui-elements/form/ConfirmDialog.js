@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Button from 'material-ui/Button';
 import Dialog, {
@@ -9,7 +9,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 
 
-class ConfirmDialog extends React.Component {
+class ConfirmDialog extends Component {
   state = {
     open: this.props.show,
   };

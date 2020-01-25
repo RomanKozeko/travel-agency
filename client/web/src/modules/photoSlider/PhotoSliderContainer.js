@@ -1,5 +1,4 @@
 import React from 'react'
-import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
 import { fetchPhotoSlider } from './PhotoSliderReducer'
@@ -28,7 +27,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
-        this.props.fetchPhotoSlider()
+        this.props.fetchPhotoSlider();
       }
     }
   })

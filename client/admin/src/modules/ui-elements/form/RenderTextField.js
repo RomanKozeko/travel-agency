@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import TextField from 'material-ui/TextField';
 import {StyleSheet, css} from 'aphrodite/no-important';
 

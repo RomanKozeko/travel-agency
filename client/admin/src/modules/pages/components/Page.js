@@ -1,6 +1,6 @@
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Portlet from '../../ui-elements/Portlet';
 import PageForm from './PageForm';
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Page extends React.Component {
+class Page extends Component {
   constructor(props) {
     super(props);
     this.state = {

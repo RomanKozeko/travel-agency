@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { load } from '../pages/PagesReducer';
@@ -37,7 +37,7 @@ const mapStateToProps = (state) => ({
   }
 );
 
-class MenuContainer extends React.Component {
+class MenuContainer extends Component {
   componentDidMount() {
     if (!this.props.isPagesFetched) {
       this.props.loadPages();

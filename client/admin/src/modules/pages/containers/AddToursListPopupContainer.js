@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { closeAddToursListPopup } from '../pageReducer'
 import { loadCategories } from '../../categories/categoriesReducer'
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 });
 
 
-class AddToursListPopupContainer extends React.Component {
+class AddToursListPopupContainer extends Component {
   componentDidMount() {
     if (!this.props.categories.length) {
       this.props.loadCategories();

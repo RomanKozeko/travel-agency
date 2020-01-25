@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Tabs, { Tab } from 'material-ui/Tabs';
 const _ = require('lodash');
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 });
 
 export default function withTabs(WrappedComponent, backLink ) {
-  return class extends React.Component {
+  return class extends Component {
     constructor(props) {
       super(props);
       const contentByLang = {...this.props.languagesIDs};

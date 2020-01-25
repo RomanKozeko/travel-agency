@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { load, deleteItems } from './../PagesReducer';
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class PagesContainer extends React.Component {
+class PagesContainer extends Component {
 
   componentDidMount() {
     if (!this.props.isFetched) {

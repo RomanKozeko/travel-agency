@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { compose, withStateHandlers } from 'recompose';
 import { sendEmail } from '../../orderForm/orderReducer';
 
 const withEmailSending = (WrappedComponent, emailSubject) => {
-	class BaseContainer extends React.Component {
+	class BaseContainer extends Component {
 		render() {
 			return (
 				<WrappedComponent {...this.props} />

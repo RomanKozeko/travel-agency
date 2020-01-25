@@ -1,8 +1,5 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
-import PrefixLink from '../ui-elements/PrefixLink'
-import { theme } from '../../services/constans';
 import TourBody from './TourBody';
 
 const styles = StyleSheet.create({

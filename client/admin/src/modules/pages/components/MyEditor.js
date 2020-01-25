@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TinyMCE from 'react-tinymce';
 
-class MyEditor extends React.Component {
+class MyEditor extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,6 +17,7 @@ class MyEditor extends React.Component {
           content="<p>This is the initial content of the editor</p>"
           config={{
             plugins: 'link image code',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect link image',
             height : '500'
           }}
           onChange={this.handleEditorChange.bind(this)}

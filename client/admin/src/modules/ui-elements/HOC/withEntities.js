@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 
 function withEntities(WrappedComponent, options) {
-  class BaseContainer extends React.Component {
+  class BaseContainer extends Component {
     componentDidMount() {
       Object.keys(options).forEach(key => {
         if (!this.props.state[key].isFetched) {

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StyleSheet, css } from 'aphrodite/no-important';
 import { withRouter } from 'react-router-dom';
 import { getPage } from '../../rootReducer';
 import { loadPage, clearError } from './PagesActions';
@@ -51,7 +50,7 @@ const PageColumn = ({ item, page }) => {
   }
 }
 
-class Page extends React.Component {
+class Page extends Component {
   componentDidMount() {
     if (!this.props.page) {
       this.props.loadPage(this.props.match.params.id);

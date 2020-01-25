@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class RegionsContainer extends React.Component {
+class RegionsContainer extends Component {
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.loadRegions();

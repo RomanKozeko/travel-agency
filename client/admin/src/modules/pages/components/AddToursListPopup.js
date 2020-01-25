@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import Dialog, {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 
-class AddToursListPopup extends React.Component {
+class AddToursListPopup extends Component {
   constructor(props) {
     super(props);
     const filtersObj = { ...this.props.currRowItem.filtersObj }

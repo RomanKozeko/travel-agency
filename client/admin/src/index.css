@@ -204,6 +204,15 @@ td,
 th {
   padding: 0;
 }
+
+
+/* myfix #1 */
+.editor-popup-content {
+    width: auto !important;
+    border: none !important;
+    background: transparent !important;
+}
+/* myfix #1 end */
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
   *,

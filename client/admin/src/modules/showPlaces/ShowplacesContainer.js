@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { loadItems, saveItem, deleteItems } from './showplacesReducer';
 import { getShowplaces } from '../../rootReducer';
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class ShowPlacesContainer extends React.Component {
+class ShowPlacesContainer extends Component {
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.loadItems();

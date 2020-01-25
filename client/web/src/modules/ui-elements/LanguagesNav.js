@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { getLanguages } from '../../rootReducer'
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { theme } from '../../services/constans'
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class LanguagesNav extends React.Component {
+class LanguagesNav extends Component {
   render() {
     if (!this.props.items.length) {
       return null;

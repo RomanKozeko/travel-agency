@@ -145,15 +145,15 @@ const PhotoSlider = ({ items, prevSlide, nextSlide, hover, mouseLeave, currIndex
             return null
           }
           return (
-            <div className={css(styles.wrapper)} key={ item._id }  style={{ backgroundImage: `url(${item.image}`}}>
+            <div className={css(styles.wrapper)} key={ item._id } style={{ backgroundImage: `url('${item.image}'`}}>
               <div className="container">
                 <div className={css(styles.sliderWrapper)}>
-                  <h2 className={css(styles.titleMain)}>
+                  <h2 className={css(styles.titleMain)} style={{ color: item.color }}>
                     {
                       item.content.title
                     }
                   </h2>
-                  <p className={css(styles.text)}>
+                  <p className={css(styles.text)} style={{ color: item.color }}>
                     {
                       item.content.description
                     }

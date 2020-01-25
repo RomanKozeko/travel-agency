@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class FilterByRegions extends React.Component {
+class FilterByRegions extends Component {
   constructor(props) {
     super(props);
     this.state = {

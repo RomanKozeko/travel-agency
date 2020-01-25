@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 import TextField from 'material-ui/TextField';
 import Chip from 'material-ui/Chip';
@@ -51,7 +51,7 @@ const HighlightedText = ({text, search}) => {
 };
 
 
-class SortableInput extends React.Component {
+class SortableInput extends Component {
   constructor(props) {
     super(props);
 

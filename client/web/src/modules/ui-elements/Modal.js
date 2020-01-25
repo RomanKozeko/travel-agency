@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
 
 
-class Modal extends React.Component {
+class Modal extends Component {
   constructor(props) {
     super(props);
     this.el = document.createElement('div');

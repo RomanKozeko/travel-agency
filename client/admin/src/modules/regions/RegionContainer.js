@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -54,7 +54,7 @@ const mapStateToProps = (state, router) => {
 };
 
 
-class RegionContainer extends React.Component {
+class RegionContainer extends Component {
   componentDidMount() {
     if (!this.props.regions.length) {
       this.props.loadRegions();

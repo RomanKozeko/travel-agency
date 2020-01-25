@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';

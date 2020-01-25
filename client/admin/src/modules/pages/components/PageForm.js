@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import ImagePreview from '../../ui-elements/ImagePreview';
@@ -12,7 +12,7 @@ import AddToursListPopupContainer from '../containers/AddToursListPopupContainer
 import { denormalizeRowsItems } from '../pageFormService';
 import MediaFilesPopup from '../../mediaFiles/MediaFilesPopup'
 
-class PageForm extends React.Component {
+class PageForm extends Component {
   componentDidMount() {
     this.props.pageDidMount({
       htmlEditorOpen: false,
@@ -84,8 +84,7 @@ class PageForm extends React.Component {
       addImages,
       closeMediaPopup,
       mediafilesByIds,
-      deleteMediaItem,
-      handleChange,
+      deleteMediaItem
     } = this.props;
     if (!page.item) {
       return null;
@@ -107,7 +106,7 @@ class PageForm extends React.Component {
                     label="title"
                     fullWidth
                     value={page.contentByLang[lang._id].title}
-                    onChange={e => pageInputChange(lang._id, 'title', e.target.value)}
+                    onChange={(e) => pageInputChange(lang._id, 'title', e.target.value)}
                     margin="normal"
                     required
                   />
@@ -116,7 +115,7 @@ class PageForm extends React.Component {
                     label="url"
                     fullWidth
                     value={page.item.url}
-                    onChange={e => pageInputChange(null, 'url', e.target.value)}
+                    onChange={(e) => pageInputChange(null, 'url', e.target.value)}
                     margin="normal"
                     required
                   />
@@ -125,7 +124,7 @@ class PageForm extends React.Component {
                     label="Meta description"
                     fullWidth
                     value={page.contentByLang[lang._id].description}
-                    onChange={e => pageInputChange(lang._id, 'description', e.target.value)}
+                    onChange={(e) => pageInputChange(lang._id, 'description', e.target.value)}
                     margin="normal"
                   />
                 </div>

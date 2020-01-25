@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
@@ -8,7 +8,7 @@ import SortableTable from '../ui-elements/sortableTable/SortableTable';
 import Pagination from '../ui-elements/Pagination';
 import withSearch from '../ui-elements/HOC/withSearch';
 
-class ToursList extends React.Component {
+class ToursList extends Component {
 	render() {
 		const {
 			items,

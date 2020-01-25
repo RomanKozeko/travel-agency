@@ -24,7 +24,7 @@ const SocialLinks = ({ items }) => {
     <div className={ css(styles.wrap) }>
       {
         items[0] && items[0].socials.map(item =>
-          <a href={ item.link } target="_blank" className={ css(styles.item) } key={ item._id }>
+          <a href={ item.link } target="_blank" rel="noopener noreferrer" className={ css(styles.item) } key={ item._id }>
             <img src={ item.image } className={ css(styles.img) } />
           </a>
         )

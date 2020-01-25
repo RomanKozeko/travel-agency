@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import { Collapse } from 'react-collapse';
 import Icon from 'material-ui/Icon';
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class CollapseComponent extends React.Component {
+class CollapseComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {

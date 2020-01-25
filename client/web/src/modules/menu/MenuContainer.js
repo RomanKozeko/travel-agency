@@ -136,7 +136,7 @@ MenuContainer = compose(
     },
   }),
   withStateHandlers(
-    ({}) => ({ isOpen: false }),
+    () => ({ isOpen: false }),
     {
       onMenuTriggerClick: ({ isOpen }) => () => ({
         isOpen: !isOpen

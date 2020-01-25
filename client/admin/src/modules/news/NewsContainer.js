@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import Spinner from '../ui-elements/Spinner';
 import { getNews, getLanguages, getMediaFiles, getPageWithItems } from '../../rootReducer';
@@ -14,7 +14,7 @@ import createConfirmation from "../ui-elements/form/createConfirmation";
 
 const confirm = createConfirmation(ConfirmDialog);
 
-class NewsContainer extends React.Component {
+class NewsContainer extends Component {
   constructor(props) {
     super(props);
     const {dispatch} = props;

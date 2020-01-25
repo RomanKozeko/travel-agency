@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chip from 'material-ui/Chip';
 import {css, StyleSheet} from 'aphrodite/no-important';
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class FiltersTags extends React.Component {
+class FiltersTags extends Component {
   componentDidMount() {
     if (!this.props.regions.length ) {
       this.props.loadRegions();

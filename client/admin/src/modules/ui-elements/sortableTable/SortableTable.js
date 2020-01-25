@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class SortableTable extends React.Component {
+class SortableTable extends Component {
   constructor(props) {
     super(props);
 

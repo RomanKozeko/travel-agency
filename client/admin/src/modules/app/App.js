@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route
@@ -181,7 +181,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export class App extends React.Component {
+export class App extends Component {
   componentDidMount() {
     if (!this.props.items.length) {
       this.props.loadLang();

@@ -28,7 +28,7 @@ module.exports = {
     const { query: { fileType } = ''} = req
     const mediaFile = new Media({
       filename,
-      path: path.replace('client', '').replace(/\\/g, '/'),
+      path: `/uploads/${filename}`,
       type: fileType || '@image'
     });
     mediaFile.save()
@@ -45,7 +45,7 @@ module.exports = {
       });
     }
     res.send({
-      path: req.file.path.replace('client', '').replace(/\\/g, '/')
+      path: `/uploads/${req.file.filename}`,
     })
   },
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 });
 
 
-class ImagePreview extends React.Component {
+class ImagePreview extends Component {
   constructor(props) {
     super(props);
     this.state = {

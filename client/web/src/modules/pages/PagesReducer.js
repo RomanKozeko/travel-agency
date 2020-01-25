@@ -1,4 +1,4 @@
-import { createReducer, getPageCount } from '../../services/utils';
+import { createReducer } from '../../services/utils';
 import * as actions from './PagesActions';
 
 const pagesSuccess = (state, action) => {
@@ -38,7 +38,7 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGES_FAILURE]: state => ({ ...state, isFetching: false, error: true }),
   [actions.PAGE_SUCCESS]: pageSuccess,
   [actions.PAGE_FAILURE]: state => ({ ...state, isFetching: false, error: true }),
-  ['PAGE/CLEAR_ERROR']: state => ({ ...state, error: false }),
+  'PAGE/CLEAR_ERROR': state => ({ ...state, error: false }),
 });
 
 export default pagesReducer;

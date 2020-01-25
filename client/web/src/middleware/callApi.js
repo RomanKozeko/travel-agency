@@ -1,4 +1,3 @@
-import { camelizeKeys } from 'humps';
 import { normalize, schema } from 'normalizr'
 
 const API_ROOT = '/';
