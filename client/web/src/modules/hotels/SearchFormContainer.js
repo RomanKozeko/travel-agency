@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 });
 
 function sort(a, b){
-	if(a.content.title.toLowerCase() < b.content.title.toLowerCase()) return -1;
-	if(a.content.title.toLowerCase() > b.content.title.toLowerCase()) return 1;
+	if (a.content) { if(a.content.title.toLowerCase() < b.content.title.toLowerCase()) return -1 };
+	if (a.content) { if(a.content.title.toLowerCase() > b.content.title.toLowerCase()) return 1 };
 	return 0;
 }
 
