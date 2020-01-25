@@ -1,5 +1,5 @@
 import {createReducer, withPrefix} from '../../services/utils';
-import {CALL_API, Schemas} from "../../middleware/callApi";
+import {CALL_API} from "../../middleware/callApi";
 
 const ORDER_REQUEST = 'ORDER_REQUEST';
 const ORDER_SUCCESS = 'ORDER_SUCCESS';

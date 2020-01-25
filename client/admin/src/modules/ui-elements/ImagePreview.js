@@ -1,9 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import Icon from 'material-ui/Icon';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import classNames from 'classnames';
 
 const opacityKeyframes = {
   'from': {
@@ -13,20 +10,6 @@ const opacityKeyframes = {
   'to': {
     opacity: 1,
   }
-};
-
-const translateKeyframes = {
-  '0%': {
-    transform: 'translateX(0)',
-  },
-
-  '50%': {
-    transform: 'translateX(100px)',
-  },
-
-  '100%': {
-    transform: 'translateX(0)',
-  },
 };
 
 const pulse = {
@@ -84,7 +67,7 @@ const styles = StyleSheet.create({
 });
 
 
-class ImagePreview extends React.Component {
+class ImagePreview extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,10 +79,6 @@ class ImagePreview extends React.Component {
   }
 
   render() {
-    const imgClass = classNames({
-      [css(styles.image)]: !this.state.loaded,
-      [css(styles.image, styles.imageLoaded)]: this.state.loaded
-    });
     const src = this.props.url || '/landscape.svg';
     return (
       <div className={css(styles.wrapper)}>

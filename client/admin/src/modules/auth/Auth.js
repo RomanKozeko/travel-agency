@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
@@ -60,7 +60,7 @@ const mapStateToProps = (state) => {
 	}
 };
 
-export class Auth extends React.Component {
+export class Auth extends Component {
 	submit(values) {
 		this.props.loginUser(values);
 	}

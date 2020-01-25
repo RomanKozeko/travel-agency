@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from '../ui-elements/Spinner';
 import { loadTours, deleteTours } from './toursActions';
 import { getPageWithTours } from '../../rootReducer';
 import ToursList from './ToursList';
 
-class ToursContainer extends React.Component {
+class ToursContainer extends Component {
 
   componentDidMount() {
     this.props.loadTours();

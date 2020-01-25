@@ -1,15 +1,8 @@
-import React from 'react';
-import Popup from 'reactjs-popup';
-import Dialog from 'material-ui/Dialog';
+import React, { Component } from 'react';
+import Popup from 'reactjs-popup'
 import TinyMCE from 'react-tinymce';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
-import Slide from 'material-ui/transitions/Slide';
 import Button from 'material-ui/Button';
 import { css, StyleSheet } from 'aphrodite/no-important';
 
@@ -30,7 +23,7 @@ const styles = StyleSheet.create({
     },
 });
 
-class HtmlEditorPopup extends React.Component {
+class HtmlEditorPopup extends Component {
     constructor(props) {
         super(props);
         this.state = {

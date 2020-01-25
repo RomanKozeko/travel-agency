@@ -1,4 +1,4 @@
-import {createReducer, withPrefix, makeActionCreator} from '../../services/utils';
+import {createReducer, withPrefix} from '../../services/utils';
 import {CALL_API, Schemas} from "../../middleware/callApi";
 
 const CONTACTS_REQUEST = 'CONTACTS_REQUEST'

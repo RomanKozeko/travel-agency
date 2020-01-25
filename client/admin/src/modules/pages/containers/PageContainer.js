@@ -1,6 +1,6 @@
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import React from 'react';
 import PropTypes from 'prop-types';
 import PageHeader from '../../ui-elements/PageHeader';
 import Spinner from '../../ui-elements/Spinner';
@@ -57,7 +57,7 @@ const mapStateToProps = (state, router) => {
   };
 };
 
-class PageContainer extends React.Component {
+class PageContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
 import ImagePreview from '../../ui-elements/ImagePreview';
@@ -12,7 +12,7 @@ import AddToursListPopupContainer from '../containers/AddToursListPopupContainer
 import { denormalizeRowsItems } from '../pageFormService';
 import MediaFilesPopup from '../../mediaFiles/MediaFilesPopup'
 
-class PageForm extends React.Component {
+class PageForm extends Component {
   componentDidMount() {
     this.props.pageDidMount({
       htmlEditorOpen: false,

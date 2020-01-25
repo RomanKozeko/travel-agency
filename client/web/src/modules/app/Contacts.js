@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import TextField from '../ui-elements/TextField';
 import TextArea from '../ui-elements/TextArea';

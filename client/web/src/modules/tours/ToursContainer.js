@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ToursList from './ToursList';
 import Pagination from '../ui-elements/Pagination';
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 	}
 };
 
-class ToursContainer extends React.Component {
+class ToursContainer extends Component {
 	componentDidMount() {
 		if (!this.props.isFetched) {
 			this.props.loadFilteredTours();

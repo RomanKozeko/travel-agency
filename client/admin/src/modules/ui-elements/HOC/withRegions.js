@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { loadRegions } from '../../regions/regionsReducer';
 import { getRegions } from '../../../rootReducer';
 import Skeleton from 'react-loading-skeleton';
 
 function withRegions(WrappedComponent) {
-  class BaseConatiner extends React.Component {
+  class BaseConatiner extends Component {
     componentDidMount() {
       if (!this.props.items.length) {
         this.props.loadRegions();

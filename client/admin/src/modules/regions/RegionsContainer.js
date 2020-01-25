@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 
 import { loadRegions, deleteRegions } from './regionsReducer';
@@ -18,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class RegionsContainer extends React.Component {
+class RegionsContainer extends Component {
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.loadRegions();

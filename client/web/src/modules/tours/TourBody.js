@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
-import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon, Monney } from '../ui-elements/icons/Icons';
+import { compose } from 'recompose';
+import { DinnerIcon, ClockIcon, DateIcon, WorkIcon, PlaceIcon } from '../ui-elements/icons/Icons';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { getContentByLanguage } from '../../services/utils';
 import { theme } from '../../services/constans';

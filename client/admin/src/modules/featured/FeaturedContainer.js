@@ -1,5 +1,4 @@
-import React from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import Spinner from '../ui-elements/Spinner';
 import { getFeatured, getLanguages, getMediaFiles, getPageWithItems } from '../../rootReducer';
@@ -17,7 +16,7 @@ import createConfirmation from "../ui-elements/form/createConfirmation";
 
 const confirm = createConfirmation(ConfirmDialog);
 
-class FeaturedContainer extends React.Component {
+class FeaturedContainer extends Component {
   constructor(props) {
     super(props);
     const {dispatch} = props;

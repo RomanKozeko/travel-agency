@@ -533,7 +533,7 @@ To reduce the number of requests to the server, importing images that are less t
 Here is an example:
 
 ```js
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.png'; // Tell Webpack this JS file uses this image
 
 console.log(logo); // /logo.84287d09.png
@@ -1113,7 +1113,7 @@ There is a broad spectrum of component testing techniques. They range from a “
 Different projects choose different testing tradeoffs based on how often components change, and how much logic they contain. If you haven’t decided on a testing strategy yet, we recommend that you start with creating simple smoke tests for your components:
 
 ```js
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
@@ -1134,7 +1134,7 @@ npm install --save-dev enzyme react-test-renderer
 ```
 
 ```js
-import React from 'react';
+import React, { Component } from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 
@@ -1150,7 +1150,7 @@ You can read the [Enzyme documentation](http://airbnb.io/enzyme/) for more testi
 Here is an example from Enzyme documentation that asserts specific output, rewritten to use Jest matchers:
 
 ```js
-import React from 'react';
+import React, { Component } from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import List, { ListItem, ListItemText } from 'material-ui/List';
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ItemsSelector extends React.Component {
+class ItemsSelector extends Component {
   constructor(props) {
     super(props);
     this.state = {

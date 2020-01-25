@@ -1,5 +1,5 @@
 import { StyleSheetTestUtils } from 'aphrodite';
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

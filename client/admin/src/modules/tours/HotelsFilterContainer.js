@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getHotels, getHotelsByFilter } from '../../rootReducer';
 import { loadItems, loadHotelsByRegions } from '../hotels/hotelsReducer';
@@ -6,7 +6,7 @@ import FilterByRegions from '../regions/FilterByRegions';
 import withEntities from "../ui-elements/HOC/withEntities";
 
 
-class HotelsFilterContainer extends React.Component {
+class HotelsFilterContainer extends Component {
   render() {
     return (
       <FilterByRegions {...this.props} itemsNameToFilter={'hotels'} />

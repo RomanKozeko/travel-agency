@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite/no-important';
 
 export const DinnerIcon = ({ color, width }) => (
 	<svg fill={ color } height={ width } viewBox="0 0 24 24" width={width} xmlns="http://www.w3.org/2000/svg">

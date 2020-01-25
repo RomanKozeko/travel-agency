@@ -122,7 +122,7 @@ let MenuItem = ({ item, hover, mouseLeave, isHovered }) => (
 
 export default compose(
   withStateHandlers(
-    ({}) => ({ isHovered: false }),
+    () => ({ isHovered: false }),
     {
       hover: () => () => ({
         isHovered: true

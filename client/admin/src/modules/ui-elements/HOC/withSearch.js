@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 
 export default function withSearch(WrappedComponent) {
-	return class extends React.Component {
+	return class extends Component {
     constructor(props) {
       super(props);
 
@@ -18,8 +18,8 @@ export default function withSearch(WrappedComponent) {
 
     filterItems = (items) => {
       return items.filter(item => (
-          item.content.some(contentItem => (contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1)) ||
-          item.filename && (item.filename.toLowerCase().indexOf(this.state.filterQuery) !== -1)
+          (item.content.some(contentItem => (contentItem.title.toLowerCase().indexOf(this.state.filterQuery) !== -1))) ||
+          (item.filename && (item.filename.toLowerCase().indexOf(this.state.filterQuery) !== -1))
         )
       );
     }

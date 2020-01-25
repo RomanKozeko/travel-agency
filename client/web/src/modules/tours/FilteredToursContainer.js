@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ToursList from './ToursList';
 import { loadFilteredTours } from './toursActions';
@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 };
 
-class FilteredToursContainer extends React.Component {
+class FilteredToursContainer extends Component {
   componentDidMount() {
     const {tours, query, loadFilteredTours} = this.props;
     if (!tours.length) {

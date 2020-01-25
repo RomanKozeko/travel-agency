@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import TextField from 'material-ui/TextField';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
+import { FormControlLabel } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import TinyMCE from 'react-tinymce';
 import Button from 'material-ui/Button';
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class ShowPlaceForm extends React.Component {
+class ShowPlaceForm extends Component {
 
   selectRegions = (e) => {
     const regions = [...this.props.parentState.item.regions];

@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'core-js/fn/array/';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import { fetchLanguages, fetchSettings } from './services/apiHelper';
@@ -17,10 +13,10 @@ import './index.css';
 
 
 // Grab the state from a global variable injected into the server-generated HTML
-const preloadedState = window.__PRELOADED_STATE__ || {};
+// const preloadedState = window.__PRELOADED_STATE__ || {};
 
 // Allow the passed state to be garbage-collected
-delete window.__PRELOADED_STATE_;
+// delete window.__PRELOADED_STATE_;
 
 var store;
 

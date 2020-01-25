@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, { Component } from 'react';
 import {css, StyleSheet} from 'aphrodite/no-important';
 
 
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 
 const modalRoot = document.getElementById('root');
-class ListItemsModal extends React.Component {
+class ListItemsModal extends Component {
   constructor(props) {
     super(props);
     this.el = document.createElement('div');

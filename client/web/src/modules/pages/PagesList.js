@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PrefixLink from '../ui-elements/PrefixLink'
 
 const PagesList = ({pages}) => (

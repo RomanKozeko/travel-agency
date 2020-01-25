@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TinyMCE from 'react-tinymce';
 
-class MyEditor extends React.Component {
+class MyEditor extends Component {
   constructor(props) {
     super(props);
   }

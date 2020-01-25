@@ -88,7 +88,7 @@ SearchFormContainer = compose(
 		{ loadFilteredHotels, resetActiveFilter, loadRegions }
 	),
   withStateHandlers(
-    ({}) => ({ filter: {} }),
+    () => ({ filter: {} }),
     {
       onFieldChange: ({ filter }, { loadFilteredHotels }) => (field, value) => {
       	const newFilter = {...filter};

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import Icon from 'material-ui/Icon';
 import {StyleSheet, css} from 'aphrodite/no-important';
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
 });
 
-class ItemTemplate extends React.Component {
+class ItemTemplate extends Component {
 
   state = {
     item: this.props.item ? {

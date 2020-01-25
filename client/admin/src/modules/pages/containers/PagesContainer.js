@@ -1,15 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
-import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { load, deleteItems } from './../PagesReducer';
 import { getPageWithItems } from '../../../rootReducer';
-import PageHeader from '../../ui-elements/PageHeader';
-import Portlet from '../../ui-elements/Portlet';
 import Spinner from '../../ui-elements/Spinner';
-import SortableTable from '../../ui-elements/sortableTable/SortableTable';
 import PagesList from '../components/PagesList'
 
 const mapStateToProps = (state) => {
@@ -24,7 +18,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class PagesContainer extends React.Component {
+class PagesContainer extends Component {
 
   componentDidMount() {
     if (!this.props.isFetched) {

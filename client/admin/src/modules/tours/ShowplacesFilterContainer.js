@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getShowplaces, getShowplacesByFilter } from '../../rootReducer';
 import { loadItems, loadShowplacesByRegions } from '../showPlaces/showplacesReducer';
@@ -6,7 +6,7 @@ import FilterByRegions from '../regions/FilterByRegions';
 import withEntities from "../ui-elements/HOC/withEntities";
 
 
-class ShowplacesFilterContainer extends React.Component {
+class ShowplacesFilterContainer extends Component {
   render() {
     return (
       <FilterByRegions {...this.props} itemsNameToFilter={'showplaces'} />

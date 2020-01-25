@@ -6,7 +6,7 @@ const config = require('../config/index');
 // const ReactDOMServer = require('react-dom/server');
 // import {StaticRouter} from 'react-router';
 // import {Provider} from 'react-redux';
-// import React from 'react';
+// import React, { Component } from 'react';
 // import App from '../../client/web/src/modules/app/App';
 // import {defaultState} from '../../client/web/src/modules/tours/toursReducer';
 // import {Schemas} from '../../client/web/src/middleware/callApi';

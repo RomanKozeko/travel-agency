@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import TextField from 'material-ui/TextField';
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Map extends React.Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {

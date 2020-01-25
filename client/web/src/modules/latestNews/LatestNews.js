@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle } from 'recompose'
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
-import {getLatestNews, getPromoLinks} from '../../rootReducer';
+import {getLatestNews} from '../../rootReducer';
 import { fetchLatestNews } from './latestNewsReducer';
 
 const styles = StyleSheet.create({

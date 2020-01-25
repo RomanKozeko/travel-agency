@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import TinyMCE from 'react-tinymce';
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class TourProgram extends React.Component {
+class TourProgram extends Component {
   handleEditorChange = (id) => (e) => {
     let days = [...this.props.days];
     let item = days.find(item => (item._id|| item.id) === id);

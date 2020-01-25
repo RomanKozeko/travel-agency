@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { withRouter } from 'react-router-dom';
@@ -151,7 +151,7 @@ const getPrice = ({ price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD, cur
     }
 }
 
-class Tour extends React.Component {
+class Tour extends Component {
     componentDidMount() {
         if (!this.props.tour) {
             this.props.loadTour(this.props.match.params.id);
@@ -232,7 +232,7 @@ class Tour extends React.Component {
                                                 ))}
                                                 {tour.content.programFile[0] && (
                                                     <div className={css(styles.downloadLink)}>
-                                                        <a href={tour.content.programFile[0].path} target="_blank" className={css(styles.btn)}>
+                                                        <a href={tour.content.programFile[0].path} target="_blank" rel="noopener noreferrer" className={css(styles.btn)}>
                                                             {window.TA.content.downloadTourProgram}
                                                         </a>
                                                     </div>
@@ -253,7 +253,7 @@ class Tour extends React.Component {
                                             ))}
                                             {tour.content.programFile[0] && (
                                                 <div className={css(styles.downloadLink)}>
-                                                    <a href={tour.content.programFile[0].path} target="_blank" className={css(styles.btn)}>
+                                                    <a href={tour.content.programFile[0].path} target="_blank" rel="noopener noreferrer" className={css(styles.btn)}>
                                                         {window.TA.content.downloadTourProgram}
                                                     </a>
                                                 </div>

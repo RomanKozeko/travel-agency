@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
 import { compose, lifecycle } from 'recompose'
 import {connect} from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from "../ui-elements/Portlet";
 import { getSettings } from "../../rootReducer";
 import { getLanguages } from "../../rootReducer";
 import { loadItems, saveItem } from "./SettingsReducer";
 import Spinner from '../ui-elements/Spinner';
-import ImageUploader from '../ui-elements/form/ImageUploader';
 import SettingsForm from './SettingsForm';
 
 class Settings extends Component {
   render() {
-    const { pagesImgPath, item } = this.props;
+    const { item } = this.props;
     return (
       <div>
         <PageHeader text={'Настройки'} />

@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { compose, withHandlers, withState } from 'recompose';
+import { compose, withHandlers } from 'recompose';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import { Field, FieldArray, reduxForm } from 'redux-form'
@@ -63,7 +63,7 @@ const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
 )
 
 const SocialForm = props => {
-  const { handleSubmit, pristine, reset, submitting, saveItem } = props
+  const { handleSubmit, submitting } = props
   return (
     <form onSubmit={ handleSubmit }>
       <FieldArray name="socials" component={renderMembers} />

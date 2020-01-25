@@ -1,13 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { connect } from 'react-redux';
-import {
-  Route,
-  Link
-} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Home from './Home'
-import Contacts from './Contacts';
-import ToursPage from '../tours/ToursPage';
 import Tour from '../tours/Tour';
 import Page from '../pages/Page';
 import Header from '../header/Header';

@@ -44,13 +44,13 @@ const languagesReducer = createReducer(defaultState, {
 	[LANGUAGES_REQUEST]: state => ({ ...state, isFetching: true }),
 	[LANGUAGES_SUCCESS]: itemsSuccess,
 	[LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
-	['SET_CURRENCY']: (state, { payload }) => {
+	'SET_CURRENCY': (state, { payload }) => {
     return {
       ...state,
       currency: payload
     }
   },
-	['SET_CURRENCIES']: (state, { payload }) => {
+	'SET_CURRENCIES': (state, { payload }) => {
 		return {
 			...state,
 			currencies: payload
