@@ -47,7 +47,7 @@ fetchLanguages().then(res => {
 
 }).then(({ items }) => {
 
-  window.TA = items[0] || { content: {} };
+  window.TA = items[0].content === undefined ? { content: {}, currencies: [] } : items[0];
 
   ReactDOM.render(
     <Provider store={store}>

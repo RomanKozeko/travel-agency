@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';

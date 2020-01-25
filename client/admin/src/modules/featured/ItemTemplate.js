@@ -103,7 +103,14 @@ const styles = StyleSheet.create({
 class ItemTemplate extends React.Component {
 
   state = {
-    item: this.props.item || {
+    item: this.props.item ? {
+      ...this.props.item,
+      content: this.props.languages.map(langItem => {
+        const contentItem = this.props.item.content.find(c => c.language === langItem._id);
+        return {
+          title: contentItem ? contentItem.title : '', 
+          language: langItem._id
+      }})} : {
       content: this.props.languages.map(langItem => ({
         title: '',
         language: langItem._id

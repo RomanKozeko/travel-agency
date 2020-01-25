@@ -84,8 +84,8 @@ let TreeItem = ({item, onChange, togglePanel, isOpen, inner}) => (
 			<li key={item._id} className={inner ? css(styles.innerItem): null}>
 				<CheckBox
 					onChange={() => onChange('regions', item._id)}
-					label={item.content.title}
-					name={item.content.title}
+					label={item.content ? item.content.title : item.content}
+					name={item.content ? item.content.title : item.content}
 					block={true}
 				/>
 			</li>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import { bindActionCreators } from 'redux'
 import Spinner from '../ui-elements/Spinner';
 import { getNews, getLanguages, getMediaFiles, getPageWithItems } from '../../rootReducer';

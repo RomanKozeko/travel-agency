@@ -64,8 +64,8 @@ const hotelsReducer = createReducer(defaultState, {
   [actions.HOTEL_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.HOTEL_SAVE_SUCCESS]: state => ({...state, isFetching: false, isSaving: false}),
   [actions.HOTEL_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
-  ['FILTERED_HOTELS_SUCCESS']: setActiveFilter,
-  ['GET_FILTERED_HOTELS_FROM_CACHE']: getFilteredItemsFromCash,
+  'FILTERED_HOTELS_SUCCESS': setActiveFilter,
+  'GET_FILTERED_HOTELS_FROM_CACHE': getFilteredItemsFromCash,
 });
 
 export default hotelsReducer;

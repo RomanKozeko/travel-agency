@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 let AuthForm = props => {
-  const { handleSubmit, pristine, reset, submitting, loginError } = props;
+  const { handleSubmit, pristine, reset, submitting } = props;
 
   const submitForm = (data) => {
     handleSubmit(data);

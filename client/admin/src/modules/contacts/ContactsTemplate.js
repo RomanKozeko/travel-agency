@@ -2,9 +2,7 @@ import React from 'react'
 import TextField from 'material-ui/TextField';
 import Icon from 'material-ui/Icon';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import AddTourPreviewPopup from '../tours/AddTourPreviewPopup';
 import Button from 'material-ui/Button';
-import SortableInput from '../ui-elements/SortableInput'
 import ImageUploader from '../ui-elements/form/ImageUploader';
 
 const styles = StyleSheet.create({
@@ -53,9 +51,16 @@ function removeItem(array, index) {
 }
 
 class ContactsTemplate extends React.Component {
-
   state = {
-    item: this.props.item || {
+    item: {
+      ...this.props.item,
+      content: this.props.languages.map(langItem => {
+        const contentItem = this.props.item.content.find(c => c.language === langItem._id);
+        return {
+          title: contentItem ? contentItem.title : '',
+          description: contentItem ? contentItem.description : '', 
+          language: langItem._id
+      }})} || {
       content: this.props.languages.map(langItem => ({
         title: '',
         description: '',
@@ -180,26 +185,27 @@ class ContactsTemplate extends React.Component {
 
   render() {
     const { item, isNew } = this.state
+
     return (
       <div className={css(styles.item, styles.itemTmp)}>
         {
-          item.content.map(contentItem => {
-            const langTitle = this.props.languages.find(lang => lang._id === contentItem.language).title
+          this.props.languages.map(lang => {
+            const contentItem = item.content.find(ic => ic.language === lang._id);
+
             return (
-              <div key={ contentItem.language } >
+              <div key={lang._id}>
                 <TextField
                   name='title'
                   fullWidth
-                  value={ contentItem.title }
+                  value={contentItem ? contentItem.title : ''}
                   className={css(styles.field)}
-                  onChange={this.onFieldChange(contentItem.language)}
-                  label={`Адресс ${langTitle}`}
+                  onChange={this.onFieldChange(contentItem ? contentItem.language : lang._id)}
+                  label={`Адресс ${lang.title}`}
                   required
                 />
               </div>
             )
-            }
-          )
+          })
         }
         <div>
           {
@@ -207,7 +213,7 @@ class ContactsTemplate extends React.Component {
               return (
                 <div className={css(styles.telWrap)} >
                   {
-                    tel.img ?
+                    tel.img ? 
                       <div className={css(styles.imgWrapper)}>
                         <Icon className={css(styles.icon)} onClick={ this.removeImg(i) }>delete</Icon>
                         <img
@@ -223,28 +229,22 @@ class ContactsTemplate extends React.Component {
                     value={tel.title}
                     onChange={this.onTelChange(i)}
                     className={css(styles.fieldTel)}
-                    label={`Тел/Skype/Viber`}
+                    label='Тел / Skype / Viber'
                     required
                   />
                   <Icon className={css(styles.iconTelDelete)} onClick={ this.deleteTel(i) }>delete</Icon>
-
                 </div>
               )
             })
           }
           <Button className={css(styles.button)} onClick={ this.addTel } >
-            Добавить Тел/Skype/Viber
+            Добавить Тел / Skype / Viber
           </Button>
         </div>
 
         <Button className={css(styles.button)} onClick={ this.props.saveItem(item, isNew) } color="primary">
           Сохранить
         </Button>
-
-        <Button className={css(styles.buttonLeft)} onClick={ this.props.deleteItems([item._id]) } color="secondary">
-           Удалить
-        </Button>
-
       </div>
     )
   }

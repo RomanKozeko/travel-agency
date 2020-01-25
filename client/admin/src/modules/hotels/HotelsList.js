@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';

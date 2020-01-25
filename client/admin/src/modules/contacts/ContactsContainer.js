@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {StyleSheet, css} from 'aphrodite/no-important';
-import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
+import Button from 'material-ui/Button';
 import { bindActionCreators } from 'redux'
-import Spinner from '../ui-elements/Spinner';
 import { getContacts, getLanguages } from '../../rootReducer';
 import { loadLang } from '../languages/LanguagesReducer';
 import withEntities from "../ui-elements/HOC/withEntities";
@@ -17,7 +14,7 @@ import { saveItem, deleteItems, loadItems } from './ContactsReducer';
 
 
 const confirm = createConfirmation(ConfirmDialog);
-class SettingsContainer extends React.Component {
+class SettingsContainer extends Component {
   constructor(props) {
     super(props);
     const {dispatch} = props;
@@ -71,29 +68,14 @@ class SettingsContainer extends React.Component {
         contacts.map(item => (
           <Portlet isBordered key={ item._id }>
             <ContactsTemplate
-              item={ item }
-              saveItem={ this.saveItem }
-              editItem={ this.editItem }
-              deleteItems={ this.deleteItems }
-              { ...this.props }
+              item={item}
+              saveItem={this.saveItem}
+              editItem={this.editItem}
+              deleteItems={this.deleteItems}
+              {...this.props}
             />
           </Portlet>
         ))
-      }
-
-      <Button onClick={ this.toggleTemplate } variant="raised" color="primary">
-          Добавить
-      </Button>
-      {
-        this.state.showTemplate &&
-        <Portlet isBordered>
-          <ContactsTemplate
-            saveItem={ this.saveItem }
-            editItem={ this.editItem }
-            deleteItems={ this.deleteItems }
-            { ...this.props }
-          />
-        </Portlet>
       }
     </div>);
   }

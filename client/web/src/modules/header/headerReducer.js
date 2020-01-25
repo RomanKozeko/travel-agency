@@ -9,7 +9,8 @@ export const defaultState = {
   allIds: [],
   byIds: {},
   isFetching: false,
-  isFetched: false
+  isFetched: false,
+  content: {}
 };
 
 export const fetchContacts = () => (dispatch, getState) => {
@@ -25,11 +26,17 @@ export const fetchContacts = () => (dispatch, getState) => {
 export default createReducer(defaultState, {
   [CONTACTS_REQUEST] : (state) => ({...state, isFetching: true}),
   [CONTACTS_SUCCESS] : (state, { response }) => {
-
+    let items = response.entities.items;
+    Object.keys(items).map((key) => {
+      if (items[key].content === undefined) {
+        items[key] = Object.assign({content: {}}, items[key])
+      }
+    });
+    
     return {
       ...state,
       allIds: response.result.items,
-      byIds: {...state.byIds, ...response.entities.items},
+      byIds: {...state.byIds, ...items},
       isFetching: false,
       isFetched: true
     }

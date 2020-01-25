@@ -27,10 +27,17 @@ const promoLinksReducer = createReducer(defaultState, {
     return {...state, isFetching: true}
   },
   [PROMO_LINKS_SUCCESS] : (state, { response }) => {
+    let items = response.entities.items;
+    Object.keys(items).map((key) => {
+      if (items[key].content === undefined) {
+        items[key] = Object.assign({content: {}}, items[key])
+      }
+    });
+    
     return {
       ...state,
       allIds: [...state.allIds, ...response.result.items],
-      byIds: {...state.byIds, ...response.entities.items},
+      byIds: {...state.byIds, ...items},
       isFetching: false,
       isFetched: true
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import Tabs, { Tab, TabContainer } from 'material-ui/Tabs';
+import Tabs, { Tab } from 'material-ui/Tabs';
 const _ = require('lodash');
 
 const styles = StyleSheet.create({

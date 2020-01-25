@@ -64,7 +64,7 @@ class Map extends React.Component {
   }
 
   createInitialMap = () => {
-    this.directionsService = new window.google.maps.DirectionsService;
+    this.directionsService = new window.google.maps.DirectionsService();
     this.directionsDisplay = new window.google.maps.DirectionsRenderer({
       markerOptions: { icon: '' },
     });
