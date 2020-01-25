@@ -1,4 +1,4 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import { createReducer, basicReducerEvents, createBasicActions, makeActionCreator } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
@@ -50,7 +50,7 @@ export default createReducer(defaultState, {
   [actions.SETTINGS_ITEM_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.SETTINGS_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.SETTINGS_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
-  'CURRENCIES_SUCCESS': (state, { payload }) => {
+  ['CURRENCIES_SUCCESS']: (state, { payload }) => {
     return {
       ...state,
       currencies: payload,

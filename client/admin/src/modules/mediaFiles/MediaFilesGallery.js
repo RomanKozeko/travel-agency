@@ -4,6 +4,7 @@ import MediaFilesList from './MediaFilesList';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
 import ImageUploader from '../ui-elements/form/ImageUploader';
+import {updateItem, updateItemContent} from "./mediaFilesReducer";
 
 const styles = StyleSheet.create({
   button: {
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class MediaFilesGallery extends Component {
+class MediaFilesGallery extends React.Component {
 	componentWillUnmount() {
 		this.props.resetItems();
 	}

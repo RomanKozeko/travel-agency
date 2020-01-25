@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { CircularProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
@@ -55,7 +58,7 @@ const renderCells = ({ title, prefix }, id, selectedRow, handleChange) => {
   ];
 };
 
-class LanguagesList extends Component {
+class LanguagesList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -115,7 +118,7 @@ class LanguagesList extends Component {
   };
 
   render() {
-    const { isSaving } = this.props;
+    const { saveLang, isSaving, deleteLang } = this.props;
     return (
       <div>
         <PageHeader text={'Языки'} />

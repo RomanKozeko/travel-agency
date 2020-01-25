@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class HotelsContainer extends Component {
+class HotelsContainer extends React.Component {
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.loadItems();

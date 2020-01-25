@@ -6,7 +6,9 @@ import Dialog, {
   DialogTitle,
   DialogContent
 } from 'material-ui/Dialog';
+import Slide from 'material-ui/transitions/Slide';
 import FilteredTagSelector from '../../ui-elements/FilteredTagSelector';
+import TextField from 'material-ui/TextField';
 
 const styles = StyleSheet.create({
   popup: {

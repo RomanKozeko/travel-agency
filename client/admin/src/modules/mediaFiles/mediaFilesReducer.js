@@ -1,8 +1,10 @@
-import { createReducer, basicReducerEvents, createBasicActions, makeActionCreator } from '../../services/utils';
+import { createReducer, basicReducerEvents, createBasicActions, makeActionCreator, updatePages } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
+import {EDIT_TOUR_FAILURE, EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS} from "../tours/toursActions";
 
 // actions
 const actionsObj = createBasicActions('MEDIAFILES', 'MEDIAFILE', 'media', CALL_API, Schemas);
+const MEDIAFILES_SELECT_FILE = 'MEDIAFILES_SELECT_FILE';
 const MEDIA_TOGGLE_ITEM = 'MEDIA_TOGGLE_ITEM';
 const MEDIA_RESET_ITEMS = 'MEDIA_RESET_ITEMS';
 
@@ -127,7 +129,7 @@ const mediaFilesReducer = createReducer(defaultState, {
   [actions.MEDIAFILE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
   [MEDIA_TOGGLE_ITEM]: reducerHelper.toggleItem,
 	[MEDIA_RESET_ITEMS]: reducerHelper.resetItems,
-	'UPDATE_ITEM_CONTENT': (state, { itemID, langID, val }) => {
+	['UPDATE_ITEM_CONTENT']: (state, { itemID, langID, val }) => {
 		const newState = { ...state };
 		let hasLang = false;
 

@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class FoodContainer extends Component {
+class FoodContainer extends React.Component {
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.loadItems();

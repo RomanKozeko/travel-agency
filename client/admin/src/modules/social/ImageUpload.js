@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
-import { compose, withHandlers } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 
 const styles = StyleSheet.create({
   wrapper: {

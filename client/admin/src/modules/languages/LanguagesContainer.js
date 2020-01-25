@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class LanguagesContainer extends Component {
+class LanguagesContainer extends React.Component {
   componentDidMount() {
     if (!this.props.items.length) {
       this.props.loadLang();

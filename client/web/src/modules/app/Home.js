@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 
 const Home = ({ match }) => ([
-  <PhotoSliderContainer />,
+    <PhotoSliderContainer />,
 	<PageContent>
     <BigTitle key={1} title={ window.TA.content.mostInteresting } subTitle=''/>
 		<PromoLinks />

@@ -3,11 +3,13 @@ import { compose, lifecycle, withStateHandlers, withHandlers } from 'recompose'
 import {connect} from 'react-redux';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import Icon from 'material-ui/Icon';
+import PageHeader from '../ui-elements/PageHeader';
 import Portlet from "../ui-elements/Portlet";
 import { getLanguages, getSliderItems } from "../../rootReducer";
 import { loadItems, saveItem, deleteItems } from "./SliderReducer";
 import Spinner from '../ui-elements/Spinner';
 import Button from 'material-ui/Button';
+import ImageUploader from '../ui-elements/form/ImageUploader';
 import SliderForm from './SliderForm';
 import ConfirmDialog from "../ui-elements/form/ConfirmDialog";
 import createConfirmation from "../ui-elements/form/createConfirmation";

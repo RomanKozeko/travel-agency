@@ -89,21 +89,33 @@ const styles = StyleSheet.create({
   }
 });
 
-const RenderPrice = ({ price, currency, currencies }) => {
-  
-  if (!currency) {
-    return `${price} BYN`;
-  }
+const getPrice = ({ price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD, currency, currencies }) => {
+    if (!currency) {
+        return `${priceBYN || price || '0'} BYN`;
+    }
 
-  const Cur_ID = currency.split(',')[2];
+    const Cur_ID = currency.split(',')[2];
 
-  if (Cur_ID === 'BYN') {
-    return `${price} BYN`;
-  }
-  const currencyWithRate = currencies.find(item => item.Cur_ID === Number(Cur_ID))
+    if (Cur_ID === 'BYN') {
+        return `${priceBYN || price || '0'} BYN`;
+    }
 
-  return `${(price / currencyWithRate.Cur_OfficialRate * currencyWithRate.Cur_Scale).toFixed(0)} ${currencyWithRate.Cur_Abbreviation}`;
+    if (!priceBYN && !priceRUB && !priceEUR && !pricePLN && !priceUSD) {
+        const currencyWithRate = currencies.find(item => item.Cur_ID === Number(Cur_ID));
 
+        return `${((price / currencyWithRate.Cur_OfficialRate) * currencyWithRate.Cur_Scale).toFixed(0) || '0'} ${currencyWithRate.Cur_Abbreviation}`;
+    }
+
+    const { Cur_Abbreviation } = currencies.find(item => item.Cur_ID === Number(Cur_ID));
+
+    switch (Cur_Abbreviation) {
+        case 'BYN': return `${priceBYN} BYN`;
+        case 'RUB': return `${priceRUB} RUB`;
+        case 'EUR': return `${priceEUR} EUR`;
+        case 'USD': return `${priceUSD} USD`;
+        case 'PLN': return `${pricePLN} PLN`;
+        default: return `${priceBYN || price} BYN`;
+    }
 }
 
 const TourBody = ({
@@ -113,6 +125,7 @@ const TourBody = ({
   currencies
 }) => {
   const categoriesList = categories.map(category => getContentByLanguage(category.content, languageID).title)
+  const { price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD } = content;
   return (
     <div className={css(styles.content)}>
       <div className={css(styles.contentLeft)}>
@@ -162,17 +175,13 @@ const TourBody = ({
             <span className={css(styles.listItemText)}>{  window.TA.content.daysAmount }: { days }</span>
           </div>
         }
-
-        {
-          content.price &&
           <div className={css(styles.listItemPrice)}>
             <span className={css(styles.price)}>
               {
-                RenderPrice({ price: content.price, currency, currencies })
+                getPrice({ price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD, currency, currencies })
               }
             </span>
           </div>
-        }
       </div>
     </div>
   )

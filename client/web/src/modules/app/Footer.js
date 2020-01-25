@@ -4,7 +4,6 @@ import { compose, lifecycle } from 'recompose'
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { getContacts } from '../../rootReducer'
 import { fetchContacts } from '../header/headerReducer'
-import SocialLinks from '../social/SocialLinks'
 
 
 const styles = StyleSheet.create({
@@ -101,7 +100,7 @@ const Footer = ({ items }) => (
   <footer className={css(styles.footer)}>
     <div className="container">
       <div className="row">
-        <div className="col-md-9">
+        <div className="col-md-12">
           <h4 className={css(styles.header)}>{ window.TA.content.ourContacts }</h4>
           {
             items.map(({ content, _id, tels }) => (
@@ -122,10 +121,6 @@ const Footer = ({ items }) => (
               </div>
             ))
           }
-        </div>
-        <div className="col-md-3">
-          <h4 className={css(styles.header)}>{ window.TA.content.followUs }</h4>
-          <SocialLinks />
         </div>
       </div>
 

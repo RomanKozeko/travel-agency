@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { compose, lifecycle } from 'recompose'
 import {connect} from 'react-redux';
+import {StyleSheet, css} from 'aphrodite/no-important';
 import Portlet from "../ui-elements/Portlet";
 import { getSocialItems } from "../../rootReducer";
 import { loadItems, saveItem, deleteItems } from "./SocialReducer";

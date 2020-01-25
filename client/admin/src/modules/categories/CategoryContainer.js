@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
-import { withRouter} from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import PageHeader from '../ui-elements/PageHeader';
@@ -50,7 +51,7 @@ const mapStateToProps = (state, router) => {
 };
 
 
-class CategoryContainer extends Component {
+class CategoryContainer extends React.Component {
   componentDidMount() {
     if (!this.props.item) {
       this.props.loadCategory(this.props.match.params.id);

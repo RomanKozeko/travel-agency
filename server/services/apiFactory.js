@@ -51,6 +51,7 @@ const getAll = model => (req, res, next) => {
 const post = model => (req, res, next) => {
   req.body = populateEmpty(req.body);
   delete req.body._id;
+
   const item = new model(req.body);
 
   saveAndPopulate()

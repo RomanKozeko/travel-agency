@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 });
 
 const PageHeader = ({ title }) =>
-	<header className={css(styles.header)} style={{ backgroundImage: `url(${window.TA && window.TA.pagesImg})` }}>
+	<header className={css(styles.header)} style={{ backgroundImage: `url('${window.TA && window.TA.pagesImg}')` }}>
 		<div className='container'>
 			<h1 className={css(styles.headerTitle)}>{ title }</h1>
 		</div>

@@ -28,7 +28,7 @@ export default compose(
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
-        this.props.fetchPhotoSlider()
+        this.props.fetchPhotoSlider();
       }
     }
   })

@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, css} from 'aphrodite/no-important';
 import TextField from 'material-ui/TextField';
-import { FormControlLabel } from 'material-ui/Form';
+import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import Switch from 'material-ui/Switch';
 import TinyMCE from 'react-tinymce';
 import Button from 'material-ui/Button';
@@ -157,6 +157,7 @@ class ShowPlaceForm extends React.Component {
                         content={parentState.contentByLang[lang._id].content}
                         config={{
                           plugins:'link image code',
+                          toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect link image',
                           height: '500'
                         }}
                         onChange={handleEditorChange(lang._id)}

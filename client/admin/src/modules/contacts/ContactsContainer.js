@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PageHeader from '../ui-elements/PageHeader';
-import Button from 'material-ui/Button';
 import { bindActionCreators } from 'redux'
 import { getContacts, getLanguages } from '../../rootReducer';
 import { loadLang } from '../languages/LanguagesReducer';

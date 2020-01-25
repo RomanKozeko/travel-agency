@@ -12,13 +12,22 @@ const ContentSchema = new Schema({
   priceInclude: String,
   priceNotInclude: String,
   departureInfo: String,
-  program: [{
-    description: String
-  }],
+  programs: [
+    {
+        id: Number,
+        program: [{
+            description: String
+        }],
+    },
+  ],
   duration: String,
   mapName: String,
   language: String,
-  price: Number,
+  priceBYN: Number,
+  priceRUB: Number,
+  priceUSD: Number,
+  priceEUR: Number,
+  pricePLN: Number,
 	programFile: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Media'

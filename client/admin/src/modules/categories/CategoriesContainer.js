@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {StyleSheet, css} from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 
 import { loadCategories, deleteCategories } from './categoriesReducer';
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class CategoriesContainer extends Component {
+class CategoriesContainer extends React.Component {
   componentDidMount() {
     if (!this.props.items.length) {
       this.props.loadCategories();
