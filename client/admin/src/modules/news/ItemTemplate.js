@@ -96,14 +96,22 @@ const styles = StyleSheet.create({
 class ItemTemplate extends Component {
 
   state = {
-    item: this.props.item || {
+    item: this.props.item ? {
+      ...this.props.item,
+      content: this.props.languages.map(langItem => {
+        const contentItem = this.props.item.content.find(c => c.language === langItem._id);
+        return {
+          title: contentItem ? contentItem.title : '', 
+          description: contentItem ? contentItem.description : '', 
+          language: langItem._id
+      }})} : {
+      order: 0,
+      preview: [],
       content: this.props.languages.map(langItem => ({
         title: '',
         description: '',
         language: langItem._id
       })),
-      order: 0,
-      preview: []
     },
     isNew: !this.props.item
   }
@@ -208,9 +216,7 @@ class ItemTemplate extends Component {
                 />
               </div>
             )
-          }
-
-          )
+          })
         }
 
         <SortableInput
