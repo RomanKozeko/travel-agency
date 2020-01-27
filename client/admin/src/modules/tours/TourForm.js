@@ -71,6 +71,7 @@ class TourForm extends Component {
                 description: '',
                 mapName: '',
                 language: key,
+                programs: [],
             };
         });
 
