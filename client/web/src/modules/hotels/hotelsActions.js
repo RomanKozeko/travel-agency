@@ -14,46 +14,55 @@ export const HOTELS_SET_ACTIVE_FILTER = 'HOTELS_SET_ACTIVE_FILTER';
 export const HOTELS_RESET_ACTIVE_FILTER = 'HOTELS_RESET_ACTIVE_FILTER';
 
 export const fetchHotel = (url, urlPrefix) => ({
-	[CALL_API]: {
-		types: [HOTEL_REQUEST, HOTEL_SUCCESS, HOTEL_FAILURE],
-		endpoint: withPrefix(`/api/hotelGetByUrl/${url}`, urlPrefix),
-		schema: Schemas.HOTEL
-	}
+  [CALL_API]: {
+    types: [HOTEL_REQUEST, HOTEL_SUCCESS, HOTEL_FAILURE],
+    endpoint: withPrefix(`/api/hotelGetByUrl/${url}`, urlPrefix),
+    schema: Schemas.HOTEL,
+  },
 });
 
 export const loadHotel = url => (dispatch, getState) => {
-	const state = getState();
-	if (!state.hotels.byIds[url]) {
-		return dispatch(fetchHotel(url, state.app.languages.urlPrefix));
-	}
-	return null;
+  const state = getState();
+  if (!state.hotels.byIds[url]) {
+    return dispatch(fetchHotel(url, state.app.languages.urlPrefix));
+  }
+  return null;
 };
 
 export const fetchFilteredHotels = (filterQuery, lang) => ({
-	[CALL_API]: {
-		types: [ HOTELS_FILTERED_REQUEST, HOTELS_FILTERED_SUCCESS, HOTELS_FILTERED_FAILURE ],
-		endpoint: withPrefix(`/api/hotels?${filterQuery}`, lang),
-		schema: Schemas.HOTELS,
-		query: filterQuery
-	}
+  [CALL_API]: {
+    types: [
+      HOTELS_FILTERED_REQUEST,
+      HOTELS_FILTERED_SUCCESS,
+      HOTELS_FILTERED_FAILURE,
+    ],
+    endpoint: withPrefix(`/api/hotels?${filterQuery}`, lang),
+    schema: Schemas.HOTELS,
+    query: filterQuery,
+  },
 });
 
-export const resetActiveFilter = () => (dispatch) => {
-	dispatch({
-		type: HOTELS_RESET_ACTIVE_FILTER,
-	})
+export const resetActiveFilter = () => dispatch => {
+  dispatch({
+    type: HOTELS_RESET_ACTIVE_FILTER,
+  });
 };
 
-export const loadFilteredHotels = (filterQuery) => (dispatch, getState) => {
-	filterQuery = typeof filterQuery === 'string' ? filterQuery : getFiltersQuery(filterQuery);
-	const filter = getState().hotels.byQueries;
+export const loadFilteredHotels = filterQuery => (dispatch, getState) => {
+  filterQuery =
+    typeof filterQuery === 'string'
+      ? filterQuery
+      : getFiltersQuery(filterQuery);
+  const filter = getState().hotels.byQueries;
 
-	if (filter.hasOwnProperty(filterQuery)) {
-		return dispatch({
-			type: HOTELS_SET_ACTIVE_FILTER,
-			payload: filterQuery
-		})
-	}
+  if (filter.hasOwnProperty(filterQuery)) {
+    return dispatch({
+      type: HOTELS_SET_ACTIVE_FILTER,
+      payload: filterQuery,
+    });
+  }
 
-	dispatch(fetchFilteredHotels(filterQuery, getState().app.languages.urlPrefix))
+  dispatch(
+    fetchFilteredHotels(filterQuery, getState().app.languages.urlPrefix)
+  );
 };

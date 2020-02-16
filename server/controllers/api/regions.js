@@ -1,13 +1,13 @@
 const slicer = require('../../services/index');
 const Region = require('../../models/Region');
 
-const findLastChildren = (allRegions) => {
+const findLastChildren = allRegions => {
   const lastChildren = {};
   const regionsLength = allRegions.length;
   allRegions.forEach(region => {
     let regionHasChildren = false;
 
-    for(let i = 0; i < regionsLength; i++ ) {
+    for (let i = 0; i < regionsLength; i++) {
       if (allRegions[i].parent === region._id.toString()) {
         regionHasChildren = true;
         break;
@@ -19,16 +19,16 @@ const findLastChildren = (allRegions) => {
       if (lastChildren.hasOwnProperty(prop)) {
         lastChildren[prop].push(region);
       } else {
-        lastChildren[prop] = [region]
+        lastChildren[prop] = [region];
       }
     }
-
   });
 
   return lastChildren;
 };
 
-const getItemById = (items,id) => items.find(item => item._id.toString() === id);
+const getItemById = (items, id) =>
+  items.find(item => item._id.toString() === id);
 
 const setUpAncestors = (reg, lastChildren) => {
   const regions = reg.slice();
@@ -37,7 +37,7 @@ const setUpAncestors = (reg, lastChildren) => {
       const ancestors = [];
       let parentId = region.parent;
 
-      while(parentId) {
+      while (parentId) {
         ancestors.push(parentId);
         const parentItem = getItemById(regions, parentId);
         parentId = parentItem.parent;
@@ -51,24 +51,25 @@ const setUpAncestors = (reg, lastChildren) => {
             region.ancestors = ancestors.slice(i + 1);
           }
         });
-      })
-
-    })
+      });
+    });
   });
 
   return regions;
 };
 
-const saveRegionsTree = (updatedRegions) => {
+const saveRegionsTree = updatedRegions => {
   const savedRegions = [];
   updatedRegions.forEach(updatedRegion => {
-    savedRegions.push(Region.findByIdAndUpdate(updatedRegion._id.toString(), updatedRegion))
+    savedRegions.push(
+      Region.findByIdAndUpdate(updatedRegion._id.toString(), updatedRegion)
+    );
   });
 
-  return Promise.all(savedRegions)
+  return Promise.all(savedRegions);
 };
 
-const rebuildRegionsTree = (items) => {
+const rebuildRegionsTree = items => {
   const regions = items.map(item => item.toObject());
   const lastChildren = findLastChildren(regions);
   const updatedRegions = setUpAncestors(regions, lastChildren);
@@ -79,7 +80,9 @@ const rebuildRegionsTree = (items) => {
 module.exports = {
   get(req, res, next) {
     Region.find()
-      .then(result => res.json(slicer.sliceModelContent(result.concat(), req.query.lang)))
+      .then(result =>
+        res.json(slicer.sliceModelContent(result.concat(), req.query.lang))
+      )
       .catch(next);
   },
 
@@ -91,8 +94,9 @@ module.exports = {
 
   post(req, res, next) {
     const region = new Region(req.body);
-    region.save()
-      .then((result) => {
+    region
+      .save()
+      .then(result => {
         res.json(result);
       })
       .catch(next);
@@ -120,5 +124,5 @@ module.exports = {
     Region.deleteMany({ _id: ids })
       .then(() => res.json(ids))
       .catch(next);
-  }
+  },
 };

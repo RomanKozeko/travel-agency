@@ -16,13 +16,12 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   icon: {
-    color: 'c62828'
+    color: 'c62828',
   },
   content: {
-    paddingLeft: '10px'
-  }
+    paddingLeft: '10px',
+  },
 });
-
 
 const NotificationPanel = ({ children }) => (
   <div className={classNames(css(styles.wrapper))}>

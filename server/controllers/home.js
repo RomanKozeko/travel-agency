@@ -1,10 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 
-
-const React = require('react')
-const {Provider} = require('react-redux')
-const {renderToString} = require('react-dom/server')
 // const {StaticRouter} = require('react-router')
 // const {StyleSheetServer} = require('aphrodite')
 //
@@ -20,11 +16,10 @@ export const getLangPref = () => {
   if (window) {
     const pref = window.location.href.split('/')[3];
     if (pref.length > 2) {
-      return 'ru'
+      return 'ru';
     }
-    return window.location.href.split('/')[3]
+    return window.location.href.split('/')[3];
   }
-
 };
 
 module.exports = {
@@ -33,7 +28,7 @@ module.exports = {
     const filePath = path.join(__dirname, '../../client/web/build/index.html');
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
       if (err) {
-        return res.status(404).end()
+        return res.status(404).end();
       }
 
       const context = {};
@@ -55,22 +50,23 @@ module.exports = {
       //   languagePrefix: prefix.length > 2 ? '' : prefix
       // };
       // const preloadedState = Object.assign(defaultState, app);
-      const preloadedState = ''
+      const preloadedState = '';
 
       if (context.url) {
         // Somewhere a `<Redirect>` was rendered
-        res.redirect(301, context.url)
+        res.redirect(301, context.url);
       } else {
-         const withSsr = htmlData.replace('{{SSR}}', `<style type="text/css" id="server-side-styles"></style>`);
+        const withSsr = htmlData.replace(
+          '{{SSR}}',
+          `<style type="text/css" id="server-side-styles"></style>`
+        );
         // const RenderedApp = withSsr.replace(
         //   '__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')};
         //    StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)}});`
         // );
 
-        res.send(withSsr)
+        res.send(withSsr);
       }
-
     });
-  }
+  },
 };
-

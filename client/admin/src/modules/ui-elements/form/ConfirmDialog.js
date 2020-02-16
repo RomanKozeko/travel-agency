@@ -8,7 +8,6 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog';
 
-
 class ConfirmDialog extends Component {
   state = {
     open: this.props.show,
@@ -29,10 +28,8 @@ class ConfirmDialog extends Component {
       <div>
         <Dialog open={this.state.open} onRequestClose={this.handleRequestClose}>
           <DialogTitle>{this.props.title}</DialogTitle>
-          <DialogContent style={{minWidth: '320px'}}>
-            <DialogContentText>
-              {this.props.body}
-            </DialogContentText>
+          <DialogContent style={{ minWidth: '320px' }}>
+            <DialogContentText>{this.props.body}</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleRequestClose} color="secondary">
@@ -48,4 +45,4 @@ class ConfirmDialog extends Component {
   }
 }
 
-export default ConfirmDialog
+export default ConfirmDialog;

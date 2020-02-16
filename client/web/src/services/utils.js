@@ -1,11 +1,11 @@
 export const createReducer = (initialState, handlers) => {
   return function reducer(state = initialState, action) {
     if (handlers.hasOwnProperty(action.type)) {
-      return handlers[action.type](state, action)
+      return handlers[action.type](state, action);
     } else {
-      return state
+      return state;
     }
-  }
+  };
 };
 
 export function createBasicActions(aliasPlural, endpoint, middleware, schemas) {
@@ -15,12 +15,16 @@ export function createBasicActions(aliasPlural, endpoint, middleware, schemas) {
     [`${aliasPlural}_FAILURE`]: `${aliasPlural}_FAILURE`,
   };
 
-  const fetch = (lang) => ({
+  const fetch = lang => ({
     [middleware]: {
-      types: [`${aliasPlural}_REQUEST`, `${aliasPlural}_SUCCESS`, `${aliasPlural}_FAILURE`],
+      types: [
+        `${aliasPlural}_REQUEST`,
+        `${aliasPlural}_SUCCESS`,
+        `${aliasPlural}_FAILURE`,
+      ],
       endpoint: withPrefix(`/api/${endpoint}`, lang),
       schema: schemas[aliasPlural],
-    }
+    },
   });
 
   const load = () => (dispatch, getState) => {
@@ -29,7 +33,7 @@ export function createBasicActions(aliasPlural, endpoint, middleware, schemas) {
 
   return {
     actions,
-    load
+    load,
   };
 }
 
@@ -45,44 +49,41 @@ export const getLangPref = () => {
   }
 };
 
-
 export const makeActionCreator = (type, ...argNames) => {
-  return function (...args) {
+  return function(...args) {
     const action = { type };
     argNames.forEach((arg, index) => {
-      action[argNames[index]] = args[index]
+      action[argNames[index]] = args[index];
     });
-    return action
-  }
+    return action;
+  };
 };
 
 export const getLangUrlPref = (languages, currPrefix) => {
-	const pref = languages.find(lang => lang.prefix === currPrefix);
-	if (pref) {
-		return pref._id;
-	}
-	return languages.find(lang => lang.prefix === 'ru')._id;
+  const pref = languages.find(lang => lang.prefix === currPrefix);
+  if (pref) {
+    return pref._id;
+  }
+  return languages.find(lang => lang.prefix === 'ru')._id;
 };
 
 export const withPrefix = (endpoint, langPref) => {
-	if(langPref) {
-		const separator = (endpoint.indexOf('?') > -1) ? '&' : '?';
-		return `${endpoint}${separator}lang=${langPref}`
-	}
-	return endpoint
+  if (langPref) {
+    const separator = endpoint.indexOf('?') > -1 ? '&' : '?';
+    return `${endpoint}${separator}lang=${langPref}`;
+  }
+  return endpoint;
 };
 
 export const getPageCount = (count, limit) => {
-  return parseInt(count/limit) + (count % limit)
+  return parseInt(count / limit) + (count % limit);
 };
 
-export const getContentByLanguage = (content, languageId) => content.find(
-	item => item.language === languageId
-);
+export const getContentByLanguage = (content, languageId) =>
+  content.find(item => item.language === languageId);
 
-export const getImageById = (allImages, id) => allImages.find(
-  item => item._id === id
-);
+export const getImageById = (allImages, id) =>
+  allImages.find(item => item._id === id);
 
 export const getFiltersQuery = filters => {
   let query = '';
@@ -90,10 +91,11 @@ export const getFiltersQuery = filters => {
   for (const filter in filters) {
     if (filters[filter].length) {
       query += `${filter}=`;
-      query += typeof filters[filter] === 'object' ?
-        filters[filter].map(item => item._id || item).join(','):
-        filters[filter];
-      query += '&'
+      query +=
+        typeof filters[filter] === 'object'
+          ? filters[filter].map(item => item._id || item).join(',')
+          : filters[filter];
+      query += '&';
     }
   }
   return query.slice(0, -1);

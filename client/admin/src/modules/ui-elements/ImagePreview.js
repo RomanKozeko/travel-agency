@@ -3,25 +3,24 @@ import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
 const opacityKeyframes = {
-  'from': {
+  from: {
     opacity: 0,
   },
 
-  'to': {
+  to: {
     opacity: 1,
-  }
+  },
 };
 
 const pulse = {
-  'from': {
+  from: {
     backgroundPosition: '0% 0%',
   },
 
-  'to': {
+  to: {
     backgroundPosition: ' -135% 0%',
-  }
+  },
 };
-
 
 const styles = StyleSheet.create({
   image: {
@@ -49,7 +48,8 @@ const styles = StyleSheet.create({
     borderRadius: '4px;',
   },
   layer: {
-    backgroundImage: 'linear-gradient(-90deg, #fff 0%, rgba(230,230,230, .4) 50%, #fff 100%)',
+    backgroundImage:
+      'linear-gradient(-90deg, #fff 0%, rgba(230,230,230, .4) 50%, #fff 100%)',
     backgroundSize: '400% 400%;',
     animationName: [pulse],
     animationDuration: '3s, 1200ms',
@@ -62,10 +62,8 @@ const styles = StyleSheet.create({
     zIndex: '1',
     opacity: '0.6',
     borderRadius: '4px;',
-  }
-
+  },
 });
-
 
 class ImagePreview extends Component {
   constructor(props) {
@@ -83,10 +81,19 @@ class ImagePreview extends Component {
     return (
       <div className={css(styles.wrapper)}>
         {!this.state.loaded && <div className={css(styles.layer)} />}
-        {this.state.loaded && <img className={css(styles.image)} src={src} alt="" />}
-        {!this.state.loaded && <img style={{display: 'none'}} src={src} onLoad={this.onLoad.bind(this)} />}
+        {this.state.loaded && (
+          <img className={css(styles.image)} src={src} alt="" />
+        )}
+        {!this.state.loaded && (
+          <img
+            style={{ display: 'none' }}
+            src={src}
+            alt="loader?"
+            onLoad={this.onLoad.bind(this)}
+          />
+        )}
       </div>
-    )
+    );
   }
 }
 

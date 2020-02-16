@@ -15,97 +15,106 @@ const styles = StyleSheet.create({
     zIndex: '1',
     position: 'relative',
     borderRadius: '4px 4px 0 0',
-    borderBottom: '1px solid #dae2ea'
+    borderBottom: '1px solid #dae2ea',
   },
   selectWrapper: {
     width: '100%',
     marginTop: '40px',
-    marginBottom: '40px'
-  }
+    marginBottom: '40px',
+  },
 });
 
 const RegionForm = ({
-                      isSaving,
-                      parentState,
-                      languages,
-                      handleChange,
-                      handleSave,
-                      regions,
-                      handleInputChange
-                    }) => {
-
+  isSaving,
+  parentState,
+  languages,
+  handleChange,
+  handleSave,
+  regions,
+  handleInputChange,
+}) => {
   const setupAncestors = parent => {
     let ancestors = [parent._id];
     if (parent.parent) {
       ancestors = [...parent.ancestors, ...ancestors];
     }
 
-    return ancestors
+    return ancestors;
   };
 
   const appendAncestors = name => event => {
     let ancestors = [];
     const val = event.target.value;
-    const parent = regions.find(region => (region._id === val));
+    const parent = regions.find(region => region._id === val);
     if (parent) {
       ancestors = setupAncestors(parent);
     }
 
-    handleInputChange(name, { ancestors, parent: val === 'noParent' ? null : val })(event)
+    handleInputChange(name, {
+      ancestors,
+      parent: val === 'noParent' ? null : val,
+    })(event);
   };
 
   return (
     <form action="" onSubmit={handleSave}>
       <div className="row">
         <div className="col-sm-6">
-
           {languages.map((lang, i) => (
             <div key={lang._id}>
-              {parentState.selectedTabIndex === i &&
-              <TextField
-                id="title"
-                label="title"
-                fullWidth
-                value={parentState.contentByLang[lang._id].title}
-                onChange={handleChange(lang._id, 'title')}
-                margin="normal"
-                required
-              />
-              }
+              {parentState.selectedTabIndex === i && (
+                <TextField
+                  id="title"
+                  label="title"
+                  fullWidth
+                  value={parentState.contentByLang[lang._id].title}
+                  onChange={handleChange(lang._id, 'title')}
+                  margin="normal"
+                  required
+                />
+              )}
             </div>
           ))}
 
-          {regions.length > 0  &&
-          <FormControl className={css(styles.selectWrapper)}>
-            <InputLabel htmlFor="parentRegion">Родительский регион</InputLabel>
-            <Select
-              value={parentState.item.parent || 'noParent'}
-              onChange={appendAncestors('parent')}
-              input={<Input id="parentRegion" />}
-              autoWidth
-            >
-              <MenuItem key='1' value={'noParent'}>Нет родителя</MenuItem>
-              {regions.map(region => {
-                if (
-                  parentState.item._id !== region._id &&
-                  region.ancestors.indexOf(parentState.item._id) === -1
-                ) {
-                  return (
-                    <MenuItem key={region._id} value={region._id}>{region.content[0].title}</MenuItem>
-                  );
-                }
-              })
-              }
-            </Select>
-          </FormControl>
-          }
+          {regions.length > 0 && (
+            <FormControl className={css(styles.selectWrapper)}>
+              <InputLabel htmlFor="parentRegion">
+                Родительский регион
+              </InputLabel>
+              <Select
+                value={parentState.item.parent || 'noParent'}
+                onChange={appendAncestors('parent')}
+                input={<Input id="parentRegion" />}
+                autoWidth
+              >
+                <MenuItem key="1" value={'noParent'}>
+                  Нет родителя
+                </MenuItem>
+                {regions.map(region => {
+                  if (
+                    parentState.item._id !== region._id &&
+                    region.ancestors.indexOf(parentState.item._id) === -1
+                  ) {
+                    return (
+                      <MenuItem key={region._id} value={region._id}>
+                        {region.content[0].title}
+                      </MenuItem>
+                    );
+                  }
 
+                  return null;
+                })}
+              </Select>
+            </FormControl>
+          )}
         </div>
       </div>
 
-      {parentState.notValidForm &&
-      <NotificationPanel>Пожалуйста заполните заголовки для всех языков</NotificationPanel>
-      }
+      {parentState.notValidForm && (
+        <NotificationPanel>
+          Пожалуйста заполните заголовки для всех языков
+        </NotificationPanel>
+      )}
       <Button
         variant="raised"
         type="submit"
@@ -116,7 +125,6 @@ const RegionForm = ({
       </Button>
     </form>
   );
-}
-
+};
 
 export default withTabs(RegionForm, '/admin/regions');

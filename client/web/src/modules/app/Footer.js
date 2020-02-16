@@ -1,15 +1,14 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { compose, lifecycle } from 'recompose'
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose, lifecycle } from 'recompose';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { getContacts } from '../../rootReducer'
-import { fetchContacts } from '../header/headerReducer'
-
+import { getContacts } from '../../rootReducer';
+import { fetchContacts } from '../header/headerReducer';
 
 const styles = StyleSheet.create({
   footer: {
     background: '#141414',
-    padding: '70px 0 0'
+    padding: '70px 0 0',
   },
   bottom: {
     background: '#0c0c0c',
@@ -19,27 +18,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '90px',
     color: '#777777',
-    marginTop: '70px'
+    marginTop: '70px',
   },
   left: {
-    float: 'left'
+    float: 'left',
   },
   right: {
-    float: 'right'
+    float: 'right',
   },
   header: {
     fontSize: '13px',
     fontWeight: 'bold',
     color: '#fff',
     textTransform: 'uppercase',
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
   columnText: {
-    color: '#fff'
+    color: '#fff',
   },
   columnInner: {
     color: '#d4d4d4',
-    display: 'flex'
+    display: 'flex',
   },
   button: {
     display: 'inline-block',
@@ -52,30 +51,30 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.6);',
     ':hover': {
       color: 'rgba(255, 255, 255, 0.6);',
-      textDecoration: 'none'
+      textDecoration: 'none',
     },
     ':active': {
       color: 'rgba(255, 255, 255, 0.6);',
-      textDecoration: 'none'
+      textDecoration: 'none',
     },
     ':focus': {
       color: 'rgba(255, 255, 255, 0.6);',
-      textDecoration: 'none'
-    }
+      textDecoration: 'none',
+    },
   },
   fb: {
-    background: '#3b5998;'
+    background: '#3b5998;',
   },
   vk: {
-    background: '#507299'
+    background: '#507299',
   },
   google: {
-    background: '#d0422a'
+    background: '#d0422a',
   },
   textTelWrap: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginLeft: '-10px'
+    marginLeft: '-10px',
   },
   textTel: {
     width: 'calc(100% / 2 - 10px)',
@@ -86,14 +85,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     '@media (min-width: 600px)': {
       width: 'calc(100% / 3 - 10px)',
-    }
+    },
   },
   textTelImg: {
-    maxHeight: '15px'
+    maxHeight: '15px',
   },
   textTelContent: {
     marginLeft: '10px',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
   },
 });
 const Footer = ({ items }) => (
@@ -101,56 +100,51 @@ const Footer = ({ items }) => (
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <h4 className={css(styles.header)}>{ window.TA.content.ourContacts }</h4>
-          {
-            items.map(({ content, _id, tels }) => (
-              <div className={css(styles.columnText)} key={ _id }>
-                <div className={css(styles.item)}>
-                  <span className={css(styles.columnInner)}>{ content.title }</span>
-                </div>
-                <div className={css(styles.textTelWrap)}>
-                  {
-                    tels.map(({ title, img }) =>
-                      <div className={css(styles.textTel)}>
-                        <img src={ img }  className={css(styles.textTelImg)} alt=""/>
-                        <div className={css(styles.textTelContent)}>{ title }</div>
-                      </div>
-                    )
-                  }
-                </div>
+          <h4 className={css(styles.header)}>
+            {window.TA.content.ourContacts}
+          </h4>
+          {items.map(({ content, _id, tels }) => (
+            <div className={css(styles.columnText)} key={_id}>
+              <div className={css(styles.item)}>
+                <span className={css(styles.columnInner)}>{content.title}</span>
               </div>
-            ))
-          }
+              <div className={css(styles.textTelWrap)}>
+                {tels.map(({ title, img }) => (
+                  <div className={css(styles.textTel)}>
+                    <img src={img} className={css(styles.textTelImg)} alt="" />
+                    <div className={css(styles.textTelContent)}>{title}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-
     </div>
     <div className={css(styles.bottom)}>
-      <div className='container'>
-        <div className={css(styles.left)}>
-          { window.TA.content.copyRight }
-        </div>
+      <div className="container">
+        <div className={css(styles.left)}>{window.TA.content.copyRight}</div>
       </div>
     </div>
-
   </footer>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   items: getContacts(state),
   isFetching: state.contacts.isFetching,
-  isFetched: state.contacts.isFetched
-})
+  isFetched: state.contacts.isFetched,
+});
 
 export default compose(
-  connect(mapStateToProps, { fetchContacts }),
+  connect(
+    mapStateToProps,
+    { fetchContacts }
+  ),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
-        this.props.fetchContacts()
+        this.props.fetchContacts();
       }
-    }
+    },
   })
-)(Footer)
-
-
+)(Footer);

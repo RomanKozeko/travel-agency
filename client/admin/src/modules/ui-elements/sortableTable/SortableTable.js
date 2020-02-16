@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from 'material-ui/Table';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import Checkbox from 'material-ui/Checkbox';
@@ -14,11 +19,11 @@ import SortableTableToolbar from './SortableTableToolbar';
 
 const styles = StyleSheet.create({
   actions: {
-    width: '100px'
+    width: '100px',
   },
   disabled: {
-    backgroundColor: '#eee'
-  }
+    backgroundColor: '#eee',
+  },
 });
 
 class SortableTable extends Component {
@@ -47,7 +52,7 @@ class SortableTable extends Component {
 
   deleteItemss() {
     const pagesToDelete = Object.keys(this.state.selected).filter(
-      id => (this.state.selected[id] === true)
+      id => this.state.selected[id] === true
     );
 
     this.props.deleteItems(pagesToDelete);
@@ -57,7 +62,7 @@ class SortableTable extends Component {
   countSelected() {
     let counter = 0;
     const selected = Object.keys(this.state.selected);
-    selected.forEach((item) => {
+    selected.forEach(item => {
       if (this.state.selected[item]) {
         counter += 1;
       }
@@ -68,15 +73,18 @@ class SortableTable extends Component {
   getItemContent(item) {
     const { data } = this.props;
     //  get all content of curr item
-    return item.content ?
-      item.content.find((itemContent) => {
-        if (!data.languages.byIds[itemContent.language]) {
-          // Return some content if no language match was detected
-          return itemContent;
-        }
-        return data.languages.byIds[itemContent.language].prefix === data.languages.currLanguage;
-      })
-    : item;
+    return item.content
+      ? item.content.find(itemContent => {
+          if (!data.languages.byIds[itemContent.language]) {
+            // Return some content if no language match was detected
+            return itemContent;
+          }
+          return (
+            data.languages.byIds[itemContent.language].prefix ===
+            data.languages.currLanguage
+          );
+        })
+      : item;
   }
 
   renderFields(item, fields) {
@@ -90,19 +98,23 @@ class SortableTable extends Component {
   renderCellItem(item, field) {
     switch (field.isLink) {
       case 'toggle': {
-        return <Switch checked={item[field.name]} />
+        return <Switch checked={item[field.name]} />;
       }
       case 'date': {
-        return <span>{moment(item.date).format('DD/MM/YYYY')}</span>
+        return <span>{moment(item.date).format('DD/MM/YYYY')}</span>;
       }
       case 'stars': {
-        return <StarsList starsCount={item.stars} />
+        return <StarsList starsCount={item.stars} />;
       }
       case true: {
-        return <Link to={field.linkPrefix + item._id}>{this.getItemContent(item)[field.name]}</Link>
+        return (
+          <Link to={field.linkPrefix + item._id}>
+            {this.getItemContent(item)[field.name]}
+          </Link>
+        );
       }
       default: {
-       return <span>{this.getItemContent(item)[field.name]}</span>
+        return <span>{this.getItemContent(item)[field.name]}</span>;
       }
     }
   }
@@ -112,25 +124,33 @@ class SortableTable extends Component {
 
     return (
       <div>
-        <SortableTableToolbar numSelected={this.countSelected()} deletePages={this.deleteItemss} />
+        <SortableTableToolbar
+          numSelected={this.countSelected()}
+          deletePages={this.deleteItemss}
+        />
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className={css(styles.actions)}>
-              </TableCell>
+              <TableCell className={css(styles.actions)} />
               {data.headers.map((item, i) => (
                 <TableCell key={i + 1}>{item}</TableCell>
-              ))
-              }
-              <TableCell numeric className={css(styles.actions)}>Действия</TableCell>
+              ))}
+              <TableCell numeric className={css(styles.actions)}>
+                Действия
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.items.map(item => (
-              <TableRow key={item._id} className={item.enabled !== false ? '' : css(styles.disabled)}>
+              <TableRow
+                key={item._id}
+                className={item.enabled !== false ? '' : css(styles.disabled)}
+              >
                 <TableCell>
                   <Checkbox
-                    onChange={(e, checked) => this.handleSelect(e, checked, item._id)}
+                    onChange={(e, checked) =>
+                      this.handleSelect(e, checked, item._id)
+                    }
                     checked={this.isSelected(item._id)}
                   />
                 </TableCell>
@@ -141,8 +161,7 @@ class SortableTable extends Component {
                   </IconButton>
                 </TableCell>
               </TableRow>
-            ))
-            }
+            ))}
           </TableBody>
         </Table>
       </div>
@@ -153,7 +172,7 @@ class SortableTable extends Component {
 SortableTable.propTypes = {
   data: PropTypes.object,
   languages: PropTypes.object,
-  deletePages: PropTypes.func
+  deletePages: PropTypes.func,
 };
 
 export default SortableTable;

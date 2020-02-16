@@ -1,7 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import MenuContainer from '../menu/MenuContainer';
-
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -16,13 +15,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     height: '60px',
-    position: 'relative'
+    position: 'relative',
   },
 });
 
 const MainNav = ({ menuItems }) => (
   <div className={css(styles.wrapper)}>
-    <div className="container" style={{height: '100%'}}>
+    <div className="container" style={{ height: '100%' }}>
       <nav className={css(styles.nav)}>
         <MenuContainer />
       </nav>
@@ -30,4 +29,4 @@ const MainNav = ({ menuItems }) => (
   </div>
 );
 
-export default MainNav
+export default MainNav;

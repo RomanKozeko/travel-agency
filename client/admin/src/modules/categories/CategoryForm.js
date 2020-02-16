@@ -6,64 +6,72 @@ import NotificationPanel from '../ui-elements/form/NotificationPanel';
 import withTabs from '../ui-elements/HOC/withTabs';
 import Switch from 'material-ui/Switch';
 
-const CategoryForm = ({ isSaving, parentState, languages, handleChange, handleSave, handleToggle, toggleEnableForLanguage }) => (
+const CategoryForm = ({
+  isSaving,
+  parentState,
+  languages,
+  handleChange,
+  handleSave,
+  handleToggle,
+  toggleEnableForLanguage,
+}) => (
   <form action="" onSubmit={handleSave}>
     {languages.map((lang, i) => (
       <div key={lang._id}>
-        {parentState.selectedTabIndex === i &&
-        <div className="row">
-          <div className="col-sm-6">
-          <FormControlLabel
-              control={
-                <Switch
-                  checked={parentState.item.enabled}
-                  onChange={(event, checked) => handleToggle(event, 'enabled', checked)}
-                  aria-label="checkedD"
-                />
-              }
-              label={ parentState.item.enabled ? 'Активен' : 'Не активен'}
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={parentState.item.disabledForLanguages && parentState.item.disabledForLanguages.includes(lang._id)}
-                  onChange={ toggleEnableForLanguage(lang._id)}
-                  aria-label="checkedD"
-                />
-              }
-              label={parentState.item.disabledForLanguages && parentState.item.disabledForLanguages.includes(lang._id) ?
-                'Скрыть для этого языка' :
-                'Скрыть для этого языка'
-              }
-            />
-            <TextField
-              id="title"
-              label="title"
-              fullWidth
-              value={parentState.contentByLang[lang._id].title}
-              onChange={handleChange(lang._id, 'title')}
-              margin="normal"
-              required
-            />
+        {parentState.selectedTabIndex === i && (
+          <div className="row">
+            <div className="col-sm-6">
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={parentState.item.enabled}
+                    onChange={(event, checked) =>
+                      handleToggle(event, 'enabled', checked)
+                    }
+                    aria-label="checkedD"
+                  />
+                }
+                label={parentState.item.enabled ? 'Активен' : 'Не активен'}
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={
+                      parentState.item.disabledForLanguages &&
+                      parentState.item.disabledForLanguages.includes(lang._id)
+                    }
+                    onChange={toggleEnableForLanguage(lang._id)}
+                    aria-label="checkedD"
+                  />
+                }
+                label={
+                  parentState.item.disabledForLanguages &&
+                  parentState.item.disabledForLanguages.includes(lang._id)
+                    ? 'Скрыть для этого языка'
+                    : 'Скрыть для этого языка'
+                }
+              />
+              <TextField
+                id="title"
+                label="title"
+                fullWidth
+                value={parentState.contentByLang[lang._id].title}
+                onChange={handleChange(lang._id, 'title')}
+                margin="normal"
+                required
+              />
+            </div>
           </div>
-        </div>
-        }
+        )}
       </div>
-    ))
-    }
-    {parentState.notValidForm &&
-    <NotificationPanel>Please fill title for each language</NotificationPanel>
-    }
-    <Button
-      variant="raised"
-      type="submit"
-      color="primary"
-      disabled={isSaving}
-    >
+    ))}
+    {parentState.notValidForm && (
+      <NotificationPanel>Please fill title for each language</NotificationPanel>
+    )}
+    <Button variant="raised" type="submit" color="primary" disabled={isSaving}>
       {isSaving ? 'Сохраняю...' : 'Сохранить'}
     </Button>
   </form>
 );
-
 
 export default withTabs(CategoryForm, '/admin/categories');

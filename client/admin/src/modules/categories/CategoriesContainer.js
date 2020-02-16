@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { loadCategories, deleteCategories } from './categoriesReducer';
 import { getCategories } from '../../rootReducer';
 import CategoriesList from './CategoriesList';
 
-
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getCategories(state),
     content: state.categories.content,
     isFetching: state.categories.isFetching,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
@@ -24,7 +23,7 @@ class CategoriesContainer extends Component {
   }
 
   render() {
-    return (<CategoriesList {...this.props} />);
+    return <CategoriesList {...this.props} />;
   }
 }
 
@@ -36,7 +35,10 @@ CategoriesContainer.propTypes = {
 
 CategoriesContainer = connect(
   mapStateToProps,
-  { loadCategories, deleteCategories }
+  {
+    loadCategories,
+    deleteCategories,
+  }
 )(CategoriesContainer);
 
 export default CategoriesContainer;

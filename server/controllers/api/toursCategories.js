@@ -4,10 +4,10 @@ const TourCategory = require('../../models/TourCategory');
 module.exports = {
   get(req, res, next) {
     TourCategory.find({})
-    .then(result => (
-      res.json(slicer.sliceModelContent(result.concat(), req.query.lang)))
-    )
-    .catch(next);
+      .then(result =>
+        res.json(slicer.sliceModelContent(result.concat(), req.query.lang))
+      )
+      .catch(next);
   },
 
   getOne(req, res, next) {
@@ -28,8 +28,9 @@ module.exports = {
   post(req, res, next) {
     const category = new TourCategory(req.body);
 
-    category.save()
-      .then((result) => {
+    category
+      .save()
+      .then(result => {
         res.json(result);
       })
       .catch(next);
@@ -41,5 +42,5 @@ module.exports = {
     TourCategory.deleteMany({ _id: ids })
       .then(() => res.json(ids))
       .catch(next);
-  }
+  },
 };

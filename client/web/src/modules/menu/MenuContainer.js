@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, lifecycle, withStateHandlers } from 'recompose';
 import { connect } from 'react-redux';
@@ -7,7 +7,6 @@ import { theme } from '../../services/constans';
 import { fetchMenu } from './menuReducer';
 import { getMenu } from '../../rootReducer';
 import MenuItem from './MenuItem';
-
 
 const styles = StyleSheet.create({
   menu: {
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
       flexGrow: '1',
       justifyContent: 'space-between',
       alignItems: 'center',
-    }
+    },
   },
   menuItem: {
     height: '100%',
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
       color: theme.colors.primary,
       textDecoration: 'none',
       borderBottom: `3px solid ${theme.colors.primary}`,
-    }
+    },
   },
   menuTrigger: {
     position: 'absolute',
@@ -72,44 +71,67 @@ const styles = StyleSheet.create({
     top: '50%',
     transform: 'translateY(-50%)',
     '@media (min-width: 1000px)': {
-      display: 'none'
-    }
+      display: 'none',
+    },
   },
   wrap: {
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
-const findRootNodesAndPopulate = items => (
+const findRootNodesAndPopulate = items =>
   items
     .map(item => ({ ...item, children: [...item.children] }))
     .filter(item => !item.parent)
     .map(item => {
       if (item.children) {
-        item.children = item.children.map(childId => items.find(item => item._id === childId));
+        item.children = item.children.map(childId =>
+          items.find(item => item._id === childId)
+        );
       }
       return item;
     })
-    .sort((a, b) => a.order - b.order)
-);
+    .sort((a, b) => a.order - b.order);
 
 let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
   <div className={css(styles.wrap)}>
-    {
-      isOpen ?
-        <svg fill="#333" height="60" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg" className={css(styles.menuTrigger)} onClick={ onMenuTriggerClick }>
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-          <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-        :
-        <svg fill="#333" height="60" viewBox="0 0 24 24" width="60" xmlns="http://www.w3.org/2000/svg" className={css(styles.menuTrigger)} onClick={ onMenuTriggerClick }>
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"/>
-        </svg>
-    }
+    {isOpen ? (
+      <svg
+        fill="#333"
+        height="60"
+        viewBox="0 0 24 24"
+        width="60"
+        xmlns="http://www.w3.org/2000/svg"
+        className={css(styles.menuTrigger)}
+        onClick={onMenuTriggerClick}
+      >
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        <path d="M0 0h24v24H0z" fill="none" />
+      </svg>
+    ) : (
+      <svg
+        fill="#333"
+        height="60"
+        viewBox="0 0 24 24"
+        width="60"
+        xmlns="http://www.w3.org/2000/svg"
+        className={css(styles.menuTrigger)}
+        onClick={onMenuTriggerClick}
+      >
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z" />
+      </svg>
+    )}
 
-    <ul className={css(styles.menu)} style={{ display: isOpen ? 'block' : 'none' }}>
-      <li className={css(styles.menuItem)}><PrefixLink className={css(styles.link)} to="/">{ window.TA.content.main }</PrefixLink></li>
+    <ul
+      className={css(styles.menu)}
+      style={{ display: isOpen ? 'block' : 'none' }}
+    >
+      <li className={css(styles.menuItem)}>
+        <PrefixLink className={css(styles.link)} to="/">
+          {window.TA.content.main}
+        </PrefixLink>
+      </li>
       {findRootNodesAndPopulate(menuItems).map(item => (
         <MenuItem item={item} />
       ))}
@@ -117,7 +139,7 @@ let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   menuItems: getMenu(state),
   isFetching: state.menu.isFetching,
   isFetched: state.menu.isFetched,
@@ -135,14 +157,11 @@ MenuContainer = compose(
       }
     },
   }),
-  withStateHandlers(
-    () => ({ isOpen: false }),
-    {
-      onMenuTriggerClick: ({ isOpen }) => () => ({
-        isOpen: !isOpen
-      })
-    }
-  ),
+  withStateHandlers(() => ({ isOpen: false }), {
+    onMenuTriggerClick: ({ isOpen }) => () => ({
+      isOpen: !isOpen,
+    }),
+  })
 )(MenuContainer);
 
-export default MenuContainer
+export default MenuContainer;

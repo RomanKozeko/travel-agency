@@ -1,8 +1,18 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('LANGUAGES', 'LANGUAGE', 'languages', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'LANGUAGES',
+  'LANGUAGE',
+  'languages',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -16,7 +26,7 @@ export const defaultState = {
   byIds: {},
   isFetching: false,
   isFetched: false,
-  currLanguage: 'ru'
+  currLanguage: 'ru',
 };
 
 const languagesReducer = createReducer(defaultState, {
@@ -25,7 +35,10 @@ const languagesReducer = createReducer(defaultState, {
   [actions.LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.LANGUAGES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
   [actions.LANGUAGES_DELETE_SUCCESS]: basicReducerEvents.deleteSuccess,
-  [actions.LANGUAGES_DELETE_FAILURE]: state => ({ ...state, isDeleting: false }),
+  [actions.LANGUAGES_DELETE_FAILURE]: state => ({
+    ...state,
+    isDeleting: false,
+  }),
   [actions.LANGUAGES_FAILURE]: state => ({ ...state, isFetching: false }),
   [actions.LANGUAGE_REQUEST]: state => ({ ...state, isFetching: true }),
   [actions.LANGUAGE_SUCCESS]: basicReducerEvents.itemSuccess(),
@@ -37,5 +50,4 @@ const languagesReducer = createReducer(defaultState, {
 export default languagesReducer;
 
 //  selectors
-export const getLanguages = state => (state.allIds.map(id => state.byIds[id]));
-
+export const getLanguages = state => state.allIds.map(id => state.byIds[id]);

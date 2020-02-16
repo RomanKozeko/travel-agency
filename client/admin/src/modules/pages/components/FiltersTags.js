@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Chip from 'material-ui/Chip';
-import {css, StyleSheet} from 'aphrodite/no-important';
+import { css, StyleSheet } from 'aphrodite/no-important';
 import { loadRegions } from '../../regions/regionsReducer';
 import { loadCategories } from '../../categories/categoriesReducer';
 import { getCategories, getRegions } from '../../../rootReducer';
@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     color: '#aeaeae',
     cursor: 'pointer',
     ':hover': {
-      color: '#3f51b5'
-    }
+      color: '#3f51b5',
+    },
   },
   itemContentToolbar: {
     position: 'absolute',
@@ -22,19 +22,19 @@ const styles = StyleSheet.create({
   chipWrapper: {
     display: 'flex',
     flexWrap: 'wrap',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   filtersHeader: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   chipTag: {
-    margin: '2px'
-  }
+    margin: '2px',
+  },
 });
 
 class FiltersTags extends Component {
   componentDidMount() {
-    if (!this.props.regions.length ) {
+    if (!this.props.regions.length) {
       this.props.loadRegions();
     }
     if (!this.props.categories.length) {
@@ -48,12 +48,12 @@ class FiltersTags extends Component {
       categoriesByIDs,
       regionsByIDs,
       regionsIsFetched,
-      categoriesIsFetched
+      categoriesIsFetched,
     } = this.props;
     let allFilters = [];
     for (const filterType in filters) {
       if (filters.hasOwnProperty(filterType)) {
-        allFilters = [...allFilters, ...filters[filterType]]
+        allFilters = [...allFilters, ...filters[filterType]];
       }
     }
 
@@ -61,22 +61,26 @@ class FiltersTags extends Component {
       return <div>Loading...</div>;
     }
 
-    return (<div className={css(styles.chipWrapper)}>
-      Показывать туры:
-      {allFilters.map(item => {
-        if (!item) return null;
-        const chipItem = item._id ? item : categoriesByIDs[item] || regionsByIDs[item];
-        return (
-          <Chip
-            className={css(styles.chipTag)}
-            key={chipItem._id + 1}
-            label={chipItem.content[0].title}
-          />
-        )
-      })}
-    </div>)
+    return (
+      <div className={css(styles.chipWrapper)}>
+        Показывать туры:
+        {allFilters.map(item => {
+          if (!item) return null;
+          const chipItem = item._id
+            ? item
+            : categoriesByIDs[item] || regionsByIDs[item];
+          return (
+            <Chip
+              className={css(styles.chipTag)}
+              key={chipItem._id + 1}
+              label={chipItem.content[0].title}
+            />
+          );
+        })}
+      </div>
+    );
   }
-};
+}
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -86,8 +90,8 @@ const mapStateToProps = (state, ownProps) => {
     categoriesIsFetched: state.categories.isFetched,
     regions: getRegions(state),
     categories: getCategories(state),
-    filters: ownProps.filters
-  }
+    filters: ownProps.filters,
+  };
 };
 
 FiltersTags = connect(

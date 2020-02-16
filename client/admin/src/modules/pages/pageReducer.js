@@ -1,5 +1,15 @@
-import { createReducer, makeActionCreator, getFiltersQuery } from '../../services/utils';
-import { addRow, removeRow, setInputsValues, normolizeRowItems, addCustomRow } from './pageFormService';
+import {
+  createReducer,
+  makeActionCreator,
+  getFiltersQuery,
+} from '../../services/utils';
+import {
+  addRow,
+  removeRow,
+  setInputsValues,
+  normolizeRowItems,
+  addCustomRow,
+} from './pageFormService';
 
 // actions
 const PAGE_DID_MOUNT = 'PAGE_DID_MOUNT';
@@ -26,89 +36,141 @@ const PAGE_DELETE_MEDIA_FILE = 'PAGE_DELETE_MEDIA_FILE';
 export const pageDidMount = makeActionCreator(PAGE_DID_MOUNT, 'payload');
 export const pageUnmount = makeActionCreator(PAGE_UNMOUNT);
 export const pageAddRow = makeActionCreator(PAGE_ADD_ROW, 'columns', 'langId');
-export const pageAddCustomRow = makeActionCreator(PAGE_ADD_CUSTOM_ROW, 'payload');
-export const pageRemoveRow = makeActionCreator(PAGE_REMOVE_ROW, 'langId', 'rowId');
-export const pageRemoveRowItem = makeActionCreator(PAGE_REMOVE_ROW_ITEM, 'itemId');
+export const pageAddCustomRow = makeActionCreator(
+  PAGE_ADD_CUSTOM_ROW,
+  'payload'
+);
+export const pageRemoveRow = makeActionCreator(
+  PAGE_REMOVE_ROW,
+  'langId',
+  'rowId'
+);
+export const pageRemoveRowItem = makeActionCreator(
+  PAGE_REMOVE_ROW_ITEM,
+  'itemId'
+);
 export const pageEditRowItem = makeActionCreator(PAGE_EDIT_ROW_ITEM, 'itemId');
-export const pageInputChange = makeActionCreator(PAGE_INPUT_CHANGE, 'langId', 'name', 'value');
-export const openHtmlEditor = makeActionCreator(PAGE_OPEN_HTML_EDITOR, 'rowItem');
+export const pageInputChange = makeActionCreator(
+  PAGE_INPUT_CHANGE,
+  'langId',
+  'name',
+  'value'
+);
+export const openHtmlEditor = makeActionCreator(
+  PAGE_OPEN_HTML_EDITOR,
+  'rowItem'
+);
 export const closeHtmlEditor = makeActionCreator(PAGE_CLOSE_HTML_EDITOR);
-export const saveRow = makeActionCreator(PAGE_SAVE_ROW_ITEM, 'content', 'filterType', 'itemsContent');
-export const openAddToursListPopup = makeActionCreator(PAGE_OPEN_TOURS_LIST_POPUP_EDITOR, 'rowItem');
-export const closeAddToursListPopup = makeActionCreator(PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR);
+export const saveRow = makeActionCreator(
+  PAGE_SAVE_ROW_ITEM,
+  'content',
+  'filterType',
+  'itemsContent'
+);
+export const openAddToursListPopup = makeActionCreator(
+  PAGE_OPEN_TOURS_LIST_POPUP_EDITOR,
+  'rowItem'
+);
+export const closeAddToursListPopup = makeActionCreator(
+  PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR
+);
 export const editRowTitle = makeActionCreator(PAGE_EDIT_ROW_TITLE, 'payload');
 export const editOrder = makeActionCreator(PAGE_EDIT_ROW_ORDER, 'payload');
-export const openMediaPopup = makeActionCreator(PAGE_TOGGLE_MEDIA_POPUP, 'currRowId');
+export const openMediaPopup = makeActionCreator(
+  PAGE_TOGGLE_MEDIA_POPUP,
+  'currRowId'
+);
 export const closeMediaPopup = makeActionCreator(PAGE_CLOSE_MEDIA_POPUP);
-export const deleteMediaItem = makeActionCreator(PAGE_DELETE_MEDIA_FILE, 'payload');
+export const deleteMediaItem = makeActionCreator(
+  PAGE_DELETE_MEDIA_FILE,
+  'payload'
+);
 export const addImages = () => (dispatch, getState) => {
-  let { mediafiles: { selected }} = getState();
+  let {
+    mediafiles: { selected },
+  } = getState();
   return dispatch({
     type: PAGE_SAVE_ROW_ITEM,
     content: '',
     filterType: '@gallery',
-    itemsContent: selected
-  })
+    itemsContent: selected,
+  });
 };
 
 const addRowSuccess = (state, action) => {
-  const addedRow = addRow({ ...state.contentByLang }, action.columns, action.langId);
+  const addedRow = addRow(
+    { ...state.contentByLang },
+    action.columns,
+    action.langId
+  );
   return {
     ...state,
     contentByLang: addedRow.contentByLang,
-    rowItemsByID: { ...state.rowItemsByID, ...addedRow.rowItemsByID }
+    rowItemsByID: { ...state.rowItemsByID, ...addedRow.rowItemsByID },
   };
 };
 
 const addCustomRowSuccess = (state, { payload: { langId, type } }) => {
-  const addedRow = addCustomRow({ ...state.contentByLang }, langId, type)
+  const addedRow = addCustomRow({ ...state.contentByLang }, langId, type);
   return {
     ...state,
     contentByLang: addedRow.contentByLang,
-    rowItemsByID: { ...state.rowItemsByID, ...addedRow.rowItemsByID }
+    rowItemsByID: { ...state.rowItemsByID, ...addedRow.rowItemsByID },
   };
 };
 
-const updateImages = (allImages,rowItemsByID,  contentByLang, langId, rowId) => {
-  const index = contentByLang[langId].rows.findIndex(row => (
-    row.id === rowId || row._id === rowId
-  ));
+const updateImages = (
+  allImages,
+  rowItemsByID,
+  contentByLang,
+  langId,
+  rowId
+) => {
+  const index = contentByLang[langId].rows.findIndex(
+    row => row.id === rowId || row._id === rowId
+  );
   let images = [];
   if (index > -1) {
     const row = contentByLang[langId].rows[index];
     images = row.items.reduce((curr, prev) => {
       if (curr.length) {
-        return [...prev.images, ...curr]
+        return [...prev.images, ...curr];
       }
-      return prev.images
-    }, [])
+      return prev.images;
+    }, []);
   }
   return allImages.filter(image => {
     const imageID = image || image._id;
-    return !images.includes(imageID)
-  })
-}
+    return !images.includes(imageID);
+  });
+};
 
 const removeRowSuccess = (state, { langId, rowId }) => {
-  const allImages = updateImages(state.item.allImages, state.rowItemsByID, state.contentByLang, langId, rowId)
+  const allImages = updateImages(
+    state.item.allImages,
+    state.rowItemsByID,
+    state.contentByLang,
+    langId,
+    rowId
+  );
   return {
     ...state,
     item: {
       ...state.item,
-      allImages
+      allImages,
     },
-    contentByLang: removeRow({ ...state.contentByLang }, langId, rowId)
-  }
+    contentByLang: removeRow({ ...state.contentByLang }, langId, rowId),
+  };
 };
 
 const removeRowItem = (state, { itemId }) => {
   const rowItemsByID = { ...state.rowItemsByID };
   const allImages = state.item.allImages.filter(image => {
     const imageID = image || image._id;
-    return !rowItemsByID[itemId].images.includes(imageID)
-  })
+    return !rowItemsByID[itemId].images.includes(imageID);
+  });
 
-  rowItemsByID[itemId].images = []
+  rowItemsByID[itemId].images = [];
   rowItemsByID[itemId].type = '';
   rowItemsByID[itemId].content = '';
   rowItemsByID[itemId].filters = '';
@@ -117,9 +179,9 @@ const removeRowItem = (state, { itemId }) => {
     ...state,
     item: {
       ...state.item,
-      allImages
+      allImages,
     },
-    rowItemsByID
+    rowItemsByID,
   };
 };
 
@@ -129,28 +191,25 @@ const editRowItem = (state, { itemId }) => {
     ...state,
     htmlEditorOpen: rowItemsByID[itemId].type === 'content',
     addToursPopupOpen: rowItemsByID[itemId].type === 'tours',
-    currRowItem: rowItemsByID[itemId]
+    currRowItem: rowItemsByID[itemId],
   };
 };
 
-const inputChange = (state, action) => setInputsValues(
-  { ...state.contentByLang },
-  state, action
-);
+const inputChange = (state, action) =>
+  setInputsValues({ ...state.contentByLang }, state, action);
 
 const openEditor = (state, action) => ({
   ...state,
   htmlEditorOpen: true,
-  currRowItem: action.rowItem
+  currRowItem: action.rowItem,
 });
-
 
 const setUpState = (state, action) => {
   const rowItemsByID = normolizeRowItems([...action.payload.item.content]);
   return {
     ...state,
     ...action.payload,
-    rowItemsByID
+    rowItemsByID,
   };
 };
 
@@ -158,11 +217,11 @@ const reducerHelper = {
   openAddToursListPopup: (state, action) => ({
     ...state,
     addToursPopupOpen: true,
-    currRowItem: action.rowItem
+    currRowItem: action.rowItem,
   }),
   saveRow: (state, action) => {
-    const currRowItem = {...state.currRowItem};
-    const rowItemsByID = {...state.rowItemsByID};
+    const currRowItem = { ...state.currRowItem };
+    const rowItemsByID = { ...state.rowItemsByID };
     let allImages = [...state.item.allImages];
     if (action.filterType === 'content') {
       const id = currRowItem.id || currRowItem._id;
@@ -172,14 +231,19 @@ const reducerHelper = {
     if (action.filterType === 'tours') {
       const id = currRowItem.id || currRowItem._id;
       rowItemsByID[id].type = action.filterType;
-      rowItemsByID[id] = {...rowItemsByID[id], ...action.itemsContent};
-      rowItemsByID[id].filters = getFiltersQuery(action.itemsContent.filtersObj);
+      rowItemsByID[id] = { ...rowItemsByID[id], ...action.itemsContent };
+      rowItemsByID[id].filters = getFiltersQuery(
+        action.itemsContent.filtersObj
+      );
     }
     if (action.filterType === '@gallery') {
       const id = currRowItem.id || currRowItem._id;
       rowItemsByID[id].type = action.filterType;
-      rowItemsByID[id].images = [...rowItemsByID[id].images, ...action.itemsContent]
-      allImages = [...allImages, ...action.itemsContent]
+      rowItemsByID[id].images = [
+        ...rowItemsByID[id].images,
+        ...action.itemsContent,
+      ];
+      allImages = [...allImages, ...action.itemsContent];
     }
     if (action.filterType === '@contactForm') {
       rowItemsByID[action.content].type = action.filterType;
@@ -190,13 +254,13 @@ const reducerHelper = {
       rowItemsByID,
       item: {
         ...state.item,
-        allImages
+        allImages,
       },
       htmlEditorOpen: false,
       addToursPopupOpen: false,
-      currRowItem: null
+      currRowItem: null,
     };
-  }
+  },
 };
 
 const defaultState = {
@@ -205,7 +269,7 @@ const defaultState = {
   contentByLang: {},
   currRowItem: null,
   mediaPopupIsOpen: false,
-  allImages: []
+  allImages: [],
 };
 
 const pageReducer = createReducer(defaultState, {
@@ -223,41 +287,54 @@ const pageReducer = createReducer(defaultState, {
     return {
       ...state,
       mediaPopupIsOpen: true,
-      currRowItem: state.rowItemsByID[currRowId]
-    }
+      currRowItem: state.rowItemsByID[currRowId],
+    };
   },
   [PAGE_CLOSE_MEDIA_POPUP]: state => {
     return {
       ...state,
       mediaPopupIsOpen: false,
-      currRowItem: null
-    }
+      currRowItem: null,
+    };
   },
-  [PAGE_DELETE_MEDIA_FILE]: (state, { payload: { imageIdToRemove, rowId }}) => {
-    const rowItemsByID = {...state.rowItemsByID};
+  [PAGE_DELETE_MEDIA_FILE]: (
+    state,
+    { payload: { imageIdToRemove, rowId } }
+  ) => {
+    const rowItemsByID = { ...state.rowItemsByID };
     let allImages = [...state.item.allImages];
-    rowItemsByID[rowId].images = rowItemsByID[rowId].images.filter(img => img !== imageIdToRemove)
+    rowItemsByID[rowId].images = rowItemsByID[rowId].images.filter(
+      img => img !== imageIdToRemove
+    );
     allImages = allImages.filter(img => {
       const imageID = img._id || img;
-      return imageID !== imageIdToRemove
+      return imageID !== imageIdToRemove;
     });
     return {
       ...state,
       rowItemsByID,
       item: {
         ...state.item,
-        allImages
+        allImages,
       },
       htmlEditorOpen: false,
       addToursPopupOpen: false,
-      currRowItem: null
+      currRowItem: null,
     };
   },
-  [PAGE_CLOSE_HTML_EDITOR]: state => ({ ...state, htmlEditorOpen: false, currRowItem: null }),
+  [PAGE_CLOSE_HTML_EDITOR]: state => ({
+    ...state,
+    htmlEditorOpen: false,
+    currRowItem: null,
+  }),
   [PAGE_OPEN_TOURS_LIST_POPUP_EDITOR]: reducerHelper.openAddToursListPopup,
-  [PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR]: state => ({ ...state, addToursPopupOpen: false, currRowItem: null }),
-  [PAGE_EDIT_ROW_TITLE]: (state, { payload: { value, id, langId }}) => {
-    const item = {...state.item};
+  [PAGE_CLOSE_TOURS_LIST_POPUP_EDITOR]: state => ({
+    ...state,
+    addToursPopupOpen: false,
+    currRowItem: null,
+  }),
+  [PAGE_EDIT_ROW_TITLE]: (state, { payload: { value, id, langId } }) => {
+    const item = { ...state.item };
     item.content = item.content.map(itemContent => {
       if (itemContent.language === langId) {
         return {
@@ -266,15 +343,15 @@ const pageReducer = createReducer(defaultState, {
             if ((row._id || row.id) === id) {
               return {
                 ...row,
-                title: value
-              }
+                title: value,
+              };
             }
-            return row
-          })
-        }
+            return row;
+          }),
+        };
       }
-      return itemContent
-    })
+      return itemContent;
+    });
     return {
       ...state,
       item,
@@ -286,17 +363,17 @@ const pageReducer = createReducer(defaultState, {
             if ((row._id || row.id) === id) {
               return {
                 ...row,
-                title: value
-              }
+                title: value,
+              };
             }
-            return row
-          })
-        }
-      }
+            return row;
+          }),
+        },
+      },
     };
   },
-  [PAGE_EDIT_ROW_ORDER]: (state, { payload: { value, id, langId }}) => {
-    const item = {...state.item};
+  [PAGE_EDIT_ROW_ORDER]: (state, { payload: { value, id, langId } }) => {
+    const item = { ...state.item };
     item.content = item.content.map(itemContent => {
       if (itemContent.language === langId) {
         return {
@@ -305,15 +382,15 @@ const pageReducer = createReducer(defaultState, {
             if ((row._id || row.id) === id) {
               return {
                 ...row,
-                order: value
-              }
+                order: value,
+              };
             }
-            return row
-          })
-        }
+            return row;
+          }),
+        };
       }
-      return itemContent
-    })
+      return itemContent;
+    });
     return {
       ...state,
       item,
@@ -325,16 +402,15 @@ const pageReducer = createReducer(defaultState, {
             if ((row._id || row.id) === id) {
               return {
                 ...row,
-                order: value
-              }
+                order: value,
+              };
             }
-            return row
-          })
-        }
-      }
+            return row;
+          }),
+        },
+      },
     };
-  }
-
+  },
 });
 
-export default pageReducer
+export default pageReducer;

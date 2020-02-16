@@ -7,7 +7,7 @@ const PageContentSchemaRow = new Schema({
   title: String,
   subTitle: String,
   order: Number,
-  items: [PageContentCellSchema]
+  items: [PageContentCellSchema],
 });
 
 module.exports = PageContentSchemaRow;

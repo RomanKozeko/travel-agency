@@ -1,22 +1,23 @@
-
 const Period = require('../../models/Period');
 
-module.exports =  {
+module.exports = {
   get(req, res, next) {
-    Period.find().then(result => {
-      res.json(result);
-    })
+    Period.find()
+      .then(result => {
+        res.json(result);
+      })
       .catch(next);
   },
 
   post(req, res, next) {
     const { content } = req.body;
-    const period = new Period({content});
+    const period = new Period({ content });
 
-    period.save()
+    period
+      .save()
       .then(result => {
         res.json(result);
       })
       .catch(next);
-  }
+  },
 };

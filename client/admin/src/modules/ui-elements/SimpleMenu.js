@@ -19,7 +19,11 @@ class SimpleMenu extends Component {
   render() {
     return (
       <div>
-        <Button aria-owns="simple-menu" aria-haspopup="true" onClick={this.handleClick}>
+        <Button
+          aria-owns="simple-menu"
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >
           Добавить
         </Button>
         <Menu
@@ -28,8 +32,12 @@ class SimpleMenu extends Component {
           open={this.state.open}
           onRequestClose={this.handleRequestClose}
         >
-          <MenuItem onClick={this.handleRequestClose}>Добавить галерею</MenuItem>
-          <MenuItem onClick={this.handleRequestClose}>Добавить список туров</MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
+            Добавить галерею
+          </MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
+            Добавить список туров
+          </MenuItem>
         </Menu>
       </div>
     );

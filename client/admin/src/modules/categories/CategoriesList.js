@@ -15,17 +15,17 @@ const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/categories/'
+        linkPrefix: '/admin/categories/',
       },
       {
         name: 'description',
-        isLink: false
+        isLink: false,
       },
       {
         name: 'date',
-        isLink: 'date'
-      }
-    ]
+        isLink: 'date',
+      },
+    ],
   };
 
   return (
@@ -40,14 +40,13 @@ const CategoriesList = ({ items, languages, isFetching, deleteCategories }) => {
       >
         Добавить категорию
       </Button>
-      {isFetching
-        ?
+      {isFetching ? (
         <Spinner />
-        :
+      ) : (
         <Portlet isBordered={false}>
           <SortableTable data={data} deleteItems={deleteCategories} />
         </Portlet>
-      }
+      )}
     </div>
   );
 };

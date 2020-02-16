@@ -1,5 +1,5 @@
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 const ToursQueries = require('../models/queries/tours');
 const config = require('../config/index');
 
@@ -24,7 +24,7 @@ module.exports = {
     fs.readFile(filePath, 'utf8', (err, htmlData) => {
       if (err) {
         console.error('read err', err);
-        return res.status(404).end()
+        return res.status(404).end();
       }
       const offset = +req.query.page * config.itemsPerPageLimit;
 
@@ -35,13 +35,16 @@ module.exports = {
             count: 9,
             limit: 2,
             offset: 0,
-            tours: result[0]
+            tours: result[0],
           };
           const normalizedTours = normalize(obj, Schemas.TOURS);
 
           for (const key in normalizedTours.entities.tours) {
-            if (normalizedTours.entities.tours.hasOwnProperty(key) && !byIds.hasOwnProperty(key)) {
-              byIds[key] = normalizedTours.entities.tours[key]._doc
+            if (
+              normalizedTours.entities.tours.hasOwnProperty(key) &&
+              !byIds.hasOwnProperty(key)
+            ) {
+              byIds[key] = normalizedTours.entities.tours[key]._doc;
             }
           }
 
@@ -49,15 +52,15 @@ module.exports = {
             byIds,
             allIds: normalizedTours.result.tours,
             pages: {
-              0: normalizedTours.result.tours
-            }
+              0: normalizedTours.result.tours,
+            },
           };
 
           const preloadState = Object.assign(defaultState, tours);
 
           const context = {};
           // Create a new Redux store instance
-          const store = configureStoreSSR({preloadState});
+          const store = configureStoreSSR({ preloadState });
 
           // const markup = ReactDOMServer.renderToString(
           //   <Provider store={store}>
@@ -76,17 +79,20 @@ module.exports = {
 
           if (context.url) {
             // Somewhere a `<Redirect>` was rendered
-            res.redirect(301, context.url)
+            res.redirect(301, context.url);
           } else {
             const withSsr = htmlData.replace('{{SSR}}', markup);
-            const RenderedApp = withSsr.replace('__PRELOADED_STATE__', `window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}`);
+            const RenderedApp = withSsr.replace(
+              '__PRELOADED_STATE__',
+              `window.__PRELOADED_STATE__ = ${JSON.stringify(
+                preloadedState
+              ).replace(/</g, '\\u003c')}`
+            );
 
-            res.send(RenderedApp)
+            res.send(RenderedApp);
           }
         })
         .catch(next);
-
     });
-  }
+  },
 };
-

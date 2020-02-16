@@ -1,15 +1,24 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('SOCIAL', 'SOCIAL_ITEM', 'social', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'SOCIAL',
+  'SOCIAL_ITEM',
+  'social',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
 export const loadItems = actionsObj.loadWithPagination;
 export const deleteItems = actionsObj.deleteItems;
 export const saveItem = actionsObj.saveItem;
-
 
 // reducers
 export const defaultState = {
@@ -31,9 +40,8 @@ export default createReducer(defaultState, {
   [actions.SOCIAL_ITEM_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.SOCIAL_ITEM_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.SOCIAL_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
-  [actions.SOCIAL_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false })
+  [actions.SOCIAL_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
 });
 
 //  selectors
-export const getSocialItems = state => (state.allIds.map(id => state.byIds[id]));
-
+export const getSocialItems = state => state.allIds.map(id => state.byIds[id]);

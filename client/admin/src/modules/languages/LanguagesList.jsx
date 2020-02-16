@@ -1,27 +1,31 @@
-import React, {Component} from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
+import Table, {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from 'material-ui/Table';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
-import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
-import createConfirmation  from '../ui-elements/form/createConfirmation'
+import ConfirmDialog from '../ui-elements/form/ConfirmDialog';
+import createConfirmation from '../ui-elements/form/createConfirmation';
 import FormInput from '../ui-elements/form/FormInput';
 const uniqueId = require('lodash.uniqueid');
-
 
 const confirm = createConfirmation(ConfirmDialog);
 
 const styles = StyleSheet.create({
   actions: {
-    textAlign: 'right'
+    textAlign: 'right',
   },
   field: {
-    width: '300px'
-  }
+    width: '300px',
+  },
 });
 
 const renderCells = ({ title, prefix }, id, selectedRow, handleChange) => {
@@ -46,12 +50,16 @@ const renderCells = ({ title, prefix }, id, selectedRow, handleChange) => {
           id={id}
           regExp={/^.{1,2}$/}
         />
-      </TableCell>
+      </TableCell>,
     ];
   }
   return [
-    <TableCell key={id + 2} className={css(styles.field)}>{title}</TableCell>,
-    <TableCell key={id + 3} className={css(styles.field)}>{prefix}</TableCell>
+    <TableCell key={id + 2} className={css(styles.field)}>
+      {title}
+    </TableCell>,
+    <TableCell key={id + 3} className={css(styles.field)}>
+      {prefix}
+    </TableCell>,
   ];
 };
 
@@ -60,34 +68,36 @@ class LanguagesList extends Component {
     super(props);
     this.state = {
       selectedRow: null,
-      items:  [...this.props.items],
-      isValid: false
+      items: [...this.props.items],
+      isValid: false,
     };
 
-    this.handleChange = this.handleChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  editRow = (selectedRow) => event => {
-    this.setState({selectedRow})
+  editRow = selectedRow => event => {
+    this.setState({ selectedRow });
   };
 
   cancelEdit = () => {
-    this.setState({selectedRow: null})
+    this.setState({ selectedRow: null });
   };
 
-  deleteRow = (item) => event => {
+  deleteRow = item => event => {
     const id = item._id || item.id;
-    confirm({title: `Are you sure to delete ${item.title} language?`, body: ''}).then((res) => {
+    confirm({
+      title: `Are you sure to delete ${item.title} language?`,
+      body: '',
+    }).then(res => {
       const items = [...this.state.items];
       const index = items.findIndex(row => row._id === id || row.id === id);
 
       items.splice(index, 1);
       if (item._id) {
-        this.props.deleteLang([item._id])
+        this.props.deleteLang([item._id]);
       }
-      this.setState({items});
-    })
-
+      this.setState({ items });
+    });
   };
 
   addRow = () => {
@@ -98,15 +108,15 @@ class LanguagesList extends Component {
       prefix: '',
       id,
     });
-    this.setState({selectedRow: id, items});
+    this.setState({ selectedRow: id, items });
   };
 
   handleChange(event, name, id, isValid) {
     const items = [...this.state.items];
-    const index = items.findIndex(item => (item._id === id || item.id === id));
+    const index = items.findIndex(item => item._id === id || item.id === id);
     items[index][name] = event.target.value;
-    this.setState({items, isValid});
-  };
+    this.setState({ items, isValid });
+  }
 
   handleSave = (item, id) => e => {
     if (this.state.isValid) {
@@ -139,36 +149,44 @@ class LanguagesList extends Component {
             <TableBody>
               {this.state.items.map(item => (
                 <TableRow key={item._id || item.id}>
-                  {renderCells(item, item._id || item.id, this.state.selectedRow, this.handleChange)}
+                  {renderCells(
+                    item,
+                    item._id || item.id,
+                    this.state.selectedRow,
+                    this.handleChange
+                  )}
                   <TableCell className={css(styles.actions)}>
-                    {this.state.selectedRow === item._id || this.state.selectedRow === item.id
-                      ?
+                    {this.state.selectedRow === item._id ||
+                    this.state.selectedRow === item.id ? (
                       <div>
-                        {isSaving ? 'Saving..' :
-                        <IconButton onClick={this.handleSave(item, !!item.id)}>
-                          <Icon>save</Icon>
-                        </IconButton>
-                        }
+                        {isSaving ? (
+                          'Saving..'
+                        ) : (
+                          <IconButton
+                            onClick={this.handleSave(item, !!item.id)}
+                          >
+                            <Icon>save</Icon>
+                          </IconButton>
+                        )}
                         <IconButton onClick={this.cancelEdit}>
                           <Icon>cancel</Icon>
                         </IconButton>
                       </div>
-                      :
+                    ) : (
                       <div>
                         <IconButton onClick={this.editRow(item._id || item.id)}>
                           <Icon>create</Icon>
                         </IconButton>
-                        {this.state.items.length > 2 &&
-                        <IconButton onClick={this.deleteRow(item)}>
-                          <Icon>delete</Icon>
-                        </IconButton>
-                        }
+                        {this.state.items.length > 2 && (
+                          <IconButton onClick={this.deleteRow(item)}>
+                            <Icon>delete</Icon>
+                          </IconButton>
+                        )}
                       </div>
-                    }
+                    )}
                   </TableCell>
                 </TableRow>
-              ))
-              }
+              ))}
             </TableBody>
           </Table>
         </Portlet>

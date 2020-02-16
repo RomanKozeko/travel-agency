@@ -1,19 +1,18 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { loadRegions, deleteRegions } from './regionsReducer';
 import { getRegions } from '../../rootReducer';
 import RegionsList from './RegionsList';
 
-
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getRegions(state),
     content: state.regions.content,
     isFetching: state.entities.regions.isFetching,
     isFetched: state.entities.regions.isFetched,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
@@ -25,7 +24,7 @@ class RegionsContainer extends Component {
   }
 
   render() {
-    return (<RegionsList {...this.props} />);
+    return <RegionsList {...this.props} />;
   }
 }
 

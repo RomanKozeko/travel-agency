@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import { Link } from 'react-router-dom';
 import Button from 'material-ui/Button';
 import PageHeader from '../ui-elements/PageHeader';
@@ -7,20 +7,20 @@ import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import DeleteIcon from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
-import ConfirmDialog  from '../ui-elements/form/ConfirmDialog'
-import createConfirmation  from '../ui-elements/form/createConfirmation'
-import { populateTree }  from './RegionService'
+import ConfirmDialog from '../ui-elements/form/ConfirmDialog';
+import createConfirmation from '../ui-elements/form/createConfirmation';
+import { populateTree } from './RegionService';
 
 const styles = StyleSheet.create({
   actions: {
-    width: '100px'
+    width: '100px',
   },
   disabled: {
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
   wrapper: {
     listStyle: 'none',
-    marginBottom: '0'
+    marginBottom: '0',
   },
   li: {
     display: 'flex',
@@ -29,46 +29,51 @@ const styles = StyleSheet.create({
     padding: '0 20px',
     background: '#fff',
     marginTop: '1px',
-    minHeight: '48px'
+    minHeight: '48px',
   },
   treeWrapper: {
     marginLeft: '-40px',
-    marginBottom: '20px'
-  }
+    marginBottom: '20px',
+  },
 });
 
 const confirm = createConfirmation(ConfirmDialog);
 
 const deleteRow = (item, deleteItems) => event => {
-  confirm({title: `Вы уверены что хотите удалить ${item.content[0].title}`, body: ''}).then((res) => {
-    deleteItems([item._id])
-  })
+  confirm({
+    title: `Вы уверены что хотите удалить ${item.content[0].title}`,
+    body: '',
+  }).then(res => {
+    deleteItems([item._id]);
+  });
 };
 
-function sort(a, b){
-  if(a.content[0].title < b.content[0].title) return -1;
-  if(a.content[0].title > b.content[0].title) return 1;
+function sort(a, b) {
+  if (a.content[0].title < b.content[0].title) return -1;
+  if (a.content[0].title > b.content[0].title) return 1;
   return 0;
 }
 
-const TreeItems = ({items, deleteItems}) => (
+const TreeItems = ({ items, deleteItems }) => (
   <div>
     {items.sort(sort).map(item => (
       <ul key={item._id} className={css(styles.wrapper)}>
         <li className={css(styles.li)}>
           <Link to={'/admin/regions/' + item._id}>{item.content[0].title}</Link>
-          {!item.childrens &&
+          {!item.childrens && (
             <IconButton aria-label="Delete">
-              <DeleteIcon onClick={deleteRow(item, deleteItems)}/>
+              <DeleteIcon onClick={deleteRow(item, deleteItems)} />
             </IconButton>
-          }
+          )}
         </li>
-        {item.childrens &&
-        <TreeItems items={item.childrens.sort(sort)} deleteItems={deleteItems} />
-        }
+        {item.childrens && (
+          <TreeItems
+            items={item.childrens.sort(sort)}
+            deleteItems={deleteItems}
+          />
+        )}
       </ul>
-    ))
-    }
+    ))}
   </div>
 );
 
@@ -87,16 +92,15 @@ const RegionsList = ({ items, languages, isFetching, deleteRegions }) => {
       >
         Добавить регион
       </Button>
-        {isFetching
-        ?
+      {isFetching ? (
         <Spinner />
-        :
+      ) : (
         <Portlet isBordered={true}>
           <div className={css(styles.treeWrapper)}>
             <TreeItems items={tree} deleteItems={deleteRegions} />
           </div>
         </Portlet>
-      }
+      )}
     </div>
   );
 };

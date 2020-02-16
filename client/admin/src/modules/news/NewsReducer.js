@@ -1,8 +1,18 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('NEWS', 'NEWS_ITEM', 'news', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'NEWS',
+  'NEWS_ITEM',
+  'news',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -34,5 +44,4 @@ export default createReducer(defaultState, {
 });
 
 //  selectors
-export const getNews = state => (state.allIds.map(id => state.byIds[id]));
-
+export const getNews = state => state.allIds.map(id => state.byIds[id]);

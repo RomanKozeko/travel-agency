@@ -16,11 +16,11 @@ export const TOURS_RESET_ACTIVE_FILTER = 'TOURS_RESET_ACTIVE_FILTER';
 
 const fetchTours = (nextPageUrl, nextPage) => ({
   [CALL_API]: {
-    types: [ TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE ],
+    types: [TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE],
     endpoint: nextPageUrl,
     schema: Schemas.TOURS,
-    nextPage
-  }
+    nextPage,
+  },
 });
 
 const fetchTour = (url, urlPrefix) => ({
@@ -28,9 +28,8 @@ const fetchTour = (url, urlPrefix) => ({
     types: [TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE],
     endpoint: withPrefix(`/api/tourGetByUrl/${url}`, urlPrefix),
     schema: Schemas.TOUR,
-  }
+  },
 });
-
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   const {
@@ -40,45 +39,52 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   } = getState().tours;
 
   if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
-    return null
+    return null;
   }
 
   if (pages[nextPage]) {
     return dispatch({
       type: TOURS_GET_PAGE_FROM_CACHE,
-      payload: nextPage
-    })
+      payload: nextPage,
+    });
   }
 
-  return dispatch(fetchTours(nextPageUrl, nextPage))
+  return dispatch(fetchTours(nextPageUrl, nextPage));
 };
 const fetchFilteredTours = (filterQuery, lang) => ({
   [CALL_API]: {
-    types: [ TOURS_FILTERED_REQUEST, TOURS_FILTERED_SUCCESS, TOURS_FILTERED_FAILURE ],
+    types: [
+      TOURS_FILTERED_REQUEST,
+      TOURS_FILTERED_SUCCESS,
+      TOURS_FILTERED_FAILURE,
+    ],
     endpoint: withPrefix(`/api/tours?${filterQuery}`, lang),
     schema: Schemas.TOURS,
-    query: filterQuery
-  }
+    query: filterQuery,
+  },
 });
 
-export const resetActiveFilter = () => (dispatch) => {
+export const resetActiveFilter = () => dispatch => {
   dispatch({
     type: TOURS_RESET_ACTIVE_FILTER,
-  })
+  });
 };
 
-export const loadFilteredTours = (filterQuery) => (dispatch, getState) => {
-  filterQuery = typeof filterQuery === 'string' ? filterQuery : getFiltersQuery(filterQuery);
+export const loadFilteredTours = filterQuery => (dispatch, getState) => {
+  filterQuery =
+    typeof filterQuery === 'string'
+      ? filterQuery
+      : getFiltersQuery(filterQuery);
   const filter = getState().tours.byQueries;
 
   if (filter.hasOwnProperty(filterQuery)) {
     return dispatch({
       type: TOURS_SET_ACTIVE_FILTER,
-      payload: filterQuery
-    })
+      payload: filterQuery,
+    });
   }
 
-  dispatch(fetchFilteredTours(filterQuery, getState().app.languages.urlPrefix))
+  dispatch(fetchFilteredTours(filterQuery, getState().app.languages.urlPrefix));
 };
 
 export const loadTour = url => (dispatch, getState) => {

@@ -6,11 +6,11 @@ const PageContentRowSchema = require('./PageContentRow');
 const PageContentSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: String,
   language: String,
-  rows: [PageContentRowSchema]
+  rows: [PageContentRowSchema],
 });
 
 module.exports = PageContentSchema;

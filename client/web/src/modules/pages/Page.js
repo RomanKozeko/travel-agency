@@ -19,36 +19,42 @@ import NotFound from '../app/NotFound';
 const mapStateToProps = (state, router) => ({
   page: getPage(state, router.match.params.id),
   isFetching: state.pages.isFetching,
-  error: state.pages.error
+  error: state.pages.error,
 });
 
 const PageColumn = ({ item, page }) => {
-  switch(item.type) {
+  switch (item.type) {
     case 'content': {
-      return <div dangerouslySetInnerHTML={{ __html: item.content }} />
+      return <div dangerouslySetInnerHTML={{ __html: item.content }} />;
     }
     case 'tours': {
-      return <FilteredToursContainer query={item.filters} />
+      return <FilteredToursContainer query={item.filters} />;
     }
     case '@hotelSearch': {
-      return <HotelsSearchFormContainer />
+      return <HotelsSearchFormContainer />;
     }
     case '@toursSearch': {
-      return <ToursSearchFormContainer />
+      return <ToursSearchFormContainer />;
     }
     case '@showPlacesSearch': {
-      return <ShowplacesSearchFormContainer />
+      return <ShowplacesSearchFormContainer />;
     }
     case '@gallery': {
-      return <ImageSlider images={ item.images.map(image => page.allImages.find(img => img._id === image)) } />
+      return (
+        <ImageSlider
+          images={item.images.map(image =>
+            page.allImages.find(img => img._id === image)
+          )}
+        />
+      );
     }
     case '@contactForm': {
-      return <ContactForm />
+      return <ContactForm />;
     }
     default:
-      return <div dangerouslySetInnerHTML={{ __html: item.content }} />
+      return <div dangerouslySetInnerHTML={{ __html: item.content }} />;
   }
-}
+};
 
 class Page extends Component {
   componentDidMount() {
@@ -58,7 +64,7 @@ class Page extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearError()
+    this.props.clearError();
   }
 
   getRowItemClass(size) {
@@ -69,30 +75,38 @@ class Page extends Component {
     const { isFetching, page, error } = this.props;
     return (
       <div>
-        {
-          error || !page || !page.content ?
-            <NotFound /> :
-            <div>
-              <Head title={page ? page.content.title : ''} metaDescription={page ? page.content.description : ''} />
-              <PageHeader title={page ? page.content.title : ''} />
-              <PageContent>
-                {isFetching || !page ?
-                  <h4>Загрузка...</h4> :
-                  page.content.rows.sort((a, b) => a.order - b.order).map(row => (
+        {error || !page || !page.content ? (
+          <NotFound />
+        ) : (
+          <div>
+            <Head
+              title={page ? page.content.title : ''}
+              metaDescription={page ? page.content.description : ''}
+            />
+            <PageHeader title={page ? page.content.title : ''} />
+            <PageContent>
+              {isFetching || !page ? (
+                <h4>Загрузка...</h4>
+              ) : (
+                page.content.rows
+                  .sort((a, b) => a.order - b.order)
+                  .map(row => (
                     <div key={row._id} className="row">
-                      { row.title && <FancyHeader title={ row.title } /> }
+                      {row.title && <FancyHeader title={row.title} />}
                       {row.items.map(item => (
-                        <div key={item._id} className={this.getRowItemClass(item.size)}>
+                        <div
+                          key={item._id}
+                          className={this.getRowItemClass(item.size)}
+                        >
                           <PageColumn item={item} page={page} />
                         </div>
-                      ))
-                      }
+                      ))}
                     </div>
                   ))
-                }
-              </PageContent>
-            </div>
-        }
+              )}
+            </PageContent>
+          </div>
+        )}
       </div>
     );
   }
@@ -105,9 +119,11 @@ Page.propTypes = {
   match: PropTypes.object,
 };
 
-Page = withRouter(connect(
-  mapStateToProps,
-  { loadPage, clearError }
-)(Page));
+Page = withRouter(
+  connect(
+    mapStateToProps,
+    { loadPage, clearError }
+  )(Page)
+);
 
-export default Page
+export default Page;

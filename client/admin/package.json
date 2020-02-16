@@ -1,15 +1,18 @@
 {
-  "name": "my-app",
+  "name": "travel-admin",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3003/",
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "aphrodite": "^1.2.5",
     "classnames": "^2.2.5",
-    "core-js": "2.5.3",
+    "core-js": "3.6.4",
     "draft-js": "^0.10.4",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint-config-airbnb": "^16.1.0",
     "lodash": "^4.17.4",
     "lodash.uniqueid": "^4.0.1",
     "material-ui": "1.0.0-beta.29",
@@ -17,53 +20,53 @@
     "moment": "^2.20.1",
     "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
-    "react": "^16.2.0",
+    "react": "^16.12.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-addons-shallow-compare": "^15.6.2",
     "react-collapse": "^4.0.3",
     "react-dates": "^16.2.0",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.12.0",
     "react-loading-skeleton": "^0.3.2",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.2.0",
     "react-router-dom": "^4.2.2",
+    "react-scripts": "3.4.0",
     "react-test-renderer": "^16.2.0",
     "react-tinymce": "^0.7.0",
     "reactjs-popup": "^1.5.0",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
-    "redux-form": "^6.8.0"
-  },
-  "devDependencies": {
-    "react-scripts": "1.0.10"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/path/to/dir/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
-      }
-    },
-    "coverageReporters": [
-      "html"
-    ]
+    "redux-form": "^6.8.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3003/",
-  "homepage": "/admin/build/"
+  "eslintConfig": {
+    "extends": ["react-app", "plugin:prettier/recommended"],
+    "plugins": ["prettier"]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "prettier": "1.19.1"
+  }
 }

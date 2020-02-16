@@ -10,7 +10,7 @@ module.exports = {
     const count = +req.params.count || config.itemsPerPageLimit;
 
     ToursQueries.getAllWithFilter(offset, count, req.query)
-      .then((result) => {
+      .then(result => {
         res.json({
           offset,
           items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
@@ -27,45 +27,47 @@ module.exports = {
       .populate('preview')
       .populate('hotels')
       .populate('showplaces')
-	    .populate('content.programFile')
+      .populate('content.programFile')
       .then(tour => res.json(tour))
       .catch(next);
   },
 
   getOneByUrl(req, res, next) {
-    Tour.findOne({ url: req.params.url } )
-	    .populate('preview')
-	    .populate('content.programFile')
-	    .populate({
-		    path: 'hotels',
-			  populate: [
-			  	{
-					  path: 'preview',
-					  model: 'Media'
-				  },
-				  {
-					  path: 'regions',
-					  model: 'Region'
-				  }
-			  ]
-	    })
-	    .populate('regions')
-	    .populate('categories')
-	    .populate({
-		    path: 'showplaces',
-		    populate: [
-			    {
-				    path: 'preview',
-				    model: 'Media'
-			    },
-			    {
-				    path: 'regions',
-				    model: 'Region'
-			    }
-		    ]
-	    })
-	    .populate('food')
-      .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
+    Tour.findOne({ url: req.params.url })
+      .populate('preview')
+      .populate('content.programFile')
+      .populate({
+        path: 'hotels',
+        populate: [
+          {
+            path: 'preview',
+            model: 'Media',
+          },
+          {
+            path: 'regions',
+            model: 'Region',
+          },
+        ],
+      })
+      .populate('regions')
+      .populate('categories')
+      .populate({
+        path: 'showplaces',
+        populate: [
+          {
+            path: 'preview',
+            model: 'Media',
+          },
+          {
+            path: 'regions',
+            model: 'Region',
+          },
+        ],
+      })
+      .populate('food')
+      .then(tour =>
+        res.json(slicer.sliceModelContentSingle(tour, req.query.lang))
+      )
       .catch(next);
   },
 
@@ -107,5 +109,5 @@ module.exports = {
     Tour.deleteMany({ _id: ids })
       .then(() => res.json(ids))
       .catch(next);
-  }
+  },
 };

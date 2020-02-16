@@ -6,22 +6,22 @@ const modalRoot = document.getElementById('modal-root');
 const translateKeyframes = {
   '0%': {
     transform: 'rotateX(-60deg)',
-    opacity: '0'
+    opacity: '0',
   },
   '100%': {
     transform: 'rotateX(0deg)',
-    opacity: '1'
+    opacity: '1',
   },
 };
 
 const opacityKeyframes = {
-  'from': {
+  from: {
     opacity: 0,
   },
 
-  'to': {
+  to: {
     opacity: 1,
-  }
+  },
 };
 
 const styles = StyleSheet.create({
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     animationDuration: '.3s, 300ms',
   },
   modal: {
-    perspective: '1300px'
+    perspective: '1300px',
   },
   body: {
     background: '#fff',
@@ -52,10 +52,8 @@ const styles = StyleSheet.create({
     transition: 'all 0.3s',
     animationName: [translateKeyframes],
     animationDuration: '.3s, 300ms',
-  }
+  },
 });
-
-
 
 class Modal extends Component {
   constructor(props) {
@@ -73,17 +71,14 @@ class Modal extends Component {
 
   render() {
     return ReactDOM.createPortal(
-      <div className={ css(styles.wrapper) }>
-        <div className={ css(styles.modal) }>
-          <div className={ css(styles.body) }>
-            { this.props.children }
-          </div>
+      <div className={css(styles.wrapper)}>
+        <div className={css(styles.modal)}>
+          <div className={css(styles.body)}>{this.props.children}</div>
         </div>
-
       </div>,
-      this.el,
+      this.el
     );
   }
 }
 
-export default Modal
+export default Modal;

@@ -8,9 +8,9 @@ import Rows from './Rows';
 import HtmlEditorPopup from './HtmlEditorPopup';
 import withTabs from '../../ui-elements/HOC/withTabs';
 import TextField from 'material-ui/TextField';
-import AddToursListPopupContainer from '../containers/AddToursListPopupContainer'
+import AddToursListPopupContainer from '../containers/AddToursListPopupContainer';
 import { denormalizeRowsItems } from '../pageFormService';
-import MediaFilesPopup from '../../mediaFiles/MediaFilesPopup'
+import MediaFilesPopup from '../../mediaFiles/MediaFilesPopup';
 
 class PageForm extends Component {
   componentDidMount() {
@@ -18,19 +18,21 @@ class PageForm extends Component {
       htmlEditorOpen: false,
       addToursPopupOpen: false,
       contentByLang: { ...this.props.parentState.contentByLang },
-      item: { 
+      item: {
         ...this.props.item,
         content: this.props.languages.map(lang => {
-          const itemContent = this.props.item.content.find(ic => ic.language === lang._id);
-          const rows = itemContent ? itemContent.rows : []
+          const itemContent = this.props.item.content.find(
+            ic => ic.language === lang._id
+          );
+          const rows = itemContent ? itemContent.rows : [];
           return {
             ...itemContent,
             rows,
             language: lang._id,
-          }
-        })
+          };
+        }),
       },
-      currRowItem: null
+      currRowItem: null,
     });
   }
 
@@ -38,22 +40,25 @@ class PageForm extends Component {
     this.props.pageUnmount();
   }
 
-  handleSave = (e) => {
+  handleSave = e => {
     e.preventDefault();
     const { page, item } = this.props;
 
     //hotfix
     page.item.content.forEach(pic => {
       item.content.forEach(ic => {
-        if(pic._id === ic._id) {
-          pic.title = ic.title
-          pic.description = ic.description
-          pic.url = ic.url
+        if (pic._id === ic._id) {
+          pic.title = ic.title;
+          pic.description = ic.description;
+          pic.url = ic.url;
         }
-      })
-    })
+      });
+    });
 
-    page.item.content = denormalizeRowsItems(page.item.content, page.rowItemsByID);
+    page.item.content = denormalizeRowsItems(
+      page.item.content,
+      page.rowItemsByID
+    );
     page.item.url = page.item.url.replace(/\s+/g, '-').toLowerCase();
 
     this.props.save(page.item, this.props.isNew);
@@ -84,7 +89,7 @@ class PageForm extends Component {
       addImages,
       closeMediaPopup,
       mediafilesByIds,
-      deleteMediaItem
+      deleteMediaItem,
     } = this.props;
     if (!page.item) {
       return null;
@@ -93,70 +98,76 @@ class PageForm extends Component {
       <form onSubmit={this.handleSave}>
         {languages.map((lang, i) => (
           <div key={lang._id}>
-            {parentState.selectedTabIndex === i &&
-            <div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <ImagePreview url={page.item.preview} />
+            {parentState.selectedTabIndex === i && (
+              <div>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <ImagePreview url={page.item.preview} />
+                  </div>
+
+                  <div className="col-sm-6">
+                    <TextField
+                      id="title"
+                      label="title"
+                      fullWidth
+                      value={page.contentByLang[lang._id].title}
+                      onChange={e =>
+                        pageInputChange(lang._id, 'title', e.target.value)
+                      }
+                      margin="normal"
+                      required
+                    />
+                    <TextField
+                      id="url"
+                      label="url"
+                      fullWidth
+                      value={page.item.url}
+                      onChange={e =>
+                        pageInputChange(null, 'url', e.target.value)
+                      }
+                      margin="normal"
+                      required
+                    />
+                    <TextField
+                      id="description"
+                      label="Meta description"
+                      fullWidth
+                      value={page.contentByLang[lang._id].description}
+                      onChange={e =>
+                        pageInputChange(lang._id, 'description', e.target.value)
+                      }
+                      margin="normal"
+                    />
+                  </div>
                 </div>
 
-                <div className="col-sm-6">
-                  <TextField
-                    id="title"
-                    label="title"
-                    fullWidth
-                    value={page.contentByLang[lang._id].title}
-                    onChange={(e) => pageInputChange(lang._id, 'title', e.target.value)}
-                    margin="normal"
-                    required
-                  />
-                  <TextField
-                    id="url"
-                    label="url"
-                    fullWidth
-                    value={page.item.url}
-                    onChange={(e) => pageInputChange(null, 'url', e.target.value)}
-                    margin="normal"
-                    required
-                  />
-                  <TextField
-                    id="description"
-                    label="Meta description"
-                    fullWidth
-                    value={page.contentByLang[lang._id].description}
-                    onChange={(e) => pageInputChange(lang._id, 'description', e.target.value)}
-                    margin="normal"
-                  />
-                </div>
+                <PageCaption text={'Добавить ряд'} />
+                <GridSelector
+                  pageAddRow={pageAddRow}
+                  pageAddCustomRow={pageAddCustomRow}
+                  count={4}
+                  lang={lang._id}
+                />
+
+                <PageCaption text={'Схема страницы'} />
+                <Rows
+                  rows={page.contentByLang[lang._id].rows}
+                  langId={lang._id}
+                  rowsItems={page.rowItemsByID}
+                  removeRow={pageRemoveRow}
+                  removeRowItem={removeRowItem}
+                  editRowItem={editRowItem}
+                  openHtmlEditor={openHtmlEditor}
+                  openAddToursListPopup={openAddToursListPopup}
+                  editRowTitle={editRowTitle}
+                  openMediaPopup={openMediaPopup}
+                  editOrder={editOrder}
+                  mediafilesByIds={mediafilesByIds}
+                  deleteMediaItem={deleteMediaItem}
+                  saveRow={saveRow}
+                />
               </div>
-
-              <PageCaption text={'Добавить ряд'} />
-              <GridSelector
-                pageAddRow={pageAddRow}
-                pageAddCustomRow={pageAddCustomRow}
-                count={4}
-                lang={lang._id}
-              />
-              
-              <PageCaption text={'Схема страницы'} />
-              <Rows
-                rows={page.contentByLang[lang._id].rows}
-                langId={lang._id}
-                rowsItems={page.rowItemsByID}
-                removeRow={pageRemoveRow}
-                removeRowItem={removeRowItem}
-                editRowItem={editRowItem}
-                openHtmlEditor={openHtmlEditor}
-                openAddToursListPopup={openAddToursListPopup}
-                editRowTitle={editRowTitle}
-                openMediaPopup={openMediaPopup}
-                editOrder={editOrder}
-                mediafilesByIds={mediafilesByIds}
-                deleteMediaItem={deleteMediaItem}
-                saveRow={saveRow}
-              />
-            </div>
-            }
+            )}
           </div>
         ))}
 
@@ -168,11 +179,11 @@ class PageForm extends Component {
         />
 
         <MediaFilesPopup
-          isOpen={ page.mediaPopupIsOpen }
+          isOpen={page.mediaPopupIsOpen}
           handleRequestClose={closeMediaPopup}
-          addPreview={ addImages }
+          addPreview={addImages}
         />
-        
+
         {page.addToursPopupOpen && <AddToursListPopupContainer />}
 
         <Button
@@ -184,7 +195,6 @@ class PageForm extends Component {
           {isSaving ? 'Сохраняю...' : 'Сохранить'}
         </Button>
       </form>
-
     );
   }
 }
@@ -198,4 +208,3 @@ PageForm.propTypes = {
 };
 
 export default withTabs(PageForm, '/admin/pages');
-

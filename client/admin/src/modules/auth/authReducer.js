@@ -1,19 +1,19 @@
-const authReducer = (state = { isAuth: false}, action) => {
+const authReducer = (state = { isAuth: false }, action) => {
   switch (action.type) {
     case 'LOGIN_SUCCESS': {
       return {
         ...state,
-        isAuth: true
-      }
+        isAuth: true,
+      };
     }
-	  case 'LOGOUT_SUCCESS': {
-		  return {
-			  ...state,
-			  isAuth: false
-		  }
-	  }
+    case 'LOGOUT_SUCCESS': {
+      return {
+        ...state,
+        isAuth: false,
+      };
+    }
     default:
-      return state
+      return state;
   }
 };
 

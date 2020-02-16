@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { loadItems, saveItem, deleteItems } from './foodReducer';
 import { getFood } from '../../rootReducer';
 import FoodList from './FoodList';
 import Spinner from '../ui-elements/Spinner';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getFood(state),
     isFetching: state.food.isFetching,
     isFetched: state.food.isFetched,
     isSaving: state.languages.isSaving,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
@@ -24,15 +24,7 @@ class FoodContainer extends Component {
 
   render() {
     const { isFetching } = this.props;
-    return (<div>
-      {isFetching ?
-        <Spinner/>
-        :
-        <FoodList
-          {...this.props}
-        />
-      }
-    </div>);
+    return <div>{isFetching ? <Spinner /> : <FoodList {...this.props} />}</div>;
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { theme } from '../../services/constans'
+import { theme } from '../../services/constans';
 
 const styles = StyleSheet.create({
   btn: {
@@ -17,19 +17,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     outline: 'none',
     width: '100%',
-	  '@media (min-width: 500px)': {
-		  width: 'auto',
-	  },
+    '@media (min-width: 500px)': {
+      width: 'auto',
+    },
     ':hover': {
       backgroundColor: theme.colors.primaryAccent,
-    }
-  }
+    },
+  },
 });
 
-const Button = ({children}) => (
-  <button className={css(styles.btn)}>
-    {children}
-  </button>
-)
+const Button = ({ children }) => (
+  <button className={css(styles.btn)}>{children}</button>
+);
 
-export default Button
+export default Button;

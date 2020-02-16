@@ -6,7 +6,6 @@ import Portlet from '../ui-elements/Portlet';
 import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
 
-
 const FoodList = ({ items, languages, isFetching, deleteItems }) => {
   const data = {
     headers: ['Название', 'Активен/Неактивен', 'Дата создания'],
@@ -16,17 +15,17 @@ const FoodList = ({ items, languages, isFetching, deleteItems }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/food/'
+        linkPrefix: '/admin/food/',
       },
       {
         name: 'enabled',
-        isLink: 'toggle'
+        isLink: 'toggle',
       },
       {
         name: 'date',
-        isLink: 'date'
-      }
-    ]
+        isLink: 'date',
+      },
+    ],
   };
 
   return (
@@ -42,14 +41,13 @@ const FoodList = ({ items, languages, isFetching, deleteItems }) => {
       >
         Добавить новый тип питания
       </Button>
-      {isFetching
-        ?
+      {isFetching ? (
         <Spinner />
-        :
+      ) : (
         <Portlet isBordered={false}>
           <SortableTable data={data} deleteItems={deleteItems} />
         </Portlet>
-      }
+      )}
     </div>
   );
 };

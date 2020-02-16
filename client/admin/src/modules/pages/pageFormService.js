@@ -5,7 +5,7 @@ class RowItem {
     this.id = uniqueId();
     this.size = size;
     this.type = type;
-    this.images = []
+    this.images = [];
   }
 }
 
@@ -24,9 +24,9 @@ class Row {
 export function normolizeRowItems(content) {
   const rowItemsByID = {};
 
-  content.forEach((contentItem) => {
-    contentItem.rows.forEach((row) => {
-      row.items.forEach((rowItem) => {
+  content.forEach(contentItem => {
+    contentItem.rows.forEach(row => {
+      row.items.forEach(rowItem => {
         const newRowItem = { ...rowItem };
         const filtersObj = {};
         if (rowItem.filters) {
@@ -34,7 +34,7 @@ export function normolizeRowItems(content) {
           filters.forEach(filter => {
             const filterSplit = filter.split('=');
             filtersObj[filterSplit[0]] = filterSplit[1].split(',');
-          })
+          });
         }
         newRowItem.filtersObj = filtersObj;
         rowItemsByID[rowItem._id || rowItem.id] = newRowItem;
@@ -47,7 +47,7 @@ export function normolizeRowItems(content) {
 
 export function denormalizeRowsItems(content, rowItemsByID) {
   content.forEach(contentItem => {
-    contentItem.rows.forEach((row) => {
+    contentItem.rows.forEach(row => {
       row.items.forEach((rowItem, i) => {
         row.items[i] = rowItemsByID[rowItem._id || rowItem.id];
       });
@@ -85,9 +85,9 @@ export function addCustomRow(contentByLang, langId, type) {
 }
 
 export function removeRow(contentByLang, langId, rowId) {
-  const index = contentByLang[langId].rows.findIndex(row => (
-    row.id === rowId || row._id === rowId
-  ));
+  const index = contentByLang[langId].rows.findIndex(
+    row => row.id === rowId || row._id === rowId
+  );
   if (index > -1) {
     contentByLang[langId].rows.splice(index, 1);
   }
@@ -107,7 +107,6 @@ export function setInputsValues(contentByLang, state, action) {
   return {
     ...state,
     contentByLang,
-    item
+    item,
   };
 }
-

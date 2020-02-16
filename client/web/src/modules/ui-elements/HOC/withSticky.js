@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
   wrapper: {
     '@media (max-width: 992px)': {
       width: 'auto',
-      position: 'static'
-    }
-  }
+      position: 'static',
+    },
+  },
 });
 
 function withSticky(WrappedComponent) {
@@ -16,23 +16,23 @@ function withSticky(WrappedComponent) {
       super(props);
       this.handleChange = this.handleChange.bind(this);
       this.state = {
-        isSticky: false
-      }
+        isSticky: false,
+      };
     }
 
     componentDidMount() {
-      window.addEventListener('scroll', this.handleChange)
+      window.addEventListener('scroll', this.handleChange);
     }
 
     componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleChange)
+      window.removeEventListener('scroll', this.handleChange);
     }
 
     handleChange() {
       this.setState({
         isSticky: this.wrapper.getBoundingClientRect().top < 0,
-        width: this.wrapper.offsetWidth
-      })
+        width: this.wrapper.offsetWidth,
+      });
     }
 
     render() {
@@ -40,17 +40,17 @@ function withSticky(WrappedComponent) {
       const wrapperStyles = {
         top: '0',
         width: isSticky ? `${width}px` : 'auto',
-        position: isSticky ? 'fixed' : 'initial'
+        position: isSticky ? 'fixed' : 'initial',
       };
-      return <div ref={ (wrapper) => this.wrapper = wrapper }>
-        <div className={ css(styles.wrapper) } style={ wrapperStyles }>
-          <WrappedComponent
-            {...this.props}
-          />
+      return (
+        <div ref={wrapper => (this.wrapper = wrapper)}>
+          <div className={css(styles.wrapper)} style={wrapperStyles}>
+            <WrappedComponent {...this.props} />
+          </div>
         </div>
-      </div>;
+      );
     }
   };
 }
 
-export default withSticky
+export default withSticky;

@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { loadItems, saveItem, deleteItems } from './hotelsReducer';
 import { getHotels } from '../../rootReducer';
 import HotelsList from './HotelsList';
 import Spinner from '../ui-elements/Spinner';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getHotels(state),
     isFetching: state.hotels.isFetching,
     isFetched: state.hotels.isFetched,
     isSaving: state.languages.isSaving,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
@@ -24,15 +24,9 @@ class HotelsContainer extends Component {
 
   render() {
     const { isFetching } = this.props;
-    return (<div>
-      {isFetching ?
-        <Spinner/>
-        :
-        <HotelsList
-          {...this.props}
-        />
-      }
-    </div>);
+    return (
+      <div>{isFetching ? <Spinner /> : <HotelsList {...this.props} />}</div>
+    );
   }
 }
 

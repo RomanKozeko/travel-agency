@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const createConfirmation = (Component) => {
-  return (props) => {
+const createConfirmation = Component => {
+  return props => {
     const wrapper = document.body.appendChild(document.createElement('div'));
     const promise = new Promise((resolve, reject) => {
       try {
@@ -27,14 +27,17 @@ const createConfirmation = (Component) => {
       }, 1000);
     }
 
-    return promise.then((res) => {
-      dispose();
-      return res;
-    }, (res) => {
-      dispose();
-      return Promise.reject(res);
-    });
-  }
+    return promise.then(
+      res => {
+        dispose();
+        return res;
+      },
+      res => {
+        dispose();
+        return Promise.reject(res);
+      }
+    );
+  };
 };
 
 export default createConfirmation;

@@ -1,4 +1,4 @@
-const config =  require('../config/index');
+const config = require('../config/index');
 const path = require('path');
 const jwt = require('jwt-simple');
 
@@ -8,9 +8,9 @@ function tokenForUser(user) {
 }
 
 exports.login = (req, res) => {
-  res.send({ token: tokenForUser(req.user) })
+  res.send({ token: tokenForUser(req.user) });
 };
 
 exports.getMe = (req, res) => {
-	res.json({ userName: config.user.login });
+  res.json({ userName: config.user.login });
 };

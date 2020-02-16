@@ -1,8 +1,8 @@
 import { createReducer } from '../../services/utils';
-import { updateEntities as updateMenuEntities } from '../menuBuilder/menuService'
+import { updateEntities as updateMenuEntities } from '../menuBuilder/menuService';
 
 function defaultEntity(options) {
-  return { ...{ byId : {}, allIds : [] }, ...options }
+  return { ...{ byId: {}, allIds: [] }, ...options };
 }
 
 const defaultState = {
@@ -18,37 +18,39 @@ const mergeIds = (allIds, newIds) => {
 
   newIds.forEach(id => {
     if (!res.includes(id)) {
-      res.push(id)
+      res.push(id);
     }
   });
 
-  return  res;
+  return res;
 };
 
 const hotelReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
-    let hotels = {...state.hotels};
-    let regions = {...state.regions};
+    let hotels = { ...state.hotels };
+    let regions = { ...state.regions };
 
-    let regionsAllIds = res.entities.regions ? Object.keys(res.entities.regions) : [];
+    let regionsAllIds = res.entities.regions
+      ? Object.keys(res.entities.regions)
+      : [];
     let hotelsIDs = res.result.items ? res.result.items : [res.result];
 
     regions = {
       ...regions,
-      byId: {...regions.byId, ...res.entities.regions},
-      allIds: mergeIds(regions.allIds, regionsAllIds)
+      byId: { ...regions.byId, ...res.entities.regions },
+      allIds: mergeIds(regions.allIds, regionsAllIds),
     };
     hotels = {
       ...hotels,
-      byId: {...hotels.byId, ...action.response.entities.items},
+      byId: { ...hotels.byId, ...action.response.entities.items },
       allIds: mergeIds(hotels.allIds, hotelsIDs),
-      filter: {}
+      filter: {},
     };
     return {
       ...state,
       hotels,
-      regions
+      regions,
     };
   },
   deleteSuccess: function(state, action) {
@@ -57,7 +59,7 @@ const hotelReducer = {
     const byId = { ...hotels.byId };
     const allIds = [...hotels.allIds];
 
-    Object.keys(idsToRemove).forEach((id) => {
+    Object.keys(idsToRemove).forEach(id => {
       delete byId[idsToRemove[id]];
       const index = allIds.indexOf(idsToRemove[id]);
       if (index > -1) {
@@ -66,7 +68,7 @@ const hotelReducer = {
     });
     return {
       ...state,
-      hotels: { ...hotels, byId, allIds, filter: {} }
+      hotels: { ...hotels, byId, allIds, filter: {} },
     };
   },
   filteredItemsSuccess: (state, action) => {
@@ -76,32 +78,32 @@ const hotelReducer = {
 
     hotels.filter = {
       ...hotels.filter,
-      [key]: items
+      [key]: items,
     };
 
     return {
       ...state,
-      hotels
-    }
-  }
+      hotels,
+    };
+  },
 };
 
 const regionReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
-    let regions = {...state.regions};
+    let regions = { ...state.regions };
     let regionsAllIds = Object.keys(res.entities.regions || res.entities);
 
     regions = {
-      byId: {...regions.byId, ...res.entities.regions},
+      byId: { ...regions.byId, ...res.entities.regions },
       allIds: mergeIds(regions.allIds, regionsAllIds),
-      isFetched: true
+      isFetched: true,
     };
 
     return {
       ...state,
-      
-      regions
+
+      regions,
     };
   },
   deleteSuccess: function(state, action) {
@@ -110,7 +112,7 @@ const regionReducer = {
     const byId = { ...hotels.byId };
     const allIds = [...hotels.allIds];
 
-    Object.keys(idsToRemove).forEach((id) => {
+    Object.keys(idsToRemove).forEach(id => {
       delete byId[idsToRemove[id]];
       const index = allIds.indexOf(idsToRemove[id]);
       if (index > -1) {
@@ -119,35 +121,37 @@ const regionReducer = {
     });
     return {
       ...state,
-      regions: { byId, allIds }
+      regions: { byId, allIds },
     };
-  }
+  },
 };
 
 const showPlaceReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
-    let showplaces = {...state.showplaces};
-    let regions = {...state.regions};
+    let showplaces = { ...state.showplaces };
+    let regions = { ...state.regions };
 
-    let regionsAllIds = res.entities.regions ? Object.keys(res.entities.regions) : [];
+    let regionsAllIds = res.entities.regions
+      ? Object.keys(res.entities.regions)
+      : [];
     let showplaceIDs = res.result.items ? res.result.items : [res.result];
 
     regions = {
       ...regions,
-      byId: {...regions.byId, ...res.entities.regions},
-      allIds: mergeIds(regions.allIds, regionsAllIds)
+      byId: { ...regions.byId, ...res.entities.regions },
+      allIds: mergeIds(regions.allIds, regionsAllIds),
     };
     showplaces = {
       ...showplaces,
-      byId: {...showplaces.byId, ...action.response.entities.items},
+      byId: { ...showplaces.byId, ...action.response.entities.items },
       allIds: mergeIds(showplaces.allIds, showplaceIDs),
-      filter: {}
+      filter: {},
     };
     return {
       ...state,
       showplaces,
-      regions
+      regions,
     };
   },
   deleteSuccess: function(state, action) {
@@ -156,7 +160,7 @@ const showPlaceReducer = {
     const byId = { ...showplaces.byId };
     const allIds = [...showplaces.allIds];
 
-    Object.keys(idsToRemove).forEach((id) => {
+    Object.keys(idsToRemove).forEach(id => {
       delete byId[idsToRemove[id]];
       const index = allIds.indexOf(idsToRemove[id]);
       if (index > -1) {
@@ -165,7 +169,7 @@ const showPlaceReducer = {
     });
     return {
       ...state,
-      showplaces: { ...showplaces, byId, allIds, filter: {} }
+      showplaces: { ...showplaces, byId, allIds, filter: {} },
     };
   },
   filteredItemsSuccess: (state, action) => {
@@ -175,34 +179,34 @@ const showPlaceReducer = {
 
     showplaces.filter = {
       ...showplaces.filter,
-      [key]: items
+      [key]: items,
     };
 
     return {
       ...state,
-      showplaces
-    }
-  }
+      showplaces,
+    };
+  },
 };
 
 const menuReducer = {
   itemsSuccess: function(state, action) {
     const res = action.response;
-    let menu = {...state.menu};
+    let menu = { ...state.menu };
     let menuItemsIDs = res.result.items ? res.result.items : [res.result];
 
     menu = {
       ...menu,
-      byId: {...menu.byId, ...action.response.entities.items},
+      byId: { ...menu.byId, ...action.response.entities.items },
       allIds: mergeIds(menu.allIds, menuItemsIDs),
-      isFetched: true
+      isFetched: true,
     };
     return {
       ...state,
       menu,
     };
   },
-  updateItems: function (state, action) {
+  updateItems: function(state, action) {
     const updatedEntities = updateMenuEntities(
       state.menu.byId,
       action.node,
@@ -215,9 +219,9 @@ const menuReducer = {
       menu: {
         ...state.menu,
         byId: updatedEntities,
-        allIds: Object.keys(updatedEntities)
-      }
-    }
+        allIds: Object.keys(updatedEntities),
+      },
+    };
   },
   deleteSuccess: function(state, action) {
     const newItems = action.response.entities.items;
@@ -235,33 +239,33 @@ const menuReducer = {
 };
 
 const regionsActions = {
-  'REGIONS_SUCCESS': regionReducer.itemsSuccess,
-  'REGION_SUCCESS': regionReducer.itemsSuccess,
-  'REGION_SAVE_SUCCESS': regionReducer.itemsSuccess,
-  'REGIONS_DELETE_SUCCESS': regionReducer.deleteSuccess,
+  REGIONS_SUCCESS: regionReducer.itemsSuccess,
+  REGION_SUCCESS: regionReducer.itemsSuccess,
+  REGION_SAVE_SUCCESS: regionReducer.itemsSuccess,
+  REGIONS_DELETE_SUCCESS: regionReducer.deleteSuccess,
 };
 
 const hotelsActions = {
-  'HOTELS_SUCCESS': hotelReducer.itemsSuccess,
-  'HOTEL_SUCCESS': hotelReducer.itemsSuccess,
-  'HOTEL_SAVE_SUCCESS': hotelReducer.itemsSuccess,
-  'HOTELS_DELETE_SUCCESS': hotelReducer.deleteSuccess,
-  'FILTERED_HOTELS_SUCCESS': hotelReducer.filteredItemsSuccess,
+  HOTELS_SUCCESS: hotelReducer.itemsSuccess,
+  HOTEL_SUCCESS: hotelReducer.itemsSuccess,
+  HOTEL_SAVE_SUCCESS: hotelReducer.itemsSuccess,
+  HOTELS_DELETE_SUCCESS: hotelReducer.deleteSuccess,
+  FILTERED_HOTELS_SUCCESS: hotelReducer.filteredItemsSuccess,
 };
 
 const showplacesActions = {
-  'SHOWPLACES_SUCCESS': showPlaceReducer.itemsSuccess,
-  'SHOWPLACE_SUCCESS': showPlaceReducer.itemsSuccess,
-  'SHOWPLACE_SAVE_SUCCESS': showPlaceReducer.itemsSuccess,
-  'SHOWPLACES_DELETE_SUCCESS': showPlaceReducer.deleteSuccess,
-  'FILTERED_SHOWPLACES_SUCCESS': showPlaceReducer.filteredItemsSuccess,
+  SHOWPLACES_SUCCESS: showPlaceReducer.itemsSuccess,
+  SHOWPLACE_SUCCESS: showPlaceReducer.itemsSuccess,
+  SHOWPLACE_SAVE_SUCCESS: showPlaceReducer.itemsSuccess,
+  SHOWPLACES_DELETE_SUCCESS: showPlaceReducer.deleteSuccess,
+  FILTERED_SHOWPLACES_SUCCESS: showPlaceReducer.filteredItemsSuccess,
 };
 
 const menuActions = {
-  'MENU_SUCCESS': menuReducer.itemsSuccess,
-  'MENU_ITEM_SAVE_SUCCESS': menuReducer.itemsSuccess,
-  'UPDATE_MENU_ITEMS': menuReducer.updateItems,
-  'MENU_DELETE_SUCCESS': menuReducer.deleteSuccess,
+  MENU_SUCCESS: menuReducer.itemsSuccess,
+  MENU_ITEM_SAVE_SUCCESS: menuReducer.itemsSuccess,
+  UPDATE_MENU_ITEMS: menuReducer.updateItems,
+  MENU_DELETE_SUCCESS: menuReducer.deleteSuccess,
 };
 
 const entitiesReducer = createReducer(defaultState, {
@@ -274,27 +278,30 @@ const entitiesReducer = createReducer(defaultState, {
 export default entitiesReducer;
 
 //  selectors
-export const getHotels = state => (state.allIds.map(id => state.byId[id]));
-export const getHotel = (state, id) => (state.byId[id] ? {...state.byId[id]} : false);
+export const getHotels = state => state.allIds.map(id => state.byId[id]);
+export const getHotel = (state, id) =>
+  state.byId[id] ? { ...state.byId[id] } : false;
 export const getHotelsByFilter = (state, filter) => {
   const items = state.filter[filter] ? [...state.filter[filter]] : false;
   if (items) {
-    return items.map(item => ({...state.byId[item]}))
+    return items.map(item => ({ ...state.byId[item] }));
   }
   return [];
 };
 
-export const getRegions = state => (state.allIds.map(id => state.byId[id]));
-export const getRegion = (state, id) => (state.byId[id] ? {...state.byId[id]} : false);
+export const getRegions = state => state.allIds.map(id => state.byId[id]);
+export const getRegion = (state, id) =>
+  state.byId[id] ? { ...state.byId[id] } : false;
 
-export const getShowplaces = state => (state.allIds.map(id => state.byId[id]));
-export const getShowplace = (state, id) => (state.byId[id] ? {...state.byId[id]} : false);
+export const getShowplaces = state => state.allIds.map(id => state.byId[id]);
+export const getShowplace = (state, id) =>
+  state.byId[id] ? { ...state.byId[id] } : false;
 export const getShowplacesByFilter = (state, filter) => {
   const items = state.filter[filter] ? [...state.filter[filter]] : false;
   if (items) {
-    return items.map(item => ({...state.byId[item]}))
+    return items.map(item => ({ ...state.byId[item] }));
   }
   return [];
 };
 
-export const getMenu = state => (state.allIds.map(id => state.byId[id]));
+export const getMenu = state => state.allIds.map(id => state.byId[id]);

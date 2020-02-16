@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import { getLanguages, getHotel, getRegions } from '../../rootReducer';
 import { loadRegions } from '../regions/regionsReducer';
-import {loadItem, saveItem} from './hotelsReducer';
+import { loadItem, saveItem } from './hotelsReducer';
 import Portlet from '../ui-elements/Portlet';
 import HotelForm from './HotelForm';
 import { populateTree } from '../regions/RegionService';
 
 const uniqueId = require('lodash.uniqueid');
 
-const createBlankPage = (languages) => {
+const createBlankPage = languages => {
   const content = [];
-  languages.forEach((language) => {
+  languages.forEach(language => {
     content.push({
       id: uniqueId(),
       title: '',
@@ -29,7 +29,7 @@ const createBlankPage = (languages) => {
     preview: [],
     regions: [],
     enabled: true,
-    content
+    content,
   };
 };
 
@@ -44,14 +44,14 @@ const mapStateToProps = (state, router) => {
   }
 
   return {
-    languagesIDs: {...state.languages.byIds},
+    languagesIDs: { ...state.languages.byIds },
     regions: populateTree(getRegions(state)),
     item,
     languages,
     isNew,
     isFetching: state.hotels.isFetching,
     regionsIsFetched: state.regions.regionsIsFetched,
-    isSaving: state.hotels.isSaving
+    isSaving: state.hotels.isSaving,
   };
 };
 
@@ -77,24 +77,29 @@ class HotelContainer extends Component {
     return (
       <div>
         <BackLink text="Назад к списку страниц" url="/admin/hotels" />
-        {isFetching || !item ? <Spinner /> :
+        {isFetching || !item ? (
+          <Spinner />
+        ) : (
           <div>
-            <PageHeader text={item.content[0].title}/>
+            <PageHeader text={item.content[0].title} />
             <Portlet isBordered={isBordered}>
               <HotelForm {...this.props} />
             </Portlet>
           </div>
-        }
+        )}
       </div>
     );
   }
 }
-HotelContainer = withRouter(connect(
-  mapStateToProps, {
-    loadItem,
-    save: saveItem,
-    loadRegions
-  }
-)(HotelContainer));
+HotelContainer = withRouter(
+  connect(
+    mapStateToProps,
+    {
+      loadItem,
+      save: saveItem,
+      loadRegions,
+    }
+  )(HotelContainer)
+);
 
 export default HotelContainer;

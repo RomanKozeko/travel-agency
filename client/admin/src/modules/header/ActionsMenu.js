@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 const styles = StyleSheet.create({
   button: {
@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     color: 'white',
     height: '30px',
   },
-})
-
+});
 
 class ActionsMenu extends Component {
   state = {
@@ -29,7 +28,12 @@ class ActionsMenu extends Component {
   render() {
     return (
       <div>
-        <Button aria-owns="simple-menu" aria-haspopup="true"  className={css(styles.button)} onClick={this.handleClick}>
+        <Button
+          aria-owns="simple-menu"
+          aria-haspopup="true"
+          className={css(styles.button)}
+          onClick={this.handleClick}
+        >
           Новое действие
         </Button>
         <Menu
@@ -38,7 +42,9 @@ class ActionsMenu extends Component {
           open={this.state.open}
           onClose={this.handleRequestClose}
         >
-          <MenuItem onClick={this.handleRequestClose}>Добавить страницу</MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
+            Добавить страницу
+          </MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить тур</MenuItem>
           <MenuItem onClick={this.handleRequestClose}>Добавить отель</MenuItem>
         </Menu>

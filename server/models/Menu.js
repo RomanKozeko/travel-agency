@@ -5,18 +5,18 @@ const Schema = mongoose.Schema;
 const MenuSchema = new Schema({
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   page: {
     type: Schema.Types.ObjectId,
-    ref: 'Page'
+    ref: 'Page',
   },
   order: Number,
   parent: {
     type: String,
-    default: null
+    default: null,
   },
-  children: [String]
+  children: [String],
 });
 
 module.exports = mongoose.model('Menu', MenuSchema);

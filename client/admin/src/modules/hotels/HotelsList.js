@@ -16,21 +16,21 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/hotels/'
+        linkPrefix: '/admin/hotels/',
       },
       {
         name: 'stars',
-        isLink: 'stars'
+        isLink: 'stars',
       },
       {
         name: 'enabled',
-        isLink: 'toggle'
+        isLink: 'toggle',
       },
       {
         name: 'date',
-        isLink: 'date'
-      }
-    ]
+        isLink: 'date',
+      },
+    ],
   };
 
   return (
@@ -46,14 +46,13 @@ const HotelsList = ({ items, languages, isFetching, deleteItems }) => {
       >
         Добавить новый отель
       </Button>
-      {isFetching
-        ?
+      {isFetching ? (
         <Spinner />
-        :
+      ) : (
         <Portlet isBordered={false}>
           <SortableTable data={data} deleteItems={deleteItems} />
         </Portlet>
-      }
+      )}
     </div>
   );
 };

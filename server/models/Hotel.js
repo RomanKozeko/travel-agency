@@ -8,25 +8,29 @@ const HotelSchema = new Schema({
   url: { type: String, index: true, unique: true, required: true },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   enabled: {
     type: Boolean,
-    default: true
+    default: true,
   },
   food: {
     type: Schema.Types.ObjectId,
-    ref: 'Food'
+    ref: 'Food',
   },
-  regions: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Region'
-  }],
-  preview: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Media'
-  }],
-  content: [ContentSchema]
+  regions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Region',
+    },
+  ],
+  preview: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media',
+    },
+  ],
+  content: [ContentSchema],
 });
 
 module.exports = mongoose.model('Hotel', HotelSchema);

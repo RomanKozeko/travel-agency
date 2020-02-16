@@ -11,5 +11,4 @@ router.get(/^(\/admin)[^.]*$/, (req, res) => {
 //router.get('/tours', ToursCtrl.index);
 router.get(/^[^.]*$/, HomeCtrl.index);
 
-
 module.exports = router;
