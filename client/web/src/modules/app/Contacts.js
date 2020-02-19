@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import TextField from '../ui-elements/TextField';
-import TextArea from '../ui-elements/TextArea';
-import Button from '../ui-elements/FormButton';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
 import ContactForm from '../contactForm/ContactForm';

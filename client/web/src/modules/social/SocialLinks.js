@@ -31,7 +31,7 @@ const SocialLinks = ({ items }) => {
             className={css(styles.item)}
             key={item._id}
           >
-            <img src={item.image} className={css(styles.img)} />
+            <img src={item.image} className={css(styles.img)} alt={item.link} />
           </a>
         ))}
     </div>
@@ -45,10 +45,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { fetchSocial }
-  ),
+  connect(mapStateToProps, { fetchSocial }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {

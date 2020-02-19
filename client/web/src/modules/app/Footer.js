@@ -109,8 +109,8 @@ const Footer = ({ items }) => (
                 <span className={css(styles.columnInner)}>{content.title}</span>
               </div>
               <div className={css(styles.textTelWrap)}>
-                {tels.map(({ title, img }) => (
-                  <div className={css(styles.textTel)}>
+                {tels.map(({ title, img, _id }, index) => (
+                  <div className={css(styles.textTel)} key={_id}>
                     <img src={img} className={css(styles.textTelImg)} alt="" />
                     <div className={css(styles.textTelContent)}>{title}</div>
                   </div>
@@ -136,10 +136,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { fetchContacts }
-  ),
+  connect(mapStateToProps, { fetchContacts }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {

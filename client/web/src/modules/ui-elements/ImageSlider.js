@@ -110,6 +110,7 @@ const ImageSlider = ({
           className={css(styles.imgPlaceHolder)}
           src={img.path}
           key={img._id}
+          alt="slider"
         />
       );
     })}

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const NoteFound = ({ match }) => (
+const NotFound = ({ match }) => (
   <div
     className={css(styles.pageContent)}
     style={{ backgroundImage: `url(${window.TA && window.TA.pagesImg})` }}
@@ -40,4 +40,4 @@ const NoteFound = ({ match }) => (
   </div>
 );
 
-export default NoteFound;
+export default NotFound;

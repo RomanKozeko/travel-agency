@@ -133,7 +133,7 @@ let MenuContainer = ({ menuItems, onMenuTriggerClick, isOpen }) => (
         </PrefixLink>
       </li>
       {findRootNodesAndPopulate(menuItems).map(item => (
-        <MenuItem item={item} />
+        <MenuItem item={item} key={item._id} />
       ))}
     </ul>
   </div>
@@ -146,10 +146,7 @@ const mapStateToProps = state => ({
 });
 
 MenuContainer = compose(
-  connect(
-    mapStateToProps,
-    { fetchMenu }
-  ),
+  connect(mapStateToProps, { fetchMenu }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {

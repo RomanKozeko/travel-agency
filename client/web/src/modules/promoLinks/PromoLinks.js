@@ -85,8 +85,12 @@ const PromoLinks = ({ items, isFetching, isFetched }) => (
     ) : (
       items
         .sort((a, b) => a.order - b.order)
-        .map(({ preview, content, linkUrl }) => (
-          <PrefixLink to={`/pages/${linkUrl}`} className={css(styles.item)}>
+        .map(({ preview, content, linkUrl, _id }) => (
+          <PrefixLink
+            to={`/pages/${linkUrl}`}
+            className={css(styles.item)}
+            key={_id}
+          >
             <div
               className={css(styles.itemBg)}
               style={{
@@ -107,10 +111,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { fetchPromoLinks }
-  ),
+  connect(mapStateToProps, { fetchPromoLinks }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {

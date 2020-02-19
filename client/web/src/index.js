@@ -58,5 +58,5 @@ fetchLanguages()
       document.getElementById('root')
     );
   });
-  
+
 registerServiceWorker();

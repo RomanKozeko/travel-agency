@@ -11,14 +11,11 @@ const withEmailSending = (WrappedComponent, emailSubject) => {
   }
 
   return compose(
-    connect(
-      null,
-      { sendEmail }
-    ),
+    connect(null, { sendEmail }),
     withStateHandlers(
       ({ isEmailSent, reset }) => ({ isEmailSent: false, reset }),
       {
-        onSubmit: ({}, { reset, sendEmail, item, itemName }) => options => {
+        onSubmit: (_, { reset, sendEmail, item, itemName }) => options => {
           options = item
             ? {
                 ...options,

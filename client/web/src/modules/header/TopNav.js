@@ -129,7 +129,11 @@ const TopNav = ({ items, setCurrency, currency }) => (
         >
           {window.TA.currencies.map(({ item }) => {
             const splited = item.split(',');
-            return <option value={item}>{splited[1]}</option>;
+            return (
+              <option value={item} key={item}>
+                {splited[1]}
+              </option>
+            );
           })}
         </select>
         <LanguagesNav />
@@ -148,8 +152,8 @@ const TopNav = ({ items, setCurrency, currency }) => (
                 <span className={css(styles.text)}>{content.title}</span>
               </div>
               <div className={css(styles.textTelWrap)}>
-                {tels.map(({ title, img }) => (
-                  <div className={css(styles.textTel)}>
+                {tels.map(({ title, img, _id }) => (
+                  <div className={css(styles.textTel)} key={_id}>
                     <img src={img} className={css(styles.textTelImg)} alt="" />
                     <div className={css(styles.textTelContent)}>{title}</div>
                   </div>
@@ -175,10 +179,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { fetchContacts, setCurrency, setCurrencies }
-  ),
+  connect(mapStateToProps, { fetchContacts, setCurrency, setCurrencies }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {
