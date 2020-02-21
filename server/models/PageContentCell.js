@@ -8,13 +8,13 @@ const PageContentSchemaCell = new Schema({
   subTitle: String,
   size: {
     type: String,
-    required: true
+    required: true,
   },
   type: String,
   images: [String],
   content: String,
   pageLink: String,
-  filters: String
+  filters: String,
 });
 
 module.exports = PageContentSchemaCell;

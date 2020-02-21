@@ -9,27 +9,23 @@ import PageCaption from './PageCaption';
 Enzyme.configure({ adapter: new Adapter() });
 
 it('renders without crashing', () => {
-	const div = document.createElement('div');
-	ReactDOM.render(<PageCaption />, div);
+  const div = document.createElement('div');
+  ReactDOM.render(<PageCaption />, div);
 });
 
 it('renders correctly', () => {
-	const tree = renderer
-		.create(<PageCaption text="Welcome" />)
-		.toJSON();
-	expect(tree).toMatchSnapshot();
+  const tree = renderer.create(<PageCaption text="Welcome" />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
 
 test('renders text from props', () => {
-	const caption = shallow(
-		<PageCaption text="Welcome" />
-	);
-	expect(caption.text()).toEqual('Welcome');
+  const caption = shallow(<PageCaption text="Welcome" />);
+  expect(caption.text()).toEqual('Welcome');
 });
 
 beforeEach(() => {
-	StyleSheetTestUtils.suppressStyleInjection();
+  StyleSheetTestUtils.suppressStyleInjection();
 });
 afterEach(() => {
-	StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
 });

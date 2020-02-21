@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
@@ -8,10 +8,10 @@ import Chip from 'material-ui/Chip';
 const styles = StyleSheet.create({
   root: {
     boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
-    marginBottom: '20px'
+    marginBottom: '20px',
   },
   listItem: {
-    display: 'block'
+    display: 'block',
   },
   chip: {
     margin: '10px',
@@ -30,7 +30,7 @@ class ItemsSelector extends Component {
       anchorEl: undefined,
       open: false,
       checked: [...this.props.defaultChecked],
-    }
+    };
   }
 
   handleClickListItem = event => {
@@ -52,36 +52,34 @@ class ItemsSelector extends Component {
       newChecked.splice(currentIndex, 1);
     }
 
-    this.props.updateItems(
-      this.props.itemsName,
-      newChecked
-    );
+    this.props.updateItems(this.props.itemsName, newChecked);
 
     this.setState({
       checked: newChecked,
     });
-
   };
 
   getSelectedLabels = () => {
     const items = this.props.items;
     return (
       <div className={css(styles.row)}>
-        {this.state.checked.map((id, i) =>
-          items[id] &&
-          <Chip
-            label={this.props.items[id].content[0].title}
-            key={id}
-            onDelete={(e) => this.handleToggle(e, id)}
-            className={css(styles.chip)}
-          />
+        {this.state.checked.map(
+          (id, i) =>
+            items[id] && (
+              <Chip
+                label={this.props.items[id].content[0].title}
+                key={id}
+                onDelete={e => this.handleToggle(e, id)}
+                className={css(styles.chip)}
+              />
+            )
         )}
       </div>
-    )
+    );
   };
 
   render() {
-    const {items} = this.props;
+    const { items } = this.props;
     return (
       <div className={css(styles.root)}>
         <div>
@@ -96,7 +94,11 @@ class ItemsSelector extends Component {
               <ListItemText
                 className={css(styles.listItem)}
                 primary={this.props.title}
-                secondary={this.state.checked.length > 0 ? this.getSelectedLabels() : "Не выбрано"}
+                secondary={
+                  this.state.checked.length > 0
+                    ? this.getSelectedLabels()
+                    : 'Не выбрано'
+                }
               />
             </ListItem>
           </List>
@@ -107,7 +109,7 @@ class ItemsSelector extends Component {
           open={this.state.open}
           onClose={this.handleClose}
         >
-          {Object.keys(items).map((option, index) =>
+          {Object.keys(items).map((option, index) => (
             <MenuItem
               key={index}
               onClick={event => this.handleToggle(event, option)}
@@ -120,7 +122,7 @@ class ItemsSelector extends Component {
               {this.props.items[option].content[0].title}
               {this.state.checked.indexOf(option._id) !== -1}
             </MenuItem>
-          )}
+          ))}
         </Menu>
       </div>
     );

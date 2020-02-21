@@ -20,7 +20,8 @@ function populateEmpty(body) {
 }
 
 const getOne = model => (req, res, next) => {
-  model.findById(req.params.id)
+  model
+    .findById(req.params.id)
     .populate('preview')
     .populate('regions')
     .then(item => res.json(item))
@@ -28,7 +29,8 @@ const getOne = model => (req, res, next) => {
 };
 
 const getAllWithPagination = (offset, itemsPerPageLimit, model) => {
-  const query = model.find({})
+  const query = model
+    .find({})
     .sort('-date')
     .skip(offset)
     .populate('preview');
@@ -38,7 +40,7 @@ const getAllWithPagination = (offset, itemsPerPageLimit, model) => {
 const getAll = model => (req, res, next) => {
   const offset = +req.query.page * config.itemsPerPageLimit;
   getAllWithPagination(offset, config.itemsPerPageLimit, model)
-    .then((result) => {
+    .then(result => {
       res.json({
         offset,
         items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
@@ -66,7 +68,10 @@ const post = model => (req, res, next) => {
     }
 
     function populate(savedItem) {
-      return model.findById(savedItem._id).populate('preview').populate('regions');
+      return model
+        .findById(savedItem._id)
+        .populate('preview')
+        .populate('regions');
     }
 
     return await populate(savedItem);
@@ -77,15 +82,22 @@ const put = model => (req, res, next) => {
   const id = req.params.id;
   const props = populateEmpty(req.body);
 
-  model.findByIdAndUpdate(id, props)
-    .then(() => model.findById(id).populate('preview').populate('regions'))
+  model
+    .findByIdAndUpdate(id, props)
+    .then(() =>
+      model
+        .findById(id)
+        .populate('preview')
+        .populate('regions')
+    )
     .then(item => res.json(item))
     .catch(next);
 };
 
 const deleteItem = model => (req, res, next) => {
   const ids = req.body;
-  model.deleteMany({ _id: ids })
+  model
+    .deleteMany({ _id: ids })
     .then(() => res.json(ids))
     .catch(next);
 };
@@ -98,7 +110,7 @@ const crudFactory = (model, options) => {
       getOne: getOne(model),
       put: put(model),
       post: post(model),
-      delete: deleteItem(model)
+      delete: deleteItem(model),
     },
     options
   );

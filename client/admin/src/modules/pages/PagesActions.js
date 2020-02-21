@@ -19,8 +19,8 @@ const fetchPages = (nextPageUrl, nextPage) => ({
     types: [PAGES_REQUEST, PAGES_SUCCESS, PAGES_FAILURE],
     endpoint: nextPageUrl,
     schema: Schemas.PAGES,
-    nextPage
-  }
+    nextPage,
+  },
 });
 
 export const loadPages = (nextPage = 0) => (dispatch, getState) => {
@@ -37,7 +37,7 @@ export const loadPages = (nextPage = 0) => (dispatch, getState) => {
   if (pages[nextPage]) {
     return dispatch({
       type: PAGES_GET_PAGE_FROM_CACHE,
-      payload: nextPage
+      payload: nextPage,
     });
   }
 
@@ -49,7 +49,7 @@ const fetchPage = id => ({
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
     endpoint: `/api/pages/${id}`,
     schema: Schemas.PAGE,
-  }
+  },
 });
 
 export const loadPage = id => (dispatch, getState) => {
@@ -66,22 +66,26 @@ export const deletePages = ids => ({
     method: 'DELETE',
     endpoint: '/api/pages',
     toasterMsg: {
-      success: 'Pages deleted'
+      success: 'Pages deleted',
     },
     body: ids,
     schema: Schemas.PAGES,
-  }
+  },
 });
 
 const populatePageContent = (pageFormValues, item, pageState) => {
-  const content = pageFormValues[item] || { title: 'Untitled page', description: '', language: item };
+  const content = pageFormValues[item] || {
+    title: 'Untitled page',
+    description: '',
+    language: item,
+  };
   if (!content.language) {
     content.language = item;
   }
-  content.rows = pageState.rowsByLang[item].map((row) => {
+  content.rows = pageState.rowsByLang[item].map(row => {
     const populatedRow = { ...pageState.allRowsById[row] };
-    populatedRow.items = pageState.allRowsById[row].items.map(rowItem =>
-      (pageState.rowsItems[rowItem])
+    populatedRow.items = pageState.allRowsById[row].items.map(
+      rowItem => pageState.rowsItems[rowItem]
     );
 
     return populatedRow;
@@ -90,7 +94,7 @@ const populatePageContent = (pageFormValues, item, pageState) => {
 };
 
 const populatePage = (page, pageState, pageFormValues) => {
-  Object.keys(pageState.rowsByLang).forEach((item) => {
+  Object.keys(pageState.rowsByLang).forEach(item => {
     const content = populatePageContent(pageFormValues, item, pageState);
     page.content.push(content);
   });
@@ -115,10 +119,9 @@ export const savePage = (pageState, pageId, isNew) => (dispatch, getState) => {
       endpoint: isNew ? '/api/pages/' : `/api/pages/${page._id}`,
       body: page,
       toasterMsg: {
-        success: 'Page saved'
+        success: 'Page saved',
       },
-      schema: Schemas.PAGE
-    }
+      schema: Schemas.PAGE,
+    },
   });
-
 };

@@ -1,4 +1,4 @@
 {
-  "presets": ["babel-preset-env", "react"],
+  "presets": ["babel-preset-env"],
   "plugins": ["transform-object-rest-spread", "transform-decorators-legacy"]
 }

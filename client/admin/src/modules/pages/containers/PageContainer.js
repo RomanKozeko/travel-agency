@@ -1,37 +1,35 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PageHeader from '../../ui-elements/PageHeader';
 import Spinner from '../../ui-elements/Spinner';
 import BackLink from '../../ui-elements/BackLink';
-import {getLanguages, getPage} from '../../../rootReducer';
-import {loadItem, saveItem} from '../PagesReducer';
-import {
-  loadItems,
-} from '../../mediaFiles/mediaFilesReducer';
+import { getLanguages, getPage } from '../../../rootReducer';
+import { loadItem, saveItem } from '../PagesReducer';
+import { loadItems } from '../../mediaFiles/mediaFilesReducer';
 import * as actions from '../pageReducer';
 import Portlet from '../../ui-elements/Portlet';
 import PageForm from '../components/PageForm';
 
 const uniqueId = require('lodash.uniqueid');
 
-const createBlankPage = (languages) => {
+const createBlankPage = languages => {
   const content = [];
-  languages.forEach((language) => {
+  languages.forEach(language => {
     content.push({
       id: uniqueId(),
       title: '',
       description: '',
       rows: [],
-      language: language._id
+      language: language._id,
     });
   });
   return {
     id: uniqueId(),
     preview: '',
     allImages: [],
-    content
+    content,
   };
 };
 
@@ -75,14 +73,23 @@ class PageContainer extends Component {
   }
 
   render() {
-    const { isFetching, item, isBordered = true, mediafilesIsFetched } = this.props;
+    const {
+      isFetching,
+      item,
+      isBordered = true,
+      mediafilesIsFetched,
+    } = this.props;
     return (
       <div>
         <PageHeader text={'Cтраница:'} />
         <BackLink text="Назад к списку страниц" url="/admin/pages" />
-        {isFetching || !item || !mediafilesIsFetched ? <Spinner /> :
-          <Portlet isBordered={isBordered}><PageForm {...this.props} /></Portlet>
-        }
+        {isFetching || !item || !mediafilesIsFetched ? (
+          <Spinner />
+        ) : (
+          <Portlet isBordered={isBordered}>
+            <PageForm {...this.props} />
+          </Portlet>
+        )}
       </div>
     );
   }
@@ -95,31 +102,34 @@ PageContainer.propTypes = {
   match: PropTypes.object,
 };
 
-PageContainer = withRouter(connect(
-  mapStateToProps, {
-    loadItem,
-    save: saveItem,
-    pageAddRow: actions.pageAddRow,
-    pageAddCustomRow: actions.pageAddCustomRow,
-    pageDidMount: actions.pageDidMount,
-    pageRemoveRow: actions.pageRemoveRow,
-    pageUnmount: actions.pageUnmount,
-    pageInputChange: actions.pageInputChange,
-    openHtmlEditor: actions.openHtmlEditor,
-    closeHtmlEditor: actions.closeHtmlEditor,
-    openAddToursListPopup: actions.openAddToursListPopup,
-    closeAddToursListPopup: actions.closeAddToursListPopup,
-    saveRow: actions.saveRow,
-    removeRowItem: actions.pageRemoveRowItem,
-    editRowItem: actions.pageEditRowItem,
-    editRowTitle: actions.editRowTitle,
-    editOrder: actions.editOrder,
-    openMediaPopup: actions.openMediaPopup,
-    addImages: actions.addImages,
-    closeMediaPopup: actions.closeMediaPopup,
-    deleteMediaItem: actions.deleteMediaItem,
-    loadMediaFiles: loadItems,
-  }
-)(PageContainer));
+PageContainer = withRouter(
+  connect(
+    mapStateToProps,
+    {
+      loadItem,
+      save: saveItem,
+      pageAddRow: actions.pageAddRow,
+      pageAddCustomRow: actions.pageAddCustomRow,
+      pageDidMount: actions.pageDidMount,
+      pageRemoveRow: actions.pageRemoveRow,
+      pageUnmount: actions.pageUnmount,
+      pageInputChange: actions.pageInputChange,
+      openHtmlEditor: actions.openHtmlEditor,
+      closeHtmlEditor: actions.closeHtmlEditor,
+      openAddToursListPopup: actions.openAddToursListPopup,
+      closeAddToursListPopup: actions.closeAddToursListPopup,
+      saveRow: actions.saveRow,
+      removeRowItem: actions.pageRemoveRowItem,
+      editRowItem: actions.pageEditRowItem,
+      editRowTitle: actions.editRowTitle,
+      editOrder: actions.editOrder,
+      openMediaPopup: actions.openMediaPopup,
+      addImages: actions.addImages,
+      closeMediaPopup: actions.closeMediaPopup,
+      deleteMediaItem: actions.deleteMediaItem,
+      loadMediaFiles: loadItems,
+    }
+  )(PageContainer)
+);
 
 export default PageContainer;

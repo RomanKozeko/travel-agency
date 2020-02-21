@@ -5,11 +5,11 @@ const LanguageSchema = new Schema({
   title: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
   prefix: {
     type: String,
-    required: true
+    required: true,
   },
 });
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose } from 'recompose';
 import { PlaceIcon } from '../ui-elements/icons/Icons';
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     transition: 'all .3s ease-in',
     marginBottom: '20px',
     ':hover': {
-      boxShadow: '0 15px 35px rgba(0,0,0,0.15)'
+      boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
     },
     overflow: 'hidden',
     '@media (min-width: 750px)': {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     display: 'flex',
     '@media (min-width: 750px)': {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
   },
   contentRegions: {
@@ -58,15 +58,15 @@ const styles = StyleSheet.create({
     fontSize: '18px;',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    color: '#222222;'
+    color: '#222222;',
   },
   listItem: {
     display: 'flex',
     alignItems: 'center',
-    paddingBottom: '5px'
+    paddingBottom: '5px',
   },
   listItemText: {
-    marginLeft: '10px'
+    marginLeft: '10px',
   },
   contentLeft: {
     flexGrow: '1',
@@ -74,41 +74,35 @@ const styles = StyleSheet.create({
   contentRight: {
     paddingTop: '20px',
     '@media (min-width: 750px)': {
-      paddingTop: '0'
+      paddingTop: '0',
     },
   },
   price: {
     fontSize: '20px',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
-const HotelBody = ({
-  hotel: { url, content = {} },
-}) => {
+const HotelBody = ({ hotel: { url, content = {} } }) => {
   return (
     <div className={css(styles.content)}>
       <div className={css(styles.contentLeft)}>
         <h4 className={css(styles.title)}>
-          <PrefixLink to={`/hotels/${ url }`}>{ content.title }</PrefixLink>
+          <PrefixLink to={`/hotels/${url}`}>{content.title}</PrefixLink>
         </h4>
-        {
-          content.address &&
+        {content.address && (
           <div className={css(styles.listItem)}>
-            <PlaceIcon color={ theme.colors.primary } width={20}/>
-            <span className={css(styles.listItemText)}>{ content.address }</span>
+            <PlaceIcon color={theme.colors.primary} width={20} />
+            <span className={css(styles.listItemText)}>{content.address}</span>
           </div>
-        }
+        )}
       </div>
     </div>
-  )
+  );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   languageID: state.app.languages.urlPrefix,
 });
 
-export default compose(
-  connect(mapStateToProps)
-)(HotelBody)
-
+export default compose(connect(mapStateToProps))(HotelBody);

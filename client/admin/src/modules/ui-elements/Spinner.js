@@ -5,8 +5,8 @@ import { CircularProgress } from 'material-ui/Progress';
 const styles = StyleSheet.create({
   progress: {
     marginTop: '100px',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 
 const Spinner = () => (

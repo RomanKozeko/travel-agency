@@ -8,24 +8,24 @@ const styles = StyleSheet.create({
     marginRight: '30px',
     '@media (min-width: 800px)': {
       display: 'inline-block',
-      width: 'auto'
+      width: 'auto',
     },
   },
   input: {
-    display: 'none'
+    display: 'none',
   },
   button: {
     marginTop: '15px',
     '@media (max-width: 800px)': {
-      width: '100%'
-    }
-  }
+      width: '100%',
+    },
+  },
 });
 
 const ImageUploader = ({ uploadImg, fileType }) => {
-  const handleImageChange = (e) => {
+  const handleImageChange = e => {
     uploadImg({ payload: e.target.files[0], fileType });
-	  e.target.value = '';
+    e.target.value = '';
   };
 
   return (
@@ -35,10 +35,15 @@ const ImageUploader = ({ uploadImg, fileType }) => {
         name="file"
         id="file"
         type="file"
-        onChange={(e) => handleImageChange(e)}
+        onChange={e => handleImageChange(e)}
       />
       <label htmlFor="file">
-        <Button className={css(styles.button)} component="span" variant="raised" color="primary">
+        <Button
+          className={css(styles.button)}
+          component="span"
+          variant="raised"
+          color="primary"
+        >
           Добавить новый файл
         </Button>
       </label>

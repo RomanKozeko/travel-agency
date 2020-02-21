@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { load, deleteItems } from './../PagesReducer';
 import { getPageWithItems } from '../../../rootReducer';
 import Spinner from '../../ui-elements/Spinner';
-import PagesList from '../components/PagesList'
+import PagesList from '../components/PagesList';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getPageWithItems(state, state.pages.currPage),
     currPage: state.pages.currPage,
@@ -14,12 +14,11 @@ const mapStateToProps = (state) => {
     count: state.pages.count,
     isFetching: state.pages.isFetching,
     isFetched: state.pages.isFetched,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
 class PagesContainer extends Component {
-
   componentDidMount() {
     if (!this.props.isFetched) {
       this.props.load();
@@ -30,15 +29,7 @@ class PagesContainer extends Component {
     const { isFetching } = this.props;
 
     return (
-      <div>
-	      {isFetching ?
-          <Spinner/>
-		      :
-          <PagesList
-			      {...this.props}
-          />
-	      }
-      </div>
+      <div>{isFetching ? <Spinner /> : <PagesList {...this.props} />}</div>
     );
   }
 }

@@ -1,7 +1,6 @@
-import React from 'react'
-import MainNav from './MainNav'
-import TopNav from './TopNav'
-
+import React from 'react';
+import MainNav from './MainNav';
+import TopNav from './TopNav';
 
 const Header = () => (
   <div>

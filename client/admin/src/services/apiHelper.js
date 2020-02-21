@@ -2,29 +2,31 @@
 // This makes every API response have the same shape, regardless of how nested it was.
 function callApi(endpoint, options) {
   return fetch('/api' + endpoint, options)
-    .then(response =>
-      response.json().then(json => ({ json, response }))
-    ).then(({ json, response }) => {
+    .then(response => response.json().then(json => ({ json, response })))
+    .then(({ json, response }) => {
       if (!response.ok) {
         return Promise.reject(json);
       }
       return json;
     })
     .then(
-      response => (response),
+      response => response,
       error => ({ error: error.message || 'Something bad happened' })
     );
 }
 
-export const loginUserRequest = (creds) =>
+export const loginUserRequest = creds =>
   callApi('/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(creds)
+    body: JSON.stringify(creds),
   });
 
 export const getMeRequest = () =>
   callApi('/getMe', {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json', 'authorization': window.localStorage.token },
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: window.localStorage.token,
+    },
   });

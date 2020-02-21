@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { theme } from '../../services/constans'
+import { theme } from '../../services/constans';
 
 const styles = StyleSheet.create({
   btn: {
@@ -18,15 +18,15 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     outline: 'none',
     ':hover': {
-      backgroundColor: theme.colors.primaryAccent
-    }
-  }
+      backgroundColor: theme.colors.primaryAccent,
+    },
+  },
 });
 
-const FormButton = ({children, handleClick}) => (
-  <button onClick={ handleClick } className={css(styles.btn)}>
+const FormButton = ({ children, handleClick }) => (
+  <button onClick={handleClick} className={css(styles.btn)}>
     {children}
   </button>
-)
+);
 
-export default FormButton
+export default FormButton;

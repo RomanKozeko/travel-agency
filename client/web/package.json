@@ -1,20 +1,17 @@
 {
-  "name": "client",
+  "name": "travel-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3003/",
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "animated": "^0.2.0",
     "aphrodite": "^1.2.4",
-    "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
-    "humps": "^2.0.1",
-    "jss-vendor-prefixer": "^7.0.0",
     "normalizr": "^3.2.4",
-    "react": "^16.0.0",
-    "react-addons-css-transition-group": "^15.6.2",
-    "react-dom": "^16.0.0",
     "react-helmet": "^5.2.0",
-    "react-jss": "^6.1.1",
     "react-loading-skeleton": "^0.4.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -22,19 +19,36 @@
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-form": "^7.1.0",
-    "redux-saga": "^0.15.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.4.0"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7",
-    "react-snapshot": "^1.2.0"
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "prettier": "1.19.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3003/",
-  "homepage": "/web/build/"
+  "eslintConfig": {
+    "extends": ["react-app", "plugin:prettier/recommended"],
+    "plugins": ["prettier"]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -5,7 +5,7 @@ const ContentSchema = require('./Content');
 const RegionSchema = new Schema({
   content: [ContentSchema],
   ancestors: [String],
-  parent: String
+  parent: String,
 });
 
 module.exports = mongoose.model('Region', RegionSchema);

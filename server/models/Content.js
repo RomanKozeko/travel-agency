@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ContentSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: String,
   address: String,
@@ -14,10 +14,12 @@ const ContentSchema = new Schema({
   departureInfo: String,
   programs: [
     {
-        id: Number,
-        program: [{
-            description: String
-        }],
+      id: Number,
+      program: [
+        {
+          description: String,
+        },
+      ],
     },
   ],
   duration: String,
@@ -28,10 +30,12 @@ const ContentSchema = new Schema({
   priceUSD: Number,
   priceEUR: Number,
   pricePLN: Number,
-	programFile: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Media'
-	}],
+  programFile: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media',
+    },
+  ],
 });
 
 module.exports = ContentSchema;

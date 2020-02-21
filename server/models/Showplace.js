@@ -8,21 +8,25 @@ const ShowPlaceSchema = new Schema({
   url: { type: String, index: true, unique: true, required: true },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   enabled: {
     type: Boolean,
-    default: true
+    default: true,
   },
-  regions: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Region'
-  }],
-  preview: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Media'
-  }],
-  content: [ContentSchema]
+  regions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Region',
+    },
+  ],
+  preview: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media',
+    },
+  ],
+  content: [ContentSchema],
 });
 
 module.exports = mongoose.model('ShowPlace', ShowPlaceSchema);

@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { loadItems, saveItem, deleteItems } from './showplacesReducer';
 import { getShowplaces } from '../../rootReducer';
 import ShowPlacesList from './ShowplacesList';
 import Spinner from '../ui-elements/Spinner';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     items: getShowplaces(state),
     isFetching: state.showplaces.isFetching,
     isFetched: state.showplaces.isFetched,
     isSaving: state.languages.isSaving,
-    languages: state.languages
+    languages: state.languages,
   };
 };
 
@@ -24,15 +24,9 @@ class ShowPlacesContainer extends Component {
 
   render() {
     const { isFetching } = this.props;
-    return (<div>
-      {isFetching ?
-        <Spinner/>
-        :
-        <ShowPlacesList
-          {...this.props}
-        />
-      }
-    </div>);
+    return (
+      <div>{isFetching ? <Spinner /> : <ShowPlacesList {...this.props} />}</div>
+    );
   }
 }
 

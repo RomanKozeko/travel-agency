@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const ContentSchema = require('./Content');
 
 const PeriodSchema = new Schema({
-  content: [ContentSchema]
+  content: [ContentSchema],
 });
 
 module.exports = mongoose.model('Period', PeriodSchema);

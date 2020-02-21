@@ -1,8 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
+const Input = ({ classes }) => <input type="text" />;
 
-const Input = ({classes}) => (
-  <input type="text" />
-);
-
-export default Input
+export default Input;

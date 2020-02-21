@@ -5,19 +5,23 @@ const Schema = mongoose.Schema;
 const NewsSchema = new Schema({
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  preview: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Media'
-  }],
-  content: [{
-    title: String,
-    description: String,
-    language: String
-  }],
+  preview: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media',
+    },
+  ],
+  content: [
+    {
+      title: String,
+      description: String,
+      language: String,
+    },
+  ],
   linkUrl: String,
-  order: Number
+  order: Number,
 });
 
 module.exports = mongoose.model('News', NewsSchema);

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     width: 'calc(100% / 2 - 10px)',
     boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
-    borderRadius: '2px'
+    borderRadius: '2px',
   },
   active: {
     position: 'relative',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingTop: '100%',
     position: 'relative',
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   img: {
     position: 'absolute',
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     top: '50%',
     transform: 'translateY(-50%)',
     left: '0',
-    maxHeight: '100%'
+    maxHeight: '100%',
   },
   iconWrapper: {
     position: 'absolute',
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     width: '25px',
     height: '25px',
     background: '#1678cc',
-    zIndex: '5'
-  }
+    zIndex: '5',
+  },
 });
 
 function ImageGridList({ imgs, clickHandler }) {
@@ -59,13 +59,17 @@ function ImageGridList({ imgs, clickHandler }) {
         <div
           key={item._id + 1}
           onClick={() => clickHandler(item)}
-          className={item.active ? css(styles.gridListItem, styles.active) : css(styles.gridListItem)}
+          className={
+            item.active
+              ? css(styles.gridListItem, styles.active)
+              : css(styles.gridListItem)
+          }
         >
-          {item.active &&
+          {item.active && (
             <div className={css(styles.iconWrapper)}>
               <Icon>check</Icon>
             </div>
-          }
+          )}
           <div className={css(styles.imgWrapper)}>
             <img
               className={css(styles.img)}
@@ -73,17 +77,15 @@ function ImageGridList({ imgs, clickHandler }) {
               alt={item.title || ''}
             />
           </div>
-
         </div>
-      ))
-      }
+      ))}
     </div>
   );
 }
 
 ImageGridList.propTypes = {
   imgs: PropTypes.array,
-  clickHandler: PropTypes.func
+  clickHandler: PropTypes.func,
 };
 
 export default ImageGridList;

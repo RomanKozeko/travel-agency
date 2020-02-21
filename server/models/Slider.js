@@ -6,11 +6,13 @@ const SliderSchema = new Schema({
   order: String,
   link: String,
   image: String,
-  content: [{
-    title: String,
-    description: String,
-    language: String
-  }]
+  content: [
+    {
+      title: String,
+      description: String,
+      language: String,
+    },
+  ],
 });
 
 module.exports = mongoose.model('Slider', SliderSchema);

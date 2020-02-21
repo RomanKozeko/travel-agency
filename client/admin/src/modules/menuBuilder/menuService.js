@@ -1,9 +1,9 @@
-export const populateTree = (entities) => {
+export const populateTree = entities => {
   const tree = entities
     .filter(item => !item.parent)
-    .sort((a,b) => a.order - b.order);
+    .sort((a, b) => a.order - b.order);
 
-    tree.forEach(parent => appendChildren(parent, entities));
+  tree.forEach(parent => appendChildren(parent, entities));
 
   return tree;
 };
@@ -12,18 +12,18 @@ const appendChildren = (parent, entities) => {
   if (parent.children.length) {
     parent.children.forEach((nodeChildrenId, i) => {
       const node = entities.find(item => item._id === nodeChildrenId);
-      parent.children.splice(i, 1, {...node});
+      parent.children.splice(i, 1, { ...node });
 
-        if (node.children.length) {
-          appendChildren(node, entities);
-        }
+      if (node.children.length) {
+        appendChildren(node, entities);
+      }
     });
-    parent.children.sort((a,b) => a.order - b.order);
+    parent.children.sort((a, b) => a.order - b.order);
   }
 };
 
 export const makeNodeAsRoot = (entities, nodeParameter) => {
-  const node = {...entities[nodeParameter._id]};
+  const node = { ...entities[nodeParameter._id] };
   const parent = entities[node.parent];
 
   if (!parent) {
@@ -38,12 +38,12 @@ export const makeNodeAsRoot = (entities, nodeParameter) => {
 
   return {
     ...entities,
-    [node._id]: node
-  }
+    [node._id]: node,
+  };
 };
 
 export const updateEntitiesAsChild = (allEntities, nodeParameter) => {
-  const entities = {...allEntities};
+  const entities = { ...allEntities };
   if (Object.keys(entities).length === 1) {
     return entities;
   }
@@ -61,56 +61,62 @@ export const updateEntitiesAsChild = (allEntities, nodeParameter) => {
   let nodeToInsertId;
   if (parentNode) {
     //find new item parent
-    nodeToInsertId = parentNode.children.find(itemId => allEntities[itemId].order === node.order - 1);
+    nodeToInsertId = parentNode.children.find(
+      itemId => allEntities[itemId].order === node.order - 1
+    );
   }
-
 
   let nodeToInsert = entities[nodeToInsertId];
 
   if (!nodeToInsertId) {
     //
     const sortedSiblings = Object.values(entities)
-    .filter(item => !item.parent)
-    .sort((a,b) => a.order - b.order);
-    nodeToInsert = sortedSiblings.find(item => allEntities[item._id].order === node.order - 1);
+      .filter(item => !item.parent)
+      .sort((a, b) => a.order - b.order);
+    nodeToInsert = sortedSiblings.find(
+      item => allEntities[item._id].order === node.order - 1
+    );
     nodeToInsertId = nodeToInsert._id;
   }
-
 
   if (nodeToInsert) {
     entities[node._id].order = nodeToInsert.children.length;
 
-    const childrenToAddIndex = nodeToInsert.children.findIndex(id => id === node._id);
+    const childrenToAddIndex = nodeToInsert.children.findIndex(
+      id => id === node._id
+    );
     if (childrenToAddIndex === -1) {
       nodeToInsert.children.push(node._id);
     }
-
   }
 
   if (parentNode) {
     //remove node id in parent children array
-    const childrenIndexToRemove = parentNode.children.findIndex(id => id === node._id);
+    const childrenIndexToRemove = parentNode.children.findIndex(
+      id => id === node._id
+    );
     if (childrenIndexToRemove !== -1) {
       parentNode.children.splice(childrenIndexToRemove, 1);
     }
 
     const sortedSiblings = parentNode.children
-    .map(itemId => entities[itemId])
-    .sort((a,b) => a.order - b.order);
+      .map(itemId => entities[itemId])
+      .sort((a, b) => a.order - b.order);
 
-    sortedSiblings.forEach((item, index) => entities[item._id].order = index);
-
+    sortedSiblings.forEach((item, index) => (entities[item._id].order = index));
   } else {
     const sortedSiblings = Object.values(entities)
-    .filter(item => !item.parent)
-    .sort((a,b) => a.order - b.order);
+      .filter(item => !item.parent)
+      .sort((a, b) => a.order - b.order);
 
-    const childrenToRemoveIndex = sortedSiblings.findIndex(item => item._id === node._id);
+    const childrenToRemoveIndex = sortedSiblings.findIndex(
+      item => item._id === node._id
+    );
     if (childrenToRemoveIndex !== -1) {
       sortedSiblings.splice(childrenToRemoveIndex, 1);
     }
 
-    sortedSiblings.forEach((item, index) => entities[item._id].order = index);
+    sortedSiblings.forEach((item, index) => (entities[item._id].order = index));
   }
 
   node.parent = nodeToInsertId;
@@ -118,7 +124,12 @@ export const updateEntitiesAsChild = (allEntities, nodeParameter) => {
   return { ...entities, [node._id]: node };
 };
 
-export const updateEntities = (allEntities, nodeParam, siblingParam, updateMethod) => {
+export const updateEntities = (
+  allEntities,
+  nodeParam,
+  siblingParam,
+  updateMethod
+) => {
   if (siblingParam && siblingParam._id === 'fake') {
     return { [nodeParam._id]: nodeParam };
   }
@@ -131,14 +142,14 @@ export const updateEntities = (allEntities, nodeParam, siblingParam, updateMetho
     return makeNodeAsRoot(allEntities, nodeParam);
   }
 
-  let entities = {...allEntities};
+  let entities = { ...allEntities };
   if (!siblingParam) {
     return entities;
   }
   // get normalized nodes from entities
   let node = entities[nodeParam._id];
   if (!node) {
-    entities = {...entities, [nodeParam._id]:nodeParam}
+    entities = { ...entities, [nodeParam._id]: nodeParam };
     node = nodeParam;
   }
   let sibling = entities[siblingParam._id];
@@ -147,7 +158,9 @@ export const updateEntities = (allEntities, nodeParam, siblingParam, updateMetho
 
   // remove node id from parent children
   if (nodeParent) {
-    const childrenToRemoveIndex = nodeParent.children.findIndex(id => id === node._id);
+    const childrenToRemoveIndex = nodeParent.children.findIndex(
+      id => id === node._id
+    );
     if (childrenToRemoveIndex !== -1) {
       nodeParent.children.splice(childrenToRemoveIndex, 1);
     }
@@ -156,29 +169,32 @@ export const updateEntities = (allEntities, nodeParam, siblingParam, updateMetho
   //go through sibling parent children and update order for every item
   if (siblingParent) {
     const sortedSiblings = siblingParent.children
-    .map(itemId => entities[itemId])
-    .sort((a,b) => a.order - b.order);
+      .map(itemId => entities[itemId])
+      .sort((a, b) => a.order - b.order);
 
     sortedSiblings.splice(+sibling.order + 1, 0, node);
-    sortedSiblings.forEach((item, index) => entities[item._id].order = index);
+    sortedSiblings.forEach((item, index) => (entities[item._id].order = index));
 
-    const childrenToAddIndex = siblingParent.children.findIndex(id => id === node._id);
+    const childrenToAddIndex = siblingParent.children.findIndex(
+      id => id === node._id
+    );
     if (childrenToAddIndex === -1) {
       siblingParent.children.push(node._id);
     }
-
   } else {
     const sortedSiblings = Object.values(entities)
       .filter(item => !item.parent)
-      .sort((a,b) => a.order - b.order);
+      .sort((a, b) => a.order - b.order);
 
-    const childrenToRemoveIndex = sortedSiblings.findIndex(item => item._id === node._id);
+    const childrenToRemoveIndex = sortedSiblings.findIndex(
+      item => item._id === node._id
+    );
     if (childrenToRemoveIndex !== -1) {
       sortedSiblings.splice(childrenToRemoveIndex, 1);
     }
 
     sortedSiblings.splice(+sibling.order + 1, 0, node);
-    sortedSiblings.forEach((item, index) => entities[item._id].order = index);
+    sortedSiblings.forEach((item, index) => (entities[item._id].order = index));
   }
 
   //set new parent for node

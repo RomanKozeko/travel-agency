@@ -1,19 +1,19 @@
 import React from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import Icon from 'material-ui/Icon';
-import ItemTemplate from './ItemTemplate'
+import ItemTemplate from './ItemTemplate';
 
 const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     margin: '0 -15px',
     flexWrap: 'wrap',
-    paddingBottom: '40px'
+    paddingBottom: '40px',
   },
   img: {
     maxWidth: '100%',
-    minWidth: '100%'
+    minWidth: '100%',
   },
   item: {
     position: 'relative',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     boxShadow: '0px 30px 90px rgba(0,0,0,0.14)',
     ':hover': {
       textDecoration: 'none',
-      color: '#222'
+      color: '#222',
     },
   },
   column: {
@@ -38,25 +38,25 @@ const styles = StyleSheet.create({
     },
     '@media (min-width: 970px)': {
       width: 'calc(100% / 3 - 30px)',
-    }
+    },
   },
   content: {
-    padding: '20px'
+    padding: '20px',
   },
   title: {
-    marginTop: '0'
+    marginTop: '0',
   },
   itemAdd: {
     height: 'auto',
     backgroundColor: 'transparent',
     boxShadow: 'none',
     ':before': {
-      display: 'none'
+      display: 'none',
     },
   },
   button: {
     width: '100%',
-    marginBottom: '10px'
+    marginBottom: '10px',
   },
 
   itemTmp: {
@@ -65,21 +65,21 @@ const styles = StyleSheet.create({
     display: 'block',
     backgroundColor: '#fff',
     ':before': {
-      display: 'none'
+      display: 'none',
     },
   },
   field: {
     marginBottom: '10px',
-    width: '100%'
+    width: '100%',
   },
   imgWrapper: {
-    position: 'relative'
+    position: 'relative',
   },
   icon: {
     background: 'red',
     position: 'absolute',
     right: '0',
-    top: '0'
+    top: '0',
   },
   toolbar: {
     color: '#fff',
@@ -88,23 +88,21 @@ const styles = StyleSheet.create({
     top: '0',
     width: '100%',
     display: 'flex',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
-
-const itemsBycolumns = (items) => {
+const itemsBycolumns = items => {
   return items.reduce((prev, curr, index) => {
-    const columnIndex = index % 3
+    const columnIndex = index % 3;
     if (!prev[columnIndex]) {
       prev[columnIndex] = [curr];
-      return prev
+      return prev;
     }
-    prev[columnIndex].push(curr)
-    return prev
-
-  }, [])
-}
+    prev[columnIndex].push(curr);
+    return prev;
+  }, []);
+};
 
 const FeaturedList = ({
   toggleTemplate,
@@ -114,42 +112,49 @@ const FeaturedList = ({
   editItem,
   itemToEdit,
   deleteItems,
-  ...props,
-}) =>
+  ...props
+}) => (
   <div className={css(styles.wrapper)}>
-    {
-      itemsBycolumns(items.sort((a, b) => (a.order - b.order))).map(columns =>
-        <div className={css(styles.column)}>
-          {
-            columns.map(item =>
-            item._id === itemToEdit ?
-              <ItemTemplate item={ item } closeTemplate={ closeTemplate }  { ...props } /> :
-              <div className={css(styles.item)} key={ item._id }>
-                <img className={css(styles.img)} src={ item.preview[0] && item.preview[0].path } alt=""/>
-                <div className={css(styles.toolbar)}>
-                  <Icon onClick={ deleteItems([item._id])}>delete</Icon>
-                  <Icon onClick={ editItem(item._id) }>edit</Icon>
-                  Порядок в очереди: { item.order }
-                </div>
-                <div className={css(styles.content)}>
-                  <h3 className={css(styles.title)}>{ item.content[0].title }</h3>
-                  <p>{ item.content[0].description }</p>
-                </div>
+    {itemsBycolumns(items.sort((a, b) => a.order - b.order)).map(columns => (
+      <div className={css(styles.column)}>
+        {columns.map(item =>
+          item._id === itemToEdit ? (
+            <ItemTemplate
+              item={item}
+              closeTemplate={closeTemplate}
+              {...props}
+            />
+          ) : (
+            <div className={css(styles.item)} key={item._id}>
+              <img
+                className={css(styles.img)}
+                src={item.preview[0] && item.preview[0].path}
+                alt=""
+              />
+              <div className={css(styles.toolbar)}>
+                <Icon onClick={deleteItems([item._id])}>delete</Icon>
+                <Icon onClick={editItem(item._id)}>edit</Icon>
+                Порядок в очереди: {item.order}
               </div>
-            )
-          }
-        </div>
+              <div className={css(styles.content)}>
+                <h3 className={css(styles.title)}>{item.content[0].title}</h3>
+                <p>{item.content[0].description}</p>
+              </div>
+            </div>
+          )
+        )}
+      </div>
+    ))}
 
-      )
-    }
-
-    {
-      showTemplate ?
-      <div className={css(styles.column)}><ItemTemplate closeTemplate={ closeTemplate }  { ...props } /></div> :
+    {showTemplate ? (
+      <div className={css(styles.column)}>
+        <ItemTemplate closeTemplate={closeTemplate} {...props} />
+      </div>
+    ) : (
       <div className={css(styles.column)}>
         <div className={css(styles.item, styles.itemAdd)}>
           <Button
-            onClick={ toggleTemplate }
+            onClick={toggleTemplate}
             className={css(styles.button)}
             variant="raised"
             color="primary"
@@ -158,9 +163,8 @@ const FeaturedList = ({
           </Button>
         </div>
       </div>
-    }
+    )}
   </div>
+);
 
-
-
-export default FeaturedList
+export default FeaturedList;
