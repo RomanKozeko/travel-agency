@@ -74,7 +74,7 @@ class TourProgram extends Component {
             <TinyMCE
               content={item.description}
               config={{
-                plugins: 'link image code',
+                plugins: 'link image code media',
                 height: '100',
               }}
               onChange={this.handleEditorChange(item._id || item.id)}

@@ -16,7 +16,7 @@ class MyEditor extends Component {
         <TinyMCE
           content="<p>This is the initial content of the editor</p>"
           config={{
-            plugins: 'link image code',
+            plugins: 'link image code media',
             toolbar:
               'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect link image',
             height: '500',

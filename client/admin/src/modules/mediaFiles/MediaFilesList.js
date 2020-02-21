@@ -127,6 +127,7 @@ const MediaFilesList = ({
               >
                 {item.filename.slice(13)}
               </div>
+              <div>Путь на сервере: {item.path}</div>
             </div>
 
             <div className={css(styles.footer)}>

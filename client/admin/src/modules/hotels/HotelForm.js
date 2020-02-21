@@ -172,7 +172,7 @@ class HotelForm extends Component {
                       <TinyMCE
                         content={parentState.contentByLang[lang._id].content}
                         config={{
-                          plugins: 'link image code',
+                          plugins: 'link image code media',
                           toolbar:
                             'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect link image',
                           height: '500',

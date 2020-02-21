@@ -556,7 +556,7 @@ class TourForm extends Component {
                         <TinyMCE
                           content={contentByLang[lang._id].content}
                           config={{
-                            plugins: 'link image code',
+                            plugins: 'link image code media',
                             height: '200',
                             fontsize_formats: '30px',
                           }}
@@ -572,7 +572,7 @@ class TourForm extends Component {
                         <TinyMCE
                           content={contentByLang[lang._id].priceInclude}
                           config={{
-                            plugins: 'link image code',
+                            plugins: 'link image code media',
                             height: '200',
                             fontsize_formats: '30px',
                           }}
@@ -588,7 +588,7 @@ class TourForm extends Component {
                         <TinyMCE
                           content={contentByLang[lang._id].priceNotInclude}
                           config={{
-                            plugins: 'link image code',
+                            plugins: 'link image code media',
                             height: '200',
                             fontsize_formats: '30px',
                           }}

@@ -72,7 +72,7 @@ class HtmlEditorPopup extends Component {
                 className={'editor-html'}
                 content={content}
                 config={{
-                  plugins: 'table link image code',
+                  plugins: 'table link image code media',
                   toolbar:
                     'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | fontsizeselect link image',
                   height: '500',
