@@ -8,12 +8,12 @@ export const PAGE_REQUEST = 'PAGE_REQUEST';
 export const PAGE_SUCCESS = 'PAGE_SUCCESS';
 export const PAGE_FAILURE = 'PAGE_FAILURE';
 
-const fetchPages = (urlPrefix) => ({
+const fetchPages = urlPrefix => ({
   [CALL_API]: {
     types: [PAGES_REQUEST, PAGES_SUCCESS, PAGES_FAILURE],
     endpoint: withPrefix('/api/pages', urlPrefix),
-    schema: Schemas.PAGES
-  }
+    schema: Schemas.PAGES,
+  },
 });
 
 const fetchPage = (url, urlPrefix) => ({
@@ -21,7 +21,7 @@ const fetchPage = (url, urlPrefix) => ({
     types: [PAGE_REQUEST, PAGE_SUCCESS, PAGE_FAILURE],
     endpoint: withPrefix(`/api/pages/getByUrl/${url}`, urlPrefix),
     schema: Schemas.PAGE,
-  }
+  },
 });
 
 export const loadPage = url => (dispatch, getState) => {
@@ -32,8 +32,7 @@ export const loadPage = url => (dispatch, getState) => {
   return null;
 };
 
-export const loadPages = () => (dispatch, getState) => (
-  dispatch(fetchPages(getState().app.languages.urlPrefix))
-);
+export const loadPages = () => (dispatch, getState) =>
+  dispatch(fetchPages(getState().app.languages.urlPrefix));
 
-export const clearError = makeActionCreator('PAGE/CLEAR_ERROR')
+export const clearError = makeActionCreator('PAGE/CLEAR_ERROR');

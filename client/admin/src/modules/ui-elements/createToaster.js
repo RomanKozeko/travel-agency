@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
 const opacityKeyframes = {
-  'from': {
+  from: {
     opacity: 0,
   },
 
-  'to': {
+  to: {
     opacity: 1,
-  }
+  },
 };
 
 const translateKeyframes = {
@@ -35,21 +35,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     minWidth: '200px',
     alignItems: 'center',
-    boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);'
-  }
+    boxShadow:
+      '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);',
+  },
 });
 
-const Notifier = ({ msg }) => (
-  <div className={css(styles.wrapper)}>{msg}</div>
-);
+const Notifier = ({ msg }) => <div className={css(styles.wrapper)}>{msg}</div>;
 
 const createToaster = msg => ({
   timeOut: 400,
-  icon: (<div />),
+  icon: <div />,
   removeOnHover: true,
   showCloseButton: false,
-  component: (<Notifier msg={msg} />)
+  component: <Notifier msg={msg} />,
 });
-
 
 export default createToaster;

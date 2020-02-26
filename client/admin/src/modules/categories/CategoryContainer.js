@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';
@@ -12,20 +12,20 @@ import Portlet from '../ui-elements/Portlet';
 
 const uniqueId = require('lodash.uniqueid');
 
-const createBlankPage = (languages) => {
+const createBlankPage = languages => {
   const content = [];
-  languages.forEach((language) => {
+  languages.forEach(language => {
     content.push({
       id: uniqueId(),
       title: '',
       description: '',
-      language: language._id
+      language: language._id,
     });
   });
   return {
     id: uniqueId(),
     preview: '',
-    content
+    content,
   };
 };
 
@@ -45,10 +45,9 @@ const mapStateToProps = (state, router) => {
     languagesIDs: state.languages.byIds,
     content: state.categories.content,
     isFetching: state.categories.isFetching,
-    isSaving: state.categories.isSaving
+    isSaving: state.categories.isSaving,
   };
 };
-
 
 class CategoryContainer extends Component {
   componentDidMount() {
@@ -63,9 +62,13 @@ class CategoryContainer extends Component {
       <div>
         <PageHeader text={'Категория:'} />
         <BackLink text="Назад к списку категорий" url="/admin/categories" />
-        {isFetching || !item ? <Spinner /> :
-          <Portlet isBordered={isBordered}><CategoryForm {...this.props} /></Portlet>
-        }
+        {isFetching || !item ? (
+          <Spinner />
+        ) : (
+          <Portlet isBordered={isBordered}>
+            <CategoryForm {...this.props} />
+          </Portlet>
+        )}
       </div>
     );
   }
@@ -78,9 +81,11 @@ CategoryContainer.propTypes = {
   match: PropTypes.object,
 };
 
-CategoryContainer = withRouter(connect(
-  mapStateToProps,
-  { loadCategory, save: saveCategory }
-)(CategoryContainer));
+CategoryContainer = withRouter(
+  connect(
+    mapStateToProps,
+    { loadCategory, save: saveCategory }
+  )(CategoryContainer)
+);
 
 export default CategoryContainer;

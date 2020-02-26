@@ -2,27 +2,27 @@ const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
-const config =  require('../config');
+const config = require('../config');
 
-const localOptions = { usernameField: 'login'};
+const localOptions = { usernameField: 'login' };
 const localLogin = new LocalStrategy(localOptions, (login, password, done) => {
   if (config.user.login === login && config.user.password === password) {
-    return done(null, config.user)
+    return done(null, config.user);
   } else {
-    return done(null, false)
+    return done(null, false);
   }
 });
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.secret
+  secretOrKey: config.secret,
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
-  if(config.user.id === payload.sub) {
-    done(null, config.user)
+  if (config.user.id === payload.sub) {
+    done(null, config.user);
   } else {
-    done(null, false)
+    done(null, false);
   }
 });
 

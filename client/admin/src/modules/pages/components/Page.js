@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     zIndex: '1',
     position: 'relative',
     borderRadius: '4px 4px 0 0',
-    borderBottom: '1px solid #dae2ea'
-  }
+    borderBottom: '1px solid #dae2ea',
+  },
 });
 
 class Page extends Component {
@@ -20,7 +20,7 @@ class Page extends Component {
     super(props);
     this.state = {
       page: this.props.page,
-      index: 0
+      index: 0,
     };
   }
 
@@ -38,7 +38,9 @@ class Page extends Component {
           index={this.state.index}
           onChange={(event, index) => this.handleChange(event, index)}
         >
-          {this.props.languages.map(lang => (<Tab label={lang.title} key={lang._id}/>))}
+          {this.props.languages.map(lang => (
+            <Tab label={lang.title} key={lang._id} />
+          ))}
         </Tabs>
         <PageForm
           handleSubmit={this.props.savePage}
@@ -59,6 +61,5 @@ Page.propTypes = {
   content: PropTypes.object,
   match: PropTypes.object,
 };
-
 
 export default Page;

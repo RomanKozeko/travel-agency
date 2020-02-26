@@ -11,24 +11,24 @@ import Tooltip from 'material-ui/Tooltip';
 const styles = StyleSheet.create({
   root: {
     marginBottom: '5px 0 30px',
-    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)'
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,0.1)',
   },
   map: {
     height: '500px',
     width: '100%',
   },
   info: {
-    padding: '0 5px 20px 20px'
+    padding: '0 5px 20px 20px',
   },
   settingsBar: {
     display: 'flex',
     justifyContent: 'space-Between',
     alignItems: 'baseline',
-    marginBottom: '15px'
+    marginBottom: '15px',
   },
   place: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   placeMarker: {
     display: 'inline-block',
@@ -39,27 +39,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: '18px',
     backgroundColor: '#5C6BC0',
-    borderRadius: '50%'
+    borderRadius: '50%',
   },
   icon: {
-    fontSize: '32px'
+    fontSize: '32px',
   },
   paddingRight: {
-    paddingRight: '5px'
-  }
+    paddingRight: '5px',
+  },
 });
 
 class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: this.props.places || []
+      places: this.props.places || [],
     };
   }
 
   componentDidMount() {
     this.createInitialMap();
-    this.autocomplete = new window.google.maps.places.Autocomplete(ReactDOM.findDOMNode(this.search));
+    this.autocomplete = new window.google.maps.places.Autocomplete(
+      ReactDOM.findDOMNode(this.search)
+    );
     this.autocomplete.addListener('place_changed', this.handlePlaceChanged);
   }
 
@@ -71,7 +73,7 @@ class Map extends Component {
     this.map = new window.google.maps.Map(ReactDOM.findDOMNode(this.refs.map), {
       mapTypeControl: false,
       zoom: 6,
-      center: { lat: 0, lng: 0 }
+      center: { lat: 0, lng: 0 },
     });
     this.directionsDisplay.setMap(this.map);
     this.placesService = new window.google.maps.places.PlacesService(this.map);
@@ -93,7 +95,7 @@ class Map extends Component {
       window.navigator.geolocation.getCurrentPosition(position => {
         this.map.setCenter({
           lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lng: position.coords.longitude,
         });
       });
     }
@@ -109,13 +111,16 @@ class Map extends Component {
 
     this.search.value = '';
 
-    if (places.length && places[places.length - 1].place_id === place.place_id) {
+    if (
+      places.length &&
+      places[places.length - 1].place_id === place.place_id
+    ) {
       return;
     }
 
     places.push(place);
 
-    if(places.length === 1) {
+    if (places.length === 1) {
       this.createMarker(place);
     } else {
       this.removeMarker();
@@ -126,8 +131,8 @@ class Map extends Component {
     this.props.save(places);
   };
 
-  createMarker = (place) => {
-    const create = (place) => {
+  createMarker = place => {
+    const create = place => {
       this.marker = new window.google.maps.Marker({
         position: place.geometry.location,
         map: this.map,
@@ -141,32 +146,41 @@ class Map extends Component {
       return;
     }
 
-    this.placesService.getDetails({
-      placeId: place.place_id
-    }, (place, status) => {
-      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        create(place);
+    this.placesService.getDetails(
+      {
+        placeId: place.place_id,
+      },
+      (place, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          create(place);
+        }
       }
-    });
+    );
   };
 
   calculateRoute = (places = this.state.places) => {
-    const waypts = places.slice(1, places.length-1);
-    const updatedWaypoints = waypts.map(item => ({ location: item.formatted_address, stopover: true }));
+    const waypts = places.slice(1, places.length - 1);
+    const updatedWaypoints = waypts.map(item => ({
+      location: item.formatted_address,
+      stopover: true,
+    }));
 
-    this.directionsService.route({
-      origin: places[0].formatted_address,
-      destination: places[places.length-1].formatted_address,
-      waypoints: updatedWaypoints,
-      travelMode: 'DRIVING'
-    }, (response) => {
-      if(response.status === 'OK') {
-        this.directionsDisplay.setDirections(response)
-      } else {
-        this.resetMap();
-        toastr.error('', '', createToaster('Маршрут не найден'));
+    this.directionsService.route(
+      {
+        origin: places[0].formatted_address,
+        destination: places[places.length - 1].formatted_address,
+        waypoints: updatedWaypoints,
+        travelMode: 'DRIVING',
+      },
+      response => {
+        if (response.status === 'OK') {
+          this.directionsDisplay.setDirections(response);
+        } else {
+          this.resetMap();
+          toastr.error('', '', createToaster('Маршрут не найден'));
+        }
       }
-    });
+    );
   };
 
   deletePlace = (place, index) => {
@@ -199,7 +213,7 @@ class Map extends Component {
   resetMap = () => {
     this.removeMarker();
     this.directionsDisplay.setMap(null);
-    this.setState({ places: []});
+    this.setState({ places: [] });
     this.props.save([]);
   };
 
@@ -207,18 +221,18 @@ class Map extends Component {
     const { places } = this.state;
     return (
       <div className={css(styles.root)}>
-        <div ref='map' className={css(styles.map)}></div>
+        <div ref="map" className={css(styles.map)} />
         <div className={css(styles.info)}>
           <div className={css(styles.settingsBar)}>
             <TextField
               label="Добавить место"
               placeholder="Новое место"
-              inputRef={(node => this.search = node)}
+              inputRef={node => (this.search = node)}
             />
             <div>
               <Tooltip title="Очистить карту" placement="bottom">
                 <IconButton
-                  label='Очистить карту'
+                  label="Очистить карту"
                   color="primary"
                   disabled={!this.state.places.length}
                   onClick={() => this.resetMap()}
@@ -228,23 +242,20 @@ class Map extends Component {
               </Tooltip>
             </div>
           </div>
-          {
-            places.map((item, i, array) => (
-                <div key={item.place_id + i} className={css(styles.place)}>
-                  <span className={css(styles.paddingRight)}>
-                    <Icon>place</Icon>
-                  </span>
-                  {item.formatted_address}
-                  <IconButton onClick={() => this.deletePlace(item, i)}>
-                    <Icon>delete</Icon>
-                  </IconButton>
-                </div>
-              )
-            )
-          }
+          {places.map((item, i, array) => (
+            <div key={item.place_id + i} className={css(styles.place)}>
+              <span className={css(styles.paddingRight)}>
+                <Icon>place</Icon>
+              </span>
+              {item.formatted_address}
+              <IconButton onClick={() => this.deletePlace(item, i)}>
+                <Icon>delete</Icon>
+              </IconButton>
+            </div>
+          ))}
         </div>
       </div>
-    )
+    );
   }
 }
 

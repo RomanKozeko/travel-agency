@@ -1,8 +1,18 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('CONTACTS', 'CONTACTS_ITEM', 'contacts', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'CONTACTS',
+  'CONTACTS_ITEM',
+  'contacts',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -30,9 +40,11 @@ export default createReducer(defaultState, {
   [actions.CONTACTS_ITEM_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.CONTACTS_ITEM_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.CONTACTS_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
-  [actions.CONTACTS_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
+  [actions.CONTACTS_ITEM_SAVE_FAILURE]: state => ({
+    ...state,
+    isSaving: false,
+  }),
 });
 
 //  selectors
-export const getContacts = state => (state.allIds.map(id => state.byIds[id]));
-
+export const getContacts = state => state.allIds.map(id => state.byIds[id]);

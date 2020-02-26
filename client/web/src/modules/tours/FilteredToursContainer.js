@@ -9,31 +9,28 @@ const mapStateToProps = (state, ownProps) => {
     tours: getToursByQuery(state, ownProps.query),
     isFetching: state.tours.isFetching,
     query: ownProps.query,
-    currLanguageId: state.app.languages.urlPrefix
-  }
+    currLanguageId: state.app.languages.urlPrefix,
+  };
 };
 
 class FilteredToursContainer extends Component {
   componentDidMount() {
-    const {tours, query, loadFilteredTours} = this.props;
+    const { tours, query, loadFilteredTours } = this.props;
     if (!tours.length) {
       loadFilteredTours(query);
     }
   }
 
   render() {
-    const {
-      tours,
-      isFetching,
-      currLanguageId,
-    } = this.props;
+    const { tours, isFetching, currLanguageId } = this.props;
 
     return (
       <div>
-        {isFetching ?
-          <div>Loading...</div> :
-          <ToursList tours={tours} currLanguageId={ currLanguageId } />
-        }
+        {isFetching ? (
+          <div>Loading...</div>
+        ) : (
+          <ToursList tours={tours} currLanguageId={currLanguageId} />
+        )}
       </div>
     );
   }
@@ -44,4 +41,4 @@ FilteredToursContainer = connect(
   { loadFilteredTours }
 )(FilteredToursContainer);
 
-export default FilteredToursContainer
+export default FilteredToursContainer;

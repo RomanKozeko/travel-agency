@@ -7,7 +7,6 @@ import Spinner from '../ui-elements/Spinner';
 import SortableTable from '../ui-elements/sortableTable/SortableTable';
 import withSearch from '../ui-elements/HOC/withSearch';
 
-
 const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
   const data = {
     headers: ['Название', 'Активен/Неактивен', 'Дата создания'],
@@ -17,17 +16,17 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
       {
         name: 'title',
         isLink: true,
-        linkPrefix: '/admin/showplaces/'
+        linkPrefix: '/admin/showplaces/',
       },
       {
         name: 'enabled',
-        isLink: 'toggle'
+        isLink: 'toggle',
       },
       {
         name: 'date',
-        isLink: 'date'
-      }
-    ]
+        isLink: 'date',
+      },
+    ],
   };
 
   return (
@@ -42,14 +41,13 @@ const ShowPlacesList = ({ items, languages, isFetching, deleteItems }) => {
       >
         Добавить достопримечательность
       </Button>
-      {isFetching
-        ?
+      {isFetching ? (
         <Spinner />
-        :
+      ) : (
         <Portlet isBordered={false}>
           <SortableTable data={data} deleteItems={deleteItems} />
         </Portlet>
-      }
+      )}
     </div>
   );
 };

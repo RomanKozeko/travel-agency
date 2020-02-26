@@ -28,28 +28,37 @@ const rootReducer = combineReducers({
   showplaces: showplacesReducer,
   order: orderReducer,
   photoSlider: PhotoSliderReducer,
-  social: SocialReducer
+  social: SocialReducer,
 });
 
 export default rootReducer;
 
-
 //selectors
 export const getTour = (state, id) => fromTours.getTour(state.tours, id);
-export const getToursByQuery = (state, query) => fromTours.getToursByQuery(state.tours, query);
+export const getToursByQuery = (state, query) =>
+  fromTours.getToursByQuery(state.tours, query);
 export const getPages = state => fromPages.getPages(state.pages);
 export const getPage = (state, id) => fromPages.getPage(state.pages, id);
-export const getPageWithTours = (state, page) => fromTours.getPageWithTours(state.tours, page);
+export const getPageWithTours = (state, page) =>
+  fromTours.getPageWithTours(state.tours, page);
 export const getLanguages = state => fromApp.getLanguages(state.app.languages);
-export const getPromoLinks = state => fromPromoLinks.getPromoLinks(state.promoLinks);
-export const getLatestNews = state => fromLatestNews.getLatestNews(state.latestNews);
+export const getPromoLinks = state =>
+  fromPromoLinks.getPromoLinks(state.promoLinks);
+export const getLatestNews = state =>
+  fromLatestNews.getLatestNews(state.latestNews);
 export const getContacts = state => fromContacts.getContacts(state.contacts);
-export const getRegions = state => fromEntities.getRegions(state.entities.regions);
-export const getCategories = state => fromEntities.getCategories(state.entities.categories);
+export const getRegions = state =>
+  fromEntities.getRegions(state.entities.regions);
+export const getCategories = state =>
+  fromEntities.getCategories(state.entities.categories);
 export const getMenu = state => fromMenu.getMenu(state.menu);
 export const getHotel = (state, id) => fromHotels.getHotel(state.hotels, id);
-export const getHotelsByQuery = (state, query) => fromHotels.getHotelsByQuery(state.hotels, query);
-export const getShowPlace = (state, id) => fromShowPlaces.getShowPlace(state.showplaces, id);
-export const getShowplacesByQuery = (state, query) => fromShowPlaces.getShowplacesByQuery(state.showplaces, query);
-export const getPhotoSliders = state => fromPhotoSlider.getPhotoSliders(state.photoSlider);
+export const getHotelsByQuery = (state, query) =>
+  fromHotels.getHotelsByQuery(state.hotels, query);
+export const getShowPlace = (state, id) =>
+  fromShowPlaces.getShowPlace(state.showplaces, id);
+export const getShowplacesByQuery = (state, query) =>
+  fromShowPlaces.getShowplacesByQuery(state.showplaces, query);
+export const getPhotoSliders = state =>
+  fromPhotoSlider.getPhotoSliders(state.photoSlider);
 export const getSocial = state => fromSocial.getSocial(state.social);

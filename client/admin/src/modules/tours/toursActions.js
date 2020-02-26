@@ -22,16 +22,12 @@ const fetchTours = (nextPageUrl, nextPage) => ({
     types: [TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE],
     endpoint: nextPageUrl,
     schema: Schemas.TOURS,
-    nextPage
-  }
+    nextPage,
+  },
 });
 
 export const loadTours = (nextPage = 0) => (dispatch, getState) => {
-  const {
-    pages,
-    pageCount,
-    itemsPerPage,
-  } = getState().tours;
+  const { pages, pageCount, itemsPerPage } = getState().tours;
   const nextPageUrl = `/api/tours/${nextPage * itemsPerPage}/${itemsPerPage}`;
 
   if (nextPage < 0 || (nextPage === pageCount && pageCount !== 0)) {
@@ -41,22 +37,22 @@ export const loadTours = (nextPage = 0) => (dispatch, getState) => {
   if (pages[nextPage]) {
     return dispatch({
       type: TOURS_GET_PAGE_FROM_CACHE,
-      payload: nextPage
+      payload: nextPage,
     });
   }
 
   return dispatch(fetchTours(nextPageUrl, nextPage));
 };
 
-const fetchTour = (id) => ({
+const fetchTour = id => ({
   [CALL_API]: {
     types: [TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE],
     endpoint: `/api/tours/${id}`,
     schema: Schemas.TOUR,
-  }
+  },
 });
 
-export const loadTour = (id) => (dispatch, getState) => {
+export const loadTour = id => (dispatch, getState) => {
   const state = getState().tours;
   if (!state.byIds[id]) {
     return dispatch(fetchTour(id));
@@ -64,7 +60,7 @@ export const loadTour = (id) => (dispatch, getState) => {
   return state.byIds[id];
 };
 
-export const addTour = (tour) => (dispatch) => {
+export const addTour = tour => dispatch => {
   return dispatch({
     [CALL_API]: {
       types: [ADD_TOUR_REQUEST, ADD_TOUR_SUCCESS, ADD_TOUR_FAILURE],
@@ -73,13 +69,13 @@ export const addTour = (tour) => (dispatch) => {
       method: 'POST',
       body: tour,
       toasterMsg: {
-        success: 'Saved'
-      }
-    }
+        success: 'Saved',
+      },
+    },
   });
 };
 
-export const editTour = (tour) => (dispatch) => {
+export const editTour = tour => dispatch => {
   return dispatch({
     [CALL_API]: {
       types: [EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE],
@@ -88,13 +84,13 @@ export const editTour = (tour) => (dispatch) => {
       method: 'PUT',
       body: tour,
       toasterMsg: {
-        success: 'Saved'
-      }
-    }
+        success: 'Saved',
+      },
+    },
   });
 };
 
-export const deleteTours = (ids) => (dispatch) => {
+export const deleteTours = ids => dispatch => {
   return dispatch({
     [CALL_API]: {
       types: [DELETE_TOUR_REQUEST, DELETE_TOUR_SUCCESS, DELETE_TOUR_FAILURE],
@@ -102,8 +98,8 @@ export const deleteTours = (ids) => (dispatch) => {
       method: 'DELETE',
       body: ids,
       toasterMsg: {
-        success: 'Deleted'
-      }
-    }
+        success: 'Deleted',
+      },
+    },
   });
 };

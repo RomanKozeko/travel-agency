@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import MediaFilesList from './MediaFilesList';
 import Button from 'material-ui/Button';
@@ -9,19 +9,19 @@ const styles = StyleSheet.create({
   button: {
     marginTop: '15px',
     '@media (max-width: 800px)': {
-      width: '100%'
-    }
-  }
+      width: '100%',
+    },
+  },
 });
 
 class MediaFilesGallery extends Component {
-	componentWillUnmount() {
-		this.props.resetItems();
-	}
+  componentWillUnmount() {
+    this.props.resetItems();
+  }
 
   deleteMediaFiles = () => {
-  	this.props.deleteItems(this.props.selected);
-	};
+    this.props.deleteItems(this.props.selected);
+  };
 
   render() {
     const { saveItem, toggleImg } = this.props;
@@ -29,7 +29,7 @@ class MediaFilesGallery extends Component {
       <div>
         <PageHeader text={'Картинки'} />
         <div style={{ marginTop: '-15px' }}>
-          <ImageUploader uploadImg={saveItem} fileType={ this.props.filesType } />
+          <ImageUploader uploadImg={saveItem} fileType={this.props.filesType} />
           <Button
             onClick={this.deleteMediaFiles}
             className={css(styles.button)}
@@ -41,10 +41,7 @@ class MediaFilesGallery extends Component {
             Удалить выбранные
           </Button>
         </div>
-        <MediaFilesList
-	        { ...this.props }
-          clickHandler={ toggleImg }
-        />
+        <MediaFilesList {...this.props} clickHandler={toggleImg} />
       </div>
     );
   }

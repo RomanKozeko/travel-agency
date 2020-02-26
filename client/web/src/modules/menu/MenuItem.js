@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { compose, withStateHandlers } from 'recompose';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { RightArrow } from '../ui-elements/icons/Icons';
 import { theme } from '../../services/constans';
-
 
 const styles = StyleSheet.create({
   menuItem: {
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     textTransform: 'uppercase',
     borderBottom: '3px solid transparent',
-	  color: '#222',
+    color: '#222',
     transition: ['color'],
     transitionDuration: 300,
     fontWeight: 'bold',
@@ -30,18 +29,18 @@ const styles = StyleSheet.create({
     ':hover': {
       color: theme.colors.primary,
       textDecoration: 'none',
-	    borderBottom: `3px solid ${theme.colors.primary}`,
+      borderBottom: `3px solid ${theme.colors.primary}`,
     },
     ':active': {
       color: theme.colors.primary,
       textDecoration: 'none',
-	    borderBottom: `3px solid ${theme.colors.primary}`,
+      borderBottom: `3px solid ${theme.colors.primary}`,
     },
     ':focus': {
       color: theme.colors.primary,
       textDecoration: 'none',
       borderBottom: `3px solid ${theme.colors.primary}`,
-    }
+    },
   },
   linkInner: {
     display: 'flex',
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
     ':focus': {
       color: theme.colors.primary,
       textDecoration: 'none',
-    }
+    },
   },
   childrenContainer: {
     backgroundColor: 'white',
@@ -81,55 +80,59 @@ const styles = StyleSheet.create({
       boxShadow: '0 15px 35px rgba(0,0,0,0.15)',
       background: '#fff',
       borderBottom: 'none',
-    }
+    },
   },
   childItem: {
     padding: '15px 20px 15px 40px',
     fontSize: '12px',
     '@media (min-width: 1000px)': {
       padding: '15px 20px',
-    }
+    },
   },
   rotate: {
-    transform: 'rotateZ(90deg)'
-  }
+    transform: 'rotateZ(90deg)',
+  },
 });
 
 let MenuItem = ({ item, hover, mouseLeave, isHovered }) => (
-  <li key={item._id} className={css(styles.menuItem)} onMouseEnter={ hover } onMouseLeave={ mouseLeave }>
+  <li
+    key={item._id}
+    className={css(styles.menuItem)}
+    onMouseEnter={hover}
+    onMouseLeave={mouseLeave}
+  >
     <PrefixLink className={css(styles.link)} to={`/pages/${item.page.url}`}>
       {item.page.content.title}
-      {item.children && item.children.length ?
-        <div className={css(styles.rotate)} ><RightArrow color="#222" width={20}/></div>
-        :
-        null
-      }
+      {item.children && item.children.length ? (
+        <div className={css(styles.rotate)}>
+          <RightArrow color="#222" width={20} />
+        </div>
+      ) : null}
     </PrefixLink>
-    {item.children && isHovered &&
-    <ul className={css(styles.childrenContainer)}>
-      {item.children.map(child => (
+    {item.children && isHovered && (
+      <ul className={css(styles.childrenContainer)}>
+        {item.children.map(child => (
           <li key={child._id} className={css(styles.childItem)}>
-            <PrefixLink className={css(styles.linkInner)} to={`/pages/${child.page.url}`}>
+            <PrefixLink
+              className={css(styles.linkInner)}
+              to={`/pages/${child.page.url}`}
+            >
               {child.page.content.title}
             </PrefixLink>
           </li>
-        )
-      )}
-    </ul>
-    }
+        ))}
+      </ul>
+    )}
   </li>
 );
 
 export default compose(
-  withStateHandlers(
-    () => ({ isHovered: false }),
-    {
-      hover: () => () => ({
-        isHovered: true
-      }),
-      mouseLeave: () => () => ({
-        isHovered: false
-      })
-    }
-  ),
+  withStateHandlers(() => ({ isHovered: false }), {
+    hover: () => () => ({
+      isHovered: true,
+    }),
+    mouseLeave: () => () => ({
+      isHovered: false,
+    }),
+  })
 )(MenuItem);

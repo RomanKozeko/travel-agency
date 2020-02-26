@@ -20,11 +20,10 @@ function populateEmpty(body) {
 }
 
 module.exports = {
-
   get(req, res, next) {
     const offset = +req.query.page * config.itemsPerPageLimit;
     PagesQueries.getAllWithPagination(offset, config.itemsPerPageLimit)
-      .then((result) => {
+      .then(result => {
         res.json({
           offset,
           items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
@@ -43,9 +42,11 @@ module.exports = {
   },
 
   getOneByUrl(req, res, next) {
-    Page.findOne({ url: req.params.url } )
+    Page.findOne({ url: req.params.url })
       .populate('allImages')
-      .then(page => res.json(slicer.sliceModelContentSingle(page, req.query.lang)))
+      .then(page =>
+        res.json(slicer.sliceModelContentSingle(page, req.query.lang))
+      )
       .catch(next);
   },
 
@@ -64,8 +65,9 @@ module.exports = {
 
     const page = new Page(req.body);
 
-    page.save()
-      .then((result) => {
+    page
+      .save()
+      .then(result => {
         res.json(result);
       })
       .catch(next);
@@ -77,7 +79,5 @@ module.exports = {
     Page.deleteMany({ _id: ids })
       .then(() => res.json(ids))
       .catch(next);
-  }
+  },
 };
-
-

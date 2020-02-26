@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import {StyleSheet, css} from 'aphrodite/no-important';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
 import MediaFilesContainer from '../../mediaFiles/MediaFilesContainer';
-import Dialog, { DialogActions,	DialogContent } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
 
 const styles = StyleSheet.create({
   button: {
     display: 'block',
     textAlign: 'center',
     width: '100%',
-    marginBottom: '15px'
-  }
+    marginBottom: '15px',
+  },
 });
 
 class AddPreviewPopup extends Component {
@@ -19,8 +19,8 @@ class AddPreviewPopup extends Component {
 
     this.state = {
       open: false,
-      selectedPreviewItems: []
-    }
+      selectedPreviewItems: [],
+    };
   }
 
   handleClickOpen = () => {
@@ -33,22 +33,23 @@ class AddPreviewPopup extends Component {
 
   handleClick = () => {
     this.props.addPreview(this.state.selectedPreviewItems);
-    this.state.selectedPreviewItems = [];
+    this.setState({ selectedPreviewItems: [] });
+    // this.state.selectedPreviewItems = [];
     this.handleRequestClose();
   };
 
-  handleToggledItem = (img) => {
-    const selectedPreview = [ ...this.state.selectedPreviewItems ];
+  handleToggledItem = img => {
+    const selectedPreview = [...this.state.selectedPreviewItems];
     const index = selectedPreview.findIndex(item => item._id === img._id);
 
     if (index === -1) {
-      selectedPreview.push({...img});
+      selectedPreview.push({ ...img });
     } else {
       selectedPreview.splice(index, 1);
     }
 
     this.setState({
-      selectedPreviewItems: selectedPreview
+      selectedPreviewItems: selectedPreview,
     });
   };
 
@@ -77,7 +78,7 @@ class AddPreviewPopup extends Component {
           </DialogActions>
         </Dialog>
       </div>
-    )
+    );
   }
 }
 

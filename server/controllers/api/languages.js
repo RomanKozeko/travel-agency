@@ -1,18 +1,19 @@
-
 const Language = require('../../models/Language');
 
-module.exports =  {
+module.exports = {
   get(req, res, next) {
-    Language.find().then(result => {
-      res.json(result);
-    })
-    .catch(next);
+    Language.find()
+      .then(result => {
+        res.json(result);
+      })
+      .catch(next);
   },
 
   post(req, res, next) {
     const language = new Language(req.body);
 
-    language.save()
+    language
+      .save()
       .then(result => {
         res.json(result);
       })
@@ -33,5 +34,5 @@ module.exports =  {
     Language.deleteMany({ _id: ids })
       .then(() => res.json(ids))
       .catch(next);
-  }
+  },
 };

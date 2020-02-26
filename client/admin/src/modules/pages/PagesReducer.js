@@ -2,12 +2,18 @@ import {
   createReducer,
   basicReducerEvents,
   createBasicActions,
-  getPageCount
+  getPageCount,
 } from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('PAGES', 'PAGE', 'pages', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'PAGES',
+  'PAGE',
+  'pages',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -30,8 +36,8 @@ const pagesSuccess = (state, action) => {
     currPage: payload.nextPage,
     pages: {
       ...state.pages,
-      [payload.nextPage]: payload.result.items
-    }
+      [payload.nextPage]: payload.result.items,
+    },
   };
 };
 
@@ -40,7 +46,7 @@ const pagesDeleteSuccess = (state, action) => {
   const byIds = { ...state.byIds };
   const allIds = [...state.allIds];
 
-  Object.keys(idsToRemove).forEach((id) => {
+  Object.keys(idsToRemove).forEach(id => {
     delete byIds[idsToRemove[id]];
     const index = allIds.indexOf(idsToRemove[id]);
     if (index > -1) {
@@ -54,8 +60,8 @@ const pagesDeleteSuccess = (state, action) => {
     byIds,
     pages: {
       ...state.pages,
-      [state.currPage]: allIds
-    }
+      [state.currPage]: allIds,
+    },
   };
 };
 
@@ -68,12 +74,15 @@ export const defaultState = {
   currPage: 0,
   pages: {},
   itemsPerPage: 40,
-  pagesContent: {}
+  pagesContent: {},
 };
 
 const pagesReducer = createReducer(defaultState, {
   [actions.PAGES_REQUEST]: state => ({ ...state, isFetching: true }),
-  [actions.PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
+  [actions.PAGES_GET_PAGE_FROM_CACHE]: (state, action) => ({
+    ...state,
+    currPage: action.payload,
+  }),
   [actions.PAGES_SUCCESS]: pagesSuccess,
   [actions.PAGES_DELETE_REQUEST]: state => ({ ...state, isDeleting: true }),
   [actions.PAGES_DELETE_SUCCESS]: pagesDeleteSuccess,
@@ -83,13 +92,17 @@ const pagesReducer = createReducer(defaultState, {
   [actions.PAGE_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.PAGE_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
   [actions.PAGE_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
-  [actions.PAGES_FAILURE]: (state, action) => ({ ...state, isFetching: false, isSaving: false })
+  [actions.PAGES_FAILURE]: (state, action) => ({
+    ...state,
+    isFetching: false,
+    isSaving: false,
+  }),
 });
 
 export default pagesReducer;
 
 //  selectors
-export const getPages = state => (state.allIds.map(id => state.byIds[id]));
+export const getPages = state => state.allIds.map(id => state.byIds[id]);
 export const getPage = (state, id) => {
   if (state.byIds[id]) {
     return state.byIds[id];
@@ -112,4 +125,3 @@ export const getContentByLang = (state, contentId, lang) => {
   }
   return null;
 };
-

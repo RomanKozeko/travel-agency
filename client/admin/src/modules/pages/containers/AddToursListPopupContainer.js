@@ -1,20 +1,19 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { closeAddToursListPopup } from '../pageReducer'
-import { loadCategories } from '../../categories/categoriesReducer'
-import { loadRegions } from '../../regions/regionsReducer'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { closeAddToursListPopup } from '../pageReducer';
+import { loadCategories } from '../../categories/categoriesReducer';
+import { loadRegions } from '../../regions/regionsReducer';
 import { getCategories, getRegions } from '../../../rootReducer';
 import { saveRow } from '../pageReducer';
-import AddToursListPopup from '../components/AddToursListPopup'
+import AddToursListPopup from '../components/AddToursListPopup';
 
 const mapStateToProps = state => ({
   isOpen: state.page.addToursPopupOpen,
   currRowItem: state.page.currRowItem,
   categories: getCategories(state),
   regions: getRegions(state),
-  isFetched: state.regions.isFetched && state.categories.isFetched
+  isFetched: state.regions.isFetched && state.categories.isFetched,
 });
-
 
 class AddToursListPopupContainer extends Component {
   componentDidMount() {
@@ -31,15 +30,14 @@ class AddToursListPopupContainer extends Component {
   }
 }
 
-
 AddToursListPopupContainer = connect(
   mapStateToProps,
   {
     handleRequestClose: closeAddToursListPopup,
     loadCategories,
     loadRegions,
-    saveRow
+    saveRow,
   }
 )(AddToursListPopupContainer);
 
-export default AddToursListPopupContainer
+export default AddToursListPopupContainer;

@@ -24,20 +24,17 @@ const styles = StyleSheet.create({
     backgroundRepeat: 'no-repeat;',
     display: 'inline-block;',
     lineHeight: '1;',
-    width: '100%;'
+    width: '100%;',
   },
 });
 
 const LoadingItems = ({ count }) => {
   const res = [];
   for (let i = 0; i < count; i++) {
-    res.push(<div className={css(styles.loadingItem)} />)
+    res.push(<div className={css(styles.loadingItem)} />);
   }
 
-  return res
-}
+  return res;
+};
 
-export default LoadingItems
-
-
-
+export default LoadingItems;

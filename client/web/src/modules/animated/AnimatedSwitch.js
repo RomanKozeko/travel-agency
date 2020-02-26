@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import { Switch } from "react-router-dom";
-import * as Animated from "animated/lib/targets/react-dom";
-import TransitionGroup from "react-transition-group/TransitionGroup";
+import React from 'react';
+import { Switch } from 'react-router-dom';
+import * as Animated from 'animated/lib/targets/react-dom';
 
 export default class AnimatedSwitch extends Switch {
   constructor(props) {
     super(props);
     this.state = {
-      animate: new Animated.Value(0)
+      animate: new Animated.Value(0),
     };
   }
   componentWillAppear(cb) {
@@ -33,10 +32,10 @@ export default class AnimatedSwitch extends Switch {
       opacity: Animated.template`${this.state.animate}`,
       transform: Animated.template`
 				translate3d(0,${this.state.animate.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["12px", "0px"]
-      })},0)
-			`
+          inputRange: [0, 1],
+          outputRange: ['12px', '0px'],
+        })},0)
+			`,
     };
     return (
       <Animated.div style={style} className="animated-page-wrapper">
@@ -44,4 +43,4 @@ export default class AnimatedSwitch extends Switch {
       </Animated.div>
     );
   }
-};
+}

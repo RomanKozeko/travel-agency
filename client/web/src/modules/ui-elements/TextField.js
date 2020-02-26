@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { theme } from '../../services/constans'
+import { theme } from '../../services/constans';
 
 const styles = StyleSheet.create({
   input: {
@@ -16,15 +16,15 @@ const styles = StyleSheet.create({
     outline: 'none',
     ':focus': {
       border: `1px solid ${theme.colors.primaryAccent}`,
-    }
+    },
   },
   pageContent: {
-    padding: '40px 0'
-  }
+    padding: '40px 0',
+  },
 });
 
-const TextField = ({placeholder}) => (
+const TextField = ({ placeholder }) => (
   <input type="text" placeholder={placeholder} className={css(styles.input)} />
-)
+);
 
-export default TextField
+export default TextField;

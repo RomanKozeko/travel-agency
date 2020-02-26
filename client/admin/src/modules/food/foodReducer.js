@@ -1,8 +1,18 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('FOOD', 'FOOD_ITEM', 'food', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'FOOD',
+  'FOOD_ITEM',
+  'food',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -17,7 +27,7 @@ export const defaultState = {
   byIds: {},
   isFetching: false,
   isFetched: false,
-  currLanguage: 'ru'
+  currLanguage: 'ru',
 };
 
 const foodReducer = createReducer(defaultState, {
@@ -38,7 +48,5 @@ const foodReducer = createReducer(defaultState, {
 export default foodReducer;
 
 //  selectors
-export const getFood = state => (state.allIds.map(id => state.byIds[id]));
-export const getFoodItem = (state, id) => (state.byIds[id]);
-
-
+export const getFood = state => state.allIds.map(id => state.byIds[id]);
+export const getFoodItem = (state, id) => state.byIds[id];

@@ -1,9 +1,20 @@
 import {
-  TOURS_REQUEST, TOURS_SUCCESS, TOURS_FAILURE, TOURS_GET_PAGE_FROM_CACHE,
-  TOUR_REQUEST, TOUR_SUCCESS, TOUR_FAILURE,
-  ADD_TOUR_REQUEST, ADD_TOUR_SUCCESS, ADD_TOUR_FAILURE,
-  EDIT_TOUR_REQUEST, EDIT_TOUR_SUCCESS, EDIT_TOUR_FAILURE,
-  DELETE_TOUR_REQUEST, DELETE_TOUR_SUCCESS, DELETE_TOUR_FAILURE
+  TOURS_REQUEST,
+  TOURS_SUCCESS,
+  TOURS_FAILURE,
+  TOURS_GET_PAGE_FROM_CACHE,
+  TOUR_REQUEST,
+  TOUR_SUCCESS,
+  TOUR_FAILURE,
+  ADD_TOUR_REQUEST,
+  ADD_TOUR_SUCCESS,
+  ADD_TOUR_FAILURE,
+  EDIT_TOUR_REQUEST,
+  EDIT_TOUR_SUCCESS,
+  EDIT_TOUR_FAILURE,
+  DELETE_TOUR_REQUEST,
+  DELETE_TOUR_SUCCESS,
+  DELETE_TOUR_FAILURE,
 } from './toursActions';
 import { createReducer, getPageCount, updatePages } from '../../services/utils';
 
@@ -19,8 +30,8 @@ const toursSuccess = (state, action) => {
     currPage: payload.nextPage,
     pages: {
       ...state.pages,
-      [payload.nextPage]: payload.result.items
-    }
+      [payload.nextPage]: payload.result.items,
+    },
   };
 };
 
@@ -36,7 +47,7 @@ const tourAddedSuccess = (state, action) => {
     currPage: 0,
     count: newCount,
     pageCount: getPageCount(newCount, state.itemsPerPage),
-    pages: updatePages(allIds, state.itemsPerPage)
+    pages: updatePages(allIds, state.itemsPerPage),
   };
 };
 
@@ -46,7 +57,7 @@ const tourDeletedSuccess = (state, action) => {
   const allIds = [...state.allIds];
   const newCount = state.count - idsToRemove.length;
 
-  idsToRemove.forEach((id) => {
+  idsToRemove.forEach(id => {
     delete byIds[id];
     const index = allIds.indexOf(id);
     if (index > -1) {
@@ -61,24 +72,24 @@ const tourDeletedSuccess = (state, action) => {
     pages: updatePages(allIds, state.itemsPerPage),
     pageCount: getPageCount(newCount, state.itemsPerPage),
     isFetching: false,
-    count: newCount
+    count: newCount,
   };
 };
 
 const tourSuccess = (state, action) => {
   const payload = action.response;
-	const allIds = [...state.allIds];
+  const allIds = [...state.allIds];
 
   if (allIds.indexOf(payload.result) === -1) {
-		allIds.push(payload.result)
-	}
+    allIds.push(payload.result);
+  }
 
   return {
     ...state,
     allIds,
     byIds: { ...state.byIds, ...payload.entities.items },
     isSaving: false,
-    isFetching: false
+    isFetching: false,
   };
 };
 
@@ -89,12 +100,15 @@ export const defaultState = {
   pageCount: 0,
   itemsPerPage: 100,
   currPage: 0,
-  pages: {}
+  pages: {},
 };
 
 const toursReducer = createReducer(defaultState, {
   [TOURS_REQUEST]: state => ({ ...state, isFetching: true }),
-  [TOURS_GET_PAGE_FROM_CACHE]: (state, action) => ({ ...state, currPage: action.payload }),
+  [TOURS_GET_PAGE_FROM_CACHE]: (state, action) => ({
+    ...state,
+    currPage: action.payload,
+  }),
   [TOURS_SUCCESS]: toursSuccess,
   [TOURS_FAILURE]: state => ({ ...state, isFetching: false }),
   [TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
@@ -102,19 +116,23 @@ const toursReducer = createReducer(defaultState, {
   [TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
   [ADD_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [ADD_TOUR_SUCCESS]: tourAddedSuccess,
-  [ADD_TOUR_FAILURE]: state => ({ ...state, isFetching: false, isSaving: false }),
+  [ADD_TOUR_FAILURE]: state => ({
+    ...state,
+    isFetching: false,
+    isSaving: false,
+  }),
   [EDIT_TOUR_REQUEST]: state => ({ ...state, isSaving: true }),
   [EDIT_TOUR_SUCCESS]: tourSuccess,
   [EDIT_TOUR_FAILURE]: state => ({ ...state, isSaving: false }),
   [DELETE_TOUR_REQUEST]: state => ({ ...state, isFetching: true }),
   [DELETE_TOUR_SUCCESS]: tourDeletedSuccess,
-  [DELETE_TOUR_FAILURE]: state => ({ ...state, isFetching: false })
+  [DELETE_TOUR_FAILURE]: state => ({ ...state, isFetching: false }),
 });
 
 export default toursReducer;
 
 // selectors
-export const getTours = state => (state.allIds.map(id => state.byIds[id]));
+export const getTours = state => state.allIds.map(id => state.byIds[id]);
 export const getTour = (state, id) => {
   if (state.byIds[id]) {
     return state.byIds[id];

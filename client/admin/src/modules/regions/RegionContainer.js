@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';
@@ -12,14 +12,14 @@ import Portlet from '../ui-elements/Portlet';
 
 const uniqueId = require('lodash.uniqueid');
 
-const createBlankPage = (languages) => {
+const createBlankPage = languages => {
   const content = [];
-  languages.forEach((language) => {
+  languages.forEach(language => {
     content.push({
       id: uniqueId(),
       title: '',
       description: '',
-      language: language._id
+      language: language._id,
     });
   });
   return {
@@ -27,7 +27,7 @@ const createBlankPage = (languages) => {
     preview: '',
     ancestors: [],
     parent: '',
-    content
+    content,
   };
 };
 
@@ -49,10 +49,9 @@ const mapStateToProps = (state, router) => {
     languagesIDs: state.languages.byIds,
     content: state.regions.content,
     isFetching: state.regions.isFetching,
-    isSaving: state.regions.isSaving
+    isSaving: state.regions.isSaving,
   };
 };
-
 
 class RegionContainer extends Component {
   componentDidMount() {
@@ -67,9 +66,13 @@ class RegionContainer extends Component {
       <div>
         <PageHeader text={'Регион:'} />
         <BackLink text="Назад к списку регионов" url="/admin/regions" />
-        {isFetching || !item ? <Spinner /> :
-          <Portlet isBordered={isBordered}><RegionForm {...this.props} /></Portlet>
-        }
+        {isFetching || !item ? (
+          <Spinner />
+        ) : (
+          <Portlet isBordered={isBordered}>
+            <RegionForm {...this.props} />
+          </Portlet>
+        )}
       </div>
     );
   }
@@ -82,9 +85,11 @@ RegionContainer.propTypes = {
   match: PropTypes.object,
 };
 
-RegionContainer = withRouter(connect(
-  mapStateToProps,
-  { loadRegion, save: saveRegion, loadRegions }
-)(RegionContainer));
+RegionContainer = withRouter(
+  connect(
+    mapStateToProps,
+    { loadRegion, save: saveRegion, loadRegions }
+  )(RegionContainer)
+);
 
 export default RegionContainer;

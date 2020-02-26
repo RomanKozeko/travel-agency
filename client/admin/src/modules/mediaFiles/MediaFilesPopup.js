@@ -1,20 +1,28 @@
 import React from 'react';
 import Button from 'material-ui/Button';
 import MediaFilesContainer from '../mediaFiles/MediaFilesContainer';
-import Dialog, { DialogActions,	DialogContent } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog';
 
-const MediaFilesPopup = ({ isOpen, handleRequestClose, filesType, addPreview }) =>(
+const MediaFilesPopup = ({
+  isOpen,
+  handleRequestClose,
+  filesType,
+  addPreview,
+}) => (
   <div>
-    <Dialog open={ isOpen } onRequestClose={ handleRequestClose }>
+    <Dialog open={isOpen} onRequestClose={handleRequestClose}>
       <DialogContent>
-        <MediaFilesContainer filesType={ filesType } />
+        <MediaFilesContainer filesType={filesType} />
       </DialogContent>
       <DialogActions>
-        <Button variant="raised" onClick={() => {
-                  addPreview();
-                  handleRequestClose();
-                }}
-                color="primary">
+        <Button
+          variant="raised"
+          onClick={() => {
+            addPreview();
+            handleRequestClose();
+          }}
+          color="primary"
+        >
           Добавить
         </Button>
         <Button onClick={handleRequestClose} color="primary" autoFocus>
@@ -23,6 +31,6 @@ const MediaFilesPopup = ({ isOpen, handleRequestClose, filesType, addPreview }) 
       </DialogActions>
     </Dialog>
   </div>
-)
+);
 
 export default MediaFilesPopup;

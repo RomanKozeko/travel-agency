@@ -5,7 +5,7 @@ import { getPages } from '../../rootReducer';
 
 import PagesList from './PagesList';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     pages: getPages(state),
     isFetching: state.pages.isFetching,
@@ -27,11 +27,11 @@ class PagesContainer extends Component {
     return (
       <div>
         {isFetched && !pages.length && <div>No pages</div>}
-        {isFetching || !isFetched ?
+        {isFetching || !isFetched ? (
           <h3>Loading...</h3>
-          :
+        ) : (
           <PagesList pages={pages} />
-        }
+        )}
       </div>
     );
   }

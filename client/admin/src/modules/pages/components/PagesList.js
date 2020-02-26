@@ -8,26 +8,26 @@ import SortableTable from '../../ui-elements/sortableTable/SortableTable';
 import withSearch from '../../ui-elements/HOC/withSearch';
 
 const PagesList = ({ items, languages, isFetching, deleteItems }) => {
-	const data = {
-		headers: ['Заголовок', 'Активен/Неактивен', 'Дата создания'],
-		items,
-		languages,
-		fields: [
-			{
-				name: 'title',
-				isLink: true,
-				linkPrefix: '/admin/pages/'
-			},
-			{
-				name: 'enabled',
-				isLink: 'toggle'
-			},
-			{
-				name: 'date',
-				isLink: 'date'
-			}
-		]
-	};
+  const data = {
+    headers: ['Заголовок', 'Активен/Неактивен', 'Дата создания'],
+    items,
+    languages,
+    fields: [
+      {
+        name: 'title',
+        isLink: true,
+        linkPrefix: '/admin/pages/',
+      },
+      {
+        name: 'enabled',
+        isLink: 'toggle',
+      },
+      {
+        name: 'date',
+        isLink: 'date',
+      },
+    ],
+  };
 
   return (
     <div>
@@ -41,14 +41,13 @@ const PagesList = ({ items, languages, isFetching, deleteItems }) => {
       >
         Добавить страницу
       </Button>
-	    {isFetching
-		    ?
+      {isFetching ? (
         <Spinner />
-		    :
+      ) : (
         <Portlet isBordered={false}>
           <SortableTable data={data} deleteItems={deleteItems} />
         </Portlet>
-	    }
+      )}
     </div>
   );
 };

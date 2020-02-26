@@ -4,8 +4,8 @@ module.exports = {
   getAllWithPagination(offset, itemsPerPageLimit) {
     const query = Page.find({})
       .skip(offset)
-      .populate('allImages')
+      .populate('allImages');
 
     return Promise.all([query, Page.count()]);
-  }
+  },
 };

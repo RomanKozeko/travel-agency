@@ -10,22 +10,23 @@ const styles = StyleSheet.create({
     marginTop: '0;',
     marginBottom: '25px;',
     borderRadius: '4px;',
-    padding: '0'
+    padding: '0',
   },
   bordered: {
     '@media (min-width: 800px)': {
-      padding: '20px 20px 15px'
+      padding: '20px 20px 15px',
     },
-    padding: '20px 10px 15px'
-  }
+    padding: '20px 10px 15px',
+  },
 });
 
-
 const Portlet = ({ children, isBordered }) => (
-  <div className={classNames({
-    [css(styles.wrapper)]: !isBordered,
-    [css(styles.wrapper, styles.bordered)]: isBordered
-    })}>
+  <div
+    className={classNames({
+      [css(styles.wrapper)]: !isBordered,
+      [css(styles.wrapper, styles.bordered)]: isBordered,
+    })}
+  >
     {children}
   </div>
 );

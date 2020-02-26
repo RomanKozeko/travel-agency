@@ -4,28 +4,31 @@ const config = require('../../config/index');
 const slicer = require('../../services/index');
 const createCRUD = require('../../services/apiFactory');
 
-module.exports = createCRUD(
-  Showplace,
-  {
-    get: (req, res, next) => {
-      const { regions, title, offset = 0, limit = config.itemsPerPageLimit } = req.query;
+module.exports = createCRUD(Showplace, {
+  get: (req, res, next) => {
+    const {
+      regions,
+      title,
+      offset = 0,
+      limit = config.itemsPerPageLimit,
+    } = req.query;
 
-      ShowplacesQueries.getAllWithFilter(offset, limit, {regions, title})
-      .then((result) => {
+    ShowplacesQueries.getAllWithFilter(offset, limit, { regions, title })
+      .then(result => {
         res.json({
           offset: parseInt(offset),
           items: slicer.sliceModelContent(result[0].concat(), req.query.lang),
-          count: result[1]
+          count: result[1],
         });
       })
       .catch(next);
-    },
-    getOneByUrl: (req, res, next) => {
-      Showplace.findOne({ url: req.params.url })
-        .populate('preview')
-        .then(tour => res.json(slicer.sliceModelContentSingle(tour, req.query.lang)))
-        .catch(next);
-    }
-  }
-);
-
+  },
+  getOneByUrl: (req, res, next) => {
+    Showplace.findOne({ url: req.params.url })
+      .populate('preview')
+      .then(tour =>
+        res.json(slicer.sliceModelContentSingle(tour, req.query.lang))
+      )
+      .catch(next);
+  },
+});

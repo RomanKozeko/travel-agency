@@ -7,16 +7,18 @@ const PageSchema = new Schema({
   preview: String,
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   enabled: {
     type: Boolean,
-    default: true
+    default: true,
   },
-  allImages: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Media'
-  }],
+  allImages: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Media',
+    },
+  ],
   url: { type: String, index: true, unique: true, required: true },
   content: [PageContentSchema],
 });

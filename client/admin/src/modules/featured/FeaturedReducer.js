@@ -1,8 +1,18 @@
-import { createReducer, basicReducerEvents, createBasicActions } from '../../services/utils';
+import {
+  createReducer,
+  basicReducerEvents,
+  createBasicActions,
+} from '../../services/utils';
 import { CALL_API, Schemas } from '../../middleware/callApi';
 
 // actions
-const actionsObj = createBasicActions('FEATURED', 'FEATURED_ITEM', 'featured', CALL_API, Schemas);
+const actionsObj = createBasicActions(
+  'FEATURED',
+  'FEATURED_ITEM',
+  'featured',
+  CALL_API,
+  Schemas
+);
 
 // Action Creators
 export const actions = actionsObj.actions;
@@ -30,9 +40,11 @@ export default createReducer(defaultState, {
   [actions.FEATURED_ITEM_SUCCESS]: basicReducerEvents.itemSuccess(),
   [actions.FEATURED_ITEM_SAVE_REQUEST]: state => ({ ...state, isSaving: true }),
   [actions.FEATURED_ITEM_SAVE_SUCCESS]: basicReducerEvents.itemSuccess(),
-  [actions.FEATURED_ITEM_SAVE_FAILURE]: state => ({ ...state, isSaving: false }),
+  [actions.FEATURED_ITEM_SAVE_FAILURE]: state => ({
+    ...state,
+    isSaving: false,
+  }),
 });
 
 //  selectors
-export const getFeatured = state => (state.allIds.map(id => state.byIds[id]));
-
+export const getFeatured = state => state.allIds.map(id => state.byIds[id]);
