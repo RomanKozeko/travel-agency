@@ -60,6 +60,4 @@ const mapStateToProps = state => {
   };
 };
 
-LanguagesNav = connect(mapStateToProps)(LanguagesNav);
-
-export default LanguagesNav;
+export default connect(mapStateToProps)(LanguagesNav);

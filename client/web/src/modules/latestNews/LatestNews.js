@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { getLatestNews } from '../../rootReducer';
@@ -61,33 +60,41 @@ const itemsBycolumns = items => {
   }, []);
 };
 
-const LatestNews = ({ items }) => (
-  <div className={css(styles.wrapper)}>
-    {itemsBycolumns(items.sort((a, b) => a.order - b.order)).map(
-      (columns, index) => (
-        <div className={css(styles.column)} key={index}>
-          {columns.map(item => (
-            <PrefixLink
-              to={`/pages/${item.linkUrl}`}
-              className={css(styles.item)}
-              key={item._id}
-            >
-              <img
-                className={css(styles.img)}
-                src={item.preview[0] && item.preview[0].path}
-                alt=""
-              />
-              <div className={css(styles.content)}>
-                <h3 className={css(styles.title)}>{item.content.title}</h3>
-                <p>{item.content.description}</p>
-              </div>
-            </PrefixLink>
-          ))}
-        </div>
-      )
-    )}
-  </div>
-);
+const LatestNews = ({ items, isFetched, fetchLatestNews }) => {
+  useEffect(() => {
+    if (!isFetched) {
+      fetchLatestNews();
+    }
+  }, [fetchLatestNews, isFetched]);
+
+  return (
+    <div className={css(styles.wrapper)}>
+      {itemsBycolumns(items.sort((a, b) => a.order - b.order)).map(
+        (columns, index) => (
+          <div className={css(styles.column)} key={index}>
+            {columns.map(item => (
+              <PrefixLink
+                to={`/pages/${item.linkUrl}`}
+                className={css(styles.item)}
+                key={item._id}
+              >
+                <img
+                  className={css(styles.img)}
+                  src={item.preview[0] && item.preview[0].path}
+                  alt=""
+                />
+                <div className={css(styles.content)}>
+                  <h3 className={css(styles.title)}>{item.content.title}</h3>
+                  <p>{item.content.description}</p>
+                </div>
+              </PrefixLink>
+            ))}
+          </div>
+        )
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   items: getLatestNews(state),
@@ -95,16 +102,4 @@ const mapStateToProps = state => ({
   isFetched: state.latestNews.isFetched,
 });
 
-export default compose(
-  connect(
-    mapStateToProps,
-    { fetchLatestNews }
-  ),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchLatestNews();
-      }
-    },
-  })
-)(LatestNews);
+export default connect(mapStateToProps, { fetchLatestNews })(LatestNews);

@@ -64,7 +64,11 @@ class Page extends Component {
   }
 
   componentWillUnmount() {
-    this.props.clearError();
+    const { error, clearError } = this.props;
+
+    if (error) {
+      clearError();
+    }
   }
 
   getRowItemClass(size) {
@@ -73,41 +77,36 @@ class Page extends Component {
 
   render() {
     const { isFetching, page, error } = this.props;
+    if (error) {
+      return <NotFound />;
+    }
+
     return (
-      <div>
-        {error || !page || !page.content ? (
-          <NotFound />
-        ) : (
-          <div>
-            <Head
-              title={page ? page.content.title : ''}
-              metaDescription={page ? page.content.description : ''}
-            />
-            <PageHeader title={page ? page.content.title : ''} />
-            <PageContent>
-              {isFetching || !page ? (
-                <h4>Загрузка...</h4>
-              ) : (
-                page.content.rows
-                  .sort((a, b) => a.order - b.order)
-                  .map(row => (
-                    <div key={row._id} className="row">
-                      {row.title && <FancyHeader title={row.title} />}
-                      {row.items.map(item => (
-                        <div
-                          key={item._id}
-                          className={this.getRowItemClass(item.size)}
-                        >
-                          <PageColumn item={item} page={page} />
-                        </div>
-                      ))}
+      <>
+        <Head
+          title={page ? page.content.title : ''}
+          metaDescription={page ? page.content.description : ''}
+        />
+        <PageHeader title={page ? page.content.title : ''} />
+        <PageContent loading={isFetching || !page}>
+          {page &&
+            page.content.rows
+              .sort((a, b) => a.order - b.order)
+              .map(row => (
+                <div key={row._id} className="row">
+                  {row.title && <FancyHeader title={row.title} />}
+                  {row.items.map(item => (
+                    <div
+                      key={item._id}
+                      className={this.getRowItemClass(item.size)}
+                    >
+                      <PageColumn item={item} page={page} />
                     </div>
-                  ))
-              )}
-            </PageContent>
-          </div>
-        )}
-      </div>
+                  ))}
+                </div>
+              ))}
+        </PageContent>
+      </>
     );
   }
 }
@@ -119,11 +118,10 @@ Page.propTypes = {
   match: PropTypes.object,
 };
 
-Page = withRouter(
-  connect(
-    mapStateToProps,
-    { loadPage, clearError }
-  )(Page)
-);
+Page.defaultProps = {
+  page: { content: {} },
+};
 
-export default Page;
+export default withRouter(
+  connect(mapStateToProps, { loadPage, clearError })(Page)
+);

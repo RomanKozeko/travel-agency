@@ -92,10 +92,12 @@ const mapStateToProps = state => {
 };
 
 SearchFormContainer = compose(
-  connect(
-    mapStateToProps,
-    { loadFilteredTours, resetActiveFilter, loadRegions, loadCategories }
-  ),
+  connect(mapStateToProps, {
+    loadFilteredTours,
+    resetActiveFilter,
+    loadRegions,
+    loadCategories,
+  }),
   withStateHandlers(({ count }) => ({ filter: {} }), {
     onFieldChange: ({ filter }, { loadFilteredTours }) => (field, value) => {
       const newFilter = { ...filter };

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Head from '../ui-elements/Head';
@@ -24,55 +24,57 @@ const styles = StyleSheet.create({
   },
 });
 
-const ShowPlace = ({ item, isFetching }) => (
-  <div>
-    <Head
-      title={item ? item.content.title : ''}
-      metaDescription={item ? item.content.description : ''}
-    />
-    <PageHeader title={item ? item.content.title : ''} />
-    <PageContent small>
-      {isFetching || !item ? (
-        <h5>Загрузка...</h5>
-      ) : (
+const ShowPlace = ({
+  item,
+  isFetching,
+  loadShowPlace,
+  match: {
+    params: { url },
+  },
+}) => {
+  useEffect(() => {
+    if (!item) {
+      loadShowPlace(url);
+    }
+  }, [item, loadShowPlace, url]);
+
+  return (
+    <div>
+      <Head
+        title={item ? item.content.title : ''}
+        metaDescription={item ? item.content.description : ''}
+      />
+      <PageHeader title={item ? item.content.title : ''} />
+      <PageContent small loading={isFetching || !item}>
         <div className={css(styles.wrapper)}>
-          {item.preview.length > 0 && (
+          {item && item.preview.length > 0 && (
             <div className={css(styles.slider)}>
               <ImageSlider images={item.preview} />
             </div>
           )}
-          {item.content.address && (
+          {item && item.content.address && (
             <div className={css(styles.addressWrap)}>
               <PlaceIcon color={theme.colors.primary} width={20} />{' '}
               <b>{item.content.address}</b>
             </div>
           )}
-
-          <div dangerouslySetInnerHTML={{ __html: item.content.content }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: item && item.content.content }}
+          />
         </div>
-      )}
-    </PageContent>
-  </div>
-);
+      </PageContent>
+    </div>
+  );
+};
 
 const mapStateToProps = (state, router) => {
   return {
     item: getShowPlace(state, router.match.params.url),
-    isFetching: state.hotels.isFetching,
+    isFetching: state.showplaces.isFetching,
   };
 };
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    { loadShowPlace }
-  ),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.item) {
-        this.props.loadShowPlace(this.props.match.params.url);
-      }
-    },
-  })
+  connect(mapStateToProps, { loadShowPlace })
 )(ShowPlace);

@@ -1,11 +1,16 @@
-import React from 'react';
-import { compose, lifecycle } from 'recompose';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchPhotoSlider } from './PhotoSliderReducer';
 import { getPhotoSliders } from '../../rootReducer';
 import PhotoSlider from './PhotoSlider';
 
-const PhotoSliderContainer = ({ items }) => {
+const PhotoSliderContainer = ({ items, isFetched, fetchPhotoSlider }) => {
+  useEffect(() => {
+    if (!isFetched) {
+      fetchPhotoSlider();
+    }
+  }, [fetchPhotoSlider, isFetched]);
+
   if (!items.length) {
     return null;
   }
@@ -19,16 +24,6 @@ const mapStateToProps = state => ({
   isFetched: state.photoSlider.isFetched,
 });
 
-export default compose(
-  connect(
-    mapStateToProps,
-    { fetchPhotoSlider }
-  ),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchPhotoSlider();
-      }
-    },
-  })
-)(PhotoSliderContainer);
+export default connect(mapStateToProps, { fetchPhotoSlider })(
+  PhotoSliderContainer
+);

@@ -7,12 +7,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const PageContent = ({ children, small }) => (
+const PageContent = ({ children, small, loading }) => (
   <div className={css(styles.pageContent)}>
     <div className="container" style={{ maxWidth: small && '980px' }}>
-      {children}
+      {loading ? <h5>Загрузка...</h5> : children}
     </div>
   </div>
 );
+
+PageContent.defaultProps = {
+  loading: false,
+};
 
 export default PageContent;

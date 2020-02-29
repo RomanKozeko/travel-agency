@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { fetchSocial } from './SocialReducer';
 import { getSocial } from '../../rootReducer';
@@ -19,7 +18,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const SocialLinks = ({ items }) => {
+const SocialLinks = ({ items, isFetched, fetchSocial }) => {
+  useEffect(() => {
+    if (!isFetched) {
+      fetchSocial();
+    }
+  }, [fetchSocial, isFetched]);
+
   return (
     <div className={css(styles.wrap)}>
       {items[0] &&
@@ -44,13 +49,4 @@ const mapStateToProps = state => ({
   isFetched: state.social.isFetched,
 });
 
-export default compose(
-  connect(mapStateToProps, { fetchSocial }),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchSocial();
-      }
-    },
-  })
-)(SocialLinks);
+export default connect(mapStateToProps, { fetchSocial })(SocialLinks);
