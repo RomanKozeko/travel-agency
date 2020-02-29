@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { getContacts } from '../../rootReducer';
 import { fetchContacts } from '../header/headerReducer';
+import { EMAIL_REGEX } from '../../services/constans';
 
 const styles = StyleSheet.create({
   footer: {
@@ -92,8 +93,14 @@ const styles = StyleSheet.create({
   textTelContent: {
     marginLeft: '10px',
     whiteSpace: 'nowrap',
+    color: '#d4d4d4',
+    ':hover': {
+      color: '#d4d4d4',
+      textDecoration: 'none',
+    },
   },
 });
+
 const Footer = ({ items, isFetched, fetchContacts }) => {
   useEffect(() => {
     if (!isFetched) {
@@ -117,16 +124,24 @@ const Footer = ({ items, isFetched, fetchContacts }) => {
                   </span>
                 </div>
                 <div className={css(styles.textTelWrap)}>
-                  {tels.map(({ title, img, _id }, index) => (
-                    <div className={css(styles.textTel)} key={_id}>
-                      <img
-                        src={img}
-                        className={css(styles.textTelImg)}
-                        alt=""
-                      />
-                      <div className={css(styles.textTelContent)}>{title}</div>
-                    </div>
-                  ))}
+                  {tels.map(({ title, img, _id }) => {
+                    const prefix = EMAIL_REGEX.test(title) ? 'mailto' : 'tel';
+                    return (
+                      <div className={css(styles.textTel)} key={_id}>
+                        <img
+                          src={img}
+                          className={css(styles.textTelImg)}
+                          alt=""
+                        />
+                        <a
+                          href={`${prefix}:${title}`}
+                          className={css(styles.textTelContent)}
+                        >
+                          {title}
+                        </a>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}

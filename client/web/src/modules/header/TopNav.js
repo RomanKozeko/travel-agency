@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { compose, lifecycle } from 'recompose';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import LanguagesNav from '../ui-elements/LanguagesNav';
 import { getContacts } from '../../rootReducer';
 import { fetchContacts } from './headerReducer';
 import { setCurrency, setCurrencies } from '../app/appReducer';
-import { theme } from '../../services/constans';
-import { Link } from 'react-router-dom';
+import { theme, EMAIL_REGEX } from '../../services/constans';
 
 import SocialLinks from '../social/SocialLinks';
 
@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
   textTelContent: {
     marginLeft: '10px',
     whiteSpace: 'nowrap',
+    color: '#222',
+    ':hover': {
+      color: '#222',
+      textDecoration: 'none',
+    },
   },
   col: {
     width: '100%',
@@ -147,17 +152,29 @@ const TopNav = ({ items, setCurrency, currency }) => (
         </div>
         <div className={css(styles.col)}>
           {items.map(({ content, _id, tels }) => (
-            <div className="6" key={_id}>
+            <div key={_id}>
               <div className={css(styles.item)}>
                 <span className={css(styles.text)}>{content.title}</span>
               </div>
               <div className={css(styles.textTelWrap)}>
-                {tels.map(({ title, img, _id }) => (
-                  <div className={css(styles.textTel)} key={_id}>
-                    <img src={img} className={css(styles.textTelImg)} alt="" />
-                    <div className={css(styles.textTelContent)}>{title}</div>
-                  </div>
-                ))}
+                {tels.map(({ title, img, _id }) => {
+                  const prefix = EMAIL_REGEX.test(title) ? 'mailto' : 'tel';
+                  return (
+                    <div className={css(styles.textTel)} key={_id}>
+                      <img
+                        src={img}
+                        className={css(styles.textTelImg)}
+                        alt=""
+                      />
+                      <a
+                        href={`${prefix}:${title}`}
+                        className={css(styles.textTelContent)}
+                      >
+                        {title}
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}
