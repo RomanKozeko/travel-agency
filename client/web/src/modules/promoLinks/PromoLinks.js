@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
 import LoadingItems from '../ui-elements/LoadingItems';
@@ -78,31 +78,39 @@ const styles = StyleSheet.create({
   },
 });
 
-const PromoLinks = ({ items, isFetching, isFetched }) => (
-  <div className={css(styles.wrapper)}>
-    {isFetching ? (
-      <LoadingItems count={6} />
-    ) : (
-      items
-        .sort((a, b) => a.order - b.order)
-        .map(({ preview, content, linkUrl, _id }) => (
-          <PrefixLink
-            to={`/pages/${linkUrl}`}
-            className={css(styles.item)}
-            key={_id}
-          >
-            <div
-              className={css(styles.itemBg)}
-              style={{
-                backgroundImage: `url(${preview[0] && preview[0].path})`,
-              }}
-            />
-            <h3 className={css(styles.title)}>{content.title}</h3>
-          </PrefixLink>
-        ))
-    )}
-  </div>
-);
+const PromoLinks = ({ items, isFetching, isFetched, fetchPromoLinks }) => {
+  useEffect(() => {
+    if (!isFetched) {
+      fetchPromoLinks();
+    }
+  }, [fetchPromoLinks, isFetched]);
+
+  return (
+    <div className={css(styles.wrapper)}>
+      {isFetching ? (
+        <LoadingItems count={6} />
+      ) : (
+        items
+          .sort((a, b) => a.order - b.order)
+          .map(({ preview, content, linkUrl, _id }) => (
+            <PrefixLink
+              to={`/pages/${linkUrl}`}
+              className={css(styles.item)}
+              key={_id}
+            >
+              <div
+                className={css(styles.itemBg)}
+                style={{
+                  backgroundImage: `url(${preview[0] && preview[0].path})`,
+                }}
+              />
+              <h3 className={css(styles.title)}>{content.title}</h3>
+            </PrefixLink>
+          ))
+      )}
+    </div>
+  );
+};
 
 const mapStateToProps = state => ({
   items: getPromoLinks(state),
@@ -110,13 +118,6 @@ const mapStateToProps = state => ({
   isFetched: state.promoLinks.isFetched,
 });
 
-export default compose(
-  connect(mapStateToProps, { fetchPromoLinks }),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchPromoLinks();
-      }
-    },
-  })
-)(PromoLinks);
+export default compose(connect(mapStateToProps, { fetchPromoLinks }))(
+  PromoLinks
+);

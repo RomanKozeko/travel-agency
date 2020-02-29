@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { getContacts } from '../../rootReducer';
 import { fetchContacts } from '../header/headerReducer';
@@ -95,39 +94,53 @@ const styles = StyleSheet.create({
     whiteSpace: 'nowrap',
   },
 });
-const Footer = ({ items }) => (
-  <footer className={css(styles.footer)}>
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h4 className={css(styles.header)}>
-            {window.TA.content.ourContacts}
-          </h4>
-          {items.map(({ content, _id, tels }) => (
-            <div className={css(styles.columnText)} key={_id}>
-              <div className={css(styles.item)}>
-                <span className={css(styles.columnInner)}>{content.title}</span>
+const Footer = ({ items, isFetched, fetchContacts }) => {
+  useEffect(() => {
+    if (!isFetched) {
+      fetchContacts();
+    }
+  }, [fetchContacts, isFetched]);
+
+  return (
+    <footer className={css(styles.footer)}>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <h4 className={css(styles.header)}>
+              {window.TA.content.ourContacts}
+            </h4>
+            {items.map(({ content, _id, tels }) => (
+              <div className={css(styles.columnText)} key={_id}>
+                <div className={css(styles.item)}>
+                  <span className={css(styles.columnInner)}>
+                    {content.title}
+                  </span>
+                </div>
+                <div className={css(styles.textTelWrap)}>
+                  {tels.map(({ title, img, _id }, index) => (
+                    <div className={css(styles.textTel)} key={_id}>
+                      <img
+                        src={img}
+                        className={css(styles.textTelImg)}
+                        alt=""
+                      />
+                      <div className={css(styles.textTelContent)}>{title}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className={css(styles.textTelWrap)}>
-                {tels.map(({ title, img, _id }, index) => (
-                  <div className={css(styles.textTel)} key={_id}>
-                    <img src={img} className={css(styles.textTelImg)} alt="" />
-                    <div className={css(styles.textTelContent)}>{title}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <div className={css(styles.bottom)}>
-      <div className="container">
-        <div className={css(styles.left)}>{window.TA.content.copyRight}</div>
+      <div className={css(styles.bottom)}>
+        <div className="container">
+          <div className={css(styles.left)}>{window.TA.content.copyRight}</div>
+        </div>
       </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 const mapStateToProps = state => ({
   items: getContacts(state),
@@ -135,13 +148,4 @@ const mapStateToProps = state => ({
   isFetched: state.contacts.isFetched,
 });
 
-export default compose(
-  connect(mapStateToProps, { fetchContacts }),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchContacts();
-      }
-    },
-  })
-)(Footer);
+export default connect(mapStateToProps, { fetchContacts })(Footer);

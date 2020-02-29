@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose, lifecycle } from 'recompose';
+import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Head from '../ui-elements/Head';
@@ -26,21 +26,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const Hotel = ({ item, isFetching }) => (
-  <div>
-    <Head
-      title={item ? item.content.title : ''}
-      metaDescription={item ? item.content.description : ''}
-    />
-    <PageHeader title={item ? item.content.title : ''} />
-    <PageContent small>
-      {isFetching || !item ? (
-        <h5>Загрузка...</h5>
-      ) : (
+const Hotel = ({
+  item,
+  isFetching,
+  loadHotel,
+  match: {
+    params: { url },
+  },
+}) => {
+  useEffect(() => {
+    if (!item) {
+      loadHotel(url);
+    }
+  }, [item, loadHotel, url]);
+  return (
+    <>
+      <Head
+        title={item ? item.content.title : ''}
+        metaDescription={item ? item.content.description : ''}
+      />
+      <PageHeader title={item ? item.content.title : ''} />
+      <PageContent small loading={isFetching || !item}>
         <div className="row">
           <div className="col-md-9">
             <div className={css(styles.wrapper)}>
-              {item.preview.length > 0 && (
+              {item && item.preview.length > 0 && (
                 <div className={css(styles.slider)}>
                   <ImageSlider images={item.preview} />
                 </div>
@@ -57,10 +67,10 @@ const Hotel = ({ item, isFetching }) => (
             <OrderForm item={item} itemName={'hotel'} />
           </div>
         </div>
-      )}
-    </PageContent>
-  </div>
-);
+      </PageContent>
+    </>
+  );
+};
 
 const mapStateToProps = (state, router) => {
   return {
@@ -71,15 +81,5 @@ const mapStateToProps = (state, router) => {
 
 export default compose(
   withRouter,
-  connect(
-    mapStateToProps,
-    { loadHotel }
-  ),
-  lifecycle({
-    componentDidMount() {
-      if (!this.props.item) {
-        this.props.loadHotel(this.props.match.params.url);
-      }
-    },
-  })
+  connect(mapStateToProps, { loadHotel })
 )(Hotel);
