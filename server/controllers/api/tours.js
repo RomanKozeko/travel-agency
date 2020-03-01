@@ -1,5 +1,6 @@
 const Tour = require('../../models/Tour');
 const config = require('../../config/index');
+const Redis = require('../../services/redis').instance;
 
 const ToursQueries = require('../../models/queries/tours');
 const slicer = require('../../services/index');
@@ -65,9 +66,12 @@ module.exports = {
         ],
       })
       .populate('food')
-      .then(tour =>
-        res.json(slicer.sliceModelContentSingle(tour, req.query.lang))
-      )
+      .then(tour => {
+        const data = slicer.sliceModelContentSingle(tour, req.query.lang)
+        Redis.setex(req.params.url, 3600, JSON.stringify(data))
+
+        return res.json(data)
+      })
       .catch(next);
   },
 

@@ -2,6 +2,7 @@ const Hotel = require('../../models/Hotel');
 const HotelsQueries = require('../../models/queries/hotels');
 const config = require('../../config/index');
 const slicer = require('../../services/index');
+const Redis = require('../../services/redis').instance;
 const createCRUD = require('../../services/apiFactory');
 
 module.exports = createCRUD(Hotel, {
@@ -26,9 +27,13 @@ module.exports = createCRUD(Hotel, {
   getOneByUrl: (req, res, next) => {
     Hotel.findOne({ url: req.params.url })
       .populate('preview')
-      .then(tour =>
-        res.json(slicer.sliceModelContentSingle(tour, req.query.lang))
-      )
+      .then(hotel => {
+        const data = slicer.sliceModelContentSingle(hotel, req.query.lang)
+
+        Redis.setex(req.params.url, 3600, JSON.stringify(data))
+
+        return res.json(data)
+      })
       .catch(next);
   },
 });
