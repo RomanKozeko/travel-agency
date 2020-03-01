@@ -47,26 +47,30 @@ const Hotel = ({
       />
       <PageHeader title={item ? item.content.title : ''} />
       <PageContent small loading={isFetching || !item}>
-        <div className="row">
-          <div className="col-md-9">
-            <div className={css(styles.wrapper)}>
-              {item && item.preview.length > 0 && (
-                <div className={css(styles.slider)}>
-                  <ImageSlider images={item.preview} />
+        {item && (
+          <div className="row">
+            <div className="col-md-9">
+              <div className={css(styles.wrapper)}>
+                {item.preview.length > 0 && (
+                  <div className={css(styles.slider)}>
+                    <ImageSlider images={item.preview} />
+                  </div>
+                )}
+                <StarsList starsCount={item.stars} />
+                <div className={css(styles.addressWrap)}>
+                  <PlaceIcon color={theme.colors.primary} width={20} />{' '}
+                  <b>{item.content.address}</b>
                 </div>
-              )}
-              <StarsList starsCount={item.stars} />
-              <div className={css(styles.addressWrap)}>
-                <PlaceIcon color={theme.colors.primary} width={20} />{' '}
-                <b>{item.content.address}</b>
+                <div
+                  dangerouslySetInnerHTML={{ __html: item.content.content }}
+                />
               </div>
-              <div dangerouslySetInnerHTML={{ __html: item.content.content }} />
+            </div>
+            <div className="col-md-3">
+              <OrderForm item={item} itemName={'hotel'} />
             </div>
           </div>
-          <div className="col-md-3">
-            <OrderForm item={item} itemName={'hotel'} />
-          </div>
-        </div>
+        )}
       </PageContent>
     </>
   );

@@ -46,22 +46,22 @@ const ShowPlace = ({
       />
       <PageHeader title={item ? item.content.title : ''} />
       <PageContent small loading={isFetching || !item}>
-        <div className={css(styles.wrapper)}>
-          {item && item.preview.length > 0 && (
-            <div className={css(styles.slider)}>
-              <ImageSlider images={item.preview} />
-            </div>
-          )}
-          {item && item.content.address && (
-            <div className={css(styles.addressWrap)}>
-              <PlaceIcon color={theme.colors.primary} width={20} />{' '}
-              <b>{item.content.address}</b>
-            </div>
-          )}
-          <div
-            dangerouslySetInnerHTML={{ __html: item && item.content.content }}
-          />
-        </div>
+        {item && (
+          <div className={css(styles.wrapper)}>
+            {item.preview.length > 0 && (
+              <div className={css(styles.slider)}>
+                <ImageSlider images={item.preview} />
+              </div>
+            )}
+            {item.content.address && (
+              <div className={css(styles.addressWrap)}>
+                <PlaceIcon color={theme.colors.primary} width={20} />{' '}
+                <b>{item.content.address}</b>
+              </div>
+            )}
+            <div dangerouslySetInnerHTML={{ __html: item.content.content }} />
+          </div>
+        )}
       </PageContent>
     </div>
   );

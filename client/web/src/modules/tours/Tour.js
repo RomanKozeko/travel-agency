@@ -194,100 +194,135 @@ class Tour extends Component {
         <div className={css(styles.tour)}>
           <PageHeader title={tour ? tour.content.title : ''} />
           <PageContent loading={isFetching || !tour}>
-            <div className="row">
-              <div className="col-md-9">
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.tourInfo} />
-                  <table>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.route}:
-                      </td>
-                      <td>
-                        <b>{tour.content.mapName}</b>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.date}:
-                      </td>
-                      <td>
-                        <b>{tour.content.duration}</b>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.departureInfo}:
-                      </td>
-                      <td>
-                        <b>{tour.content.departureInfo}</b>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.daysAmount}:
-                      </td>
-                      <td>
-                        <b>{tour.days}</b>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.foodType}:
-                      </td>
-                      <td>
-                        <b>
-                          {tour.food &&
-                            getContentByLanguage(tour.food.content, languageID)
-                              .title}
-                        </b>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={css(styles.cell)}>
-                        {window.TA.content.price}:
-                      </td>
-                      <td>
-                        <div className={css(styles.price)}>
-                          {getPrice({
-                            price,
-                            priceBYN,
-                            priceRUB,
-                            priceEUR,
-                            pricePLN,
-                            priceUSD,
-                            currency,
-                            currencies,
-                          })}
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.tourDescription} />
-                  <div
-                    dangerouslySetInnerHTML={{ __html: tour.content.content }}
-                  />
-                </div>
-
-                {tour.content.programs &&
-                  tour.content.programs.map((item, index) => (
-                    <div className={css(styles.content)}>
-                      <FancyHeader
-                        title={`${window.TA.content.tourProgram} ${index + 1}`}
-                      />
-                      {item.program.map(({ _id, description }, index) => (
-                        <div key={_id} className={css(styles.programWrapper)}>
-                          <div className={css(styles.programDay)}>
-                            {window.TA.content.day} {index + 1}
+            {tour && (
+              <div className="row">
+                <div className="col-md-9">
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.tourInfo} />
+                    <table>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.route}:
+                        </td>
+                        <td>
+                          <b>{tour.content.mapName}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.date}:
+                        </td>
+                        <td>
+                          <b>{tour.content.duration}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.departureInfo}:
+                        </td>
+                        <td>
+                          <b>{tour.content.departureInfo}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.daysAmount}:
+                        </td>
+                        <td>
+                          <b>{tour.days}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.foodType}:
+                        </td>
+                        <td>
+                          <b>
+                            {tour.food &&
+                              getContentByLanguage(
+                                tour.food.content,
+                                languageID
+                              ).title}
+                          </b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className={css(styles.cell)}>
+                          {window.TA.content.price}:
+                        </td>
+                        <td>
+                          <div className={css(styles.price)}>
+                            {getPrice({
+                              price,
+                              priceBYN,
+                              priceRUB,
+                              priceEUR,
+                              pricePLN,
+                              priceUSD,
+                              currency,
+                              currencies,
+                            })}
                           </div>
-                          <div
-                            className={css(styles.programContent)}
-                            dangerouslySetInnerHTML={{ __html: description }}
-                          />
-                        </div>
-                      ))}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.tourDescription} />
+                    <div
+                      dangerouslySetInnerHTML={{ __html: tour.content.content }}
+                    />
+                  </div>
+
+                  {tour.content.programs &&
+                    tour.content.programs.map((item, index) => (
+                      <div className={css(styles.content)}>
+                        <FancyHeader
+                          title={`${window.TA.content.tourProgram} ${index +
+                            1}`}
+                        />
+                        {item.program.map(({ _id, description }, index) => (
+                          <div key={_id} className={css(styles.programWrapper)}>
+                            <div className={css(styles.programDay)}>
+                              {window.TA.content.day} {index + 1}
+                            </div>
+                            <div
+                              className={css(styles.programContent)}
+                              dangerouslySetInnerHTML={{ __html: description }}
+                            />
+                          </div>
+                        ))}
+                        {tour.content.programFile[0] && (
+                          <div className={css(styles.downloadLink)}>
+                            <a
+                              href={tour.content.programFile[0].path}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={css(styles.btn)}
+                            >
+                              {window.TA.content.downloadTourProgram}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+
+                  {!tour.content.programs && (
+                    <div className={css(styles.content)}>
+                      <FancyHeader title={window.TA.content.tourProgram} />
+                      {tour.content.program.map(
+                        ({ _id, description }, index) => (
+                          <div key={_id} className={css(styles.programWrapper)}>
+                            <div className={css(styles.programDay)}>
+                              {window.TA.content.day} {index + 1}
+                            </div>
+                            <div
+                              className={css(styles.programContent)}
+                              dangerouslySetInnerHTML={{ __html: description }}
+                            />
+                          </div>
+                        )
+                      )}
                       {tour.content.programFile[0] && (
                         <div className={css(styles.downloadLink)}>
                           <a
@@ -301,96 +336,71 @@ class Tour extends Component {
                         </div>
                       )}
                     </div>
-                  ))}
+                  )}
 
-                {!tour.content.programs && (
                   <div className={css(styles.content)}>
-                    <FancyHeader title={window.TA.content.tourProgram} />
-                    {tour.content.program.map(({ _id, description }, index) => (
-                      <div key={_id} className={css(styles.programWrapper)}>
-                        <div className={css(styles.programDay)}>
-                          {window.TA.content.day} {index + 1}
-                        </div>
-                        <div
-                          className={css(styles.programContent)}
-                          dangerouslySetInnerHTML={{ __html: description }}
+                    <FancyHeader title={window.TA.content.showPlaces} />
+                    <ItemsGallery>
+                      {tour.showplaces.map(item => (
+                        <HotelPreview
+                          key={item._id}
+                          item={item}
+                          url="showplaces"
+                          content={getContentByLanguage(
+                            item.content,
+                            languageID
+                          )}
                         />
-                      </div>
-                    ))}
-                    {tour.content.programFile[0] && (
-                      <div className={css(styles.downloadLink)}>
-                        <a
-                          href={tour.content.programFile[0].path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={css(styles.btn)}
-                        >
-                          {window.TA.content.downloadTourProgram}
-                        </a>
-                      </div>
-                    )}
+                      ))}
+                    </ItemsGallery>
                   </div>
-                )}
 
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.showPlaces} />
-                  <ItemsGallery>
-                    {tour.showplaces.map(item => (
-                      <HotelPreview
-                        key={item._id}
-                        item={item}
-                        url="showplaces"
-                        content={getContentByLanguage(item.content, languageID)}
-                      />
-                    ))}
-                  </ItemsGallery>
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.accommodation} />
+                    <ItemsGallery>
+                      {tour.hotels.map(hotel => (
+                        <HotelPreview
+                          key={hotel._id}
+                          item={hotel}
+                          url="hotels"
+                          content={getContentByLanguage(
+                            hotel.content,
+                            languageID
+                          )}
+                        />
+                      ))}
+                    </ItemsGallery>
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.includedInPrice} />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: tour.content.priceInclude,
+                      }}
+                    />
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.notIncludedInPrice} />
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: tour.content.priceNotInclude,
+                      }}
+                    />
+                  </div>
+
+                  <div className={css(styles.content)}>
+                    <FancyHeader title={window.TA.content.route} />
+                    <Map places={tour.map} />
+                  </div>
                 </div>
 
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.accommodation} />
-                  <ItemsGallery>
-                    {tour.hotels.map(hotel => (
-                      <HotelPreview
-                        key={hotel._id}
-                        item={hotel}
-                        url="hotels"
-                        content={getContentByLanguage(
-                          hotel.content,
-                          languageID
-                        )}
-                      />
-                    ))}
-                  </ItemsGallery>
-                </div>
-
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.includedInPrice} />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: tour.content.priceInclude,
-                    }}
-                  />
-                </div>
-
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.notIncludedInPrice} />
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: tour.content.priceNotInclude,
-                    }}
-                  />
-                </div>
-
-                <div className={css(styles.content)}>
-                  <FancyHeader title={window.TA.content.route} />
-                  <Map places={tour.map} />
+                <div className="col-md-3">
+                  <OrderForm item={tour} itemName={'tour'} />
                 </div>
               </div>
-
-              <div className="col-md-3">
-                <OrderForm item={tour} itemName={'tour'} />
-              </div>
-            </div>
+            )}
           </PageContent>
         </div>
       </div>
@@ -398,6 +408,4 @@ class Tour extends Component {
   }
 }
 
-Tour = withRouter(connect(mapStateToProps, { loadTour })(Tour));
-
-export default Tour;
+export default withRouter(connect(mapStateToProps, { loadTour })(Tour));
