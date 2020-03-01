@@ -30,7 +30,7 @@ module.exports = {
         .populate('categories')
         .populate('regions');
 
-      return Promise.all([query, Hotel.countDocuments()]);
+      return Promise.all([query, Hotel.count()]);
     }
 
     const regionsFilterIds = filter.regions.split(',');
@@ -76,7 +76,7 @@ module.exports = {
         .populate('categories')
         .populate('regions');
 
-      return Promise.all([query, Hotel.countDocuments()]);
+      return Promise.all([query, Hotel.count()]);
     });
   },
 };

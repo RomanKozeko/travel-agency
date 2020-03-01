@@ -45,7 +45,7 @@ module.exports = {
             ],
           })
       )
-      .then(tours => Promise.all([tours, Tour.countDocuments()]));
+      .then(tours => Promise.all([tours, Tour.count()]));
   },
 };
 
