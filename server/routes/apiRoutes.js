@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const path = require('path');
-const passport = require('passport');
+const passport = require('../services/passport');
 const cache = require('../middlewares/cache');
 
 import multer from 'multer';

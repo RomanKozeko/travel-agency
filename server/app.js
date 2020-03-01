@@ -1,6 +1,8 @@
 /**
  * Module dependencies.
  */
+const path = require('path');
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env.example') });
 require('babel-polyfill');
 require('ignore-styles');
 const express = require('express');
@@ -9,19 +11,13 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const chalk = require('chalk');
-const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
-const path = require('path');
 const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/apiRoutes');
-
-/**
- * Load environment variables from .env file, where API keys and passwords are configured.
- */
-dotenv.load({ path: '.env.example' });
+const passport = require('./services/passport');
 
 /**
  * Create Express server.
@@ -54,6 +50,7 @@ app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize())
 app.use(expressValidator());
 app.use(
   session({
@@ -67,10 +64,6 @@ app.use(
     }),
   })
 );
-
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, 'client/build'), { maxAge: -31557600000 }))
-// }
 
 app.use('/api', apiRouter);
 app.use('/', indexRouter);
