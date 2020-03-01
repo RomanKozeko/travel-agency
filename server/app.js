@@ -32,7 +32,10 @@ const app = express();
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, { 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.connection.on('error', err => {
   console.error(err);
   console.log(
@@ -46,8 +49,6 @@ mongoose.connection.on('error', err => {
  * Express configuration.
  */
 app.set('port', process.env.PORT || 3003);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 app.use(expressStatusMonitor());
 app.use(compression());
 app.use(logger('dev'));

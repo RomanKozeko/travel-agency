@@ -3,7 +3,7 @@ const router = express.Router();
 
 const path = require('path');
 const passport = require('passport');
-const passportService = require('../services/passport');
+const cache = require('../middlewares/cache');
 
 import multer from 'multer';
 import storage from '../storage';
@@ -54,7 +54,7 @@ router.post('/login', requireSignIn, AuthCtrl.login);
 router.get('/getMe', requireAuth, AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
-router.get('/tourGetByUrl/:url', ApiToursCtrl.getOneByUrl);
+router.get('/tourGetByUrl/:url', cache, ApiToursCtrl.getOneByUrl);
 router.get('/tours/:startIndex/:count', ApiToursCtrl.get);
 router.get('/tours/:id', ApiToursCtrl.getOne);
 router.post('/tours', requireAuth, ApiToursCtrl.post);
@@ -97,7 +97,7 @@ router.delete('/media', requireAuth, ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
 router.get('/hotels/:id', ApiHotelsCtrl.getOne);
-router.get('/hotelGetByUrl/:url', ApiHotelsCtrl.getOneByUrl);
+router.get('/hotelGetByUrl/:url', cache, ApiHotelsCtrl.getOneByUrl);
 router.put('/hotels/:id', requireAuth, ApiHotelsCtrl.put);
 router.post('/hotels', requireAuth, ApiHotelsCtrl.post);
 router.delete('/hotels', requireAuth, ApiHotelsCtrl.delete);
