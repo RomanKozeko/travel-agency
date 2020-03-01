@@ -53,8 +53,7 @@
     "server": "nodemon --exec babel-node server/app.js",
     "client": "node start-client.js",
     "admin": "node start-client-admin.js",
-    "build:server": "babel server -d dist --presets react",
-    "build:client": "babel client/web/src -d dist/client --presets react",
+    "build:server": "babel server -d dist",
     "serve": "node dist/app.js"
   }
 }
