@@ -68,7 +68,7 @@ module.exports = {
       .populate('food')
       .then(tour => {
         const data = slicer.sliceModelContentSingle(tour, req.query.lang)
-        Redis.setex(req.params.url, 3600, JSON.stringify(data))
+        Redis.setex(`tourGetByUrl:${req.params.url}:${req.query.lang}`, 1200, JSON.stringify(data))
 
         return res.json(data)
       })

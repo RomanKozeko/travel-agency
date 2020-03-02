@@ -54,7 +54,11 @@ router.post('/login', requireSignIn, AuthCtrl.login);
 router.get('/getMe', requireAuth, AuthCtrl.getMe);
 
 router.get('/tours', ApiToursCtrl.get);
-router.get('/tourGetByUrl/:url', cache, ApiToursCtrl.getOneByUrl);
+router.get(
+  '/tourGetByUrl/:url',
+  (req, _, next) => { cache(`tourGetByUrl:${req.params.url}:${req.query.lang}`); next(); },
+  ApiToursCtrl.getOneByUrl
+);
 router.get('/tours/:startIndex/:count', ApiToursCtrl.get);
 router.get('/tours/:id', ApiToursCtrl.getOne);
 router.post('/tours', requireAuth, ApiToursCtrl.post);
@@ -76,7 +80,7 @@ router.delete('/regions', requireAuth, ApiRegionsCtrl.delete);
 router.get('/periods', ApiPeriodsCtrl.get);
 router.post('/periods', requireAuth, ApiPeriodsCtrl.post);
 
-router.get('/languages', ApiLanguagesCtrl.get);
+router.get('/languages', cache('languages'), ApiLanguagesCtrl.get);
 router.post('/languages', requireAuth, ApiLanguagesCtrl.post);
 router.put('/languages/:id', requireAuth, ApiLanguagesCtrl.put);
 router.delete('/languages', requireAuth, ApiLanguagesCtrl.delete);
@@ -97,7 +101,10 @@ router.delete('/media', requireAuth, ApiPhotosCtrl.delete);
 
 router.get('/hotels', ApiHotelsCtrl.get);
 router.get('/hotels/:id', ApiHotelsCtrl.getOne);
-router.get('/hotelGetByUrl/:url', cache, ApiHotelsCtrl.getOneByUrl);
+router.get('/hotelGetByUrl/:url',
+  (req, _, next) => { cache(`hotelGetByUrl:${req.params.url}:${req.query.lang}`); next(); },
+  ApiHotelsCtrl.getOneByUrl
+);
 router.put('/hotels/:id', requireAuth, ApiHotelsCtrl.put);
 router.post('/hotels', requireAuth, ApiHotelsCtrl.post);
 router.delete('/hotels', requireAuth, ApiHotelsCtrl.delete);
@@ -127,7 +134,7 @@ router.put('/news/:id', requireAuth, NewsCtrl.put);
 router.post('/news', requireAuth, NewsCtrl.post);
 router.delete('/news', requireAuth, NewsCtrl.delete);
 
-router.get('/menu', MenuCtrl.get);
+router.get('/menu', (req, _, next) => { cache(`menu:${req.query.lang}`); next(); }, MenuCtrl.get);
 router.put('/menu', requireAuth, MenuCtrl.put);
 router.post('/menu', requireAuth, MenuCtrl.post);
 router.delete('/menu', requireAuth, MenuCtrl.delete);
@@ -137,7 +144,7 @@ router.put('/contacts/:id', requireAuth, ContactsCtrl.put);
 router.post('/contacts', requireAuth, ContactsCtrl.post);
 router.delete('/contacts', requireAuth, ContactsCtrl.delete);
 
-router.get('/settings', SettingsCtrl.get);
+router.get('/settings', cache('settings'), SettingsCtrl.get);
 router.put('/settings/:id', requireAuth, SettingsCtrl.put);
 router.post('/settings', requireAuth, SettingsCtrl.post);
 router.delete('/settings', requireAuth, SettingsCtrl.delete);

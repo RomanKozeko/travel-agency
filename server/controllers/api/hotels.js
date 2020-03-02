@@ -30,7 +30,7 @@ module.exports = createCRUD(Hotel, {
       .then(hotel => {
         const data = slicer.sliceModelContentSingle(hotel, req.query.lang)
 
-        Redis.setex(req.params.url, 3600, JSON.stringify(data))
+        Redis.setex(`hotelGetByUrl:${req.params.url}:${req.query.lang}`, 1200, JSON.stringify(data))
 
         return res.json(data)
       })

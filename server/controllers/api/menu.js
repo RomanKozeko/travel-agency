@@ -1,6 +1,7 @@
 const Menu = require('../../models/Menu');
 const createCRUD = require('../../services/apiFactory');
 const slicer = require('../../services/index');
+const Redis = require('../../services/redis').instance;
 
 const updateItems = menuItems =>
   waitForEach(
@@ -36,10 +37,11 @@ module.exports = createCRUD(Menu, {
             ...item,
             page: slicer.sliceModelContentSingle(item.page, req.query.lang),
           }));
+        const data = { items: slicedItems }
 
-        res.json({
-          items: slicedItems,
-        });
+        Redis.setex(`menu:${req.query.lang}`, 600, JSON.stringify(data))
+
+        res.json(data);
       })
       .catch(next);
   },

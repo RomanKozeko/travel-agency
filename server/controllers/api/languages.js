@@ -1,9 +1,11 @@
 const Language = require('../../models/Language');
+const Redis = require('../../services/redis').instance;
 
 module.exports = {
   get(req, res, next) {
     Language.find()
       .then(result => {
+        Redis.setex('languages', 600, JSON.stringify(result))
         res.json(result);
       })
       .catch(next);
