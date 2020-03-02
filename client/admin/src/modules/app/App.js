@@ -234,7 +234,6 @@ App.propTypes = {
   items: PropTypes.array,
 };
 
-export default connect(
-  mapStateToProps,
-  { loadLang }
-)(DragDropContext(HTML5Backend)(App));
+export default connect(mapStateToProps, { loadLang })(
+  DragDropContext(HTML5Backend)(App)
+);

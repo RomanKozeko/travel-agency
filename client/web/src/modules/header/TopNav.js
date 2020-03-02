@@ -5,7 +5,6 @@ import { compose, lifecycle } from 'recompose';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import LanguagesNav from '../ui-elements/LanguagesNav';
 import { getContacts } from '../../rootReducer';
-import { fetchContacts } from './headerReducer';
 import { setCurrency, setCurrencies } from '../app/appReducer';
 import { theme, EMAIL_REGEX } from '../../services/constans';
 
@@ -190,19 +189,13 @@ const TopNav = ({ items, setCurrency, currency }) => (
 
 const mapStateToProps = state => ({
   items: getContacts(state),
-  isFetching: state.contacts.isFetching,
-  isFetched: state.contacts.isFetched,
   currency: state.app.languages.currency,
 });
 
 export default compose(
-  connect(mapStateToProps, { fetchContacts, setCurrency, setCurrencies }),
+  connect(mapStateToProps, { setCurrency, setCurrencies }),
   lifecycle({
     componentDidMount() {
-      if (!this.props.isFetched) {
-        this.props.fetchContacts();
-      }
-
       window.TA.currencies.unshift({ _id: 'BYN', item: 'Бун,BYN,BYN' });
 
       const currCurrency = window.TA.currencies.find(curr => {

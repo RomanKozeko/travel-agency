@@ -9,54 +9,52 @@ import { getLangPref, getLangUrlPref } from './services/utils';
 import App from './modules/app/App';
 import ScrollToTop from './modules/ui-elements/ScrollToTop';
 import registerServiceWorker from './registerServiceWorker';
+import { fetchMenu } from './modules/menu/menuReducer';
+import { fetchContacts } from './modules/header/headerReducer';
 import './index.css';
 
-// Grab the state from a global variable injected into the server-generated HTML
-// const preloadedState = window.__PRELOADED_STATE__ || {};
+async function preloadData() {
+  const languages = await fetchLanguages();
 
-// Allow the passed state to be garbage-collected
-// delete window.__PRELOADED_STATE_;
-
-var store;
-
-fetchLanguages()
-  .then(res => {
-    const prefix = getLangPref();
-    const urlPrefix = getLangUrlPref(res, prefix);
-    const preloadedState = {
-      app: {
-        languages: {
-          prefix,
-          urlPrefix,
-          defaultLang: 'ru',
-          allIds: [],
-          byIds: {},
-          isFetching: false,
-          items: res,
-        },
+  const prefix = getLangPref();
+  const urlPrefix = getLangUrlPref(languages, prefix);
+  const settings = await fetchSettings(urlPrefix);
+  const preloadedState = {
+    app: {
+      languages: {
+        prefix,
+        urlPrefix,
+        defaultLang: 'ru',
+        allIds: [],
+        byIds: {},
+        isFetching: false,
+        items: languages,
       },
-    };
+    },
+  };
+  window.TA =
+    settings[0].content === undefined
+      ? { content: {}, currencies: [] }
+      : settings[0];
 
-    store = configureStore(preloadedState);
+  const store = configureStore(preloadedState);
+  store.dispatch(fetchContacts());
+  store.dispatch(fetchMenu());
 
-    return fetchSettings(urlPrefix);
-  })
-  .then(({ items }) => {
-    window.TA =
-      items[0].content === undefined
-        ? { content: {}, currencies: [] }
-        : items[0];
+  return store;
+}
 
-    ReactDOM.render(
-      <Provider store={store}>
-        <Router>
-          <ScrollToTop>
-            <App />
-          </ScrollToTop>
-        </Router>
-      </Provider>,
-      document.getElementById('root')
-    );
-  });
+preloadData().then(store => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <Router>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </Router>
+    </Provider>,
+    document.getElementById('root')
+  );
+});
 
 registerServiceWorker();

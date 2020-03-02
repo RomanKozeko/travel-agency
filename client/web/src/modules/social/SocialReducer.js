@@ -16,7 +16,7 @@ export const fetchSocial = () => (dispatch, getState) => {
   dispatch({
     [CALL_API]: {
       types: [SOCIAL_REQUEST, SOCIAL_SUCCESS, SOCIAL_FAILURE],
-      endpoint: withPrefix('/api/social', getState().app.languages.urlPrefix),
+      endpoint: withPrefix('/api/social'),
       schema: Schemas.PROMO_LINKS,
     },
   });
