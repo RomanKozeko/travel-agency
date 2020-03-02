@@ -18,7 +18,7 @@ async function preloadData() {
 
   const prefix = getLangPref();
   const urlPrefix = getLangUrlPref(languages, prefix);
-  const settings = await fetchSettings(urlPrefix);
+  const { items: settings } = await fetchSettings(urlPrefix);
   const preloadedState = {
     app: {
       languages: {

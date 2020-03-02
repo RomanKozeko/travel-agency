@@ -7,7 +7,7 @@ module.exports = createCRUD(Settings, {
   get: (req, res, next) => {
     Settings.find({})
       .then(result => {
-        const data = slicer.sliceModelContent(result.concat(), req.query.lang);
+        const data = { items: slicer.sliceModelContent(result.concat(), req.query.lang) };
         res.json(data);
       })
       .catch(next);
