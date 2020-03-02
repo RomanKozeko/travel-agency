@@ -39,10 +39,7 @@ const mapStateToProps = state => {
 };
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { loadItems, saveItem }
-  ),
+  connect(mapStateToProps, { loadItems, saveItem }),
   lifecycle({
     componentDidMount() {
       if (!this.props.isFetched) {

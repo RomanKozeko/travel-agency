@@ -144,7 +144,7 @@ router.put('/contacts/:id', requireAuth, ContactsCtrl.put);
 router.post('/contacts', requireAuth, ContactsCtrl.post);
 router.delete('/contacts', requireAuth, ContactsCtrl.delete);
 
-router.get('/settings', cache('settings'), SettingsCtrl.get);
+router.get('/settings', SettingsCtrl.get);
 router.put('/settings/:id', requireAuth, SettingsCtrl.put);
 router.post('/settings', requireAuth, SettingsCtrl.post);
 router.delete('/settings', requireAuth, SettingsCtrl.delete);
