@@ -103,7 +103,12 @@ module.exports = {
 
     Tour.findByIdAndUpdate(tourId, tourProps)
       .then(() => Tour.findById(tourId).populate('preview'))
-      .then(tour => res.json(tour))
+      .then(tour => {
+        res.json(tour)
+        tour.content.forEach(c => {
+          Redis.del(`tourGetByUrl:${tour.url}:${c.language}`) 
+        })
+      })
       .catch(next);
   },
 

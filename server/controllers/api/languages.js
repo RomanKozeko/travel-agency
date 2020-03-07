@@ -26,7 +26,11 @@ module.exports = {
     const id = req.params.id;
     Language.findByIdAndUpdate(id, req.body)
       .then(() => Language.findById(id))
-      .then(region => res.json(region))
+      .then(region => {
+        res.json(region)
+
+        Redis.del('languages')
+      })
       .catch(next);
   },
 
