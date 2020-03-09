@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import Head from '../ui-elements/Head';
 import PageContent from '../ui-elements/PageContent';
 import PageHeader from '../ui-elements/PageHeader';
@@ -83,7 +81,4 @@ const mapStateToProps = (state, router) => {
   };
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, { loadHotel })
-)(Hotel);
+export default connect(mapStateToProps, { loadHotel })(Hotel);

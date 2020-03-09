@@ -60,11 +60,13 @@ export const makeActionCreator = (type, ...argNames) => {
 };
 
 export const getLangUrlPref = (languages, currPrefix) => {
-  const pref = languages.find(lang => lang.prefix === currPrefix);
-  if (pref) {
-    return pref._id;
+  if (languages) {
+    const pref = languages.find(lang => lang.prefix === currPrefix);
+    if (pref) {
+      return pref._id;
+    }
+    return languages.find(lang => lang.prefix === 'ru')._id;
   }
-  return languages.find(lang => lang.prefix === 'ru')._id;
 };
 
 export const withPrefix = (endpoint, langPref) => {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { getPage } from '../../rootReducer';
 import { loadPage, clearError } from './PagesActions';
 import FilteredToursContainer from '../tours/FilteredToursContainer';
@@ -59,6 +58,12 @@ const PageColumn = ({ item, page }) => {
 class Page extends Component {
   componentDidMount() {
     if (!this.props.page) {
+      this.props.loadPage(this.props.match.params.id);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
       this.props.loadPage(this.props.match.params.id);
     }
   }
@@ -122,6 +127,4 @@ Page.defaultProps = {
   page: { content: {} },
 };
 
-export default withRouter(
-  connect(mapStateToProps, { loadPage, clearError })(Page)
-);
+export default connect(mapStateToProps, { loadPage, clearError })(Page);

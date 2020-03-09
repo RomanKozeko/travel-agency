@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose } from 'recompose';
 import {
   DinnerIcon,
   ClockIcon,
@@ -12,6 +11,7 @@ import {
 import PrefixLink from '../ui-elements/PrefixLink';
 import { getContentByLanguage } from '../../services/utils';
 import { theme } from '../../services/constans';
+import getPrice from '../../helpers/price';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -49,10 +49,15 @@ const styles = StyleSheet.create({
     },
   },
   content: {
-    padding: '20px;',
+    padding: '20px',
     flex: '1',
     flexDirection: 'column',
     display: 'flex',
+    color: '#333',
+    ':hover': {
+      textDecoration: 'none',
+      color: '#333',
+    },
     '@media (min-width: 750px)': {
       flexDirection: 'row',
     },
@@ -95,57 +100,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const getPrice = ({
-  price,
-  priceBYN,
-  priceRUB,
-  priceEUR,
-  pricePLN,
-  priceUSD,
-  currency,
-  currencies,
-}) => {
-  if (!currency) {
-    return `${priceBYN || price || '0'} BYN`;
-  }
-
-  const Cur_ID = currency.split(',')[2];
-
-  if (Cur_ID === 'BYN') {
-    return `${priceBYN || price || '0'} BYN`;
-  }
-
-  if (!priceBYN && !priceRUB && !priceEUR && !pricePLN && !priceUSD) {
-    const currencyWithRate = currencies.find(
-      item => item.Cur_ID === Number(Cur_ID)
-    );
-
-    return `${(
-      (price / currencyWithRate.Cur_OfficialRate) *
-      currencyWithRate.Cur_Scale
-    ).toFixed(0) || '0'} ${currencyWithRate.Cur_Abbreviation}`;
-  }
-
-  const { Cur_Abbreviation } = currencies.find(
-    item => item.Cur_ID === Number(Cur_ID)
-  );
-
-  switch (Cur_Abbreviation) {
-    case 'BYN':
-      return `${priceBYN} BYN`;
-    case 'RUB':
-      return `${priceRUB} RUB`;
-    case 'EUR':
-      return `${priceEUR} EUR`;
-    case 'USD':
-      return `${priceUSD} USD`;
-    case 'PLN':
-      return `${pricePLN} PLN`;
-    default:
-      return `${priceBYN || price} BYN`;
-  }
-};
-
 const TourBody = ({
   tour: { url, preview, days, content = {}, food, categories },
   currency,
@@ -158,12 +112,21 @@ const TourBody = ({
   });
 
   const { price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD } = content;
+  const tourPrice = getPrice({
+    price,
+    priceBYN,
+    priceRUB,
+    priceEUR,
+    pricePLN,
+    priceUSD,
+    currency,
+    currencies,
+  });
+
   return (
-    <div className={css(styles.content)}>
+    <PrefixLink className={css(styles.content)} to={`/tours/${url}`}>
       <div className={css(styles.contentLeft)}>
-        <h4 className={css(styles.title)}>
-          <PrefixLink to={`/tours/${url}`}>{content.title}</PrefixLink>
-        </h4>
+        <h4 className={css(styles.title)}>{content.title}</h4>
         {content.mapName && (
           <div className={css(styles.listItem)}>
             <PlaceIcon color={theme.colors.primary} width={20} />
@@ -203,22 +166,13 @@ const TourBody = ({
             </span>
           </div>
         )}
-        <div className={css(styles.listItemPrice)}>
-          <span className={css(styles.price)}>
-            {getPrice({
-              price,
-              priceBYN,
-              priceRUB,
-              priceEUR,
-              pricePLN,
-              priceUSD,
-              currency,
-              currencies,
-            })}
-          </span>
-        </div>
+        {tourPrice && (
+          <div className={css(styles.listItemPrice)}>
+            <span className={css(styles.price)}>{tourPrice}</span>
+          </div>
+        )}
       </div>
-    </div>
+    </PrefixLink>
   );
 };
 
@@ -230,4 +184,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default compose(connect(mapStateToProps))(TourBody);
+export default connect(mapStateToProps)(TourBody);

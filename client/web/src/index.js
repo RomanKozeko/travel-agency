@@ -7,6 +7,7 @@ import configureStore from './store/configureStore';
 import { fetchLanguages, fetchSettings } from './services/apiHelper';
 import { getLangPref, getLangUrlPref } from './services/utils';
 import App from './modules/app/App';
+import Header from './modules/header/Header';
 import ScrollToTop from './modules/ui-elements/ScrollToTop';
 import registerServiceWorker from './registerServiceWorker';
 import { fetchMenu } from './modules/menu/menuReducer';
@@ -49,6 +50,7 @@ preloadData().then(store => {
     <Provider store={store}>
       <Router>
         <ScrollToTop>
+          <Header />
           <App />
         </ScrollToTop>
       </Router>

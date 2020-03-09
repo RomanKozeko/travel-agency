@@ -67,12 +67,6 @@ const styles = StyleSheet.create({
     left: '0',
     width: '100%',
   },
-  price: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    letterSpacing: '2px',
-    color: '#222222',
-  },
   listItem: {
     display: 'flex',
     alignItems: 'center',

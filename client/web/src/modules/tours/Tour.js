@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { withRouter } from 'react-router-dom';
 import { getTour } from '../../rootReducer';
 import { loadTour } from './toursActions';
 import PageContent from '../ui-elements/PageContent';
@@ -14,6 +13,7 @@ import Map from '../ui-elements/Map';
 import { getContentByLanguage } from '../../services/utils';
 import { theme } from '../../services/constans';
 import OrderForm from '../orderForm/OrderForm';
+import getPrice from '../../helpers/price';
 
 const styles = StyleSheet.create({
   tour: {},
@@ -122,57 +122,6 @@ const mapStateToProps = (state, router) => ({
   currencies: state.app.languages.currencies,
 });
 
-const getPrice = ({
-  price,
-  priceBYN,
-  priceRUB,
-  priceEUR,
-  pricePLN,
-  priceUSD,
-  currency,
-  currencies,
-}) => {
-  if (!currency) {
-    return `${priceBYN || price || '0'} BYN`;
-  }
-
-  const Cur_ID = currency.split(',')[2];
-
-  if (Cur_ID === 'BYN') {
-    return `${priceBYN || price || '0'} BYN`;
-  }
-
-  if (!priceBYN && !priceRUB && !priceEUR && !pricePLN && !priceUSD) {
-    const currencyWithRate = currencies.find(
-      item => item.Cur_ID === Number(Cur_ID)
-    );
-
-    return `${(
-      ((price || 0) / currencyWithRate.Cur_OfficialRate) *
-      currencyWithRate.Cur_Scale
-    ).toFixed(0) || '0'} ${currencyWithRate.Cur_Abbreviation}`;
-  }
-
-  const { Cur_Abbreviation } = currencies.find(
-    item => item.Cur_ID === Number(Cur_ID)
-  );
-
-  switch (Cur_Abbreviation) {
-    case 'BYN':
-      return `${priceBYN} BYN`;
-    case 'RUB':
-      return `${priceRUB} RUB`;
-    case 'EUR':
-      return `${priceEUR} EUR`;
-    case 'USD':
-      return `${priceUSD} USD`;
-    case 'PLN':
-      return `${pricePLN} PLN`;
-    default:
-      return `${priceBYN || price} BYN`;
-  }
-};
-
 class Tour extends Component {
   componentDidMount() {
     if (!this.props.tour) {
@@ -185,6 +134,18 @@ class Tour extends Component {
     const { price, priceBYN, priceRUB, priceEUR, pricePLN, priceUSD } = tour
       ? tour.content
       : {};
+
+    const tourPrice = getPrice({
+      price,
+      priceBYN,
+      priceRUB,
+      priceEUR,
+      pricePLN,
+      priceUSD,
+      currency,
+      currencies,
+    });
+
     return (
       <div>
         <Head
@@ -246,25 +207,16 @@ class Tour extends Component {
                           </b>
                         </td>
                       </tr>
-                      <tr>
-                        <td className={css(styles.cell)}>
-                          {window.TA.content.price}:
-                        </td>
-                        <td>
-                          <div className={css(styles.price)}>
-                            {getPrice({
-                              price,
-                              priceBYN,
-                              priceRUB,
-                              priceEUR,
-                              pricePLN,
-                              priceUSD,
-                              currency,
-                              currencies,
-                            })}
-                          </div>
-                        </td>
-                      </tr>
+                      {tourPrice && (
+                        <tr>
+                          <td className={css(styles.cell)}>
+                            {window.TA.content.price}:
+                          </td>
+                          <td>
+                            <div className={css(styles.price)}>{tourPrice}</div>
+                          </td>
+                        </tr>
+                      )}
                     </table>
                   </div>
                   <div className={css(styles.content)}>
@@ -408,4 +360,4 @@ class Tour extends Component {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { loadTour })(Tour));
+export default connect(mapStateToProps, { loadTour })(Tour);

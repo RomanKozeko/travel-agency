@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import Home from './Home';
 import Tour from '../tours/Tour';
 import Page from '../pages/Page';
-import Header from '../header/Header';
 import Hotel from '../hotels/Hotel';
 import Showplace from '../showplaces/Showplace';
 import Footer from './Footer';
@@ -24,27 +23,27 @@ let App = ({ languagePrefix }) => {
     {
       path: `${urlPrefix || '/'}`,
       exact: true,
-      main: () => <Home />,
+      component: Home,
     },
     {
       path: `${urlPrefix}/pages/:id`,
       exact: true,
-      main: () => <Page />,
+      component: Page,
     },
     {
       path: `${urlPrefix}/tours/:id`,
       exact: true,
-      main: () => <Tour />,
+      component: Tour,
     },
     {
       path: `${urlPrefix}/hotels/:url`,
       exact: true,
-      main: () => <Hotel />,
+      component: Hotel,
     },
     {
       path: `${urlPrefix}/showplaces/:url`,
       exact: true,
-      main: () => <Showplace />,
+      component: Showplace,
     },
   ];
   return [
@@ -53,14 +52,13 @@ let App = ({ languagePrefix }) => {
         title={window.TA.content.appTitle}
         metaDescription={window.TA.content.appDescription}
       />
-      <Header />
       <div className={css(styles.content)}>
-        {routes.map((route, index) => (
+        {routes.map(route => (
           <Route
-            key={index}
+            key={route.path}
             path={route.path}
             exact={route.exact}
-            component={route.main}
+            component={route.component}
           />
         ))}
       </div>

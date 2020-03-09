@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import PrefixLink from '../ui-elements/PrefixLink';
 import LoadingItems from '../ui-elements/LoadingItems';
@@ -118,6 +117,4 @@ const mapStateToProps = state => ({
   isFetched: state.promoLinks.isFetched,
 });
 
-export default compose(connect(mapStateToProps, { fetchPromoLinks }))(
-  PromoLinks
-);
+export default connect(mapStateToProps, { fetchPromoLinks })(PromoLinks);

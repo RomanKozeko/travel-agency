@@ -72,8 +72,8 @@ const TreeList = ({ items, onChange }) => {
 
   return (
     <ul className={css(styles.ul)}>
-      {populatedItems.map(item => (
-        <TreeItem item={item} onChange={onChange} />
+      {populatedItems.map((item, index) => (
+        <TreeItem key={`tree-list-${index}`} item={item} onChange={onChange} />
       ))}
     </ul>
   );

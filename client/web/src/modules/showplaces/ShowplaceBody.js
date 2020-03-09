@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { compose } from 'recompose';
 import { PlaceIcon } from '../ui-elements/icons/Icons';
 import PrefixLink from '../ui-elements/PrefixLink';
 import { theme } from '../../services/constans';
@@ -105,4 +104,4 @@ const mapStateToProps = state => ({
   languageID: state.app.languages.urlPrefix,
 });
 
-export default compose(connect(mapStateToProps))(ShowplaceBody);
+export default connect(mapStateToProps)(ShowplaceBody);
