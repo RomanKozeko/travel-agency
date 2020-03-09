@@ -28,9 +28,6 @@ const mapStateToProps = state => ({
   isFetching: state.tours.isFetching,
 });
 
-ToursContainer = connect(
-  mapStateToProps,
-  { loadTours, deleteTours }
-)(ToursContainer);
-
-export default ToursContainer;
+export default connect(mapStateToProps, { loadTours, deleteTours })(
+  ToursContainer
+);

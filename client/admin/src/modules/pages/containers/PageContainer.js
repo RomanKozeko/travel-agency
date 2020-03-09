@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PageHeader from '../../ui-elements/PageHeader';
 import Spinner from '../../ui-elements/Spinner';
@@ -102,34 +101,27 @@ PageContainer.propTypes = {
   match: PropTypes.object,
 };
 
-PageContainer = withRouter(
-  connect(
-    mapStateToProps,
-    {
-      loadItem,
-      save: saveItem,
-      pageAddRow: actions.pageAddRow,
-      pageAddCustomRow: actions.pageAddCustomRow,
-      pageDidMount: actions.pageDidMount,
-      pageRemoveRow: actions.pageRemoveRow,
-      pageUnmount: actions.pageUnmount,
-      pageInputChange: actions.pageInputChange,
-      openHtmlEditor: actions.openHtmlEditor,
-      closeHtmlEditor: actions.closeHtmlEditor,
-      openAddToursListPopup: actions.openAddToursListPopup,
-      closeAddToursListPopup: actions.closeAddToursListPopup,
-      saveRow: actions.saveRow,
-      removeRowItem: actions.pageRemoveRowItem,
-      editRowItem: actions.pageEditRowItem,
-      editRowTitle: actions.editRowTitle,
-      editOrder: actions.editOrder,
-      openMediaPopup: actions.openMediaPopup,
-      addImages: actions.addImages,
-      closeMediaPopup: actions.closeMediaPopup,
-      deleteMediaItem: actions.deleteMediaItem,
-      loadMediaFiles: loadItems,
-    }
-  )(PageContainer)
-);
-
-export default PageContainer;
+export default connect(mapStateToProps, {
+  loadItem,
+  save: saveItem,
+  pageAddRow: actions.pageAddRow,
+  pageAddCustomRow: actions.pageAddCustomRow,
+  pageDidMount: actions.pageDidMount,
+  pageRemoveRow: actions.pageRemoveRow,
+  pageUnmount: actions.pageUnmount,
+  pageInputChange: actions.pageInputChange,
+  openHtmlEditor: actions.openHtmlEditor,
+  closeHtmlEditor: actions.closeHtmlEditor,
+  openAddToursListPopup: actions.openAddToursListPopup,
+  closeAddToursListPopup: actions.closeAddToursListPopup,
+  saveRow: actions.saveRow,
+  removeRowItem: actions.pageRemoveRowItem,
+  editRowItem: actions.pageEditRowItem,
+  editRowTitle: actions.editRowTitle,
+  editOrder: actions.editOrder,
+  openMediaPopup: actions.openMediaPopup,
+  addImages: actions.addImages,
+  closeMediaPopup: actions.closeMediaPopup,
+  deleteMediaItem: actions.deleteMediaItem,
+  loadMediaFiles: loadItems,
+})(PageContainer);

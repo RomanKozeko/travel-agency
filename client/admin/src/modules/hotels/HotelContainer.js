@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
@@ -91,15 +90,9 @@ class HotelContainer extends Component {
     );
   }
 }
-HotelContainer = withRouter(
-  connect(
-    mapStateToProps,
-    {
-      loadItem,
-      save: saveItem,
-      loadRegions,
-    }
-  )(HotelContainer)
-);
 
-export default HotelContainer;
+export default connect(mapStateToProps, {
+  loadItem,
+  save: saveItem,
+  loadRegions,
+})(HotelContainer);

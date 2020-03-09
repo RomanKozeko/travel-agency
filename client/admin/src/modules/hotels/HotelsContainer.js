@@ -30,9 +30,10 @@ class HotelsContainer extends Component {
   }
 }
 
-HotelsContainer = connect(
-  mapStateToProps,
-  { loadItems, saveItem, deleteItems }
-)(HotelsContainer);
+HotelsContainer = connect(mapStateToProps, {
+  loadItems,
+  saveItem,
+  deleteItems,
+})(HotelsContainer);
 
 export default HotelsContainer;

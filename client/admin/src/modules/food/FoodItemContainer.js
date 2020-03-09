@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
@@ -86,15 +85,9 @@ class FoodItemContainer extends Component {
     );
   }
 }
-FoodItemContainer = withRouter(
-  connect(
-    mapStateToProps,
-    {
-      loadItem,
-      save: saveItem,
-      loadRegions,
-    }
-  )(FoodItemContainer)
-);
 
-export default FoodItemContainer;
+export default connect(mapStateToProps, {
+  loadItem,
+  save: saveItem,
+  loadRegions,
+})(FoodItemContainer);

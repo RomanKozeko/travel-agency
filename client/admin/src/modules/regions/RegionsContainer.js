@@ -34,9 +34,6 @@ RegionsContainer.propTypes = {
   items: PropTypes.array,
 };
 
-RegionsContainer = connect(
-  mapStateToProps,
-  { loadRegions, deleteRegions }
-)(RegionsContainer);
-
-export default RegionsContainer;
+export default connect(mapStateToProps, { loadRegions, deleteRegions })(
+  RegionsContainer
+);

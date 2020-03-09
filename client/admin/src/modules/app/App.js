@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component, lazy } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
 import { LinearProgress } from 'material-ui/Progress';
+import TourContainer from '../tours/TourContainer';
 import ToursContainer from '../tours/ToursContainer';
 import PagesContainer from '../pages/containers/PagesContainer';
 import PageContainer from '../pages/containers/PageContainer';
@@ -60,120 +61,113 @@ const styles = StyleSheet.create({
   },
 });
 
-const TourContainer = lazy(() => import('../tours/TourContainer'));
-
 const routes = [
   {
     path: '/admin/tours',
     exact: true,
-    main: () => <ToursContainer />,
+    main: ToursContainer,
   },
   {
     path: '/admin/tours/:id',
     exact: true,
-    // FIXME: TEST case
-    main: () => (
-      <Suspense fallback={<div>Loading</div>}>
-        <TourContainer />
-      </Suspense>
-    ),
+    main: TourContainer,
   },
   {
     path: '/admin/regions',
     exact: true,
-    main: () => <RegionsContainer />,
+    main: RegionsContainer,
   },
   {
     path: '/admin/regions/:id',
     exact: true,
-    main: () => <RegionContainer />,
+    main: RegionContainer,
   },
   {
     path: '/admin/hotels',
     exact: true,
-    main: () => <HotelsContainer />,
+    main: HotelsContainer,
   },
   {
     path: '/admin/hotels/:id',
     exact: true,
-    main: () => <HotelContainer />,
+    main: HotelContainer,
   },
   {
     path: '/admin/pages/:id',
-    main: () => <PageContainer />,
+    main: PageContainer,
   },
   {
     path: '/admin/pages',
     exact: true,
-    main: () => <PagesContainer />,
+    main: PagesContainer,
   },
   {
     path: '/admin/lang',
     exact: true,
-    main: () => <LanguagesContainer />,
+    main: LanguagesContainer,
   },
   {
     path: '/admin/categories',
     exact: true,
-    main: () => <CategoriesContainer />,
+    main: CategoriesContainer,
   },
   {
     path: '/admin/categories/:id',
     exact: true,
-    main: () => <CategoryContainer />,
+    main: CategoryContainer,
   },
   {
     path: '/admin/contacts',
-    main: () => <ContactsContainer />,
+    main: ContactsContainer,
   },
   {
     path: '/admin/mediaFiles',
-    main: () => <MediaFilesContainer />,
+    main: MediaFilesContainer,
   },
   {
     path: '/admin/showplaces',
     exact: true,
-    main: () => <ShowPlacesContainer />,
+    main: ShowPlacesContainer,
   },
   {
     path: '/admin/showplaces/:id',
     exact: true,
-    main: () => <ShowPlaceContainer />,
+    main: ShowPlaceContainer,
   },
   {
     path: '/admin/food',
     exact: true,
-    main: () => <FoodContainer />,
+    main: FoodContainer,
   },
   {
     path: '/admin/food/:id',
     exact: true,
-    main: () => <FoodItemContainer />,
+    main: FoodItemContainer,
   },
   {
     path: '/admin/menu',
     exact: true,
-    main: () => <MenuContainer />,
+    main: MenuContainer,
   },
   {
     path: '/admin',
     exact: true,
-    main: () => <Home />,
+    main: Home,
   },
   {
     path: '/admin/home',
     exact: true,
-    main: () => <Home />,
+    main: Home,
   },
   {
     path: '/admin/settings',
     exact: true,
-    main: () => <SettingsContainer />,
+    main: SettingsContainer,
   },
   {
     path: '/admin/social',
     exact: true,
-    main: () => <SocialContainer />,
+    main: SocialContainer,
   },
 ];
 

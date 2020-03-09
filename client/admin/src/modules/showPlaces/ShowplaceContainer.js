@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import PageHeader from '../ui-elements/PageHeader';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
@@ -90,15 +89,9 @@ class ShowPlaceContainer extends Component {
     );
   }
 }
-ShowPlaceContainer = withRouter(
-  connect(
-    mapStateToProps,
-    {
-      loadItem,
-      save: saveItem,
-      loadRegions,
-    }
-  )(ShowPlaceContainer)
-);
 
-export default ShowPlaceContainer;
+export default connect(mapStateToProps, {
+  loadItem,
+  save: saveItem,
+  loadRegions,
+})(ShowPlaceContainer);

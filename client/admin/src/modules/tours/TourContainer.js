@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import PageHeader from '../ui-elements/PageHeader';
 import Portlet from '../ui-elements/Portlet';
@@ -165,19 +164,12 @@ class TourContainer extends Component {
   }
 }
 
-TourContainer = withRouter(
-  connect(
-    mapStateToProps,
-    {
-      loadTour,
-      addTour,
-      editTour,
-      loadRegions,
-      loadCategories,
-      loadItems,
-      loadFoodItems: fromFoodReducer.loadItems,
-    }
-  )(TourContainer)
-);
-
-export default TourContainer;
+export default connect(mapStateToProps, {
+  loadTour,
+  addTour,
+  editTour,
+  loadRegions,
+  loadCategories,
+  loadItems,
+  loadFoodItems: fromFoodReducer.loadItems,
+})(TourContainer);

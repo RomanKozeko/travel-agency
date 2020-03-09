@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import Spinner from '../ui-elements/Spinner';
 import BackLink from '../ui-elements/BackLink';
 import PageHeader from '../ui-elements/PageHeader';
@@ -85,11 +84,8 @@ RegionContainer.propTypes = {
   match: PropTypes.object,
 };
 
-RegionContainer = withRouter(
-  connect(
-    mapStateToProps,
-    { loadRegion, save: saveRegion, loadRegions }
-  )(RegionContainer)
-);
-
-export default RegionContainer;
+export default connect(mapStateToProps, {
+  loadRegion,
+  save: saveRegion,
+  loadRegions,
+})(RegionContainer);
