@@ -9,13 +9,13 @@ const getPrice = ({
   currencies,
 }) => {
   if (!currency) {
-    return `${priceBYN || price || '0'} BYN`;
+    return priceBYN || price ? `${priceBYN || price} BYN` : null;
   }
 
   const Cur_ID = currency.split(',')[2];
 
   if (Cur_ID === 'BYN') {
-    return `${priceBYN || price || '0'} BYN`;
+    return priceBYN || price ? `${priceBYN || price} BYN` : null;
   }
 
   if (!priceBYN && !priceRUB && !priceEUR && !pricePLN && !priceUSD) {
