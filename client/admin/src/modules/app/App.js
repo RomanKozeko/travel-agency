@@ -1,4 +1,4 @@
-import React, { Component, lazy } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../header/AppHeader';
 import SideBar from '../sideBar/SideBar';
-import { LinearProgress } from 'material-ui/Progress';
 import TourContainer from '../tours/TourContainer';
 import ToursContainer from '../tours/ToursContainer';
 import PagesContainer from '../pages/containers/PagesContainer';
@@ -30,8 +29,6 @@ import Home from '../home/Home';
 import ContactsContainer from '../contacts/ContactsContainer';
 import SettingsContainer from '../settings/SettingsContainer';
 import SocialContainer from '../social/SocialContainer';
-
-import './App.css';
 
 const styles = StyleSheet.create({
   pageContainer: {
@@ -150,11 +147,6 @@ const routes = [
     main: MenuContainer,
   },
   {
-    path: '/admin',
-    exact: true,
-    main: Home,
-  },
-  {
     path: '/admin/home',
     exact: true,
     main: Home,
@@ -174,8 +166,6 @@ const routes = [
 const mapStateToProps = state => {
   return {
     items: state.languages.allIds,
-    isFetching: state.languages.isFetching,
-    isFetched: state.languages.isFetched,
   };
 };
 
@@ -187,43 +177,32 @@ export class App extends Component {
   }
 
   render() {
-    const { isFetching, isFetched } = this.props;
     return (
       <div className="App">
-        {isFetching || !isFetched ? (
-          <div>
-            {' '}
-            <LinearProgress />
+        <Header />
+        <Router>
+          <div className={css(styles.pageContainer, styles.clearfix)}>
+            <div className={css(styles.sideBarWrapper)}>
+              <SideBar />
+            </div>
+            <div className={css(styles.content)}>
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.main}
+                />
+              ))}
+            </div>
           </div>
-        ) : (
-          <div>
-            <Header />
-            <Router>
-              <div className={css(styles.pageContainer, styles.clearfix)}>
-                <div className={css(styles.sideBarWrapper)}>
-                  <SideBar />
-                </div>
-                <div className={css(styles.content)}>
-                  {routes.map((route, index) => (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      exact={route.exact}
-                      component={route.main}
-                    />
-                  ))}
-                </div>
-              </div>
-            </Router>
-          </div>
+        </Router>
         )}
       </div>
     );
   }
 }
 App.propTypes = {
-  isFetching: PropTypes.bool,
-  isFetched: PropTypes.bool,
   loadLang: PropTypes.func,
   items: PropTypes.array,
 };
