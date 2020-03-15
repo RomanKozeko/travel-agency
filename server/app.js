@@ -13,8 +13,6 @@ const logger = require('morgan');
 const chalk = require('chalk');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
-const expressValidator = require('express-validator');
-const expressStatusMonitor = require('express-status-monitor');
 const indexRouter = require('./routes/index');
 const apiRouter = require('./routes/apiRoutes');
 const passport = require('./services/passport');
@@ -45,13 +43,11 @@ mongoose.connection.on('error', err => {
  * Express configuration.
  */
 app.set('port', process.env.PORT || 3003);
-app.use(expressStatusMonitor());
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize())
-app.use(expressValidator());
 app.use(
   session({
     resave: true,
