@@ -46,25 +46,27 @@ let App = ({ languagePrefix }) => {
       component: Showplace,
     },
   ];
-  return [
-    <div className={css(styles.wrapper)}>
-      <Head
-        title={window.TA.content.appTitle}
-        metaDescription={window.TA.content.appDescription}
-      />
-      <div className={css(styles.content)}>
-        {routes.map(route => (
-          <Route
-            key={route.path}
-            path={route.path}
-            exact={route.exact}
-            component={route.component}
-          />
-        ))}
+  return (
+    <>
+      <div className={css(styles.wrapper)}>
+        <Head
+          title={window.TA.content.appTitle}
+          metaDescription={window.TA.content.appDescription}
+        />
+        <div className={css(styles.content)}>
+          {routes.map(route => (
+            <Route
+              key={route.path}
+              path={route.path}
+              exact={route.exact}
+              component={route.component}
+            />
+          ))}
+        </div>
       </div>
-    </div>,
-    <Footer />,
-  ];
+      <Footer />
+    </>
+  );
 };
 
 export default App;

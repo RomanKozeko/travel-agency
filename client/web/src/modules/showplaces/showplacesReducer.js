@@ -77,13 +77,8 @@ export default createReducer(defaultState, {
 });
 
 // selectors
-export const getShowPlace = (state, id) => {
-  if (state.byIds[id]) {
-    return state.byIds[id];
-  }
-
-  return null;
-};
+export const getShowPlace = (state, id) =>
+  Object.values(state.byIds).find(val => val.url === id);
 
 export const getShowplacesByQuery = (state, query) => {
   if (!query) {

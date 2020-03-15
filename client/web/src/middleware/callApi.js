@@ -69,7 +69,7 @@ export const itemsSchema = { items: [itemSchema] };
 export const itemByUrlSchema = new schema.Entity(
   'items',
   {},
-  { idAttribute: 'url' }
+  { idAttribute: '_id' }
 );
 export const itemsByUrlSchema = { items: [itemSchema] };
 

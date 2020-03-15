@@ -71,13 +71,8 @@ export default createReducer(defaultState, {
 });
 
 // selectors
-export const getHotel = (state, id) => {
-  if (state.byIds[id]) {
-    return state.byIds[id];
-  }
-
-  return null;
-};
+export const getHotel = (state, id) =>
+  Object.values(state.byIds).find(val => val.url === id);
 
 export const getHotelsByQuery = (state, query) => {
   if (!query) {
