@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: '18px;',
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    color: '#222222;',
+    color: theme.colors.primary,
   },
   listItem: {
     display: 'flex',
