@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import Button from 'material-ui/Button';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from '../ui-elements/Editor';
 import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 const uniqueId = require('lodash.uniqueid');

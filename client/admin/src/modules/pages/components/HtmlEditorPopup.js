@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from '../../ui-elements/Editor';
 import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Button from 'material-ui/Button';

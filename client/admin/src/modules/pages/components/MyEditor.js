@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from '../../ui-elements/Editor';
 
 class MyEditor extends Component {
   constructor(props) {

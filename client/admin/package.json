@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@tinymce/tinymce-react": "^3.12.2",
     "aphrodite": "^1.2.5",
     "classnames": "^2.2.5",
     "core-js": "3.6.4",
@@ -36,7 +37,6 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "3.4.0",
     "react-test-renderer": "^16.2.0",
-    "react-tinymce": "^0.7.0",
     "reactjs-popup": "^1.5.0",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
@@ -50,8 +50,13 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": ["react-app", "plugin:prettier/recommended"],
-    "plugins": ["prettier"]
+    "extends": [
+      "react-app",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ]
   },
   "browserslist": {
     "production": [

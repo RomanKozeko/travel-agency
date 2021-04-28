@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import TinyMCE from 'react-tinymce';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { FormControlLabel } from 'material-ui/Form';
@@ -10,6 +9,7 @@ import ItemsSelector from '../ui-elements/form/ItemsSelector';
 import ImageGridList from '../ui-elements/ImageGridList';
 import CollapseComponent from '../ui-elements/Collapse';
 import Map from '../ui-elements/Map';
+import TinyMCE from '../ui-elements/Editor';
 import AddTourPreviewPopup from './AddTourPreviewPopup';
 import TourProgram from './TourProgram';
 import Select from 'material-ui/Select';
